@@ -1,0 +1,180 @@
+
+
+
+/* CSS para el modal */
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 999999; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0); 
+}
+
+.modal-content {
+    background-color: #ffffff;
+    margin: 5px auto;
+    padding: 40px;
+    width: 200px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 0px solid #000000;  
+    border-radius: 20px;
+
+}
+
+
+.modal-content form  {
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: rgba(255, 0, 0, 0);
+    color: rgb(0, 0, 0);
+    border: 0px solid black;
+    border-radius: 40px;
+
+}
+
+
+
+
+
+.close {
+    color: rgb(189, 189, 189);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    background-color: #00000000;
+  }
+
+  
+  .close:hover,
+  .close:focus {
+    color: rgb(97, 97, 97);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+
+  .container-traducir {
+
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      margin: 15px auto;
+     
+      
+  }
+
+  #BtnTranslateMenu {
+     
+      background-color: rgba(255, 255, 255, 0);
+      border: none;
+      cursor: pointer;
+  }
+
+
+
+
+
+.modal-content {
+    text-align: center; /* Centra el contenido textual como los títulos */
+}
+
+#idiomasContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    background-color: #00000000;
+}
+
+.idioma-btn , .modal-content button[type="submit"]  {
+    /* Estilos comunes para todos los botones */
+    display: flex;
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: 5px solid rgba(235, 235, 235, 0.746);
+    border-radius: 100px;
+    cursor: pointer;
+    width: 240px;
+    min-width: 240px;
+    max-width: 240px;
+    align-items: center;
+    justify-content: center;
+
+}
+
+form.form-flag {
+    display: flex;
+}
+  
+.form-flag button , .idioma-btn button {
+  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: 5px solid rgba(235, 235, 235, 0.746);
+    border-radius: 100px;
+    cursor: pointer;
+    width: 240px;
+    min-width: 240px;
+    max-width: 240px;
+
+  }
+  
+  img.idioma-btn-flag {
+    border-radius: 100px;
+    width: 40px;
+    height: 40px;
+  }
+  
+
+.idioma-btn:hover ,  .modal-content button[type="submit"]:hover , .form-flag button:hover {
+    background-color: #e7e7e7;
+}
+
+form {
+    margin: 0; /* Remueve cualquier margen predeterminado del formulario */
+    display: flex;
+    justify-content: center; /* Centra el botón dentro del formulario */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,6 +1,5 @@
 <?php
 
-
 include '../get/get_restaurant_id.php';
 include '../get/get_logo.php';
 include '../get/get_idiomas.php'; 
@@ -17,6 +16,25 @@ include '../get/get_alergenos.php';
 include '../get/get_colors.php';
 
 
+
+// Obtén el dominio desde el que se hace la solicitud
+$origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
+$domain = parse_url($origin, PHP_URL_HOST);
+
+// Lista de orígenes permitidos para pruebas
+$allowedOrigins = ['http://localhost', 'https://localhost'];
+
+// Verifica si el dominio está en la lista de orígenes permitidos o es 'localhost'
+if (in_array($origin, $allowedOrigins) || $domain === 'localhost') {
+
+    header('Access-Control-Allow-Origin: ' . $origin);
+    header('Access-Control-Allow-Methods: GET, POST');
+    header('Access-Control-Allow-Credentials: true');
+    header('Content-Type: text/html');
+} else {
+    header('HTTP/1.1 403 Forbidden');
+    exit('CORS policy does not allow this origin.');
+}
 
 ?>
 
@@ -43,7 +61,7 @@ include '../get/get_colors.php';
 
 </head>
 
-<body id="menu-container">
+<body id="#maxmenu-menuContainer">
 
     <header>
         <!-- Cabecera del sitio, como el logotipo o el nombre del restaurante -->
@@ -54,15 +72,11 @@ include '../get/get_colors.php';
     
 
  
-    <div class="flecha-up">
-
-        <a class="enlace enlace-bag" href="#BtnBag"><img src="http://localhost:8080/menu/img/bag_up.png" alt=""></a>
-        <span id="cart-count">0</span> 
+      <div class="flecha-up">
+        
+          <a  id="maxmenu-up" class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="menu/img/up.png" alt=""></a>
       
-        <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="http://localhost:8080/menu/img/up.png" alt=""></a>
-      
-     
-    </div>
+      </div>
 
 
  
@@ -70,7 +84,7 @@ include '../get/get_colors.php';
 
                 <?php if (!empty($logos) && is_array($logos)): ?>
                     <?php foreach ($logos as $logoItem): ?>
-                        <div class="logo-item">
+                        <div id="maxmenu-logo" class="logo-item">
                             <?php if (!empty($logoItem['logo_url'])): ?>
                                 <img src="<?php echo htmlspecialchars($logoItem['logo_url']); ?>" alt="Logo del restaurante">
                             <?php else: ?>
@@ -89,8 +103,8 @@ include '../get/get_colors.php';
             <?php 
                 if (!empty($plataformasExistentes)):
                     foreach ($plataformasExistentes as $plataforma): ?>
-                    <div class="categoria">
-                        <a href="<?php echo htmlspecialchars($plataforma['platform_url']); ?>" 
+                    <div class="categoria" id="maxmenu-plataformas">
+                        <a id="maxmenu-plataforma-button" href="<?php echo htmlspecialchars($plataforma['platform_url']); ?>" 
                            class="visitar-btn <?php echo strtolower(htmlspecialchars($plataforma['platform_name'])); ?>" 
                         ></a>
                     </div>
@@ -113,7 +127,7 @@ include '../get/get_colors.php';
     <div class="container-menu-buttom-translate">
         <button id="BtnTranslateMenu">
             <!-- Muestra la bandera seleccionada en sesión o, si no existe, la del idioma original -->
-            <img 
+           <img id="maxmenu-img-flag" 
                 src="<?php echo htmlspecialchars($_SESSION['flag_selected'] ?? $banderaUrlOriginal, ENT_QUOTES, 'UTF-8'); ?>" 
                 alt="Current Flag"
             >
@@ -434,7 +448,7 @@ function toggleSubcategories(categoryId) {
   <?php foreach ($estructuraMenu as $categoria): ?>
     <div class="category-shortcut">
       <!-- Botón de la categoría -->
-      <div class="category-container">
+      <div class="category-container" id="maxmenu-category-container" >
         <button 
           id="category-<?php echo $categoria['category_id']; ?>-shortcut" 
           class="category-button-atajo menu-icon" 
@@ -442,13 +456,14 @@ function toggleSubcategories(categoryId) {
           onclick="scrollToCategory('<?php echo $categoria['category_id']; ?>')"
         >
           <!-- Título de la categoría con data-translate -->
-          <span class="nombre-categoria menu-icon" data-translate="category">
+          <span id="maxmenu-category-buttom"class="nombre-categoria menu-icon" data-translate="category">
             <?php echo htmlspecialchars($categoria['category_name'], ENT_QUOTES, 'UTF-8'); ?>
           </span>
         </button>
 
         <?php if (!empty($categoria['subcategorias'])): ?>
           <button 
+            id="maxmenu-subcategory-buttom"
             class="subcategory-toggle" 
             data-category-id="<?php echo $categoria['category_id']; ?>" 
             onclick="toggleSubcategories('<?php echo $categoria['category_id']; ?>')"
@@ -479,6 +494,7 @@ function toggleSubcategories(categoryId) {
         >
           <?php foreach ($categoria['subcategorias'] as $subcategoria): ?>
             <button 
+              id="maxmenu-subcategory-buttom" 
               class="subcategory-button-atajo menu-icon" 
               data-subcategory-id="<?php echo $subcategoria['subcategory_id']; ?>" 
               onclick="scrollToSubcategory('<?php echo $categoria['category_id']; ?>','<?php echo $subcategoria['subcategory_id']; ?>')"
@@ -1142,41 +1158,6 @@ document.addEventListener('DOMContentLoaded', function() {
   
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

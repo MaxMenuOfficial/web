@@ -1,0 +1,41 @@
+
+
+.logo-container {
+    width: 100%;
+    background-color: rgba(231, 0, 0, 0);
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+  .logo-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0px auto;
+    height: auto;
+}
+
+
+.logo-item img {
+    margin: 0px auto;
+    border-radius: 100px;
+    border: 0 px solid #afdaf831;
+    max-width: 60px;
+    max-height: 60px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+a.traduccion img {
+    display: flex;
+    width: 25px;
+    height: 25px;
+    align-items: center;
+    justify-content: center;
+    margin: 5px auto;
+}

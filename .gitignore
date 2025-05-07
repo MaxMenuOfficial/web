@@ -1,0 +1,29 @@
+# ⚠️ Archivos sensibles o innecesarios
+.env
+*.log
+.DS_Store
+
+# 🔧 Composer
+/vendor/
+
+# 🔥 Archivos temporales o pruebas
+*~
+*copy.php
+*.bak
+*.swp
+
+# 💻 IDEs y herramientas
+.idea/
+.vscode/
+*.code-workspace
+
+# 🚫 Archivos de producción innecesarios
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# 🌍 Entorno de despliegue
+/public/logs/
+public/menu/.DS_Store
+public/menu_api/.DS_Store
