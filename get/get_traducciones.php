@@ -1,6 +1,6 @@
 <?php
 // Incluir el servicio que carga los datos completos del restaurante y sus relaciones.
-require_once __DIR__ . '/../../config/menu-service.php';
+require_once __DIR__ . '/../config/menu-service.php';
 // Incluir el archivo que obtiene y valida el id del restaurante (estándar: ?id=...)
 require_once __DIR__ . '/get_restaurant_id.php';
 

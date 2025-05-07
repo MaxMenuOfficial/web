@@ -2,6 +2,8 @@
 FROM europe-west1-docker.pkg.dev/maxmenu-447510/maxmenu-php-a/php82-grpc-imagick:latest
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
+
+COPY get/ /var/www/html/get/
 WORKDIR /var/www/html
 
 # 🔁 Copiar solo los archivos necesarios para Composer

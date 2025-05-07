@@ -2,7 +2,7 @@
 // get_domains
 
 // 1) Cargar el servicio que inicializa $domains y $restaurantId
-require_once __DIR__ . '/../../config/menu-service.php';
+require_once __DIR__ . '/../config/menu-service.php';
 require_once __DIR__ . '/get_restaurant_id.php';
 
 // 2) Asegurarnos de que la variable global $domains exista

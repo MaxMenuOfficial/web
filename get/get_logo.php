@@ -2,7 +2,7 @@
 // 📁 backend/php/get/get_logos.php
 
 // Incluir el servicio que carga la información completa del restaurante y sus relaciones
-require_once __DIR__ . '/../../config/menu-service.php';
+require_once __DIR__ . '/../config/menu-service.php';
 // Incluir el script que obtiene y valida el restaurantId vía GET
 require_once __DIR__ . '/get_restaurant_id.php';
 
