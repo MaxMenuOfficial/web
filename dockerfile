@@ -1,45 +1,40 @@
-# Etapa 1: build con Composer
-FROM php:8.2-apache as builder
+# 🧱 Imagen base optimizada ya construida con grpc, imagick, supervisord, etc.
+FROM europe-west1-docker.pkg.dev/maxmenu-447510/maxmenu-php-a/php82-grpc-imagick:latest
 
-# Instalar dependencias necesarias para extensiones
-RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    libzip-dev \
-    libpng-dev \
-    libonig-dev \
-    && docker-php-ext-install zip pdo
-
-# Habilitar mod_rewrite de Apache
-RUN a2enmod rewrite
-
-# Instalar Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Copiar código al contenedor
+ENV COMPOSER_ALLOW_SUPERUSER=1
 WORKDIR /var/www/html
-COPY . .
 
-# Instalar dependencias PHP
-RUN composer install --no-dev --optimize-autoloader
+# 🔁 Copiar solo los archivos necesarios para Composer
+COPY composer.json composer.lock ./
 
-# Copiar configuración de Apache si existe
-COPY apache.conf /etc/apache2/sites-available/000-default.conf
+# 🔧 Instalar dependencias PHP
+RUN echo "📦 Instalando dependencias con Composer..." && \
+    composer install --no-dev --optimize-autoloader --no-interaction --no-progress || \
+    (echo "❌ Composer falló" && exit 1)
 
-# Etapa final: contenedor liviano
-FROM php:8.2-apache
+# 📂 Copiar el resto del proyecto
+COPY . /var/www/html
 
-# Copiar todo del build anterior
-COPY --from=builder /var/www/html /var/www/html
-COPY --from=builder /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf
+# 🔧 Configuraciones personalizadas
+COPY docker/php.ini /usr/local/etc/php/php.ini
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY docker/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-# Activar mod_rewrite
-RUN a2enmod rewrite
+# 🛠️ Apache rewrite + public como raíz
+RUN sed -i 's|AllowOverride None|AllowOverride All|g' /etc/apache2/apache2.conf && \
+    a2enmod rewrite && \
+    sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf && \
+    sed -i 's|<Directory /var/www/html>|<Directory /var/www/html/public>|g' /etc/apache2/sites-available/000-default.conf && \
+    sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/apache2.conf
 
-# Configurar la raíz como public
-WORKDIR /var/www/html/public
+# 📂 Crear estructura de logs
+RUN mkdir -p /var/www/html/logs/apache2 /var/log/supervisord && \
+    touch /var/www/html/logs/apache2/access.log /var/www/html/logs/apache2/error.log && \
+    chmod -R 777 /var/www/html/logs /var/log/supervisord
 
-# Puerto por defecto de Cloud Run
+# 🌐 Exponer puerto para Cloud Run
 EXPOSE 8080
 
-CMD ["apache2-foreground"]
+# 🏁 Iniciar supervisor que lanza Apache y gestiona logs
+CMD ["/entrypoint.sh"]
