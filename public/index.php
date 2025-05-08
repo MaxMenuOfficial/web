@@ -16,6 +16,6 @@ error_reporting(E_ALL);
     <title>Document</title>
 </head>
 <body>
-    <h1>hola estoy cirinsacdvfbg do</h1>
+    <h1>hola buenas</h1>
 </body>
 </html>
