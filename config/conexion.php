@@ -4,6 +4,7 @@
 // Carga de Composer y variables de entorno
 require_once __DIR__ . '/../vendor/autoload.php';
 
+
 use Google\Cloud\Spanner\SpannerClient;
 use Google\Cloud\PubSub\PubSubClient;
 

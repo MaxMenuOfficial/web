@@ -5,6 +5,7 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 
 COPY get/ /var/www/html/get/
 WORKDIR /var/www/html
+COPY .env /var/www/html/.env
 
 # 🔁 Copiar solo los archivos necesarios para Composer
 COPY composer.json composer.lock ./
