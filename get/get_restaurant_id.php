@@ -12,6 +12,10 @@ if (!preg_match("/^[a-zA-Z0-9\-_\.]+$/", $restaurantId)) {
     die("Error: Formato de id no válido.");
 }
 
+if (empty($restaurantId) || empty($restaurantData)) {
+    header("Location: https://maxmenu.com", true, 302);
+    exit;
+}
 // 🔍 Imprimir el ID para verificar si llega correctamente
 error_log("✅ get_restaurant_id.php - ID recibido: $restaurantId");
 

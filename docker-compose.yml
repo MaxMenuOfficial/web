@@ -1,0 +1,18 @@
+services:
+  menu-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: menu-service-dev
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/var/www/html
+      - ./docker/php.ini:/usr/local/etc/php/php.ini
+      - ./docker/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+      - ./docker/entrypoint.sh:/entrypoint.sh
+    environment:
+      - APP_ENV=development
+    command: /entrypoint.sh
+
+    

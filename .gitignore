@@ -5,6 +5,7 @@
 
 # 🔧 Composer
 /vendor/
+/secrets/
 
 # 🔥 Archivos temporales o pruebas
 *~

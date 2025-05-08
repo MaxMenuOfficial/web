@@ -3,7 +3,6 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-echo "✅ menu-service activo — ".date("Y-m-d H:i:s");
 
 ?>
 
@@ -17,6 +16,6 @@ echo "✅ menu-service activo — ".date("Y-m-d H:i:s");
     <title>Document</title>
 </head>
 <body>
-    <h1>hola estoy cirindo</h1>
+    <h1>hola estoy cirinsacdvfbg do</h1>
 </body>
 </html>

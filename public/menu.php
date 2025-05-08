@@ -1,6 +1,4 @@
 <?php
-
-
 include '../get/get_restaurant_id.php';
 include '../get/get_logo.php';
 include '../get/get_idiomas.php'; 
@@ -15,9 +13,6 @@ include '../get/get_daily_menu.php';
 include '../get/get_traducciones.php';
 include '../get/get_alergenos.php';
 include '../get/get_colors.php';
-
-
-
 ?>
 
 

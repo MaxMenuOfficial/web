@@ -4,3 +4,4 @@ vendor/
 .git/
 *.log
 .DS_Store
+secrets/

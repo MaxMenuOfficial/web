@@ -1,15 +1,13 @@
 <?php
+
 // Incluir el servicio que carga los datos completos del restaurante y sus relaciones.
 require_once __DIR__ . '/../config/menu-service.php';
 // Incluir el archivo que obtiene y valida el id del restaurante (estándar: ?id=...)
 require_once __DIR__ . '/get_restaurant_id.php';
 
 // Especificamos el Content-Type para HTML (o JSON, según necesidad)
-header('Content-Type: text/html; charset=utf-8');
-
-// Asegurarse de que la sesión esté iniciada
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+if (!headers_sent()) {
+    header('Content-Type: text/html; charset=utf-8');
 }
 
 // Verificar que se haya recibido el parámetro "id" (estándar en la aplicación)
