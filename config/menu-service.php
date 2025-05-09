@@ -151,18 +151,23 @@ FROM restaurant_data r;
 SQL;
 
             try {
-                $result = $this->database->execute($sql, [
-                    'parameters' => ['restaurant_id' => $restaurantId]
-                ]);
-                $data = iterator_to_array($result->rows())[0] ?? null;
-                if (!$data) {
-                    return null;
-                }
-                return self::$cache[$restaurantId] = $data;
+              $result = $this->database->execute($sql, [
+                  'parameters' => ['restaurant_id' => $restaurantId]
+              ]);
+              $data = iterator_to_array($result->rows())[0] ?? null;
+
+              // 🚨 Protección estructural: si el restaurante no existe, redirige a la raíz
+              if (!$data || !isset($data['restaurant_id'])) {
+                  header('Location: https://maxmenu.com');
+                  exit;
+              }
+
+              return self::$cache[$restaurantId] = $data;
             } catch (\Exception $e) {
-                error_log('❌ MenuService::getRestaurantPublicData error: ' . $e->getMessage());
-                return null;
+              error_log('❌ MenuService::getRestaurantPublicData error: ' . $e->getMessage());
+              return null;
             }
+
         }
     }
 }
@@ -199,28 +204,35 @@ $daily_menu              = [];
 $menu_colors             = [];
 $domains                 = []; 
 
+
 if ($restaurantId) {
-    $svc = new MenuService();
-    $data = $svc->getRestaurantPublicData($restaurantId);
-    if ($data) {
-        $restaurantData           = $data;
-        $categories               = $data['categories']               ?? [];
-        $subcategories            = $data['subcategories']            ?? [];
-        $items                    = $data['items']                    ?? [];
-        $logos                    = $data['logos']                    ?? [];
-        $platforms                = $data['platforms']                ?? [];
-        $languages                = $data['languages']                ?? [];
-        $category_translations    = $data['category_translations']    ?? [];
-        $subcategory_translations = $data['subcategory_translations'] ?? [];
-        $item_translations        = $data['item_translations']        ?? [];
-        $item_supplements         = $data['item_supplements']         ?? [];
-        $brunches                 = $data['brunches']                 ?? [];
-        $daily_menu               = $data['daily_menu']               ?? [];
-        $menu_colors              = $data['menu_colors']              ?? [];
-        $domains                  = $data['domains']              ?? [];
-    }
-    
+  $svc = new MenuService();
+  $data = $svc->getRestaurantPublicData($restaurantId);
+
+  if (!$data) {
+      // Si no hay datos, redirigir silenciosamente a la raíz
+      header('Location: https://maxmenu.com');
+      exit;
+  }
+
+  $restaurantData           = $data;
+  $categories               = $data['categories']               ?? [];
+  $subcategories            = $data['subcategories']            ?? [];
+  $items                    = $data['items']                    ?? [];
+  $logos                    = $data['logos']                    ?? [];
+  $platforms                = $data['platforms']                ?? [];
+  $languages                = $data['languages']                ?? [];
+  $category_translations    = $data['category_translations']    ?? [];
+  $subcategory_translations = $data['subcategory_translations'] ?? [];
+  $item_translations        = $data['item_translations']        ?? [];
+  $item_supplements         = $data['item_supplements']         ?? [];
+  $brunches                 = $data['brunches']                 ?? [];
+  $daily_menu               = $data['daily_menu']               ?? [];
+  $menu_colors              = $data['menu_colors']              ?? [];
+  $domains                  = $data['domains']              ?? [];
+
 } else {
-    http_response_code(400);
-    exit('❌ No se proporcionó el parámetro "id"');
+  // Si no hay parámetro ID, también redirigir sin mostrar mensaje
+  header('Location: https://maxmenu.com');
+  exit;
 }

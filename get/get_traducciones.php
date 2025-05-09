@@ -12,7 +12,7 @@ if (!headers_sent()) {
 
 // Verificar que se haya recibido el parámetro "id" (estándar en la aplicación)
 if (empty($restaurantId)) {
-    die("Error: No se proporcionó el id del restaurante.");
+  
 }
 
 // --- Construir el array global de traducciones ---

@@ -51,10 +51,10 @@ include '../get/get_colors.php';
  
     <div class="flecha-up">
 
-        <a class="enlace enlace-bag" href="#BtnBag"><img src="http://localhost:8080/menu/img/bag_up.png" alt=""></a>
+        <a class="enlace enlace-bag" href="#BtnBag"><img src="https://maxmenu.com/menu/img/bag_up.png" alt=""></a>
         <span id="cart-count">0</span> 
       
-        <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="http://localhost:8080/menu/img/up.png" alt=""></a>
+        <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="http://maxmenu.com/menu/img/up.png" alt=""></a>
       
      
     </div>

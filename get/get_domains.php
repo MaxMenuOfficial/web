@@ -13,7 +13,7 @@ if (!isset($domains) || !is_array($domains)) {
 
 // 3) Verificar que tengamos un restaurante
 if (!isset($restaurantId) || empty($restaurantId)) {
-    echo "Error: Restaurante no seleccionado.\n";
+   
     exit;
 }
 

@@ -11,7 +11,7 @@ global $categories;
 
 // Verificamos que el restaurantId fue obtenido correctamente
 if (!isset($restaurantId) || empty($restaurantId)) {
-    echo "Error: Restaurante no seleccionado.";
+  
     exit;
 }
 

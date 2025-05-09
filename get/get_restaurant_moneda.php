@@ -11,7 +11,7 @@ global $restaurantData;
 
 // Verificar que el restaurantId fue obtenido correctamente
 if (!isset($restaurantId) || empty($restaurantId)) {
-    die("Error: Restaurante no seleccionado.");
+   
 }
 
 // ✅ Verificar si $restaurantData está definido y es un array
