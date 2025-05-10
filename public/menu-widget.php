@@ -20,28 +20,6 @@ include '../get/get_domains.php';
 ?>
 
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-
-    <meta charset="UTF-8">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Menú del Restaurante</title>
-
-    <link rel="stylesheet" href="menu/styles/view-items.css">
-    <link rel="stylesheet" href="menu/styles/view-categorias.css">
-    <link rel="stylesheet" href="menu/styles/view-plataformas.css">
-    <link rel="stylesheet" href="menu/styles/view-idiomas.css">
-    <link rel="stylesheet" href="menu/styles/view-logo.css">
-    <link rel="stylesheet" href="menu/styles/view-menu.css">
-  
-
-
-</head>
-
 <body id="#maxmenu-menuContainer">
 
     <header>
@@ -1130,11 +1108,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-
-  
-</body>
-
-</html>
 
 
 
