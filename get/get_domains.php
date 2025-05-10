@@ -19,14 +19,21 @@ if (empty($domains) || empty($restaurantId)) {
 // ---------------------------------------------------------
 // 🌍 Captura y normalización del origen
 // ---------------------------------------------------------
-$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
-$originHost = parse_url($origin, PHP_URL_HOST);
-$normalizedOriginHost = preg_replace('/^www\./', '', $originHost);
+$origin = $_SERVER['HTTP_ORIGIN'] ?? null;
+$originHost = $origin ? parse_url($origin, PHP_URL_HOST) : null;
+$normalizedOriginHost = $originHost ? preg_replace('/^www\./', '', $originHost) : null;
 
-// Si no hay ORIGIN, bloquear (solo se permite desde navegador con Origin)
+// En producción, bloquear si no hay ORIGIN
 if (!$originHost) {
-    http_response_code(403);
-    exit('Missing origin header.');
+    if ($_ENV['APP_ENV'] !== 'development') {
+        http_response_code(403);
+        exit('Missing origin header.');
+    } else {
+        // En entorno local, permitir origen falso para test
+        $origin = 'http://localhost';
+        $originHost = 'localhost';
+        $normalizedOriginHost = 'localhost';
+    }
 }
 
 // ---------------------------------------------------------
@@ -39,7 +46,8 @@ $restaurantDomains = array_filter($domains, function ($d) use ($restaurantId) {
 });
 
 $allowedHosts = array_map(function ($d) {
-    return preg_replace('/^www\./', '', parse_url($d['domain'], PHP_URL_HOST));
+    $host = parse_url($d['domain'], PHP_URL_HOST);
+    return $host ? preg_replace('/^www\./', '', $host) : '';
 }, $restaurantDomains);
 
 // ---------------------------------------------------------
