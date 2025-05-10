@@ -2,13 +2,11 @@
     const scripts = document.getElementsByTagName('script');
     const myScript = scripts[scripts.length - 1];
 
-    const restaurantId = myScript.getAttribute('data-restaurant-id');
+    const restaurantId = myScript?.getAttribute('data-restaurant-id');
     if (!restaurantId) {
         console.error('[MaxMenu] Falta el atributo obligatorio data-restaurant-id.');
         return;
     }
-
-    const menuUrl = 'https://menu.maxmenu.com/menu-widget.php?id=' + encodeURIComponent(restaurantId);
 
     const container = document.getElementById('maxmenu-menuContainer');
     if (!container) {
@@ -16,7 +14,20 @@
         return;
     }
 
-    const stylesheets = [
+    // Función para cargar los estilos solo una vez
+    function injectStylesheet(href) {
+        if (!document.querySelector(`link[href="${href}"]`)) {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = href;
+            link.type = 'text/css';
+            link.media = 'all';
+            document.head.appendChild(link);
+        }
+    }
+
+    // Inyectar todos los estilos requeridos
+    const cssFiles = [
         'https://menu.maxmenu.com/menu/styles/view-items.css',
         'https://menu.maxmenu.com/menu/styles/view-categorias.css',
         'https://menu.maxmenu.com/menu/styles/view-plataformas.css',
@@ -24,54 +35,35 @@
         'https://menu.maxmenu.com/menu/styles/view-logo.css',
         'https://menu.maxmenu.com/menu/styles/view-menu.css'
     ];
+    cssFiles.forEach(injectStylesheet);
 
-    stylesheets.forEach(href => {
-        if (!document.querySelector(`link[href="${href}"]`)) {
-            const link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.href = href;
-            document.head.appendChild(link);
-        }
-    });
+    // Cargar el HTML desde menu-widget.php
+    const url = `https://menu.maxmenu.com/menu-widget.php?id=${encodeURIComponent(restaurantId)}`;
 
-    fetch(menuUrl)
-        .then(res => res.text())
+    fetch(url)
+        .then(res => {
+            if (!res.ok) throw new Error('[MaxMenu] Error al obtener el menú embebido');
+            return res.text();
+        })
         .then(html => {
-            const temp = document.createElement('div');
-            temp.innerHTML = html;
+            container.innerHTML = html;
 
-            // Extraer los scripts antes de borrar el innerHTML
-            const scripts = temp.querySelectorAll('script');
-            const scriptContents = [];
+            // Reejecutar los <script> embebidos en el HTML recibido
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
 
-            scripts.forEach(script => {
-                if (script.src) {
-                    const s = document.createElement('script');
-                    s.src = script.src;
-                    s.defer = true;
-                    document.body.appendChild(s);
+            tempDiv.querySelectorAll('script').forEach(oldScript => {
+                const newScript = document.createElement('script');
+                if (oldScript.src) {
+                    newScript.src = oldScript.src;
+                    newScript.async = false;
                 } else {
-                    scriptContents.push(script.textContent);
+                    newScript.textContent = oldScript.textContent;
                 }
-                script.remove();
-            });
-
-            // Insertar el HTML visual
-            container.innerHTML = temp.innerHTML;
-
-            // Ejecutar scripts inline manualmente
-            scriptContents.forEach(code => {
-                try {
-                    const s = document.createElement('script');
-                    s.textContent = code;
-                    document.body.appendChild(s);
-                } catch (e) {
-                    console.error('[MaxMenu] Error ejecutando script inline:', e);
-                }
+                document.body.appendChild(newScript);
             });
         })
         .catch(err => {
-            console.error('[MaxMenu] Error cargando widget:', err);
+            console.error('[MaxMenu] Error al cargar el widget:', err);
         });
 })();
-
