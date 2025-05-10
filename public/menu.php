@@ -35,9 +35,8 @@ include '../get/get_colors.php';
     <link rel="stylesheet" href="menu/styles/view-logo.css">
     <link rel="stylesheet" href="menu/styles/view-menu.css">
   
-
-
 </head>
+
 
 <body id="menu-container">
 

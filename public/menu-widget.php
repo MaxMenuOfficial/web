@@ -1037,6 +1037,7 @@ if (!isset($brunches) || !is_array($brunches)) {
 </div>
 
 
+
 <script>
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -1132,6 +1133,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
 </body>
+
 </html>
 
 

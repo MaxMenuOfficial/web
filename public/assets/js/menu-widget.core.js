@@ -327,9 +327,6 @@ function toggleSubcategories(categoryId) {
 
 
 
-
-
-
  // ampliar imagen de los items, menu del dia y brunch
 
 document.addEventListener("DOMContentLoaded", function () {

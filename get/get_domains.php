@@ -13,7 +13,7 @@ global $domains, $restaurantId;
 // ---------------------------------------------------------
 if (empty($domains) || empty($restaurantId)) {
     http_response_code(400);
-    exit('Missing restaurant context.');
+    exit("Access denied: this domain is not authorized to view this menu. Please register it in your MaxMenu dashboard.");
 }
 
 // ---------------------------------------------------------

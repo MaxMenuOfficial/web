@@ -38,13 +38,7 @@
             widgetJs.defer = true;
             document.head.appendChild(widgetJs);
 
-            // Cargar estilos si aún no se han cargado
-            if (!document.querySelector('link[href*="menu-widget.css"]')) {
-                var css = document.createElement('link');
-                css.rel = 'stylesheet';
-                css.href = 'https://menu.maxmenu.com/assets/css/menu-widget.css';
-                document.head.appendChild(css);
-            }
+    
         })
         .catch(error => {
             console.error('[MaxMenu] Error al cargar el menú:', error);
