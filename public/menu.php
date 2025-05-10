@@ -13,6 +13,7 @@ include '../get/get_daily_menu.php';
 include '../get/get_traducciones.php';
 include '../get/get_alergenos.php';
 include '../get/get_colors.php';
+
 ?>
 
 
@@ -177,6 +178,7 @@ $banderaUrlOriginal   = $banderas[$originalLanguageCode] ?? 'menu/img/flags/defa
   // o si quieres en mayúsculas:
  
 </script>
+
 
 
 <script>
@@ -917,6 +919,7 @@ if (!isset($brunches) || !is_array($brunches)) {
   src="<?php echo htmlspecialchars($menu['image']); ?>" 
   alt="Imagen del Menú del Día" 
   style="max-width: 100px; min-width: 100px; min-height: 100px; max-height: 100px; object-fit: cover; border-radius: 30px; margin: 5px;">
+
             <?php else: ?>
               <p></p>
             <?php endif; ?>
@@ -1019,8 +1022,6 @@ if (!isset($brunches) || !is_array($brunches)) {
   </div> <!-- /.carousel -->
 </div> <!-- /.añadidas -->
 </main>
-
-
 
 
 

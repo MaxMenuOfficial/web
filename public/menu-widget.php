@@ -15,26 +15,7 @@ include '../get/get_traducciones.php';
 include '../get/get_alergenos.php';
 include '../get/get_colors.php';
 
-
-
-// Obtén el dominio desde el que se hace la solicitud
-$origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
-$domain = parse_url($origin, PHP_URL_HOST);
-
-// Lista de orígenes permitidos para pruebas
-$allowedOrigins = ['http://localhost', 'https://localhost'];
-
-// Verifica si el dominio está en la lista de orígenes permitidos o es 'localhost'
-if (in_array($origin, $allowedOrigins) || $domain === 'localhost') {
-
-    header('Access-Control-Allow-Origin: ' . $origin);
-    header('Access-Control-Allow-Methods: GET, POST');
-    header('Access-Control-Allow-Credentials: true');
-    header('Content-Type: text/html');
-} else {
-    header('HTTP/1.1 403 Forbidden');
-    exit('CORS policy does not allow this origin.');
-}
+include '../get/get_domains.php';
 
 ?>
 
@@ -188,6 +169,7 @@ $originalLanguageName = $restaurantData['original_language'] ?? '';
 $originalLanguageCode = $restaurantData['language_code'] ?? '';      
 $banderaUrlOriginal   = $banderas[$originalLanguageCode] ?? 'menu/img/flags/default.png';
 ?>
+
 <!-- 2) Ahora inyectas las variables en JS -->
 <script>
   // Estas variables ya tienen los valores correctos
@@ -1099,13 +1081,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 </script>
-
-
-
-
-
-
-
 
 
 
