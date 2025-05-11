@@ -1,125 +1,140 @@
+// assets/widget/language.js
+
 (function waitForMaxMenuConfigAndDOM() {
+    // Esperamos a que exista la configuración y los elementos del modal
     if (
       typeof window.MaxMenuConfig === 'undefined' ||
-      !document.getElementById('maxmenu-menuContainer')
+      !document.getElementById('BtnTranslateMenu') ||
+      !document.getElementById('translateItemModalMenu')
     ) {
       return requestAnimationFrame(waitForMaxMenuConfigAndDOM);
     }
   
-    const { globalTranslations, originalFlagUrl, originalLanguageName } = window.MaxMenuConfig;
+    const {
+      globalTranslations,
+      originalFlagUrl,
+      originalLanguageName
+    } = window.MaxMenuConfig;
   
-    const modal = document.getElementById("translateItemModalMenu");
-    const closeBtn = modal?.querySelector(".close");
-    const btnTranslate = document.getElementById("BtnTranslateMenu");
-    const btnViewOriginal = document.getElementById("BtnViewOriginal");
-    const idiomasContainer = document.getElementById("idiomasContainer");
+    const btnTranslate   = document.getElementById('BtnTranslateMenu');
+    const modal          = document.getElementById('translateItemModalMenu');
+    const closeBtn       = modal.querySelector('.close');
+    const btnViewOriginal= document.getElementById('BtnViewOriginal');
+    const idiomasContainer = document.getElementById('idiomasContainer');
   
-    if (!modal || !btnTranslate || !closeBtn || !btnViewOriginal || !idiomasContainer) {
-      console.warn("[MaxMenu] Elementos del selector de idioma no encontrados");
-      return;
-    }
+    console.log("🔹 language.js cargado con MaxMenuConfig");
   
-    console.log("🔹 MaxMenu Language Script Ready");
-  
-    // Guardar textos originales
-    document.querySelectorAll("[data-translate]").forEach(el => {
-      el.setAttribute("data-original-text", el.textContent);
+    // Guardamos textos originales
+    document.querySelectorAll('[data-translate]').forEach(el => {
+      el.setAttribute('data-original-text', el.textContent);
     });
   
-    // Cargar idioma guardado
+    // Carga previa desde localStorage
     const savedLanguageId = localStorage.getItem('selectedLanguageId');
-    const savedFlagUrl = localStorage.getItem('selectedFlagUrl');
-  
-    if (savedLanguageId && globalTranslations[savedLanguageId]) {
+    const savedFlagUrl    = localStorage.getItem('selectedFlagUrl');
+    if (savedLanguageId) {
       cambiarIdioma(savedLanguageId, savedFlagUrl, false);
     }
   
-    // Eventos UI
+    // Abrir modal
     btnTranslate.addEventListener('click', () => {
       modal.style.display = 'block';
     });
   
+    // Cerrar modal
     closeBtn.addEventListener('click', () => {
       modal.style.display = 'none';
     });
   
-    btnViewOriginal.addEventListener('click', (e) => {
+    // Restaurar idioma original
+    btnViewOriginal.addEventListener('click', e => {
       e.preventDefault();
       cargarIdiomaOriginal();
     });
   
-    idiomasContainer.addEventListener('click', (e) => {
-      const button = e.target.closest('.idioma-btn');
-      if (!button) return;
+    // Delegación para seleccionar idioma
+    idiomasContainer.addEventListener('click', e => {
+      const btn = e.target.closest('.idioma-btn');
+      if (!btn) return;
       e.preventDefault();
-      const langId = button.getAttribute('data-idioma');
-      const flag = button.getAttribute('data-flag');
-      cambiarIdioma(langId, flag);
+      cambiarIdioma(
+        btn.getAttribute('data-idioma'),
+        btn.getAttribute('data-flag'),
+        true
+      );
     });
   
+    // Funciones de traducción -----------------------
+  
     function cambiarIdioma(languageId, flagUrl, closeModal = true) {
-      if (!globalTranslations[languageId]) {
-        console.error('❌ Traducción no encontrada:', languageId);
-        return;
+      console.log(`🔹 Cambiando idioma a: ${languageId}`);
+      const data = globalTranslations[languageId];
+      if (!data) {
+        return console.error('❌ No hay traducciones para', languageId);
       }
   
-      actualizarMenuConTraducciones(globalTranslations[languageId]);
+      actualizarMenuConTraducciones(data);
   
-      const flagImg = document.querySelector('#BtnTranslateMenu img');
-      if (flagImg) flagImg.src = flagUrl;
+      // Actualizar bandera
+      const img = btnTranslate.querySelector('img');
+      if (img && flagUrl) img.src = flagUrl;
   
       localStorage.setItem('selectedLanguageId', languageId);
-      localStorage.setItem('selectedFlagUrl', flagUrl);
+      localStorage.setItem('selectedFlagUrl',    flagUrl);
   
       if (closeModal) modalClose();
-    }
-  
-    function cargarIdiomaOriginal() {
-      document.querySelectorAll("[data-translate]").forEach(el => {
-        const original = el.getAttribute("data-original-text");
-        if (original) el.textContent = original;
-      });
-  
-      const flagImg = document.querySelector('#BtnTranslateMenu img');
-      if (flagImg) {
-        flagImg.src = originalFlagUrl;
-        flagImg.alt = originalLanguageName;
-      }
-  
-      localStorage.removeItem('selectedLanguageId');
-      localStorage.removeItem('selectedFlagUrl');
-  
-      modalClose();
     }
   
     function modalClose() {
       modal.style.display = 'none';
     }
   
-    function actualizarMenuConTraducciones(data) {
-      if (!Array.isArray(data.categories)) {
-        console.error('❌ Formato de datos inválido:', data);
-        return;
+    function cargarIdiomaOriginal() {
+      console.log("🔹 Restaurando idioma original");
+      document.querySelectorAll('[data-translate]').forEach(el => {
+        const orig = el.getAttribute('data-original-text');
+        if (orig != null) el.textContent = orig;
+      });
+      const img = btnTranslate.querySelector('img');
+      if (img) {
+        img.src = originalFlagUrl;
+        img.alt = originalLanguageName;
       }
+      localStorage.removeItem('selectedLanguageId');
+      localStorage.removeItem('selectedFlagUrl');
+      modalClose();
+    }
   
-      data.categories.forEach(cat => {
-        const { category_id, translated_category_name, subcategories, items } = cat;
+    function actualizarMenuConTraducciones(data) {
+      // Categorías
+      (data.categories || []).forEach(cat => {
+        const { category_id, translated_category_name, items, subcategories } = cat;
+        // Nombre principal
+        const elCat = document.querySelector(`[data-category-id="${category_id}"][data-translate="category"]`);
+        if (elCat) elCat.textContent = translated_category_name;
+        // Shortcut
+        const elShort = document.querySelector(`#category-${category_id}-shortcut span[data-translate="category"]`);
+        if (elShort) elShort.textContent = translated_category_name;
   
-        document.querySelectorAll(`[data-category-id="${category_id}"][data-translate="category"]`)?.forEach(el => el.textContent = translated_category_name);
-        document.querySelector(`#category-${category_id}-shortcut span[data-translate="category"]`)?.textContent = translated_category_name;
-  
-        subcategories?.forEach(sub => {
-          const { subcategory_id, translated_subcategory_name } = sub;
-          document.querySelectorAll(`[data-subcategory-id="${subcategory_id}"][data-translate="subcategory"]`)?.forEach(el => el.textContent = translated_subcategory_name);
-          document.querySelector(`[data-subcategory-id="${subcategory_id}"] span[data-translate="subcategory"]`)?.textContent = translated_subcategory_name;
+        // Ítems
+        (items || []).forEach(item => {
+          const node = document.querySelector(`[data-item-id="${item.item_id}"]`);
+          if (!node) return;
+          const t  = node.querySelector('.titulo');
+          const d  = node.querySelector('.descripcion');
+          if (t) t.textContent = item.translated_title;
+          if (d) d.textContent = item.translated_description;
         });
   
-        items?.forEach(item => {
-          const { item_id, translated_title, translated_description } = item;
-          const itemEl = document.querySelector(`[data-item-id="${item_id}"]`);
-          itemEl?.querySelector(".titulo")?.textContent = translated_title;
-          itemEl?.querySelector(".descripcion")?.textContent = translated_description;
+        // Subcategorías
+        (subcategories || []).forEach(sub => {
+          const subEl = document.querySelector(`[data-subcategory-id="${sub.subcategory_id}"][data-translate="subcategory"]`);
+          if (subEl) subEl.textContent = sub.translated_subcategory_name;
+          const subShort = document.querySelector(`[data-subcategory-id="${sub.subcategory_id}"] span[data-translate="subcategory"]`);
+          if (subShort) subShort.textContent = sub.translated_subcategory_name;
         });
       });
     }
+  
+    // Ya configurado, no seguimos esperando
   })();
