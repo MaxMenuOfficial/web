@@ -278,7 +278,7 @@ if (!isset($brunches) || !is_array($brunches)) {
                         <div class="alergenos-show">
                                 <?php 
                                 // 📌 Determinar la carpeta de alérgenos según el diseño configurado en la BD
-                                $carpetaAlergenos = "menu/alergenos" . intval($diseñoAlergenos); 
+                                $carpetaAlergenos = "https://menu.maxmenu.com/menu/alergenos" . intval($diseñoAlergenos); 
 
                                 // 📌 Verificar si hay alérgenos en el ítem
                                 if (!empty($item['allergens'])):
@@ -404,7 +404,7 @@ if (!isset($brunches) || !is_array($brunches)) {
                             <div class="alergenos-show">
                                 <?php 
                                 // 📌 Determinar la carpeta de alérgenos según el diseño configurado en la BD
-                                $carpetaAlergenos = "menu/alergenos" . intval($diseñoAlergenos); 
+                                $carpetaAlergenos = "https://menu.maxmenu.com/menu/alergenos" . intval($diseñoAlergenos); 
 
                                 // 📌 Verificar si hay alérgenos en el ítem
                                 if (!empty($brunch['allergens'])):
@@ -541,7 +541,7 @@ if (!isset($brunches) || !is_array($brunches)) {
                             <div class="alergenos-show">
                                 <?php 
                                 // 📌 Determinar la carpeta de alérgenos según el diseño configurado en la BD
-                                $carpetaAlergenos = "menu/alergenos" . intval($diseñoAlergenos); 
+                                $carpetaAlergenos = "https://menu.maxmenu.com/menu/alergenos" . intval($diseñoAlergenos); 
 
                                 // 📌 Verificar si hay alérgenos en el ítem
                                 if (!empty($menu['allergens'])):
@@ -617,7 +617,7 @@ if (!isset($brunches) || !is_array($brunches)) {
                             <div class="alergenos-show">
                                 <?php 
                                 // 📌 Determinar la carpeta de alérgenos según el diseño configurado en la BD
-                                $carpetaAlergenos = "menu/alergenos" . intval($diseñoAlergenos); 
+                                $carpetaAlergenos = "https://menu.maxmenu.com/menu/alergenos" . intval($diseñoAlergenos); 
 
                                 // 📌 Verificar si hay alérgenos en el ítem
                                 if (!empty($item['allergens'])):
