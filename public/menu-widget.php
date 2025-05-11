@@ -695,10 +695,13 @@ if (!isset($brunches) || !is_array($brunches)) {
 </script>
 
 <!-- Lógica del widget separada por responsabilidad -->
-<script src="/assets/widget/colors.js"></script>
-<script src="/assets/widget/image.js"></script>
-<script src="/assets/widget/language.js"></script>
-<script src="/assets/widget/subcategories.js"></script>
+
+<!-- Después de esto, ahora sí puedes cargar los archivos que usan esas variables -->
+<script src="https://menu.maxmenu.com/assets/widget/colors.js"></script>
+<script src="https://menu.maxmenu.com/assets/widget/image.js"></script>
+<script src="https://menu.maxmenu.com/assets/widget/language.js"></script>
+<script src="https://menu.maxmenu.com/assets/widget/subcategories.js"></script>
+
 
 </body>
 
