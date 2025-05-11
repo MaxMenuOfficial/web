@@ -686,14 +686,14 @@ if (!isset($brunches) || !is_array($brunches)) {
 </div>
 
 
-<!-- Variables JS generadas por PHP -->
 <script>
-  const globalTranslations = <?php echo json_encode($allTranslations ?? [], JSON_UNESCAPED_UNICODE); ?>;
-  const originalFlagUrl = "<?php echo htmlspecialchars($banderaUrlOriginal, ENT_QUOTES, 'UTF-8'); ?>";
-  const originalLanguageName = "<?php echo htmlspecialchars($originalLanguageName, ENT_QUOTES, 'UTF-8'); ?>";
-  const menuColors = <?php echo json_encode($colores); ?>;
+  window.MaxMenuConfig = {
+    globalTranslations: <?php echo json_encode($allTranslations ?? [], JSON_UNESCAPED_UNICODE); ?>,
+    originalFlagUrl: "<?php echo htmlspecialchars($banderaUrlOriginal, ENT_QUOTES, 'UTF-8'); ?>",
+    originalLanguageName: "<?php echo htmlspecialchars($originalLanguageName, ENT_QUOTES, 'UTF-8'); ?>",
+    menuColors: <?php echo json_encode($colores); ?>
+  };
 </script>
-
 <!-- Lógica del widget separada por responsabilidad -->
 
 <!-- Después de esto, ahora sí puedes cargar los archivos que usan esas variables -->

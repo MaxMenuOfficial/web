@@ -1,53 +1,51 @@
-// 1) Inyectar la CSS para la rotación dentro del propio JavaScript
-(function injectRotateCSS() {
-    var style = document.createElement('style');
-    style.textContent = `
+(function waitForSubcategoriesReady() {
+    if (!document.getElementById('maxmenu-menuContainer')) {
+      return requestAnimationFrame(waitForSubcategoriesReady);
+    }
+  
+    // 1️⃣ Inyectar la CSS para rotación de flechas
+    (function injectRotateCSS() {
+      if (document.getElementById('maxmenu-rotate-style')) return;
+  
+      const style = document.createElement('style');
+      style.id = 'maxmenu-rotate-style';
+      style.textContent = `
         .arrow-rotate {
-            transition: transform 0.3s ease;
+          transition: transform 0.3s ease;
         }
         .arrow-rotate.rotate {
-            transform: rotate(-90deg);
+          transform: rotate(-90deg);
         }
-    `;
-    document.head.appendChild(style);
-})();
-
-// 2) Funciones de scroll
-function scrollToCategory(categoryId) {
-    var element = document.getElementById('category-' + categoryId);
-    if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-    }
-}
-
-function scrollToSubcategory(categoryId, subcategoryId) {
-    var element = document.getElementById('subcategory-' + subcategoryId);
-    if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-    }
-}
-
-// 3) Toggle de subcategorías + rotación de flecha
-function toggleSubcategories(categoryId) {
-    var subcatDiv = document.getElementById('subcategories-' + categoryId);
-    var arrow = document.getElementById('arrow-' + categoryId); // flecha con id="arrow-categoriaID"
-    
-    if (subcatDiv) {
-        // Mostrar u ocultar
-        var isHidden = (subcatDiv.style.display === 'none' || subcatDiv.style.display === '');
-        subcatDiv.style.display = isHidden ? 'block' : 'none';
-        
-        // Rotar flecha si existe
-        if (arrow) {
-            // Aseguramos que la flecha tenga la clase base
-            arrow.classList.add('arrow-rotate');
-            // Si se despliega, rotamos; si se oculta, desrotamos
-            if (isHidden) {
-                arrow.classList.add('rotate');
-            } else {
-                arrow.classList.remove('rotate');
-            }
-        }
-    }
-}
-
+      `;
+      document.head.appendChild(style);
+    })();
+  
+    // 2️⃣ Scroll a categoría
+    window.scrollToCategory = function (categoryId) {
+      const element = document.getElementById('category-' + categoryId);
+      if (element) element.scrollIntoView({ behavior: 'smooth' });
+    };
+  
+    // 3️⃣ Scroll a subcategoría
+    window.scrollToSubcategory = function (categoryId, subcategoryId) {
+      const element = document.getElementById('subcategory-' + subcategoryId);
+      if (element) element.scrollIntoView({ behavior: 'smooth' });
+    };
+  
+    // 4️⃣ Mostrar/Ocultar subcategorías y rotar flechas
+    window.toggleSubcategories = function (categoryId) {
+      const subcatDiv = document.getElementById('subcategories-' + categoryId);
+      const arrow = document.getElementById('arrow-' + categoryId);
+  
+      if (!subcatDiv) return;
+  
+      const isHidden = (subcatDiv.style.display === '' || subcatDiv.style.display === 'none');
+      subcatDiv.style.display = isHidden ? 'block' : 'none';
+  
+      if (arrow) {
+        arrow.classList.add('arrow-rotate');
+        arrow.classList.toggle('rotate', isHidden);
+      }
+    };
+  
+  })();

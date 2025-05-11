@@ -1,13 +1,17 @@
-document.addEventListener("DOMContentLoaded", function () {
+(function waitForImageModalReady() {
+  if (!document.getElementById("image-modal") || !document.querySelector("img.expandable-image")) {
+    return requestAnimationFrame(waitForImageModalReady);
+  }
+
   const modal = document.getElementById("image-modal");
   const modalImg = document.getElementById("image-modal-content");
   const closeBtn = document.getElementById("image-modal-close");
 
   document.querySelectorAll("img.expandable-image").forEach(function (img) {
-    console.log("🖼️ Imagen lista:", img.id);
+    console.log("🖼️ Imagen lista:", img.src);
 
     img.addEventListener("click", function () {
-      console.log("🚀 Click en imagen:", this.id);
+      console.log("🚀 Click en imagen:", this.src);
       modalImg.src = this.src;
       modal.classList.add("show");
     });
@@ -25,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Swipe to close (móviles)
+  // 📱 Swipe-down para cerrar modal en móviles
   let touchStartY = 0;
   modal.addEventListener("touchstart", function (e) {
     touchStartY = e.changedTouches[0].screenY;
@@ -38,12 +42,4 @@ document.addEventListener("DOMContentLoaded", function () {
       modalImg.src = "";
     }
   });
-});
-
-
-
-
-
-
-
-
+})();
