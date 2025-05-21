@@ -22,16 +22,12 @@ include '../get/get_domains.php';
 <body id="#maxmenu-menuContainer">
 
     <main>
-
-    
-
   
-    <div class="flecha-up">
-        <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="http://menu.maxmenu.com/menu/img/up.png" alt=""></a>
-    </div>
+      <div class="flecha-up">
+          <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="http://menu.maxmenu.com/menu/img/up.png" alt=""></a>
+      </div>
 
 
- 
             <div class="logo-container">
 
                 <?php if (!empty($logos) && is_array($logos)): ?>

@@ -8,6 +8,7 @@ require_once __DIR__ . '/get_restaurant_id.php';
 
 // Asegurar que $categories esté definido
 global $categories;
+
 if (!isset($categories) || !is_array($categories)) {
     $categories = [];
 }
@@ -24,7 +25,13 @@ usort($filteredCategories, function ($a, $b) {
     return $ordenA <=> $ordenB;
 });
 
+
 $filteredCategories = array_values($filteredCategories);
+
+echo "✅ Categorías filtradas: " . count($filteredCategories) . "\n";
+var_dump($filteredCategories);
+
+
 
 // (Opcional) Devolver en JSON para frontend o pruebas
 // header('Content-Type: application/json');
