@@ -1,28 +1,39 @@
 <?php
+// 📁 backend/php/get/get_category_order.php
 
-// ✅ Asegurar que usuario-service.php está cargado
-require_once __DIR__ . '/../../../config/usuario-service.php';
+// Incluir el servicio de menú que carga las variables globales (entre ellas $categories)
+require_once __DIR__ . '/../config/menu-service.php';
+// Incluir el script que obtiene y valida el restaurantId vía GET
+require_once __DIR__ . '/get_restaurant_id.php';
 
-// ✅ Obtener el ID del restaurante desde la sesión
-$idRestaurante = $_SESSION['id_restaurante'] ?? null;
+// Accedemos a la variable global $categories
+global $categories;
 
-if (!$idRestaurante) {
-    error_log("⚠️ Error: No se encontró ID de restaurante en la sesión.");
-    $categoriasOrdenadas = [];
-} else {
-    // ✅ Filtrar categorías del restaurante actual en memoria
-    $categoriasOrdenadas = array_filter($categorias, function ($categoria) use ($idRestaurante) {
-        return $categoria['id_restaurante'] === $idRestaurante;
-    });
-
-    // ✅ Ordenar por el campo `orden`
-    usort($categoriasOrdenadas, function ($a, $b) {
-        return $a['orden'] <=> $b['orden'];
-    });
-
-    // ✅ Reindexar el array después de filtrar y ordenar
-    $categoriasOrdenadas = array_values($categoriasOrdenadas);
+// Validación de restaurantId
+if (!isset($restaurantId) || empty($restaurantId)) {
+    error_log("⚠️ No se recibió restaurantId correctamente.");
+    exit;
 }
 
-// Ahora `$categoriasOrdenadas` contiene todas las categorías de este restaurante, ordenadas correctamente.
-?>
+// Asegurar que $categories esté definida como array
+if (!isset($categories) || !is_array($categories)) {
+    $categories = [];
+}
+
+// Filtrar las categorías que pertenecen al restaurante actual
+$filteredCategories = array_filter($categories, function ($cat) use ($restaurantId) {
+    return isset($cat['restaurant_id']) && $cat['restaurant_id'] === $restaurantId;
+});
+
+// Ordenar por el campo `orden`
+usort($filteredCategories, function ($a, $b) {
+    return $a['orden'] <=> $b['orden'];
+});
+
+// Reindexar array
+$filteredCategories = array_values($filteredCategories);
+
+// (Opcional) Devolver en JSON para frontend o pruebas
+// header('Content-Type: application/json');
+// echo json_encode($filteredCategories, JSON_PRETTY_PRINT);
+// exit;
