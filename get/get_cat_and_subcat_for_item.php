@@ -64,7 +64,9 @@ function obtenerEstructuraMenu($restaurantId) {
 
     // Ordenar las categorías por su nombre
     usort($categorias, function ($a, $b) {
-        return strcmp($a['category_name'], $b['category_name']);
+        $ordenA = $a['sort_order'] ?? PHP_INT_MAX;
+        $ordenB = $b['sort_order'] ?? PHP_INT_MAX;
+        return $ordenA <=> $ordenB;
     });
 
     return $categorias;

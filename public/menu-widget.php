@@ -4,7 +4,7 @@ include '../get/get_restaurant_id.php';
 include '../get/get_logo.php';
 include '../get/get_idiomas.php'; 
 include '../get/get_categoria.php';
-include '../get/get_categoria_order.php';
+
 include '../get/get_plataformas.php';
 include '../get/get_restaurant_moneda.php';
 include '../get/get_idiomas_for_items.php';
