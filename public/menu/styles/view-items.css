@@ -380,8 +380,8 @@ form input::placeholder, form select::placeholder {
 }
 
 img.alergen {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     margin-left: 5px;
     background-color: rgb(255, 255, 255);
 }
@@ -534,12 +534,10 @@ img.alergen {
 
 }
 .item-info h3 , .item-info p , .alergenicos-show{
-  margin:  10pX auto;
+  margin:  10px auto;
   display: flex;
   justify-content: flex-start;
   text-align: start;
-
-  font-size: 15px;
   width: 100%;
   height: auto;
   min-width: 200px;
@@ -549,7 +547,7 @@ img.alergen {
 .item-info h3{
 
   letter-spacing: 1px;
-  font-size: 18px;
+  font-size: 16px;
   
 }
 
@@ -560,6 +558,7 @@ img.alergen {
   min-width: 150px;
   word-wrap: break-word;
   letter-spacing: 1px;
+  font-size: 12;
 }
 
 .item-image {

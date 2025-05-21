@@ -4,6 +4,7 @@ include '../get/get_restaurant_id.php';
 include '../get/get_logo.php';
 include '../get/get_idiomas.php'; 
 include '../get/get_categoria.php';
+include '../get/get_categoria_order.php';
 include '../get/get_plataformas.php';
 include '../get/get_restaurant_moneda.php';
 include '../get/get_idiomas_for_items.php';
@@ -14,7 +15,6 @@ include '../get/get_daily_menu.php';
 include '../get/get_traducciones.php';
 include '../get/get_alergenos.php';
 include '../get/get_colors.php';
-
 include '../get/get_domains.php';
 
 ?>
@@ -25,12 +25,10 @@ include '../get/get_domains.php';
 
     
 
- 
-      <div class="flecha-up">
-        
-          <a  id="maxmenu-up" class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="menu/img/up.png" alt=""></a>
-      
-      </div>
+  
+    <div class="flecha-up">
+        <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="http://menu.maxmenu.com/menu/img/up.png" alt=""></a>
+    </div>
 
 
  

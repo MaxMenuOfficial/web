@@ -3,6 +3,7 @@ include '../get/get_restaurant_id.php';
 include '../get/get_logo.php';
 include '../get/get_idiomas.php'; 
 include '../get/get_categoria.php';
+include '../get/get_categoria_order.php';
 include '../get/get_plataformas.php';
 include '../get/get_restaurant_moneda.php';
 include '../get/get_idiomas_for_items.php';
@@ -50,13 +51,7 @@ include '../get/get_colors.php';
 
  
     <div class="flecha-up">
-
-        <a class="enlace enlace-bag" href="#BtnBag"><img src="https://maxmenu.com/menu/img/bag_up.png" alt=""></a>
-        <span id="cart-count">0</span> 
-      
-        <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="http://maxmenu.com/menu/img/up.png" alt=""></a>
-      
-     
+        <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="http://menu.maxmenu.com/menu/img/up.png" alt=""></a>
     </div>
 
 
