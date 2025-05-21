@@ -27,11 +27,11 @@ usort($filteredCategories, function ($a, $b) {
 
 
 $filteredCategories = array_values($filteredCategories);
+$estructuraMenu = $filteredCategories;
 
-echo "✅ Categorías filtradas: " . count($filteredCategories) . "\n";
-var_dump($filteredCategories);
-
-
+if (empty($estructuraMenu)) {
+    error_log("⚠️ No se encontraron categorías para restaurantId: $restaurantId");
+}
 
 // (Opcional) Devolver en JSON para frontend o pruebas
 // header('Content-Type: application/json');
