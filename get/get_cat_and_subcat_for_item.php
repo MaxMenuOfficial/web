@@ -74,3 +74,6 @@ function obtenerEstructuraMenu($restaurantId) {
 
 // Obtener la estructura completa del menú usando el restaurantId obtenido vía GET
 $estructuraMenu = obtenerEstructuraMenu($restaurantId);
+
+
+

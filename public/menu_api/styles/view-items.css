@@ -1,37 +1,7 @@
-
-
-/*  fonts  */
-@font-face {
-  font-family: "OPTICopperplate";
-  src: url(../../../resources/fonts/OPTICopperplate-Light.otf);     
-
-}   
-@font-face {
-  font-family: "Yantramanav-Regular";
-  src: url(../../../resources/fonts/Yantramanav-Regular.ttf);     
-
-}  
-
-@font-face {
-  font-family: "Yantramanav-Light";
-  src: url(../../../resources/fonts/Yantramanav-Light.ttf);     
-
-}  
-
-
-@font-face {
-  font-family: "Yantramanav-Thin";
-  src: url(../../../resources/fonts/Yantramanav-Thin.ttf);     
-
-}  
-
-
-
 h3{
   text-align: center; 
   margin: 10px auto;
 }
-
 
 
 .categorias {
@@ -645,11 +615,6 @@ form .btn-delete img{
 html {
   scroll-behavior: smooth;
 }
-
-
-
-
-
 
 
 
