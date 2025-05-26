@@ -1,69 +1,68 @@
 <?php
-// public/api/invalidate_cache.php
-// -----------------------------------------
-// 💡  ESTE SCRIPT:
-//   1. Valida método, token y cabecera interna
-//   2. Purga caché Cloudflare (solo las URLs del restaurante)
-//   3. Devuelve JSON
-//   4. Loguea *todo* a stderr para que Cloud Run lo capture
-// -----------------------------------------
+// File: public/api/invalidate_cache.php
 
-declare(strict_types=1);
-
-// ──────────────────────────────────────────
-// 1.  Configuración de debugging/logs
-// ──────────────────────────────────────────
-ini_set('display_errors', '0');                  // No mostrar al cliente
-ini_set('log_errors', '1');
-ini_set('error_log', 'php://stderr');            // Cloud Run captura stderr
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Canal propio para medir memoria/tiempos
-function log_dbg(string $msg): void {
-    error_log('[invalidate_cache] ' . $msg);
-}
-
-// ──────────────────────────────────────────
-// 2.  Validaciones básicas
-// ──────────────────────────────────────────
+// 📡 Devolver JSON siempre
 header('Content-Type: application/json');
 
+// ✅ Método
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['error' => 'Método no permitido']);
     exit;
 }
 
-if (($_SERVER['HTTP_X_INTERNAL_REQUEST'] ?? '') !== 'MaxMenuManage') {
+// ✅ Variables
+$restaurantId = $_POST['restaurant_id'] ?? null;
+$token        = $_POST['token'] ?? null;
+$expectedToken = getenv('INTERNAL_CACHE_INVALIDATION_TOKEN');
+
+// 🧪 Depuración de variables
+if (!$restaurantId || !$token || $token !== $expectedToken) {
     http_response_code(403);
-    echo json_encode(['error' => 'Cabecera interna faltante']);
+    echo json_encode([
+        'error' => 'Token inválido o datos incompletos',
+        'token_enviado' => $token,
+        'token_esperado' => $expectedToken,
+        'restaurant_id' => $restaurantId
+    ]);
     exit;
 }
 
-$restaurantId  = $_POST['restaurant_id'] ?? '';
-$token         = $_POST['token']         ?? '';
-$expectedToken = getenv('INTERNAL_CACHE_INVALIDATION_TOKEN') ?: '';
-
-if ($restaurantId === '' || $token !== $expectedToken) {
-    http_response_code(403);
-    echo json_encode(['error' => 'Token inválido o datos incompletos']);
-    exit;
-}
-
-// ──────────────────────────────────────────
-// 3.  Purga Cloudflare
-// ──────────────────────────────────────────
-require_once __DIR__ . '/../../utils/cloudflare-utils.php';
+// 🧠 Captura de errores fatales
+register_shutdown_function(function () {
+    $error = error_get_last();
+    if ($error && in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE])) {
+        http_response_code(500);
+        echo json_encode([
+            'fatal' => true,
+            'type' => $error['type'],
+            'message' => $error['message'],
+            'file' => $error['file'],
+            'line' => $error['line']
+        ]);
+    }
+});
 
 try {
-    log_dbg("Purga solicitada para $restaurantId");
-    purgeCloudflareCacheForRestaurant($restaurantId);
-    log_dbg("Purga OK para $restaurantId · memoria=".memory_get_peak_usage(true)." bytes");
+    require_once __DIR__ . '/../../utils/cloudflare-utils.php';
 
-    echo json_encode(['success' => true, 'restaurant_id' => $restaurantId]);
+    purgeCloudflareCacheForRestaurant($restaurantId);
+
+    echo json_encode([
+        'success' => true,
+        'message' => "✅ Cache purgada para $restaurantId"
+    ]);
 } catch (Throwable $e) {
-    // Capturamos **todo**: Exception y Error (OOM, etc.)
-    log_dbg('🔥 EXCEPCIÓN: '.$e->getMessage().' · Trace: '.$e->getTraceAsString());
     http_response_code(500);
-    echo json_encode(['error' => 'Fallo interno en la invalidación']);
+    echo json_encode([
+        'error' => 'Excepción capturada',
+        'message' => $e->getMessage(),
+        'file' => $e->getFile(),
+        'line' => $e->getLine(),
+        'trace' => $e->getTraceAsString()
+    ]);
 }
