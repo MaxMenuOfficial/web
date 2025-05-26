@@ -1,10 +1,12 @@
-<?php
-// Si no hay ningún parámetro relevante (ej. `id`, `restaurantId`, etc.), redirige
-$requestUri = $_SERVER['REQUEST_URI'] ?? '/';
-
-if ($requestUri === '/' || $requestUri === '') {
-    header('Location: https://maxmenu.com');
-    exit;
-}
-
-?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <h1>hola</h1>
+</body>
+</html>
