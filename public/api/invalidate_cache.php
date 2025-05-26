@@ -1,6 +1,5 @@
 <?php
 // File: menu.maxmenu.com/api/invalidate_cache.php
-
 require_once __DIR__ . '/../config/menu-service.php';
 require_once __DIR__ . '/../utils/cloudflare-utils.php';
 
@@ -44,3 +43,4 @@ echo json_encode([
     'message' => "Caché invalidada para restaurante $restaurantId"
 ]);
 exit;
+
