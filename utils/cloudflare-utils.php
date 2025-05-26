@@ -4,18 +4,13 @@ function purgeCloudflareCacheForRestaurant(string $restaurantId): void {
     $zoneId     = getenv('CLOUDFLARE_ZONE_ID');
     $apiToken   = getenv('CLOUDFLARE_API_TOKEN');
     $baseDomain = rtrim(getenv('CLOUDFLARE_MENU_DOMAIN'), '/');
+    $targetUrl  = "$baseDomain/$restaurantId";
+    $widgetUrl  = "$baseDomain/menu-widget.php?id=$restaurantId";
 
-    // Rutas que deben ser invalidadas
-    $targetUrls = [
-        "$baseDomain/$restaurantId",                             // URL limpia
-        "$baseDomain/menu-widget.php?id=$restaurantId",          // Widget
-        "$baseDomain/menu.php?id=$restaurantId",                 // URL directa
-        "$baseDomain/widget.js",                                 // Por si el JS fue cacheado también
-    ];
+    $url = "https://api.cloudflare.com/client/v4/zones/$zoneId/purge_cache";
+    $data = json_encode(['files' => [$targetUrl, $widgetUrl]]);
 
-    $data = json_encode(['files' => $targetUrls]);
-
-    $ch = curl_init("https://api.cloudflare.com/client/v4/zones/$zoneId/purge_cache");
+    $ch = curl_init($url);
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_CUSTOMREQUEST  => 'POST',
@@ -31,8 +26,8 @@ function purgeCloudflareCacheForRestaurant(string $restaurantId): void {
     curl_close($ch);
 
     if ($httpCode !== 200) {
-        error_log("❌ Error purgando caché para $restaurantId: HTTP $httpCode | Payload: $data");
+        error_log("❌ Error al purgar caché Cloudflare: HTTP $httpCode");
     } else {
-        error_log("✅ Cloudflare caché purgada con éxito para $restaurantId (incluyendo widget y menú)");
+        error_log("✅ Cloudflare cache purgada para $restaurantId");
     }
 }
