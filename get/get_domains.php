@@ -46,8 +46,14 @@ $restaurantDomains = array_filter($domains, function ($d) use ($restaurantId) {
 });
 
 $allowedHosts = array_map(function ($d) {
-    $host = parse_url($d['domain'], PHP_URL_HOST);
-    return $host ? preg_replace('/^www\./', '', $host) : '';
+    $raw = trim($d['domain']);
+    // Si no tiene protocolo, añadimos temporalmente https:// para parse_url
+    if (!preg_match('#^https?://#i', $raw)) {
+        $raw = 'https://' . $raw;
+    }
+
+    $host = parse_url($raw, PHP_URL_HOST);
+    return $host ? preg_replace('/^www\./', '', strtolower($host)) : '';
 }, $restaurantDomains);
 
 // ---------------------------------------------------------
