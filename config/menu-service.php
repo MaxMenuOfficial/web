@@ -3,12 +3,14 @@
 
 require_once __DIR__ . '/conexion.php';
 
+/**
+ * Servicio de menú: carga de datos públicos de restaurante y sus recursos asociados.
+ */
 if (!class_exists('MenuService')) {
     class MenuService
     {
         /** @var \Google\Cloud\Spanner\Database */
         private $database;
-
         /** @var array<string,array> */
         private static array $cache = [];
 
@@ -35,6 +37,11 @@ if (!class_exists('MenuService')) {
             self::clearCache($restaurantId);
         }
 
+        /**
+         * Obtiene todos los datos públicos del restaurante con caching in-memory
+         * @param string $restaurantId
+         * @return array|null
+         */
         public function getRestaurantPublicData(string $restaurantId): ?array
         {
             if (isset(self::$cache[$restaurantId])) {
@@ -43,9 +50,10 @@ if (!class_exists('MenuService')) {
 
             $sql = <<<'SQL'
 WITH restaurant_data AS (
-  SELECT * FROM restaurants
-  WHERE restaurant_id = @restaurant_id
-  LIMIT 1
+  SELECT *
+    FROM restaurants
+   WHERE restaurant_id = @restaurant_id
+   LIMIT 1
 )
 SELECT
   r.*,
@@ -137,50 +145,66 @@ SQL;
 }
 
 // ---------------------------------------------------------------------------
-// Bloque de presentación: sólo si NO estamos en contexto API (/api/)
+// Inicialización de presentación: sólo si no es llamada de invalidador de cache
 // ---------------------------------------------------------------------------
-$isApi = isset($_SERVER['REQUEST_URI'])
-    && str_starts_with($_SERVER['REQUEST_URI'], '/api/');
-
-if (!$isApi) {
+$uri = $_SERVER['REQUEST_URI'] ?? '';
+$isCacheInvalidator = str_contains($uri, '/api/invalidate');
+if (!$isCacheInvalidator) {
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
 
-    $restaurantId = $_GET['id'] ?? null;
-    if (!$restaurantId) {
-        header('Location: https://maxmenu.com');
-        exit;
-    }
-
-    $svc = new MenuService();
-    $data = $svc->getRestaurantPublicData($restaurantId);
-
-    if (!$data || !isset($data['restaurant_id'])) {
-        header('Location: https://maxmenu.com');
-        exit;
-    }
-
-    // Variables globales para la vista pública
-    global
+    global 
+        $restaurantId, $restaurantData,
         $categories, $subcategories, $items, $logos,
         $platforms, $languages, $category_translations,
         $subcategory_translations, $item_translations,
         $item_supplements, $brunches, $daily_menu,
         $menu_colors, $domains;
 
-    $categories               = $data['categories']               ?? [];
-    $subcategories            = $data['subcategories']            ?? [];
-    $items                    = $data['items']                    ?? [];
-    $logos                    = $data['logos']                    ?? [];
-    $platforms                = $data['platforms']                ?? [];
-    $languages                = $data['languages']                ?? [];
-    $category_translations    = $data['category_translations']    ?? [];
-    $subcategory_translations = $data['subcategory_translations'] ?? [];
-    $item_translations        = $data['item_translations']        ?? [];
-    $item_supplements         = $data['item_supplements']         ?? [];
-    $brunches                 = $data['brunches']                 ?? [];
-    $daily_menu               = $data['daily_menu']               ?? [];
-    $menu_colors              = $data['menu_colors']              ?? [];
-    $domains                  = $data['domains']                  ?? [];
+    $restaurantId   = $_GET['id'] ?? null;
+    $restaurantData = null;
+    $categories     = [];
+    $subcategories  = [];
+    $items          = [];
+    $logos          = [];
+    $platforms      = [];
+    $languages      = [];
+    $category_translations    = [];
+    $subcategory_translations = [];
+    $item_translations        = [];
+    $item_supplements         = [];
+    $brunches      = [];
+    $daily_menu    = [];
+    $menu_colors   = [];
+    $domains       = [];
+
+    if ($restaurantId) {
+        $svc  = new MenuService();
+        $data = $svc->getRestaurantPublicData($restaurantId);
+
+        if (!$data || !isset($data['restaurant_id'])) {
+            header('Location: https://maxmenu.com');
+            exit;
+        }
+
+        $restaurantData           = $data;
+        $categories               = $data['categories']               ?? [];
+        $subcategories            = $data['subcategories']            ?? [];
+        $items                    = $data['items']                    ?? [];
+        $logos                    = $data['logos']                    ?? [];
+        $platforms                = $data['platforms']                ?? [];
+        $languages                = $data['languages']                ?? [];
+        $category_translations    = $data['category_translations']    ?? [];
+        $subcategory_translations = $data['subcategory_translations'] ?? [];
+        $item_translations        = $data['item_translations']        ?? [];
+        $item_supplements         = $data['item_supplements']         ?? [];
+        $brunches                 = $data['brunches']                 ?? [];
+        $daily_menu               = $data['daily_menu']               ?? [];
+        $menu_colors              = $data['menu_colors']              ?? [];
+        $domains                  = $data['domains']                  ?? [];
+    } else {
+        header('Location: https://maxmenu.com');
+        exit;
+    }
 }
