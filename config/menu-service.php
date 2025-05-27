@@ -3,28 +3,15 @@
 
 require_once __DIR__ . '/conexion.php';
 
-/**
- * Servicio de menú: carga de datos públicos de restaurante y sus recursos asociados.
- */
 if (!class_exists('MenuService')) {
     class MenuService
     {
-        /**
-         * Instancia de Spanner Database
-         * @var \Google\Cloud\Spanner\Database
-         */
+        /** @var \Google\Cloud\Spanner\Database */
         private $database;
 
-        /**
-         * Caché in-memory para un restaurante: restaurantId => data
-         * @var array<string,array>
-         */
+        /** @var array<string,array> */
         private static array $cache = [];
 
-        /**
-         * Constructor: inyecta conexión global o obtiene singleton
-         * @throws \RuntimeException si falla la conexión
-         */
         public function __construct()
         {
             global $database;
@@ -32,35 +19,22 @@ if (!class_exists('MenuService')) {
                 try {
                     $database = Conexion::spanner();
                 } catch (\Exception $e) {
-                    throw new \RuntimeException('Conexión a Spanner no inicializada: ' . $e->getMessage());
+                    throw new \RuntimeException('Conexión a Spanner fallida: ' . $e->getMessage());
                 }
             }
             $this->database = $database;
         }
 
-        /**
-         * Limpia la caché para un restaurante
-         * @param string $restaurantId
-         */
         public static function clearCache(string $restaurantId): void
         {
             unset(self::$cache[$restaurantId]);
         }
 
-        /**
-         * Alias retrocompatible
-         * @param string $restaurantId
-         */
         public static function clearMenuCache(string $restaurantId): void
         {
             self::clearCache($restaurantId);
         }
 
-        /**
-         * Obtiene todos los datos públicos del restaurante con caching in-memory
-         * @param string $restaurantId
-         * @return array|null
-         */
         public function getRestaurantPublicData(string $restaurantId): ?array
         {
             if (isset(self::$cache[$restaurantId])) {
@@ -68,7 +42,7 @@ if (!class_exists('MenuService')) {
             }
 
             $sql = <<<'SQL'
-  WITH restaurant_data AS (
+WITH restaurant_data AS (
   SELECT * FROM restaurants
   WHERE restaurant_id = @restaurant_id
   LIMIT 1
@@ -140,99 +114,73 @@ SELECT
       FROM menu_colors mc
      WHERE mc.restaurant_id = r.restaurant_id
   ) AS menu_colors,
-
   ARRAY(
-      SELECT AS STRUCT rd.*
-        FROM restaurant_domains rd
-       WHERE rd.restaurant_id = r.restaurant_id
-    ) AS domains,   
-
+    SELECT AS STRUCT rd.*
+      FROM restaurant_domains rd
+     WHERE rd.restaurant_id = r.restaurant_id
+  ) AS domains
 FROM restaurant_data r;
 SQL;
-
             try {
-              $result = $this->database->execute($sql, [
-                  'parameters' => ['restaurant_id' => $restaurantId]
-              ]);
-              $data = iterator_to_array($result->rows())[0] ?? null;
-
-              // 🚨 Protección estructural: si el restaurante no existe, redirige a la raíz
-              if (!$data || !isset($data['restaurant_id'])) {
-                  header('Location: https://maxmenu.com');
-                  exit;
-              }
-
-              return self::$cache[$restaurantId] = $data;
+                $result = $this->database->execute($sql, [
+                    'parameters' => ['restaurant_id' => $restaurantId]
+                ]);
+                $rows = iterator_to_array($result->rows());
+                $data = $rows[0] ?? null;
+                return self::$cache[$restaurantId] = $data;
             } catch (\Exception $e) {
-              error_log('❌ MenuService::getRestaurantPublicData error: ' . $e->getMessage());
-              return null;
+                error_log('❌ MenuService::getRestaurantPublicData error: ' . $e->getMessage());
+                return null;
             }
-
         }
     }
 }
 
-// ----------------------------------------------------
-// Gestión de variables globales para la vista pública
-// ----------------------------------------------------
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+// ---------------------------------------------------------------------------
+// Bloque de presentación: sólo si NO estamos en contexto API (/api/)
+// ---------------------------------------------------------------------------
+$isApi = isset($_SERVER['REQUEST_URI'])
+    && str_starts_with($_SERVER['REQUEST_URI'], '/api/');
 
-global 
-    $restaurantId, $restaurantData,
-    $categories, $subcategories, $items,
-    $logos, $platforms, $languages,
-    $category_translations, $subcategory_translations,
-    $item_translations, $item_supplements,
-    $brunches, $daily_menu, $menu_colors, $domains; 
+if (!$isApi) {
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
-$restaurantId            = $_GET['id'] ?? null;
-$restaurantData          = null;
-$categories              = [];
-$subcategories           = [];
-$items                   = [];
-$logos                   = [];
-$platforms               = [];
-$languages               = [];
-$category_translations   = [];
-$subcategory_translations= [];
-$item_translations       = [];
-$item_supplements        = [];
-$brunches                = [];
-$daily_menu              = [];
-$menu_colors             = [];
-$domains                 = []; 
+    $restaurantId = $_GET['id'] ?? null;
+    if (!$restaurantId) {
+        header('Location: https://maxmenu.com');
+        exit;
+    }
 
+    $svc = new MenuService();
+    $data = $svc->getRestaurantPublicData($restaurantId);
 
-if ($restaurantId) {
-  $svc = new MenuService();
-  $data = $svc->getRestaurantPublicData($restaurantId);
+    if (!$data || !isset($data['restaurant_id'])) {
+        header('Location: https://maxmenu.com');
+        exit;
+    }
 
-  if (!$data) {
-      // Si no hay datos, redirigir silenciosamente a la raíz
-      header('Location: https://maxmenu.com');
-      exit;
-  }
+    // Variables globales para la vista pública
+    global
+        $categories, $subcategories, $items, $logos,
+        $platforms, $languages, $category_translations,
+        $subcategory_translations, $item_translations,
+        $item_supplements, $brunches, $daily_menu,
+        $menu_colors, $domains;
 
-  $restaurantData           = $data;
-  $categories               = $data['categories']               ?? [];
-  $subcategories            = $data['subcategories']            ?? [];
-  $items                    = $data['items']                    ?? [];
-  $logos                    = $data['logos']                    ?? [];
-  $platforms                = $data['platforms']                ?? [];
-  $languages                = $data['languages']                ?? [];
-  $category_translations    = $data['category_translations']    ?? [];
-  $subcategory_translations = $data['subcategory_translations'] ?? [];
-  $item_translations        = $data['item_translations']        ?? [];
-  $item_supplements         = $data['item_supplements']         ?? [];
-  $brunches                 = $data['brunches']                 ?? [];
-  $daily_menu               = $data['daily_menu']               ?? [];
-  $menu_colors              = $data['menu_colors']              ?? [];
-  $domains                  = $data['domains']              ?? [];
-
-} else {
-  // Si no hay parámetro ID, también redirigir sin mostrar mensaje
-  header('Location: https://maxmenu.com');
-  exit;
+    $categories               = $data['categories']               ?? [];
+    $subcategories            = $data['subcategories']            ?? [];
+    $items                    = $data['items']                    ?? [];
+    $logos                    = $data['logos']                    ?? [];
+    $platforms                = $data['platforms']                ?? [];
+    $languages                = $data['languages']                ?? [];
+    $category_translations    = $data['category_translations']    ?? [];
+    $subcategory_translations = $data['subcategory_translations'] ?? [];
+    $item_translations        = $data['item_translations']        ?? [];
+    $item_supplements         = $data['item_supplements']         ?? [];
+    $brunches                 = $data['brunches']                 ?? [];
+    $daily_menu               = $data['daily_menu']               ?? [];
+    $menu_colors              = $data['menu_colors']              ?? [];
+    $domains                  = $data['domains']                  ?? [];
 }
