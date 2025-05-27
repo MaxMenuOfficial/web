@@ -1,6 +1,7 @@
 <?php
 
 function purgeCloudflareCacheForRestaurant(string $restaurantId): void {
+    
     $zoneId     = getenv('CLOUDFLARE_ZONE_ID');
     $apiToken   = getenv('CLOUDFLARE_API_TOKEN');
     $baseDomain = rtrim(getenv('CLOUDFLARE_MENU_DOMAIN'), '/');
