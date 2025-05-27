@@ -31,3 +31,9 @@ function purgeCloudflareCacheForRestaurant(string $restaurantId): void {
         error_log("✅ Cloudflare cache purgada para $restaurantId");
     }
 }
+
+
+
+
+
+
