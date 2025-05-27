@@ -1,10 +1,11 @@
 <?php
 // 📁 backend/php/show/show_categories.php
+// Incluir el script que obtiene y valida el restaurantId vía GET (sin usar la sesión)
+require_once __DIR__ . '/get_restaurant_id.php';
 
 // Incluir el servicio de menú que carga las variables globales
 require_once __DIR__ . '/../config/menu-service.php';
-// Incluir el script que obtiene y valida el restaurantId vía GET
-require_once __DIR__ . '/get_restaurant_id.php';
+
 
 // Accedemos a la variable global $categories (cargada en menu-service.php)
 global $categories;

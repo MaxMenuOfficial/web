@@ -1,15 +1,14 @@
 <?php
-
 // ---------------------------------------------------------
-// 🔗 Inicialización del entorno simbiótico de seguridad
+// 🔗 Inicialización de entorno y obtención de restaurantId
 // ---------------------------------------------------------
-require_once __DIR__ . '/../config/menu-service.php';
-require_once __DIR__ . '/get_restaurant_id.php';
+require_once __DIR__ . '/get_restaurant_id.php';          // define global $restaurantId
+require_once __DIR__ . '/../config/menu-service.php';     // inicializa global $domains
 
 global $domains, $restaurantId;
 
 // ---------------------------------------------------------
-// 🔐 Validaciones estructurales mínimas
+// 🔐 Validaciones mínimas
 // ---------------------------------------------------------
 if (empty($domains) || empty($restaurantId)) {
     http_response_code(400);
@@ -17,55 +16,42 @@ if (empty($domains) || empty($restaurantId)) {
 }
 
 // ---------------------------------------------------------
-// 🌍 Captura y normalización del origen
+// 🌍 Captura y normalización del Origin
 // ---------------------------------------------------------
-$origin = $_SERVER['HTTP_ORIGIN'] ?? null;
-$originHost = $origin ? parse_url($origin, PHP_URL_HOST) : null;
-$normalizedOriginHost = $originHost ? preg_replace('/^www\./', '', $originHost) : null;
+$origin      = $_SERVER['HTTP_ORIGIN'] ?? '';
+$originHost  = $origin ? parse_url($origin, PHP_URL_HOST) : '';
+$normalized  = $originHost ? preg_replace('/^www\./', '', strtolower($originHost)) : '';
 
-// En producción, bloquear si no hay ORIGIN
-if (!$originHost) {
-    if ($_ENV['APP_ENV'] !== 'development') {
-        http_response_code(403);
-        exit('Missing origin header.');
-    } else {
-        // En entorno local, permitir origen falso para test
-        $origin = 'http://localhost';
-        $originHost = 'localhost';
-        $normalizedOriginHost = 'localhost';
-    }
+// Si no viene Origin o es localhost → denegar
+if (!$originHost || $normalized === 'localhost') {
+    http_response_code(403);
+    exit('Forbidden: invalid origin.');
 }
 
 // ---------------------------------------------------------
-// 🧼 Extraer dominios registrados del restaurante actual
+// 🧼 Preparar lista de hosts autorizados
 // ---------------------------------------------------------
-$restaurantDomains = array_filter($domains, function ($d) use ($restaurantId) {
-    return isset($d['restaurant_id'], $d['domain']) &&
-           $d['restaurant_id'] === $restaurantId &&
-           !empty($d['domain']);
-});
+$restaurantDomains = array_filter($domains, fn($d) =>
+    isset($d['restaurant_id'], $d['domain']) &&
+    $d['restaurant_id'] === $restaurantId &&
+    !empty($d['domain'])
+);
 
-$allowedHosts = array_map(function ($d) {
-    $raw = trim($d['domain']);
-    // Si no tiene protocolo, añadimos temporalmente https:// para parse_url
-    if (!preg_match('#^https?://#i', $raw)) {
-        $raw = 'https://' . $raw;
+$allowedHosts = array_map(function($raw){
+    $u = trim($raw['domain']);
+    if (!preg_match('#^https?://#i', $u)) {
+        $u = 'https://' . $u;
     }
-
-    $host = parse_url($raw, PHP_URL_HOST);
-    return $host ? preg_replace('/^www\./', '', strtolower($host)) : '';
+    $h = parse_url($u, PHP_URL_HOST);
+    return $h ? preg_replace('/^www\./','', strtolower($h)) : '';
 }, $restaurantDomains);
 
 // ---------------------------------------------------------
-// ⚖️ Verificación exacta o subdominio autorizado
+// ⚖️ Verificar que el Origin esté en la lista o sea subdominio
 // ---------------------------------------------------------
 $authorized = false;
-
-foreach ($allowedHosts as $allowedHost) {
-    if (
-        $normalizedOriginHost === $allowedHost ||
-        str_ends_with($normalizedOriginHost, '.' . $allowedHost)
-    ) {
+foreach ($allowedHosts as $host) {
+    if ($normalized === $host || str_ends_with($normalized, '.' . $host)) {
         $authorized = true;
         break;
     }
@@ -73,19 +59,21 @@ foreach ($allowedHosts as $allowedHost) {
 
 if (!$authorized) {
     http_response_code(403);
-    exit("Access denied: origin '$normalizedOriginHost' not authorized.");
+    exit("Forbidden: origin '{$normalized}' not authorized.");
 }
 
 // ---------------------------------------------------------
-// ✅ Configuración de CORS permitida
+// ✅ Configurar CORS para dominios autorizados
 // ---------------------------------------------------------
-header('Access-Control-Allow-Origin: ' . $origin);
+header("Access-Control-Allow-Origin: {$origin}");
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
 header('Access-Control-Allow-Credentials: true');
 
-// Responder a preflight directamente
+// Responder al preflight
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit;
 }
+
+// Aquí sigue la lógica de tu widget…

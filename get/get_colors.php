@@ -1,8 +1,11 @@
 <?php
+
+// Incluir el script que obtiene y valida el restaurantId vía GET (sin usar la sesión)
+require_once __DIR__ . '/get_restaurant_id.php';
+
 // Incluir el servicio de menú que carga las variables globales
 require_once __DIR__ . '/../config/menu-service.php';
-// Incluir el script que obtiene y valida el restaurantId vía GET
-require_once __DIR__ . '/get_restaurant_id.php';
+
 
 // Alias: convertimos el snake_case de menu-service a camelCase
 global $menu_colors;          // esta viene de menu-service.php

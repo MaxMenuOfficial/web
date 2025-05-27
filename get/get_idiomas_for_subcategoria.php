@@ -1,5 +1,8 @@
 <?php
 
+// Incluir el script que obtiene y valida el restaurantId vía GET (sin usar la sesión)
+require_once __DIR__ . '/get_restaurant_id.php';
+
 // ✅ Asegurar que usuario-service.php está cargado
 require_once __DIR__ . '/../config/menu-service.php';
 
