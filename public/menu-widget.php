@@ -1,6 +1,8 @@
 <?php
-header("Cache-Control: public, s-maxage=31536000, max-age=0, immutable");
-header("Vary: Accept-Encoding");
+
+header('Content-Type: text/html; charset=utf-8');
+header('Cache-Control: public, max-age=7200, must-revalidate');
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
 
 include '../get/get_restaurant_id.php';
 include '../get/get_logo.php';

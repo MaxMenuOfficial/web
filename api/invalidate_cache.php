@@ -21,6 +21,7 @@ if (!hash_equals($expected, $token) || $rid === '') {
     exit;
 }
 
+
 // Carga de servicios
 require __DIR__ . '/../config/menu-service.php';
 require __DIR__ . '/../utils/cloudflare-utils.php';
@@ -44,6 +45,7 @@ try {
     http_response_code(500);
     exit('Cloudflare Purge Error');
 }
+
 
 // Éxito
 http_response_code(200);
