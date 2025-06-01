@@ -1,10 +1,13 @@
 RewriteEngine On
 RewriteBase /
 
-# ✅ Permitir acceso directo a archivos existentes o carpetas
+# ✅ Permitir acceso directo a archivos o carpetas
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-# 🔄 Redirigir URLs como /jajaja → menu.php?id=jajaja
+# 🔄 Redirigir /menu-widget/restaurantId → menu-widget.php?id=restaurantId
+RewriteRule ^menu-widget/([a-zA-Z0-9_-]+)$ menu-widget.php?id=$1 [L,QSA]
+
+# 🔄 Redirigir /restaurantId → menu.php?id=restaurantId
 RewriteRule ^([a-zA-Z0-9_-]+)$ menu.php?id=$1 [QSA,L]

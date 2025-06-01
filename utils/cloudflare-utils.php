@@ -5,7 +5,7 @@ function purgeCloudflareCacheForRestaurant(string $restaurantId): void {
     $baseDomain = rtrim(getenv('CLOUDFLARE_MENU_DOMAIN'), '/');
     $files = [
         "$baseDomain/$restaurantId",
-        "$baseDomain/menu-widget.php?id=$restaurantId"
+        "$baseDomain/menu-widget/$restaurantId"
     ];
     $ch = curl_init("https://api.cloudflare.com/client/v4/zones/$zoneId/purge_cache");
     curl_setopt_array($ch, [

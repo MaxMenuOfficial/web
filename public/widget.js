@@ -26,7 +26,7 @@
       }
     });
   
-    const url = `https://menu.maxmenu.com/menu-widget.php?id=${encodeURIComponent(restaurantId)}`;
+    const url = `https://menu.maxmenu.com/menu-widget/${encodeURIComponent(restaurantId)}`;
     fetch(url)
       .then(res => res.ok ? res.text() : Promise.reject('[MaxMenu] Error al obtener el menú'))
       .then(html => {
