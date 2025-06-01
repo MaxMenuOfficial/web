@@ -1,4 +1,7 @@
 <?php
+header("Cache-Control: public, s-maxage=31536000, max-age=0, immutable");
+header("Vary: Accept-Encoding");
+
 include '../get/get_restaurant_id.php';
 include '../get/get_logo.php';
 include '../get/get_idiomas.php'; 
