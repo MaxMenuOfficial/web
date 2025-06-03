@@ -26,16 +26,20 @@
     }
   });
 
-  // 🔥 PASO NUEVO: obtener la versión del menú antes de pedir el HTML del widget
+  // --- 🔥 OBTENER VERSIÓN ---
   fetch(`https://menu.maxmenu.com/api/menu-version.php?id=${encodeURIComponent(restaurantId)}`)
     .then(res => res.ok ? res.json() : Promise.reject('[MaxMenu] Error al obtener la versión'))
     .then(data => {
-      const v = data.version || Date.now(); // fallback paranoico
+      const v = data.version || Date.now();
+      // --- URL con versión ---
       const url = `https://menu.maxmenu.com/menu-widget/${encodeURIComponent(restaurantId)}?v=${v}`;
 
       fetch(url)
         .then(res => res.ok ? res.text() : Promise.reject('[MaxMenu] Error al obtener el menú'))
         .then(html => {
+          // --- DEBUG ---
+          // console.log('Widget HTML recibido:', html);
+
           container.innerHTML = html;
 
           // Reinyectar scripts del HTML (inline)
@@ -50,7 +54,7 @@
             document.body.appendChild(newScript);
           });
 
-          // Inyectar JS externos después del HTML
+          // Inyectar JS externos después del HTML (repetido, pero robusto)
           [
             "https://menu.maxmenu.com/assets/widget/colors.js",
             "https://menu.maxmenu.com/assets/widget/image.js",
