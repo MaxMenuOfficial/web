@@ -19,7 +19,6 @@ include '../get/get_traducciones.php';
 include '../get/get_alergenos.php';
 include '../get/get_colors.php';
 
-include '../api/menu-version.php';
 
 ?>
 
