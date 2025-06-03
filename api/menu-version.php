@@ -21,4 +21,8 @@ if (!$data || !isset($data['menu_version'])) {
 }
 
 $version = is_numeric($data['menu_version']) ? (int)$data['menu_version'] : 0;
+header('Content-Type: application/json');
 echo json_encode(['version' => $version]);
+
+// DEBUG TEMPORAL
+print ("🚩 menu-version para $restaurantId: $version");
