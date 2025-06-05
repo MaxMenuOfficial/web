@@ -1,4 +1,13 @@
 <?php
+// Si quieres permitir CUALQUIER dominio (estándar para widgets públicos):
+header("Access-Control-Allow-Origin: *"); // o el origen que quieras
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Access-Control-Allow-Credentials: false');
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
 
 include '../get/get_restaurant_id.php';
 include '../get/get_logo.php';
@@ -15,15 +24,6 @@ include '../get/get_traducciones.php';
 include '../get/get_alergenos.php';
 include '../get/get_colors.php';
 
-// Si quieres permitir CUALQUIER dominio (estándar para widgets públicos):
-header("Access-Control-Allow-Origin: *"); // o el origen que quieras
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization');
-header('Access-Control-Allow-Credentials: false');
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit;
-}
 
 
 ?>

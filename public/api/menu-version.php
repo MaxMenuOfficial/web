@@ -10,8 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 // ... aquí la lógica de tu endpoint ...
-require_once __DIR__ . '/../config/get_restaurant_id.php';
-require_once __DIR__ . '/../config/menu-service.php';
+require_once __DIR__ . '/../../config/get_restaurant_id.php';
+require_once __DIR__ . '/../../config/menu-service.php';
 header('Content-Type: application/json');
 
 // get_restaurant_id.php define y valida $restaurantId aquí
