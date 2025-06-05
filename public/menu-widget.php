@@ -1,12 +1,39 @@
 <?php
-// Si quieres permitir CUALQUIER dominio (estándar para widgets públicos):
-header("Access-Control-Allow-Origin: *"); // o el origen que quieras
+
+// 🔍 Versión del widget (por cache busting)
+$version = $_GET['v'] ?? null;
+$isVersioned = $version && is_numeric($version);
+
+// 🧠 Cache headers
+if ($isVersioned) {
+    header('Cache-Control: public, max-age=31536000, immutable'); // 1 año
+    header("X-Widget-Version: $version");
+    header("X-Cache-Mode: versioned-cache");
+} else {
+    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+    header("X-Widget-Version: none");
+    header("X-Cache-Mode: no-cache");
+}
+
+// 🎯 CORS universal para widgets embebidos
+header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
 header('Access-Control-Allow-Credentials: false');
+
+// 🔄 Respuesta a preflight (OPTIONS)
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
+    header('Content-Length: 0');
     exit;
+}
+
+// 🧾 Tipo de contenido
+header('Content-Type: text/html; charset=utf-8');
+
+// 🧪 Debug activo solo si se accede sin versión (útil en desarrollo)
+if (!$isVersioned) {
+    header('X-Debug-Widget: true');
 }
 
 include '../get/get_restaurant_id.php';
