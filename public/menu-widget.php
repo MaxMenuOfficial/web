@@ -1,9 +1,6 @@
 <?php
 
-header('Content-Type: text/html; charset=utf-8');
-header('Cache-Control: public, max-age=7200, must-revalidate');
-header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-
+include '../get/get_domains.php';
 include '../get/get_restaurant_id.php';
 include '../get/get_logo.php';
 include '../get/get_idiomas.php'; 
@@ -19,9 +16,6 @@ include '../get/get_traducciones.php';
 include '../get/get_alergenos.php';
 include '../get/get_colors.php';
 
-//include '../get/get_domains.php';
-
-
 ?>
 
 <body id="#maxmenu-menuContainer">
@@ -29,7 +23,7 @@ include '../get/get_colors.php';
     <main>
   
       <div class="flecha-up">
-          <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="http://menu.maxmenu.com/menu/img/up.png" alt=""></a>
+          <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="https://menu.maxmenu.com/menu/img/up.png" alt=""></a>
       </div>
 
 
