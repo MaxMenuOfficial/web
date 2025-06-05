@@ -1,6 +1,6 @@
 <?php
-// --- HABILITAR CORS SIN RESTRICCIÓN ---
-header('Access-Control-Allow-Origin: *');
+// api/menu-version.php
+header("Access-Control-Allow-Origin: *"); // o el origen que quieras
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
 header('Access-Control-Allow-Credentials: false');
@@ -9,11 +9,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-// --------------------------------------
-
+// ... aquí la lógica de tu endpoint ...
 require_once __DIR__ . '/../config/get_restaurant_id.php';
 require_once __DIR__ . '/../config/menu-service.php';
-
 header('Content-Type: application/json');
 
 // get_restaurant_id.php define y valida $restaurantId aquí
@@ -34,4 +32,3 @@ if (!$data || !isset($data['menu_version'])) {
 
 $version = is_numeric($data['menu_version']) ? (int)$data['menu_version'] : 0;
 echo json_encode(['version' => $version]);
-error_log("🚩 menu-version para $restaurantId: $version");
