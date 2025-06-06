@@ -42,9 +42,9 @@ if (!class_exists('MenuService')) {
          * @param string $restaurantId
          * @return array|null
          */
-        public function getRestaurantPublicData(string $restaurantId): ?array
+        public function getRestaurantPublicData(string $restaurantId, bool $force = false): ?array
         {
-            if (isset(self::$cache[$restaurantId])) {
+            if (!$force && isset(self::$cache[$restaurantId])) {
                 return self::$cache[$restaurantId];
             }
 
@@ -129,17 +129,23 @@ SELECT
   ) AS domains
 FROM restaurant_data r;
 SQL;
+                        
             try {
-                $result = $this->database->execute($sql, [
-                    'parameters' => ['restaurant_id' => $restaurantId]
-                ]);
-                $rows = iterator_to_array($result->rows());
-                $data = $rows[0] ?? null;
-                return self::$cache[$restaurantId] = $data;
+              $result = $this->database->execute($sql, [
+                  'parameters' => ['restaurant_id' => $restaurantId]
+              ]);
+              $data = iterator_to_array($result->rows())[0] ?? null;
+              if (!$data) {
+                  return null;
+              }
+
+              self::$cache[$restaurantId] = $data;
+              return $data;
             } catch (\Exception $e) {
-                error_log('❌ MenuService::getRestaurantPublicData error: ' . $e->getMessage());
-                return null;
+              error_log('❌ MenuService::getRestaurantPublicData error: ' . $e->getMessage());
+              return null;
             }
+
         }
     }
 }

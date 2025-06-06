@@ -22,7 +22,8 @@ if (empty($restaurantId)) {
 }
 
 $svc  = new MenuService();
-$data = $svc->getRestaurantPublicData($restaurantId);
+$data = $svc->getRestaurantPublicData($restaurantId, true); // ← 🔥 importante
+
 
 if (!$data || !isset($data['menu_version'])) {
     http_response_code(404);
