@@ -8,41 +8,41 @@
   const container = document.getElementById('maxmenu-menuContainer');
   if (!container) return console.error('[MaxMenu] No se encontró el contenedor');
 
-  const cssFiles = [
-    'https://menu.maxmenu.com/menu/styles/view-items.css',
-    'https://menu.maxmenu.com/menu/styles/view-categorias.css',
-    'https://menu.maxmenu.com/menu/styles/view-plataformas.css',
-    'https://menu.maxmenu.com/menu/styles/view-idiomas.css',
-    'https://menu.maxmenu.com/menu/styles/view-logo.css',
-    'https://menu.maxmenu.com/menu/styles/view-menu.css'
-  ];
-
-  cssFiles.forEach(href => {
-    if (!document.querySelector(`link[href="${href}"]`)) {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = href;
-      document.head.appendChild(link);
-    }
-  });
-
   // --- 🔥 OBTENER VERSIÓN ---
   fetch(`https://menu.maxmenu.com/api/menu-version.php?id=${encodeURIComponent(restaurantId)}`)
     .then(res => res.ok ? res.json() : Promise.reject('[MaxMenu] Error al obtener la versión'))
     .then(data => {
-      const v = data.version || Date.now();
-      // --- URL con versión ---
-      const url = `https://menu.maxmenu.com/menu-widget/${encodeURIComponent(restaurantId)}?v=${v}`;
+      if (!data.version || typeof data.version !== 'number') {
+        throw new Error('[MaxMenu] Versión inválida del menú');
+      }
 
+      const v = data.version;
+
+      // ✅ Inyectar CSS con versión
+      [
+        'view-items.css',
+        'view-categorias.css',
+        'view-plataformas.css',
+        'view-idiomas.css',
+        'view-logo.css',
+        'view-menu.css'
+      ].forEach(name => {
+        const href = `https://menu.maxmenu.com/menu/styles/${name}?v=${v}`;
+        if (!document.querySelector(`link[href="${href}"]`)) {
+          const link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = href;
+          document.head.appendChild(link);
+        }
+      });
+
+      // 🔄 Inyectar HTML con versión
+      const url = `https://menu.maxmenu.com/menu-widget/${encodeURIComponent(restaurantId)}?v=${v}`;
       fetch(url)
         .then(res => res.ok ? res.text() : Promise.reject('[MaxMenu] Error al obtener el menú'))
         .then(html => {
-          // --- DEBUG ---
-          // console.log('Widget HTML recibido:', html);
-
           container.innerHTML = html;
 
-          // Reinyectar scripts del HTML (inline)
           const tempDiv = document.createElement('div');
           tempDiv.innerHTML = html;
           tempDiv.querySelectorAll('script').forEach(oldScript => {
@@ -54,18 +54,21 @@
             document.body.appendChild(newScript);
           });
 
-          // Inyectar JS externos después del HTML (repetido, pero robusto)
+          // ✅ Inyectar JS con versión
           [
-            "https://menu.maxmenu.com/assets/widget/colors.js",
-            "https://menu.maxmenu.com/assets/widget/image.js",
-            "https://menu.maxmenu.com/assets/widget/language.js",
-            "https://menu.maxmenu.com/assets/widget/subcategories.js"
-          ].forEach(src => {
+            'colors.js',
+            'image.js',
+            'language.js',
+            'subcategories.js'
+          ].forEach(name => {
             const s = document.createElement('script');
-            s.src = src;
+            s.src = `https://menu.maxmenu.com/assets/widget/${name}?v=${v}`;
             s.defer = true;
             document.body.appendChild(s);
           });
+
+          // 🧠 Para debug
+          console.log(`[MaxMenu] Widget versión ${v} cargado con éxito`);
         })
         .catch(err => console.error(err));
     })
