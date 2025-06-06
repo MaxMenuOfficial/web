@@ -1,14 +1,19 @@
 <?php
 
-function purgeCloudflareCacheForRestaurant(string $restaurantId, int $version): void {
+function purgeCloudflareCacheForRestaurant(string $restaurantId): void {
     $zoneId     = getenv('CLOUDFLARE_ZONE_ID');
     $apiToken   = getenv('CLOUDFLARE_API_TOKEN');
     $baseDomain = rtrim(getenv('CLOUDFLARE_MENU_DOMAIN'), '/');
 
+    if (!$zoneId || !$apiToken || !$baseDomain) {
+        error_log("❌ Cloudflare purge skipped: missing env vars.");
+        return;
+    }
+
     $files = [
-        "$baseDomain/$restaurantId",                            // ruta tipo Instagram
-        "$baseDomain/menu-widget/$restaurantId?v=$version",     // widget embebido con versión
-    ];
+        "https://menu.maxmenu.com/{$restaurantId}",                      // página principal
+        "https://menu.maxmenu.com/menu-widget/{$restaurantId}?v={$v}"    // widget con versión
+      ];
 
     $payload = json_encode(['files' => $files]);
 
@@ -29,8 +34,8 @@ function purgeCloudflareCacheForRestaurant(string $restaurantId, int $version): 
     curl_close($ch);
 
     if ($error || $status !== 200) {
-        error_log("❌ Cloudflare purge failed ($status): $error | response: $response");
+        error_log("❌ Cloudflare purge failed ($status): $error");
     } else {
-        error_log("✅ Cloudflare purge success for: " . implode(', ', $files));
+        error_log("✅ Cloudflare purge success for: " . implode(', ', $urls));
     }
 }

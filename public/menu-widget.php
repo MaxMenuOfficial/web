@@ -1,20 +1,5 @@
 <?php
 
-// 🔍 Versión del widget (por cache busting)
-$version = $_GET['v'] ?? null;
-$isVersioned = $version && is_numeric($version);
-
-// 🧠 Cache headers
-if ($isVersioned) {
-    header('Cache-Control: public, max-age=31536000, immutable'); // 1 año
-    header("X-Widget-Version: $version");
-    header("X-Cache-Mode: versioned-cache");
-} else {
-    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
-    header("X-Widget-Version: none");
-    header("X-Cache-Mode: no-cache");
-}
-
 // 🎯 CORS universal para widgets embebidos
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
