@@ -1,4 +1,5 @@
 <?php
+
 function purgeCloudflareCacheForRestaurant(string $restaurantId): void {
     $zoneId     = getenv('CLOUDFLARE_ZONE_ID');
     $apiToken   = getenv('CLOUDFLARE_API_TOKEN');
@@ -9,13 +10,12 @@ function purgeCloudflareCacheForRestaurant(string $restaurantId): void {
         return;
     }
 
-    $urls = [
-        "$baseDomain/$restaurantId",
-        "$baseDomain/menu-widget.php?id=$restaurantId",
-        "$baseDomain/menu-widget/$restaurantId",
-    ];
+    $files = [
+        "https://menu.maxmenu.com/{$restaurantId}",                      // página principal
+        "https://menu.maxmenu.com/menu-widget/{$restaurantId}?v={$v}"    // widget con versión
+      ];
 
-    $payload = json_encode(['files' => $urls]);
+    $payload = json_encode(['files' => $files]);
 
     $ch = curl_init("https://api.cloudflare.com/client/v4/zones/$zoneId/purge_cache");
     curl_setopt_array($ch, [
