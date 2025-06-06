@@ -1,56 +1,64 @@
 <?php
-// File: api/invalidate_cache.php
+// api/invalidate_cache.php
 
-// Logging de errores (silencioso en pantalla, activo en logs)
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 error_reporting(E_ALL);
 
-// Captura de parámetros
+// 1️⃣ Captura de parámetros
 $rid   = $_POST['restaurant_id'] ?? '';
-$token = $_POST['token']         ?? '';
-
-// Log de entrada
+$token = $_POST['token'] ?? '';
 error_log("🔔 invalidate_cache.php called — rid={$rid}");
 
-// Validación redundante de seguridad
+// 2️⃣ Seguridad
 $expected = getenv('INTERNAL_CACHE_INVALIDATION_TOKEN') ?: '';
-if (!hash_equals($expected, $token) || $rid === '') {
+if (!hash_equals($expected, $token) || empty($rid)) {
     error_log("❌ Invalid call — rid={$rid}");
     http_response_code(403);
-    exit('Invalid Token or Missing ID');
+    exit;
 }
 
-// Cargar servicios necesarios
+// 3️⃣ Cargar servicios
 require __DIR__ . '/../config/menu-service.php';
 require __DIR__ . '/../utils/cloudflare-utils.php';
 
+// 4️⃣ Borrar caché en memoria
 try {
-    // 🔁 Limpiar caché en memoria
     MenuService::clearMenuCache($rid);
     error_log("✅ Mem cache cleared — rid={$rid}");
+} catch (Throwable $e) {
+    error_log("❌ clearMenuCache failed: " . $e->getMessage());
+    http_response_code(500);
+    exit('Memory Cache Error');
+}
 
-    // 🔎 Obtener versión actual del menú (fresh)
-    $svc = new MenuService();
-    $data = $svc->getRestaurantPublicData($rid, true);
+// 5️⃣ Obtener versión actual del menú
+$version = null;
 
-    if (empty($data['menu_version'])) {
-        throw new Exception("menu_version missing for $rid");
+try {
+    $menuData = (new MenuService())->getRestaurantPublicData($rid, true);
+    if (isset($menuData['menu_version'])) {
+        $version = (int)$menuData['menu_version'];
+        error_log("🔁 menu_version=$version para purge");
+    } else {
+        throw new RuntimeException('menu_version no disponible');
     }
+} catch (Throwable $e) {
+    error_log("❌ Error obteniendo menu_version: " . $e->getMessage());
+    http_response_code(500);
+    exit('Version Lookup Error');
+}
 
-    $version = (int) $data['menu_version'];
-    error_log("📦 menu_version = $version — rid={$rid}");
-
-    // ☁️ Purgar caché de Cloudflare con la versión exacta
+// 6️⃣ Purgar Cloudflare
+try {
     purgeCloudflareCacheForRestaurant($rid, $version);
     error_log("✅ Cloudflare purged — rid={$rid} — v={$version}");
-
-    // ✅ Éxito
-    http_response_code(200);
-    echo 'OK';
-
 } catch (Throwable $e) {
-    error_log("❌ Fatal error: " . $e->getMessage());
+    error_log("❌ purgeCloudflare failed: " . $e->getMessage());
     http_response_code(500);
-    exit('Internal Error');
+    exit('Cloudflare Purge Error');
 }
+
+// 7️⃣ Éxito
+http_response_code(200);
+echo 'OK';

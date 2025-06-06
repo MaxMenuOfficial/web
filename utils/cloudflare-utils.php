@@ -1,6 +1,6 @@
 <?php
 
-function purgeCloudflareCacheForRestaurant(string $restaurantId, int $menuVersion): void {
+function purgeCloudflareCacheForRestaurant(string $restaurantId, int $version): void {
     $zoneId     = getenv('CLOUDFLARE_ZONE_ID');
     $apiToken   = getenv('CLOUDFLARE_API_TOKEN');
     $baseDomain = rtrim(getenv('CLOUDFLARE_MENU_DOMAIN'), '/');
@@ -10,14 +10,12 @@ function purgeCloudflareCacheForRestaurant(string $restaurantId, int $menuVersio
         return;
     }
 
-    $files = [
-        "$baseDomain/{$restaurantId}",
-        "$baseDomain/menu-widget/{$restaurantId}",
-        "$baseDomain/menu-widget/{$restaurantId}?v={$menuVersion}",
-        "$baseDomain/api/menu-version.php?id={$restaurantId}",
+    $urls = [
+        "$baseDomain/$restaurantId",
+        "$baseDomain/menu-widget/$restaurantId?v=$version"
     ];
 
-    $payload = json_encode(['files' => $files]);
+    $payload = json_encode(['files' => $urls]);
 
     $ch = curl_init("https://api.cloudflare.com/client/v4/zones/$zoneId/purge_cache");
     curl_setopt_array($ch, [
@@ -35,9 +33,9 @@ function purgeCloudflareCacheForRestaurant(string $restaurantId, int $menuVersio
     $status   = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
-    if ($error || $status !== 200) {
-        error_log("❌ Cloudflare purge failed ($status): $error");
+    if ($status !== 200) {
+        error_log("❌ Cloudflare purge failed ($status): $error — $response");
     } else {
-        error_log("✅ Cloudflare purge success — URLs purged: " . implode(', ', $files));
+        error_log("✅ Cloudflare purge success: " . implode(', ', $urls));
     }
 }
