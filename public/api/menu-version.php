@@ -1,5 +1,5 @@
 <?php
-// api/menu-version.php
+// public/api/menu-version.php
 
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");

@@ -127,8 +127,10 @@ SELECT
       FROM restaurant_domains rd
      WHERE rd.restaurant_id = r.restaurant_id
   ) AS domains
+
 FROM restaurant_data r;
 SQL;
+
                         
             try {
               $result = $this->database->execute($sql, [
