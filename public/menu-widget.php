@@ -49,7 +49,7 @@ include '../get/get_brunch.php';
 include '../get/get_daily_menu.php';
 include '../get/get_traducciones.php';
 include '../get/get_alergenos.php';
-include '../get/get_colors.php';
+include '../get/get_colors.php'; 
 
 
 
