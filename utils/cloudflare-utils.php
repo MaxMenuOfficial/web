@@ -12,11 +12,10 @@ function purgeCloudflareCacheForRestaurant(string $restaurantId, int $version): 
     }
 
     $files = [
-        // Limpia la página principal del restaurante
+        "$base/menu-widget?id={$restaurantId}&v={$version}",
+        "$base/menu-widget.php?id={$restaurantId}&v={$version}",
         "$base/$restaurantId",
-        // Limpia el widget con versión forzada
-        "$base/menu-widget?id={$restaurantId}&v={$version}"
-    ];
+      ];
 
     $payload = json_encode(['files' => $files]);
 
