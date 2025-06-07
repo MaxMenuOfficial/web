@@ -1,12 +1,4 @@
-<?php
-// File: public/widget.php
-// Cabeceras para JS y forzar revalidación
-header('Content-Type: application/javascript');
-header('Cache-Control: no-cache, must-revalidate, max-age=0');
-header('Access-Control-Allow-Origin: *');
-?>
 (function () {
-
   const scripts = document.getElementsByTagName('script');
   const myScript = scripts[scripts.length - 1];
   const restaurantId = myScript?.getAttribute('data-restaurant-id');
@@ -34,7 +26,7 @@ header('Access-Control-Allow-Origin: *');
         }
 
         // 4️⃣ Construir URL versionada del widget
-        const widgetUrl = `https://menu.maxmenu.com/menu-widget?id=${encodeURIComponent(restaurantId)}&v=${v}`;
+        const widgetUrl = `https://menu.maxmenu.com/menu-widget.php?id=${encodeURIComponent(restaurantId)}&v=${v}`;
 
         // 5️⃣ Cargar el HTML del widget
         return fetch(widgetUrl)

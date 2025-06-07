@@ -4,9 +4,8 @@
 // Respuesta JSON  
 header('Content-Type: application/json');
 // Permitir CORS desde cualquier origen  
-header('Access-Control-Allow-Origin: *');
-// No cachear o cache muy corto  
 header('Cache-Control: no-cache, must-revalidate, max-age=0');
+header('Access-Control-Allow-Origin: *');
 
 require_once __DIR__ . '/../../config/menu-service.php';
 
@@ -34,3 +33,7 @@ try {
     http_response_code(500);
     echo json_encode(['error' => 'Error interno']);
 }
+
+
+
+

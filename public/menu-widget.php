@@ -1,10 +1,9 @@
 <?php
 
-
-// 1️⃣ Forzar revalidación en el navegador
+// ➊ Cabeceras HTTP para CORS y revalidación
+header('Content-Type: text/html; charset=utf-8');
+header('Access-Control-Allow-Origin: *');           // <— permite cualquier origen
 header('Cache-Control: no-cache, must-revalidate, max-age=0');
-header('Access-Control-Allow-Origin: *');
-
 
 include '../get/get_restaurant_id.php';
 include '../get/get_logo.php';
