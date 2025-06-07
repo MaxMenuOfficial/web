@@ -1,6 +1,5 @@
 <?php
 
-
 include '../get/get_restaurant_id.php';
 include '../get/get_logo.php';
 include '../get/get_idiomas.php'; 

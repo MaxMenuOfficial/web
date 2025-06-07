@@ -1,5 +1,4 @@
 <?php
-
 // 🎯 CORS universal para widgets embebidos
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
@@ -12,14 +11,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     header('Content-Length: 0');
     exit;
 }
-
 // 🧾 Tipo de contenido
 header('Content-Type: text/html; charset=utf-8');
 
-// 🧪 Debug activo solo si se accede sin versión (útil en desarrollo)
-if (!$isVersioned) {
-    header('X-Debug-Widget: true');
-}
 
 include '../get/get_restaurant_id.php';
 include '../get/get_logo.php';
