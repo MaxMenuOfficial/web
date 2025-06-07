@@ -28,7 +28,7 @@ include '../get/get_colors.php';
 
     <main>
   
-      <div class="flecha-up">
+       <div class="flecha-up">
           <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="https://menu.maxmenu.com/menu/img/up.png" alt=""></a>
       </div>
 
