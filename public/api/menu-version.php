@@ -1,9 +1,8 @@
 <?php
 // File: /api/menu-version.php
 
-// Respuesta JSON  
+// ➊ Cabeceras HTTP
 header('Content-Type: application/json');
-// Permitir CORS desde cualquier origen  
 header('Cache-Control: no-cache, must-revalidate, max-age=0');
 header('Access-Control-Allow-Origin: *');
 
@@ -18,7 +17,7 @@ if (!$restaurantId) {
 
 try {
     $svc  = new MenuService();
-    // forzar recarga fresca desde Spanner
+    // ▶️ Siempre forzamos query directa a Spanner
     $data = $svc->getRestaurantPublicData($restaurantId, true);
 
     if (!$data || !isset($data['menu_version'])) {
@@ -33,7 +32,3 @@ try {
     http_response_code(500);
     echo json_encode(['error' => 'Error interno']);
 }
-
-
-
-
