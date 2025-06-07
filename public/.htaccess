@@ -1,17 +1,23 @@
-RewriteEngine On
-RewriteBase /
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
 
-# Acceso directo a archivos existentes
-RewriteCond %{REQUEST_FILENAME} -f [OR]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^ - [L]
+  # —––––––– Servir archivos o carpetas existentes
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
 
-# Ignorar API y assets
-RewriteRule ^api/ - [L]
-RewriteRule ^static/ - [L]
+  # —––––––– Ignorar API y assets estáticos
+  RewriteRule ^api/   - [L]
+  RewriteRule ^static/ - [L]
 
-# Widget embebido
-RewriteRule ^menu-widget/([a-zA-Z0-9_-]+)$ menu-widget.php?id=$1 [QSA,L]
+  # —––––––– Capturar /menu-widget?id=…&v=…
+  RewriteCond %{REQUEST_URI} ^/menu-widget$
+  RewriteRule ^menu-widget$ menu-widget.php [QSA,L]
 
-# ✅ Redirigir /restaurantId → menu.php?id=restaurantId
-RewriteRule ^([a-zA-Z0-9_-]+)$ menu.php?id=$1 [QSA,L]
+  # —––––––– Capturar /menu-widget/slug  (si aún lo utilizas)
+  RewriteRule ^menu-widget/([A-Za-z0-9_-]+)$ menu-widget.php?id=$1 [QSA,L]
+
+  # —––––––– Ruta amigable /restauranteId → menu.php?id=restauranteId
+  RewriteRule ^([A-Za-z0-9_-]+)$ menu.php?id=$1 [QSA,L]
+</IfModule>
