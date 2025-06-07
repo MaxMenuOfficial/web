@@ -1,18 +1,9 @@
 <?php
-// 🎯 CORS universal para widgets embebidos
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization');
-header('Access-Control-Allow-Credentials: false');
 
-// 🔄 Respuesta a preflight (OPTIONS)
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    header('Content-Length: 0');
-    exit;
-}
-// 🧾 Tipo de contenido
-header('Content-Type: text/html; charset=utf-8');
+
+// 1️⃣ Forzar revalidación en el navegador
+header('Cache-Control: no-cache, must-revalidate, max-age=0');
+header('Access-Control-Allow-Origin: *');
 
 
 include '../get/get_restaurant_id.php';

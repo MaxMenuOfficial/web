@@ -1,11 +1,17 @@
-// File: public/widget.js
+<?php
+// File: public/widget.php
+// Cabeceras para JS y forzar revalidación
+header('Content-Type: application/javascript');
+header('Cache-Control: no-cache, must-revalidate, max-age=0');
+header('Access-Control-Allow-Origin: *');
+?>
 (function () {
-  // 1️⃣ Obtener <script> que carga este widget y extraer restaurantId
+
   const scripts = document.getElementsByTagName('script');
   const myScript = scripts[scripts.length - 1];
   const restaurantId = myScript?.getAttribute('data-restaurant-id');
   if (!restaurantId) {
-    return console.error('[MaxMenu] Falta el atributo data-restaurant-id en el <script>.');
+    return console.error('[MaxMenu] Falta el atributo data-restaurant-id en el');
   }
 
   // 2️⃣ Obtener el contenedor donde inyectar el widget
@@ -42,7 +48,7 @@
         // 6️⃣ Inyectar el HTML dentro del contenedor
         container.innerHTML = html;
 
-        // 7️⃣ Ejecutar cualquier <script> dentro del HTML inyectado
+      
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = html;
         tempDiv.querySelectorAll('script').forEach(oldScript => {
