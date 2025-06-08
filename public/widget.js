@@ -77,21 +77,6 @@
           document.body.appendChild(newScript);
         });
 
-        // 6️⃣ Inyectar los JS de comportamiento del widget (sin versión)
-        [
-          'https://menu.maxmenu.com/assets/widget/colors.js',
-          'https://menu.maxmenu.com/assets/widget/image.js',
-          'https://menu.maxmenu.com/assets/widget/language.js',
-          'https://menu.maxmenu.com/assets/widget/subcategories.js'
-        ].forEach(src => {
-          if (!document.querySelector(`script[src="${src}"]`)) {
-            const s = document.createElement('script');
-            s.src   = src;
-            s.defer = true;
-            document.body.appendChild(s);
-          }
-        });
-
         console.log(`[MaxMenu] Widget versión ${v} cargado con éxito.`);
       })
       .catch(err => {
