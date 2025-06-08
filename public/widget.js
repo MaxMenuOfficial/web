@@ -23,9 +23,8 @@
         if (typeof v !== 'number' || v <= 0) {
           throw new Error('[MaxMenu] Versión inválida recibida: ' + v);
         }
-
         // 2️⃣ Construir la URL que coincide con tu purga
-        const widgetUrl = `https://menu.maxmenu.com/menu-widget.php?id=${encodeURIComponent(restaurantId)}&v=${v}`;
+        const widgetUrl = `https://menu.maxmenu.com/menu-widget?id=${encodeURIComponent(restaurantId)}&v=${v}`;
 
         // 3️⃣ Cargar el HTML del widget
         return fetch(widgetUrl, { mode: 'cors' })

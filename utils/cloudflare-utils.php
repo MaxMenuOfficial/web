@@ -13,7 +13,6 @@ function purgeCloudflareCacheForRestaurant(string $restaurantId, int $version): 
 
     $files = [
         "$base/menu-widget?id={$restaurantId}&v={$version}",
-        "$base/menu-widget.php?id={$restaurantId}&v={$version}",
         "$base/$restaurantId",
       ];
 
