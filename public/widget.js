@@ -14,16 +14,23 @@
     return console.error('[MaxMenu] No se encontró el contenedor con id="maxmenu-menuContainer".');
   }
 
-  // ➌ Inyectar CSS “fijos” del widget (no requieren versión)
+  // ➌ Lista de CSS “fijos” del widget (idealmente unificado en un solo bundle)
   const cssFiles = [
-    'https://menu.maxmenu.com/menu/styles/view-items.css',
-    'https://menu.maxmenu.com/menu/styles/view-categorias.css',
-    'https://menu.maxmenu.com/menu/styles/view-plataformas.css',
-    'https://menu.maxmenu.com/menu/styles/view-idiomas.css',
-    'https://menu.maxmenu.com/menu/styles/view-logo.css',
-    'https://menu.maxmenu.com/menu/styles/view-menu.css'
+    'https://menu.maxmenu.com/menu/styles/all.css'
+
   ];
+
+  // ➍ Preload + inyección de cada CSS
   cssFiles.forEach(href => {
+    // Preload
+    if (!document.querySelector(`link[rel="preload"][href="${href}"]`)) {
+      const pl = document.createElement('link');
+      pl.rel  = 'preload';
+      pl.as   = 'style';
+      pl.href = href;
+      document.head.appendChild(pl);
+    }
+    // stylesheet
     if (!document.querySelector(`link[href="${href}"]`)) {
       const link = document.createElement('link');
       link.rel  = 'stylesheet';
@@ -32,7 +39,7 @@
     }
   });
 
-  // ➍ Función principal: obtiene la versión, construye la URL versionada y carga el HTML
+  // ➎ Función principal: obtiene la versión, construye la URL y carga el HTML
   function loadWidget() {
     // 1️⃣ Obtener la versión actual del menú
     fetch(`https://menu.maxmenu.com/api/menu-version.php?id=${encodeURIComponent(restaurantId)}`, { mode: 'cors' })
@@ -45,15 +52,13 @@
         if (typeof v !== 'number' || v <= 0) {
           throw new Error('[MaxMenu] Versión inválida recibida: ' + v);
         }
-
-        // 2️⃣ Construir la URL que purgas en Cloudflare
-        return { 
+        return {
           widgetUrl: `https://menu.maxmenu.com/menu-widget?id=${encodeURIComponent(restaurantId)}&v=${v}`,
-          v 
+          v
         };
       })
-      .then(({ widgetUrl, v }) => 
-        // 3️⃣ Cargar el HTML versionado
+      .then(({ widgetUrl, v }) =>
+        // 2️⃣ Cargar el HTML versionado
         fetch(widgetUrl, { mode: 'cors' })
           .then(res => {
             if (!res.ok) throw new Error('[MaxMenu] Error al cargar el widget.');
@@ -62,10 +67,10 @@
           .then(html => ({ html, v }))
       )
       .then(({ html, v }) => {
-        // 4️⃣ Inyectar el HTML dentro del contenedor
+        // 3️⃣ Inyectar el HTML dentro del contenedor
         container.innerHTML = html;
 
-        // 5️⃣ Reejecutar scripts inline que vinieron en el HTML
+        // 4️⃣ Reejecutar scripts inline que vinieron en el HTML
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = html;
         tempDiv.querySelectorAll('script').forEach(oldScript => {
