@@ -8,9 +8,11 @@
   RewriteRule ^ - [L]
 
   # —––––––– Ignorar API y assets estáticos
-  RewriteRule ^api/   - [L]
+  RewriteRule ^api/    - [L]
   RewriteRule ^static/ - [L]
 
+  # —––––––– Mapear /menu-widget?id=… a menu-widget.php
+  RewriteRule ^menu-widget$ menu-widget.php [QSA,L]
 
   # —––––––– Ruta amigable /restauranteId → menu.php?id=restauranteId
   RewriteRule ^([A-Za-z0-9_-]+)$ menu.php?id=$1 [QSA,L]
