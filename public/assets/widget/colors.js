@@ -13,14 +13,6 @@
       return;
     }
   
-    // 🟡 Aplicar el color de fondo al contenedor principal del menú
-    const menuContainer = document.getElementById('menu-container');
-    if (menuContainer) {
-      menuContainer.style.backgroundColor = menuColors.backgroundColor;
-    } else {
-      console.warn('[MaxMenu] No se encontró el contenedor con id "menu-container".');
-    }
-  
     // 🔹 Aplicar color a títulos
     document.querySelectorAll('.menu-title').forEach(title => {
       title.style.color = menuColors.titleColor;

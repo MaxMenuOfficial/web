@@ -4,7 +4,6 @@
 // ➊ Cabeceras para CORS y forzar revalidación
 header('Content-Type: text/html; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
-header('Cache-Control: no-cache, must-revalidate, max-age=0');
 
 // ➋ Obtener parámetros
 $restaurantId = $_GET['id'] ?? null;
@@ -13,19 +12,6 @@ $version      = $_GET['v']  ?? null;
 if (!$restaurantId) {
     http_response_code(400);
     exit('<p>Restaurant ID requerido</p>');
-}
-
-// ➌ Instanciar servicio y forzar recarga si viene ?v=
-require_once __DIR__ . '/../config/menu-service.php';
-
-$svc   = new MenuService();
-// Si recibimos v (aunque sea cero), lo tomamos como indicación de fuerza
-$force = isset($version);
-$data  = $svc->getRestaurantPublicData($restaurantId, $force);
-
-if (!$data) {
-    http_response_code(404);
-    exit('<p>Datos del restaurante no encontrados</p>');
 }
 
 include '../get/get_restaurant_id.php';
