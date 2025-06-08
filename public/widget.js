@@ -1,19 +1,41 @@
+// File: public/widget.js
 (function () {
-  const scripts = document.getElementsByTagName('script');
-  const myScript = scripts[scripts.length - 1];
+  // ➊ Detectar el <script> embebido y leer restaurantId
+  const scripts      = document.getElementsByTagName('script');
+  const myScript     = scripts[scripts.length - 1];
   const restaurantId = myScript?.getAttribute('data-restaurant-id');
   if (!restaurantId) {
     return console.error('[MaxMenu] Falta el atributo data-restaurant-id en el <script>.');
   }
-  
+
+  // ➋ Localizar el contenedor donde inyectar el widget
   const container = document.getElementById('maxmenu-menuContainer');
   if (!container) {
     return console.error('[MaxMenu] No se encontró el contenedor con id="maxmenu-menuContainer".');
   }
 
+  // ➌ Inyectar CSS “fijos” del widget (no requieren versión)
+  const cssFiles = [
+    'https://menu.maxmenu.com/menu/styles/view-items.css',
+    'https://menu.maxmenu.com/menu/styles/view-categorias.css',
+    'https://menu.maxmenu.com/menu/styles/view-plataformas.css',
+    'https://menu.maxmenu.com/menu/styles/view-idiomas.css',
+    'https://menu.maxmenu.com/menu/styles/view-logo.css',
+    'https://menu.maxmenu.com/menu/styles/view-menu.css'
+  ];
+  cssFiles.forEach(href => {
+    if (!document.querySelector(`link[href="${href}"]`)) {
+      const link = document.createElement('link');
+      link.rel  = 'stylesheet';
+      link.href = href;
+      document.head.appendChild(link);
+    }
+  });
+
+  // ➍ Función principal: obtiene la versión, construye la URL versionada y carga el HTML
   function loadWidget() {
-    // 1️⃣ Obtener la versión
-    fetch(`https://menu.maxmenu.com/api/menu-version.php?id=${encodeURIComponent(restaurantId)}`)
+    // 1️⃣ Obtener la versión actual del menú
+    fetch(`https://menu.maxmenu.com/api/menu-version.php?id=${encodeURIComponent(restaurantId)}`, { mode: 'cors' })
       .then(res => {
         if (!res.ok) throw new Error('[MaxMenu] Error al obtener la versión del menú.');
         return res.json();
@@ -24,22 +46,26 @@
           throw new Error('[MaxMenu] Versión inválida recibida: ' + v);
         }
 
-        // 2️⃣ Construir la URL que coincide con tu purga
-        const widgetUrl = `https://menu.maxmenu.com/menu-widget?id=${encodeURIComponent(restaurantId)}&v=${v}`;
-
-        // 3️⃣ Cargar el HTML del widget
-        return fetch(widgetUrl, { mode: 'cors' })
+        // 2️⃣ Construir la URL que purgas en Cloudflare
+        return { 
+          widgetUrl: `https://menu.maxmenu.com/menu-widget?id=${encodeURIComponent(restaurantId)}&v=${v}`,
+          v 
+        };
+      })
+      .then(({ widgetUrl, v }) => 
+        // 3️⃣ Cargar el HTML versionado
+        fetch(widgetUrl, { mode: 'cors' })
           .then(res => {
             if (!res.ok) throw new Error('[MaxMenu] Error al cargar el widget.');
             return res.text();
           })
-          .then(html => ({ html, v }));
-      })
+          .then(html => ({ html, v }))
+      )
       .then(({ html, v }) => {
-        // 4️⃣ Inyectar el HTML
+        // 4️⃣ Inyectar el HTML dentro del contenedor
         container.innerHTML = html;
 
-        // 5️⃣ Ejecutar scripts internos
+        // 5️⃣ Reejecutar scripts inline que vinieron en el HTML
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = html;
         tempDiv.querySelectorAll('script').forEach(oldScript => {
@@ -51,6 +77,21 @@
           document.body.appendChild(newScript);
         });
 
+        // 6️⃣ Inyectar los JS de comportamiento del widget (sin versión)
+        [
+          'https://menu.maxmenu.com/assets/widget/colors.js',
+          'https://menu.maxmenu.com/assets/widget/image.js',
+          'https://menu.maxmenu.com/assets/widget/language.js',
+          'https://menu.maxmenu.com/assets/widget/subcategories.js'
+        ].forEach(src => {
+          if (!document.querySelector(`script[src="${src}"]`)) {
+            const s = document.createElement('script');
+            s.src   = src;
+            s.defer = true;
+            document.body.appendChild(s);
+          }
+        });
+
         console.log(`[MaxMenu] Widget versión ${v} cargado con éxito.`);
       })
       .catch(err => {
@@ -59,5 +100,6 @@
       });
   }
 
+  // ➏ Iniciar
   loadWidget();
 })();
