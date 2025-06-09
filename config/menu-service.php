@@ -157,7 +157,10 @@ SQL;
 // ---------------------------------------------------------------------------
 $uri = $_SERVER['REQUEST_URI'] ?? '';
 $isCacheInvalidator = str_contains($uri, '/api/invalidate');
-if (!$isCacheInvalidator) {
+$isMenuVersion = str_contains($uri, '/api/menu-version'); // ← NUEVA LÍNEA
+
+if (!$isCacheInvalidator && !$isMenuVersion) { // ← MODIFICADA
+  
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }

@@ -2,12 +2,6 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
-// Cache para 1 año en Cloudflare Edge y navegador
-header('Cache-Control: public, max-age=31536000, immutable');
-
-// Last-Modified para ayudar con cache validation
-header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-
 require_once __DIR__ . '/../../config/menu-service.php';
 
 $restaurantId = $_GET['id'] ?? null;
