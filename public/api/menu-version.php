@@ -1,11 +1,6 @@
 <?php
 // File: /api/menu-version.php
-// ➊ Cabeceras HTTP
 header('Content-Type: application/json');
-// Cloudflare ignora esto (porque así lo configuraste), pero el navegador NO
-header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
-header('Pragma: no-cache');
-header('Expires: 0');
 header('Access-Control-Allow-Origin: *');
 
 require_once __DIR__ . '/../../config/menu-service.php';
