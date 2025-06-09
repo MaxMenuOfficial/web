@@ -9,7 +9,7 @@
     RewriteRule ^ - [L]
     
     # API endpoints - el más importante para tu widget
-    RewriteRule ^api/menu-version$ api/menu-version.php [QSA,L]
+    RewriteRule ^menu-version$ menu-version.php [QSA,L]
     
     # Widget endpoint
     RewriteRule ^menu-widget$ menu-widget.php [QSA,L]

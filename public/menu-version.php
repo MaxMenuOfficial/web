@@ -9,7 +9,7 @@ header('Access-Control-Allow-Origin: *');
 
 // Resto del código...
 
-require_once __DIR__ . '/../../config/menu-service.php';
+require_once __DIR__ . '/../config/menu-service.php';
 
 $restaurantId = $_GET['id'] ?? null;
 if (!$restaurantId) {
