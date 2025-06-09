@@ -2,7 +2,6 @@
 // File: /api/menu-version.php
 // ➊ Cabeceras HTTP
 header('Content-Type: application/json');
-header('Cache-Control: no-cache, must-revalidate, max-age=0');
 header('Access-Control-Allow-Origin: *');
 
 require_once __DIR__ . '/../../config/menu-service.php';
