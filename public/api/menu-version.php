@@ -1,4 +1,5 @@
 <?php
+header('Cache-Control: public, max-age=86400, stale-while-revalidate=3600, stale-if-error=300');
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 

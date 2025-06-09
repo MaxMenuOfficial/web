@@ -15,7 +15,6 @@ function purgeCloudflareCacheForRestaurant(string $restaurantId, int $version): 
         "$base/menu-widget?id={$restaurantId}&v={$version}",  // HTML versionado
         "$base/api/menu-version?id={$restaurantId}",          // JSON versión
         "$base/$restaurantId",                                // Friendly URL
-        "$base/widget.js",                                    // JS del widget
     ];
     
 
