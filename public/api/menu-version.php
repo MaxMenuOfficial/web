@@ -3,6 +3,7 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
+
 require_once __DIR__ . '/../../config/menu-service.php';
 
 $restaurantId = $_GET['id'] ?? null;
