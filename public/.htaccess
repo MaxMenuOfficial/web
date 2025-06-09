@@ -12,5 +12,9 @@
 
   # ✅ Ruta amigable: /nombre_restaurante → menu.php?id=nombre_restaurante
   RewriteRule ^([A-Za-z0-9_-]+)$ menu.php?id=$1 [QSA,L]
+
+  # ✅ Para que Cloudflare la entienda como real y enrutable
+  # 🔥 Necesario para que Cloudflare pueda regenerar el JSON version
+  RewriteRule ^api/menu-version$ api/menu-version.php [QSA,L]
 </IfModule>
 
