@@ -7,16 +7,17 @@
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-  # —––––––– Ignorar API y assets estáticos
-  RewriteRule ^api/    - [L]
-  RewriteRule ^static/ - [L]
 
   # —––––––– Mapear /menu-widget?id=… a menu-widget.php
   RewriteRule ^menu-widget$ menu-widget.php [QSA,L]
 
-    # —––––––– Mapear /api/menu-version? id=… a menu-widget.php
-  RewriteRule ^menu-version$ menu-version.php [QSA,L]
+
+  # —––––––– Mapear /api/menu-version → api/menu-version.php
+  RewriteRule ^api/menu-version$ api/menu-version.php [QSA,L]
+
 
   # —––––––– Ruta amigable /restauranteId → menu.php?id=restauranteId
   RewriteRule ^([A-Za-z0-9_-]+)$ menu.php?id=$1 [QSA,L]
 </IfModule>
+
+
