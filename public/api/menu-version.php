@@ -2,7 +2,8 @@
 // File: /api/menu-version.php
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
-
+header('Cache-Control: public, max-age=31536000, immutable'); // ⚠️ NUEVO HEADER
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
 
 $restaurantId = $_GET['id'] ?? null;
 if (!$restaurantId) {
