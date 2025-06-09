@@ -13,7 +13,7 @@ function purgeCloudflareCacheForRestaurant(string $restaurantId, int $version): 
 
     $files = [
         "$base/menu-widget?id={$restaurantId}&v={$version}", // HTML cacheado
-        "$base/api/menu-version?id={$restaurantId}",     // JSON version ← CRÍTICO
+        "$base/api/menu-version.php?id={$restaurantId}",     // JSON version ← CRÍTICO
         "$base/$restaurantId",                               // Friendly URL
         "$base/widget.js",
     ];
