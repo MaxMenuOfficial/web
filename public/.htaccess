@@ -1,21 +1,24 @@
+# Configuración mínima para cache y performance
 <IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteBase /
+    RewriteEngine On
+    RewriteBase /
+    
 
-  # Sirve archivos/carpetas reales
-  RewriteCond %{REQUEST_FILENAME} -f [OR]
-  RewriteCond %{REQUEST_FILENAME} -d
-  RewriteRule ^ - [L]
-
-  # /api/menu-version/<id>/<vers>  →  api/menu-version.php?id=<id>&v=<vers>
-  RewriteRule ^api/menu-version/([A-Za-z0-9_-]+)/([0-9]+)$ api/menu-version.php?id=$1&v=$2 [QSA,L]
-
-  # (por compatibilidad)  /api/menu-version/<id>  →  api/menu-version.php?id=<id>
-  RewriteRule ^api/menu-version/([A-Za-z0-9_-]+)$       api/menu-version.php?id=$1     [QSA,L]
-
-  # Widget visible   /menu-widget   →  menu-widget.php
-  RewriteRule ^menu-widget$ menu-widget.php [QSA,L]
-
-  # Página amigable   /<slug>       →  menu.php?id=<slug>
-  RewriteRule ^([A-Za-z0-9_-]+)$ menu.php?id=$1 [QSA,L]
+    
+    # Sirve archivos/carpetas reales
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+    
+    # API endpoints - el más importante para tu widget
+    RewriteRule ^api/menu-version$ api/menu-version.php [QSA,L]
+    
+    # Widget endpoint
+    RewriteRule ^menu-widget$ menu-widget.php [QSA,L]
+    
+    # Invalidate cache endpoint
+    RewriteRule ^api/invalidate-cache$ api/invalidate_cache.php [QSA,L]
+    
+    # URLs amigables para restaurantes (al final)
+    RewriteRule ^([A-Za-z0-9_-]+)$ menu.php?id=$1 [QSA,L]
 </IfModule>
