@@ -4,8 +4,6 @@ header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
 
-require_once __DIR__ . '/../../config/menu-service.php';
-
 $restaurantId = $_GET['id'] ?? null;
 if (!$restaurantId) {
     http_response_code(400);
@@ -13,11 +11,14 @@ if (!$restaurantId) {
     exit;
 }
 
-try {
+// ⚠️ Esto debe ser FALSE, para permitir lectura desde caché si existe
+$force = false;
 
+require_once __DIR__ . '/../../config/menu-service.php';
+
+try {
     $svc  = new MenuService();
-    // ▶️ Siempre forzamos query directa a Spanner
-    $data = $svc->getRestaurantPublicData($restaurantId, true);
+    $data = $svc->getRestaurantPublicData($restaurantId, $force);
 
     if (!$data || !isset($data['menu_version'])) {
         http_response_code(404);
@@ -31,4 +32,3 @@ try {
     http_response_code(500);
     echo json_encode(['error' => 'Error interno']);
 }
-
