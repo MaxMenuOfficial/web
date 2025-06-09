@@ -1,7 +1,13 @@
 <?php
+// Quitar cualquier header Cache-Control previo
+header_remove('Cache-Control');
+
+// Ahora enviamos el header correcto que quieres
 header('Cache-Control: public, max-age=86400, stale-while-revalidate=3600, stale-if-error=300');
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
+
+// Resto del código...
 
 require_once __DIR__ . '/../../config/menu-service.php';
 
