@@ -2,17 +2,20 @@
   RewriteEngine On
   RewriteBase /
 
-  # ✅ Sirve archivos o carpetas físicas tal cual
+  # Sirve archivos/carpetas reales
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-  # ✅ Ruta visible de widget
+  # /api/menu-version/<id>/<vers>  →  api/menu-version.php?id=<id>&v=<vers>
+  RewriteRule ^api/menu-version/([A-Za-z0-9_-]+)/([0-9]+)$ api/menu-version.php?id=$1&v=$2 [QSA,L]
+
+  # (por compatibilidad)  /api/menu-version/<id>  →  api/menu-version.php?id=<id>
+  RewriteRule ^api/menu-version/([A-Za-z0-9_-]+)$       api/menu-version.php?id=$1     [QSA,L]
+
+  # Widget visible   /menu-widget   →  menu-widget.php
   RewriteRule ^menu-widget$ menu-widget.php [QSA,L]
 
-  # ✅ Ruta visible para restaurantes tipo /maxmenu
+  # Página amigable   /<slug>       →  menu.php?id=<slug>
   RewriteRule ^([A-Za-z0-9_-]+)$ menu.php?id=$1 [QSA,L]
-
-  # ✅ Importante para que Cloudflare cachee /api/menu-version?id=...
-  RewriteRule ^api/menu-version$ api/menu-version.php [QSA,L]
 </IfModule>
