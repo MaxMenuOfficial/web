@@ -1,13 +1,10 @@
 <?php
-// ================================
-// 🔐 CABECERAS HTTP DEL WIDGET
-header("Access-Control-Allow-Origin: *"); // <- Permite absolutamente cualquier origen
-header('Cache-Control: public, max-age=31536000, immutable');
+// File: public/menu-widget.php
+header('Cache-Control: public, max-age=31536000');
 header('Content-Type: text/html; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
 
-// ================================
-// 🧪 VALIDACIÓN DE ENTRADA
-// ================================
+// ➋ Obtener parámetros
 $restaurantId = $_GET['id'] ?? null;
 $version      = $_GET['v']  ?? null;
 
@@ -16,32 +13,20 @@ if (!$restaurantId) {
     exit('<p>Restaurant ID requerido</p>');
 }
 
-// ================================
-// 🔒 VALIDACIÓN DE ORIGEN Y DOMINIO
-// ================================
-// Este archivo realiza:
-// - Validación del restaurantId
-// - Carga de dominios autorizados
-// - Validación de HTTP_ORIGIN
-// - Envío de Access-Control-Allow-Origin dinámico
-
-// ================================
-// 📦 CARGA DE DATOS DEL MENÚ
-// ================================
-require_once __DIR__ . '/../get/get_restaurant_id.php';
-require_once __DIR__ . '/../get/get_logo.php';
-require_once __DIR__ . '/../get/get_idiomas.php'; 
-require_once __DIR__ . '/../get/get_categoria.php';
-require_once __DIR__ . '/../get/get_plataformas.php';
-require_once __DIR__ . '/../get/get_restaurant_moneda.php';
-require_once __DIR__ . '/../get/get_idiomas_for_items.php';
-require_once __DIR__ . '/../get/get_simbolo_moneda.php';
-require_once __DIR__ . '/../get/get_cat_and_subcat_for_item.php';
-require_once __DIR__ . '/../get/get_brunch.php';
-require_once __DIR__ . '/../get/get_daily_menu.php';
-require_once __DIR__ . '/../get/get_traducciones.php';
-require_once __DIR__ . '/../get/get_alergenos.php';
-require_once __DIR__ . '/../get/get_colors.php';
+include '../get/get_restaurant_id.php';
+include '../get/get_logo.php';
+include '../get/get_idiomas.php'; 
+include '../get/get_categoria.php';
+include '../get/get_plataformas.php';
+include '../get/get_restaurant_moneda.php';
+include '../get/get_idiomas_for_items.php';
+include '../get/get_simbolo_moneda.php';
+include '../get/get_cat_and_subcat_for_item.php';
+include '../get/get_brunch.php';
+include '../get/get_daily_menu.php';
+include '../get/get_traducciones.php';
+include '../get/get_alergenos.php';
+include '../get/get_colors.php'; 
 
 ?>
 

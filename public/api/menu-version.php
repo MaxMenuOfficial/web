@@ -1,8 +1,8 @@
 <?php
 
-header("Access-Control-Allow-Origin: *"); // <- Permite absolutamente cualquier origen
-header('Cache-Control: public, max-age=31536000, immutable');
-header('Content-Type: application/json; charset=utf-8');
+header('Cache-Control: public, max-age=31536000');
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
 
 require_once __DIR__ . '/../../config/menu-service.php';
 
