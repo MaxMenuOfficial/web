@@ -157,14 +157,11 @@ SQL;
 // ---------------------------------------------------------------------------
 $uri = $_SERVER['REQUEST_URI'] ?? '';
 $isCacheInvalidator = str_contains($uri, '/api/invalidate');
-$isMenuVersion = str_contains($uri, '/api/menu-version'); // ← NUEVA LÍNEA
+$isMenuVersion = str_contains($uri, '/api/menu-version');
 
-if (!$isCacheInvalidator && !$isMenuVersion) { // ← MODIFICADA
-  
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
-
+if (!$isCacheInvalidator && !$isMenuVersion) {
+    // ✅ SIN session_start() - Este archivo solo muestra datos públicos
+    
     global 
         $restaurantId, $restaurantData,
         $categories, $subcategories, $items, $logos,

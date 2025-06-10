@@ -35,7 +35,7 @@
   // ➍ Función principal: obtiene la versión, construye la URL versionada y carga el HTML
   function loadWidget() {
     // 1️⃣ Obtener la versión actual del menú
-    fetch(`https://menu.maxmenu.com/menu-version?id=${encodeURIComponent(restaurantId)}`, { mode: 'cors' })
+    fetch(`https://menu.maxmenu.com/api/menu-version?id=${encodeURIComponent(restaurantId)}`, { mode: 'cors' })
       .then(res => {
         if (!res.ok) throw new Error('[MaxMenu] Error al obtener la versión del menú.');
         return res.json();

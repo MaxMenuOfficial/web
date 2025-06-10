@@ -1,40 +1,20 @@
-# ------------------------------------------------
-# Configuración mínima para cache y performance
-# ------------------------------------------------
+# Configuración mínima para cache y performan
 <IfModule mod_rewrite.c>
-
     RewriteEngine On
     RewriteBase /
-
-    # Sirve archivos/carpetas reales directamente
+    
+    # Sirve archivos/carpetas reales
     RewriteCond %{REQUEST_FILENAME} -f [OR]
     RewriteCond %{REQUEST_FILENAME} -d
     RewriteRule ^ - [L]
-
-    # API endpoints importantes
-    RewriteRule ^menu-version$ menu-version.php [QSA,L]
+    
+    # API endpoints - el más importante para tu widget
+    RewriteRule ^api/menu-version$ api/menu-version.php [QSA,L]
+    
+    # Widget endpoint
     RewriteRule ^menu-widget$ menu-widget.php [QSA,L]
-  
+    
     # URLs amigables para restaurantes (al final)
     RewriteRule ^([A-Za-z0-9_-]+)$ menu.php?id=$1 [QSA,L]
-
-</IfModule>
-
-# ------------------------------------------------
-# Control de cache y headers para mejorar performance
-# ------------------------------------------------
-<IfModule mod_headers.c>
-
-    <Files "menu-version.php">
-       # Eliminar headers restrictivos que puedan venir por defecto
-        Header unset Cache-Control
-        Header unset Pragma
-        Header unset Expires
-
-        Header unset Cache-Control
-        Header unset Pragma
-        Header unset Expires
-        Header set Cache-Control "public, max-age=86400, stale-while-revalidate=3600, stale-if-error=300"
-    </Files>
-
+    
 </IfModule>
