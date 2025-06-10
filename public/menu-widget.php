@@ -1,11 +1,9 @@
 <?php
 // ================================
 // 🔐 CABECERAS HTTP DEL WIDGET
-// ================================
-require_once __DIR__ . '/../get/get_domains.php';
-
-header('Content-Type: text/html; charset=utf-8');
+header("Access-Control-Allow-Origin: *"); // <- Permite absolutamente cualquier origen
 header('Cache-Control: public, max-age=31536000, immutable');
+header('Content-Type: text/html; charset=utf-8');
 
 // ================================
 // 🧪 VALIDACIÓN DE ENTRADA

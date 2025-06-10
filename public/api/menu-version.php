@@ -1,13 +1,6 @@
 <?php
-require_once __DIR__ . '/../../get/get_domains.php'; 
-// ⚠️ Este archivo ya hace:
-// - Validación de restaurantId
-// - Validación del HTTP_ORIGIN contra $domains
-// - Envío de las cabeceras Access-Control-Allow-*
-// - Corte inmediato si hay errores
-// --------------------------------------
-// 📦 Cabeceras de respuesta de la API JSON
-// --------------------------------------
+
+header("Access-Control-Allow-Origin: *"); // <- Permite absolutamente cualquier origen
 header('Cache-Control: public, max-age=31536000, immutable');
 header('Content-Type: application/json; charset=utf-8');
 
