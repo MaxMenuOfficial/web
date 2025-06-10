@@ -1,20 +1,28 @@
-# Configuración mínima para cache y performan
 <IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteBase /
-    
-    # Sirve archivos/carpetas reales
-    RewriteCond %{REQUEST_FILENAME} -f [OR]
-    RewriteCond %{REQUEST_FILENAME} -d
-    RewriteRule ^ - [L]
-    
-    # API endpoints - el más importante para tu widget
-    RewriteRule ^api/menu-version$ api/menu-version.php [QSA,L]
-    
-    # Widget endpoint
-    RewriteRule ^menu-widget$ menu-widget.php [QSA,L]
-    
-    # URLs amigables para restaurantes (al final)
-    RewriteRule ^([A-Za-z0-9_-]+)$ menu.php?id=$1 [QSA,L]
-    
+  RewriteEngine On
+  RewriteBase /
+
+  # Sirve archivos/carpetas reales (CSS, JS, imágenes, etc.)
+  # Detiene el procesamiento de RewriteRule si el archivo o directorio existe.
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # --- Reglas para el correcto funcionamiento del widget y la purga de Cloudflare ---
+
+  # Reescribe internamente: /api/menu-version -> api/menu-version.php
+  # Necesario para la llamada fetch del widget.js para obtener la versión del menú.
+  # También es la URL que Cloudflare purga para el JSON de la versión.
+  RewriteRule ^api/menu-version$ api/menu-version.php [QSA,L]
+
+  # Reescribe internamente: /menu-widget -> menu-widget.php
+  # Necesario para la llamada fetch del widget.js para cargar el HTML del widget.
+  # También es la URL que Cloudflare purga para el HTML versionado.
+  RewriteRule ^menu-widget$ menu-widget.php [QSA,L]
+
+  # Reescribe internamente: /<restaurantId> (URL amigable) -> menu.php?id=<restaurantId>
+  # Esta es la "URL amigable" que Cloudflare purga para el menú.
+  # Debe ser la ÚLTIMA regla porque es la más genérica (captura cualquier slug).
+  RewriteRule ^([A-Za-z0-9_-]+)$ menu.php?id=$1 [QSA,L]
+  
 </IfModule>
