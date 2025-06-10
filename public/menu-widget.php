@@ -1,7 +1,7 @@
 <?php
 // File: public/menu-widget.php
 
-// ➊ Cabeceras para CORS y forzar revalidación
+header('Cache-Control: public, max-age=31536000');
 header('Content-Type: text/html; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 
