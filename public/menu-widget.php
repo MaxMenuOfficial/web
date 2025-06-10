@@ -87,7 +87,7 @@ include '../get/get_colors.php';
 
     <!-- Modal para la selección de idioma -->
 <div id="translateItemModalMenu" class="modal" style="display:none;">
-  <div class="modal-content">
+  <div id="modal-content-translate" class="modal-content">
     <span class="close">&times;</span>
     <br><br>
     <div id="idiomasContainer">

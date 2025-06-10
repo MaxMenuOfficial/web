@@ -15,11 +15,12 @@
     background-color: rgba(0, 0, 0, 0); 
 }
 
-.modal-content {
-    background-color: #ffffff;
+#modal-content-translate {
+    background-color: #fffffffa;
     margin: 5px auto;
     padding: 40px;
-    width: 200px;
+    max-width: 200px;
+    min-width: 200px;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -83,9 +84,6 @@
   }
 
 
-
-
-
 .modal-content {
     text-align: center; /* Centra el contenido textual como los títulos */
 }
@@ -97,7 +95,7 @@
     justify-content: center;
     width: 100%;
     text-align: center;
-    background-color: #00000000;
+    background-color: #ffffff;
 }
 
 .idioma-btn , .modal-content button[type="submit"]  {
