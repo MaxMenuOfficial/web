@@ -1,44 +1,37 @@
 <?php
-function purgeCloudflareCacheForRestaurant(string $restaurantId): void {
-    $zoneId = getenv('CLOUDFLARE_ZONE_ID');
-    $apiToken = getenv('CLOUDFLARE_API_TOKEN');
-    $baseDomain = rtrim(getenv('CLOUDFLARE_MENU_DOMAIN'), '/');
+// File: utils/cloudflare-utils.php
 
-    if (!$zoneId || !$apiToken || !$baseDomain) {
+function purgeCloudflareCacheForRestaurant(string $restaurantId, int $version): void {
+    $zoneId   = getenv('CLOUDFLARE_ZONE_ID');
+    $apiToken = getenv('CLOUDFLARE_API_TOKEN');
+
+    if (!$zoneId || !$apiToken) {
         error_log("❌ Cloudflare purge skipped: missing env vars.");
         return;
     }
 
-    $files = [
-        "https://menu.maxmenu.com/{$restaurantId}", // página principal del menú
-        "https://menu.maxmenu.com/menu-widget?id={$restaurantId}*", // widget con wildcard para todas las versiones
-        "https://menu.maxmenu.com/api/menu-version?id={$restaurantId}" // API de versión
-    ];
+    // Payload para purga total
+    $payload = json_encode(['purge_everything' => true]);
 
-    $payload = json_encode(['files' => $files]);
     $ch = curl_init("https://api.cloudflare.com/client/v4/zones/$zoneId/purge_cache");
-    
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => $payload,
-        CURLOPT_HTTPHEADER => [
+        CURLOPT_CUSTOMREQUEST  => 'POST',
+        CURLOPT_POSTFIELDS     => $payload,
+        CURLOPT_HTTPHEADER     => [
             "Authorization: Bearer $apiToken",
             'Content-Type: application/json',
         ],
     ]);
 
     $response = curl_exec($ch);
-    $error = curl_error($ch);
-    $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error    = curl_error($ch);
+    $status   = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
     if ($error || $status !== 200) {
-        error_log("❌ Cloudflare purge failed ($status): $error");
-        if ($response) {
-            error_log("Response: $response");
-        }
+        error_log("❌ Cloudflare full purge failed ($status): $error | response: $response");
     } else {
-        error_log("✅ Cloudflare purge success for: " . implode(', ', $files));
+        error_log("✅ Cloudflare full purge success.");
     }
 }
