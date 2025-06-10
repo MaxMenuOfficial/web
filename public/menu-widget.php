@@ -1,20 +1,15 @@
 <?php
-// ----------------------------------------
-// 🔐 Cabeceras HTTP para el widget público
-// ----------------------------------------
-
-// 1. Evita sniffing de MIME y fuerza codificación
+// ================================
+// 🔐 CABECERAS HTTP DEL WIDGET
+// ================================
 header('Content-Type: text/html; charset=utf-8');
-// 4. CORS se gestiona dinámicamente desde tu otro script
-header('Cache-Control: public, max-age=31536000, immutable'); // Cachea 1 año completo
+header('Cache-Control: public, max-age=31536000, immutable');
+header('X-Content-Type-Options: nosniff');
+header('Vary: Origin, Accept-Encoding'); // Muy importante para Cloudflare y navegadores
 
-// 6. Optional: ETag dinámico si generas versiones de contenido
-// header('ETag: "menu-' . $restaurantId . '-' . $version . '"');
-// ------------------------
-// 🧪 Validación de entrada
-// ------------------------
-
-// ➋ Obtener parámetros
+// ================================
+// 🧪 VALIDACIÓN DE ENTRADA
+// ================================
 $restaurantId = $_GET['id'] ?? null;
 $version      = $_GET['v']  ?? null;
 
@@ -23,25 +18,33 @@ if (!$restaurantId) {
     exit('<p>Restaurant ID requerido</p>');
 }
 
+// ================================
+// 🔒 VALIDACIÓN DE ORIGEN Y DOMINIO
+// ================================
+// Este archivo realiza:
+// - Validación del restaurantId
+// - Carga de dominios autorizados
+// - Validación de HTTP_ORIGIN
+// - Envío de Access-Control-Allow-Origin dinámico
+require_once __DIR__ . '/../get/get_domains.php';
 
-include '../get/get_restaurant_id.php';
-include '../get/get_logo.php';
-include '../get/get_idiomas.php'; 
-include '../get/get_categoria.php';
-include '../get/get_plataformas.php';
-include '../get/get_restaurant_moneda.php';
-include '../get/get_idiomas_for_items.php';
-include '../get/get_simbolo_moneda.php';
-include '../get/get_cat_and_subcat_for_item.php';
-include '../get/get_brunch.php';
-include '../get/get_daily_menu.php';
-include '../get/get_traducciones.php';
-include '../get/get_alergenos.php';
-include '../get/get_colors.php'; 
-include '../get/get_domains.php'; 
-
-
-
+// ================================
+// 📦 CARGA DE DATOS DEL MENÚ
+// ================================
+require_once __DIR__ . '/../get/get_restaurant_id.php';
+require_once __DIR__ . '/../get/get_logo.php';
+require_once __DIR__ . '/../get/get_idiomas.php'; 
+require_once __DIR__ . '/../get/get_categoria.php';
+require_once __DIR__ . '/../get/get_plataformas.php';
+require_once __DIR__ . '/../get/get_restaurant_moneda.php';
+require_once __DIR__ . '/../get/get_idiomas_for_items.php';
+require_once __DIR__ . '/../get/get_simbolo_moneda.php';
+require_once __DIR__ . '/../get/get_cat_and_subcat_for_item.php';
+require_once __DIR__ . '/../get/get_brunch.php';
+require_once __DIR__ . '/../get/get_daily_menu.php';
+require_once __DIR__ . '/../get/get_traducciones.php';
+require_once __DIR__ . '/../get/get_alergenos.php';
+require_once __DIR__ . '/../get/get_colors.php';
 
 ?>
 

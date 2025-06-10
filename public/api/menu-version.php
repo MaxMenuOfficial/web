@@ -1,6 +1,17 @@
 <?php
-header('Cache-Control: public, max-age=31536000');
-header('Content-Type: application/json');
+require_once __DIR__ . '/../../get/get_domains.php'; 
+// ⚠️ Este archivo ya hace:
+// - Validación de restaurantId
+// - Validación del HTTP_ORIGIN contra $domains
+// - Envío de las cabeceras Access-Control-Allow-*
+// - Corte inmediato si hay errores
+// --------------------------------------
+// 📦 Cabeceras de respuesta de la API JSON
+// --------------------------------------
+header('Cache-Control: public, max-age=31536000, immutable');
+header('Content-Type: application/json; charset=utf-8');
+header('X-Content-Type-Options: nosniff');
+header('Vary: Origin, Accept-Encoding');
 
 require_once __DIR__ . '/../../config/menu-service.php';
 
