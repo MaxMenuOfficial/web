@@ -16,7 +16,7 @@
 }
 
 #modal-content-translate {
-    background-color: #fffffffa;
+    background-color: #ffffff00;
     margin: 5px auto;
     padding: 40px;
     max-width: 200px;
@@ -91,11 +91,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    max-width: 200px;
-    min-width: 200px;
     width: 100%;
     text-align: center;
-    background-color: #ffffff;
+    background-color: #ffffff00;
 }
 
 .idioma-btn , .modal-content button[type="submit"]  {
