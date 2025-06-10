@@ -44,9 +44,6 @@
 }
 
 
-
-
-
 .close {
     color: rgb(189, 189, 189);
     float: right;
@@ -81,6 +78,7 @@
       background-color: rgba(255, 255, 255, 0);
       border: none;
       cursor: pointer;
+
   }
 
 
@@ -93,6 +91,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    max-width: 200px;
+    min-width: 200px;
     width: 100%;
     text-align: center;
     background-color: #ffffff;
