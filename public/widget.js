@@ -16,12 +16,10 @@
 
   // ➌ Inyectar CSS “fijos” del widget (no requieren versión)
   const cssFiles = [
-    'https://menu.maxmenu.com/menu/styles/view-items.css',
-    'https://menu.maxmenu.com/menu/styles/view-categorias.css',
-    'https://menu.maxmenu.com/menu/styles/view-plataformas.css',
-    'https://menu.maxmenu.com/menu/styles/view-idiomas.css',
-    'https://menu.maxmenu.com/menu/styles/view-logo.css',
-    'https://menu.maxmenu.com/menu/styles/view-menu.css'
+    'https://menu.maxmenu.com/menu_api/styles/view-items.css',
+    'https://menu.maxmenu.com/menu_api/styles/view-plataformas.css',
+    'https://menu.maxmenu.com/menu_api/styles/view-logo.css',
+    'https://menu.maxmenu.com/menu_api/styles/view-menu.css'
   ];
   cssFiles.forEach(href => {
     if (!document.querySelector(`link[href="${href}"]`)) {

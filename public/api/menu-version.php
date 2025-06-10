@@ -1,8 +1,19 @@
 <?php
+// ============================
+// 🔐 CABECERAS HTTP ESTRICTAS PARA API JSON
+// ============================
 
-header('Cache-Control: public, max-age=31536000');
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
+// MIME + Seguridad
+header('Content-Type: application/json; charset=utf-8');
+header('X-Content-Type-Options: nosniff');
+
+// CORS (acceso solo a dominios permitidos)
+require_once __DIR__ . '/../../get/get_domains.php'; // 👈 usa tu mismo validador que en el widget
+
+// Cacheo (controlado por menu_version, se cachea forever si no cambia)
+header('Cache-Control: public, max-age=31536000, immutable');
+// Opcional: indicar que el contenido puede ser cacheado por CDN según origin
+header('Vary: Origin, Accept-Encoding');
 
 require_once __DIR__ . '/../../config/menu-service.php';
 

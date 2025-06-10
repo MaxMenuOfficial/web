@@ -1,8 +1,31 @@
 <?php
-// File: public/menu-widget.php
-header('Cache-Control: public, max-age=31536000');
+// ----------------------------------------
+// 🔐 Cabeceras HTTP para el widget público
+// ----------------------------------------
+
+// 1. Evita sniffing de MIME y fuerza codificación
 header('Content-Type: text/html; charset=utf-8');
-header('Access-Control-Allow-Origin: *');
+header('X-Content-Type-Options: nosniff');
+
+// 2. Permite embebido solo desde dominios válidos (se sobreescribirá si tienes lógica dinámica)
+header('X-Frame-Options: SAMEORIGIN'); // Puedes reemplazar dinámicamente según tu lógica
+
+// 3. Protección mínima contra XSS
+header('X-XSS-Protection: 1; mode=block');
+
+// 4. CORS se gestiona dinámicamente desde tu otro script
+// (no pongas Access-Control-Allow-Origin aquí fijo como '*')
+
+// 5. Cache agresivo, controlado por query param `?v=menu_version`
+header('Cache-Control: public, max-age=31536000, immutable'); // Cachea 1 año completo
+header('Vary: Accept-Encoding, Origin'); // Para CDNs y CORS
+
+// 6. Optional: ETag dinámico si generas versiones de contenido
+// header('ETag: "menu-' . $restaurantId . '-' . $version . '"');
+
+// ------------------------
+// 🧪 Validación de entrada
+// ------------------------
 
 // ➋ Obtener parámetros
 $restaurantId = $_GET['id'] ?? null;
@@ -13,6 +36,7 @@ if (!$restaurantId) {
     exit('<p>Restaurant ID requerido</p>');
 }
 
+include '../get/get_domains.php'; 
 include '../get/get_restaurant_id.php';
 include '../get/get_logo.php';
 include '../get/get_idiomas.php'; 
@@ -27,6 +51,7 @@ include '../get/get_daily_menu.php';
 include '../get/get_traducciones.php';
 include '../get/get_alergenos.php';
 include '../get/get_colors.php'; 
+
 
 
 
