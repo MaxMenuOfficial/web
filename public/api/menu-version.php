@@ -2,7 +2,6 @@
 header('Cache-Control: public, max-age=31536000');
 header('Content-Type: application/json');
 
-require_once __DIR__ . '/../../get/get_domains.php';
 require_once __DIR__ . '/../../config/menu-service.php';
 
 $restaurantId = $_GET['id'] ?? null;
