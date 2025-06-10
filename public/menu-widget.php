@@ -10,7 +10,6 @@ header('Cache-Control: public, max-age=31536000, immutable'); // Cachea 1 año c
 
 // 6. Optional: ETag dinámico si generas versiones de contenido
 // header('ETag: "menu-' . $restaurantId . '-' . $version . '"');
-
 // ------------------------
 // 🧪 Validación de entrada
 // ------------------------
@@ -24,7 +23,7 @@ if (!$restaurantId) {
     exit('<p>Restaurant ID requerido</p>');
 }
 
-include '../get/get_domains.php'; 
+
 include '../get/get_restaurant_id.php';
 include '../get/get_logo.php';
 include '../get/get_idiomas.php'; 
@@ -39,6 +38,7 @@ include '../get/get_daily_menu.php';
 include '../get/get_traducciones.php';
 include '../get/get_alergenos.php';
 include '../get/get_colors.php'; 
+include '../get/get_domains.php'; 
 
 
 
