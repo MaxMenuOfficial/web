@@ -1,7 +1,8 @@
 <?php
-// Quitar cualquier header Cache-Control previo
+// Eliminar headers de cache previos o impuestos
 header_remove('Cache-Control');
-
+header_remove('Expires');
+header_remove('Pragma');
 // Ahora enviamos el header correcto que quieres
 header('Cache-Control: public, max-age=86400, stale-while-revalidate=3600, stale-if-error=300');
 header('Content-Type: application/json');
