@@ -2,10 +2,10 @@
 // ================================
 // 🔐 CABECERAS HTTP DEL WIDGET
 // ================================
+require_once __DIR__ . '/../get/get_domains.php';
+
 header('Content-Type: text/html; charset=utf-8');
 header('Cache-Control: public, max-age=31536000, immutable');
-header('X-Content-Type-Options: nosniff');
-header('Vary: Origin, Accept-Encoding'); // Muy importante para Cloudflare y navegadores
 
 // ================================
 // 🧪 VALIDACIÓN DE ENTRADA
@@ -26,7 +26,6 @@ if (!$restaurantId) {
 // - Carga de dominios autorizados
 // - Validación de HTTP_ORIGIN
 // - Envío de Access-Control-Allow-Origin dinámico
-require_once __DIR__ . '/../get/get_domains.php';
 
 // ================================
 // 📦 CARGA DE DATOS DEL MENÚ

@@ -1,54 +1,50 @@
 <?php
-// ---------------------------------------------------------
-// 🔗 Inicialización de entorno y obtención de restaurantId
-// ---------------------------------------------------------
-require_once __DIR__ . '/get_restaurant_id.php';          // define global $restaurantId
-require_once __DIR__ . '/../config/menu-service.php';     // inicializa global $domains
+// File: get_domains.php
+
+// 1. Inicia tu servicio y saca $domains y $restaurantId
+require_once __DIR__ . '/../../config/menu-service.php';
+require_once __DIR__ . '/get_restaurant_id.php';
 
 global $domains, $restaurantId;
 
-// ---------------------------------------------------------
-// 🔐 Validaciones mínimas
-// ---------------------------------------------------------
+// 2. Cabecera JSON (para debug y, al final, la validación la hará antes de enviar datos)
+header('Content-Type: application/json; charset=utf-8');
+
+// 3. Asegúrate de que $domains e $restaurantId existen
 if (empty($domains) || empty($restaurantId)) {
     http_response_code(400);
-    exit("Access denied: this domain is not authorized to view this menu. Please register it in your MaxMenu dashboard.");
+    echo json_encode(['error' => 'Restaurante o dominios no configurados']);
+    exit;
 }
 
-// ---------------------------------------------------------
-// 🌍 Captura y normalización del Origin
-// ---------------------------------------------------------
-$origin      = $_SERVER['HTTP_ORIGIN'] ?? '';
-$originHost  = $origin ? parse_url($origin, PHP_URL_HOST) : '';
-$normalized  = $originHost ? preg_replace('/^www\./', '', strtolower($originHost)) : '';
-
-// Si no viene Origin o es localhost → denegar
-if (!$originHost || $normalized === 'localhost') {
-    http_response_code(403);
-    exit('Forbidden: invalid origin.');
-}
-
-// ---------------------------------------------------------
-// 🧼 Preparar lista de hosts autorizados
-// ---------------------------------------------------------
-$restaurantDomains = array_filter($domains, fn($d) =>
-    isset($d['restaurant_id'], $d['domain']) &&
-    $d['restaurant_id'] === $restaurantId &&
-    !empty($d['domain'])
+// 4. Filtra sólo los dominios de este restaurante
+$filtered = array_filter($domains, fn($d)=>
+    isset($d['restaurant_id'], $d['domain'])
+    && $d['restaurant_id'] === $restaurantId
+    && !empty($d['domain'])
 );
+$filtered = array_values($filtered);
 
-$allowedHosts = array_map(function($raw){
-    $u = trim($raw['domain']);
-    if (!preg_match('#^https?://#i', $u)) {
-        $u = 'https://' . $u;
+// 5. Función de normalización
+function normalizeHost(string $url): string {
+    // Añadimos protocolo si falta
+    if (!preg_match('#^https?://#i', $url)) {
+        $url = 'https://' . $url;
     }
-    $h = parse_url($u, PHP_URL_HOST);
-    return $h ? preg_replace('/^www\./','', strtolower($h)) : '';
-}, $restaurantDomains);
+    $host = parse_url($url, PHP_URL_HOST) ?: '';
+    $host = strtolower(preg_replace('/^www\./', '', $host));
+    return rtrim($host, '.');
+}
 
-// ---------------------------------------------------------
-// ⚖️ Verificar que el Origin esté en la lista o sea subdominio
-// ---------------------------------------------------------
+// 6. Normaliza todos los hosts permitidos
+$allowedHosts = array_map(fn($d)=> normalizeHost($d['domain']), $filtered);
+
+// 7. Obtén y normaliza el origen de la petición
+$origin       = $_SERVER['HTTP_ORIGIN']       ?? '';
+$originHost   = parse_url($origin, PHP_URL_HOST) ?: '';
+$normalized   = strtolower(preg_replace('/^www\./', '', $originHost));
+
+// 8. Comprueba coincidencia exacta o subdominio
 $authorized = false;
 foreach ($allowedHosts as $host) {
     if ($normalized === $host || str_ends_with($normalized, '.' . $host)) {
@@ -59,21 +55,15 @@ foreach ($allowedHosts as $host) {
 
 if (!$authorized) {
     http_response_code(403);
-    exit("Forbidden: origin '{$normalized}' not authorized.");
-}
-
-// ---------------------------------------------------------
-// ✅ Configurar CORS para dominios autorizados
-// ---------------------------------------------------------
-header("Access-Control-Allow-Origin: {$origin}");
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization');
-header('Access-Control-Allow-Credentials: true');
-
-// Responder al preflight
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
+    echo json_encode([
+        'error'  => "Origen '{$originHost}' no autorizado",
+        'detail' => [
+            'allowed' => $allowedHosts,
+            'got'     => $normalized
+        ]
+    ], JSON_PRETTY_PRINT);
     exit;
 }
 
-// Aquí sigue la lógica de tu widget…
+// 9. Si llegamos aquí, todo ok → devolvemos la lista (o quítalo si no quieres exponerla)
+echo json_encode($filtered, JSON_PRETTY_PRINT);

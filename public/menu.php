@@ -18,7 +18,6 @@ require_once __DIR__ . '/../get/get_traducciones.php';
 require_once __DIR__ . '/../get/get_alergenos.php';
 require_once __DIR__ . '/../get/get_colors.php';
 
-
 ?>
 
 
