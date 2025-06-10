@@ -15,7 +15,7 @@
     background-color: rgba(0, 0, 0, 0); 
 }
 
-#modal-content-translate {
+.modal-content {
     background-color: #ffffff00;
     margin: 5px auto;
     padding: 40px;
@@ -42,6 +42,9 @@
     border-radius: 40px;
 
 }
+
+
+
 
 
 .close {
@@ -78,7 +81,6 @@
       background-color: rgba(255, 255, 255, 0);
       border: none;
       cursor: pointer;
-
   }
 
 
@@ -93,7 +95,7 @@
     justify-content: center;
     width: 100%;
     text-align: center;
-    background-color: #ffffff00;
+    background-color: #00000000;
 }
 
 .idioma-btn , .modal-content button[type="submit"]  {
