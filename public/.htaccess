@@ -2,6 +2,7 @@
 # Configuración mínima para cache y performance
 # ------------------------------------------------
 <IfModule mod_rewrite.c>
+
     RewriteEngine On
     RewriteBase /
 
@@ -13,24 +14,23 @@
     # API endpoints importantes
     RewriteRule ^menu-version$ menu-version.php [QSA,L]
     RewriteRule ^menu-widget$ menu-widget.php [QSA,L]
-    RewriteRule ^api/invalidate-cache$ api/invalidate_cache.php [QSA,L]
-
+  
     # URLs amigables para restaurantes (al final)
     RewriteRule ^([A-Za-z0-9_-]+)$ menu.php?id=$1 [QSA,L]
+
 </IfModule>
 
 # ------------------------------------------------
 # Control de cache y headers para mejorar performance
 # ------------------------------------------------
 <IfModule mod_headers.c>
-    # Eliminar headers restrictivos que puedan venir por defecto
-
-      Header unset Cache-Control
-      Header unset Pragma
-      Header unset Expires
-
 
     <Files "menu-version.php">
+       # Eliminar headers restrictivos que puedan venir por defecto
+        Header unset Cache-Control
+        Header unset Pragma
+        Header unset Expires
+
         Header unset Cache-Control
         Header unset Pragma
         Header unset Expires
