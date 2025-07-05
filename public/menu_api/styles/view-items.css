@@ -1034,7 +1034,7 @@ button img.arrow-icon {
 }
 
 .category-button-atajo {
-
+  font-weight: bolder;
   background-color: #ffffff00;
   border: 0px solid #000000;
   color: black;
@@ -1047,7 +1047,6 @@ button img.arrow-icon {
   transition: background-color 0.3s ease;
   max-width: 250px;
   min-width: 250px;
-  
 }
 
 
