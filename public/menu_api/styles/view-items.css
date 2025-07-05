@@ -1036,7 +1036,7 @@ button img.arrow-icon {
 .category-button-atajo {
 
   background-color: #ffffff00;
-  border: 5px solid #000000;
+  border: 0px solid #000000;
   color: black;
   padding: 20px 20px;
   margin: 2px auto; 
@@ -1448,12 +1448,6 @@ input:checked + .slider:before {
   min-width: 20px;
 
 }
-
-
-
-
-
-
 
 
 
