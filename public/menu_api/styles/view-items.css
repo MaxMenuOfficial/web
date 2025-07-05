@@ -1034,16 +1034,16 @@ button img.arrow-icon {
 }
 
 .category-button-atajo {
-  font-weight: bolder;
+  font-weight:900;
   background-color: #ffffff00;
   border: 0px solid #000000;
   color: black;
-  padding: 20px 20px;
+  padding: 18px 20px;
   margin: 2px auto; 
   border-radius: 80px;
   cursor: pointer;
   color: rgb(0, 0, 0) ;
-  font-size: 14px;
+  font-size: 17px;
   transition: background-color 0.3s ease;
   max-width: 250px;
   min-width: 250px;
@@ -1106,7 +1106,12 @@ svg.arrow-icon-left{
   height: 25px;
   transition: transform 0.3s ease-in-out;
   margin: -8px 0px ;
+  cursor: pointer;
+  background-color: #00000000;
+}
 
+svg.arrow-icon-left:hover {
+  background-color: #00000000;
 }
 
 /* Espacio reservado cuando NO hay flecha */
@@ -1115,10 +1120,14 @@ svg.arrow-icon-left{
   width: 30px;
   height: 30px;
   visibility: hidden; /* Oculto, pero mantiene el espacio */
+  cursor: pointer;
+  background-color: #00000000;
 }
 
 .arrow-icon-left {
   color: #000000;
+  cursor: pointer;
+  background-color: #00000000;
 }
 
 
