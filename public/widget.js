@@ -30,16 +30,36 @@
     }
   });
 
-  // ➍ Cargar directamente el HTML del widget (sin versión)
+  // ➍ Función principal: obtiene la versión, construye la URL versionada y carga el HTML
   function loadWidget() {
-    const widgetUrl = `https://menu.maxmenu.com/menu-widget?id=${encodeURIComponent(restaurantId)}`;
-
-    fetch(widgetUrl, { mode: 'cors' })
+    // 1️⃣ Obtener la versión actual del menú
+    fetch(`https://menu.maxmenu.com/api/menu-version?id=${encodeURIComponent(restaurantId)}`, { mode: 'cors' })
       .then(res => {
-        if (!res.ok) throw new Error('[MaxMenu] Error al cargar el widget.');
-        return res.text();
+        if (!res.ok) throw new Error('[MaxMenu] Error al obtener la versión del menú.');
+        return res.json();
       })
-      .then(html => {
+      .then(data => {
+        const v = data.version;
+        if (typeof v !== 'number' || v <= 0) {
+          throw new Error('[MaxMenu] Versión inválida recibida: ' + v);
+        }
+
+        // 2️⃣ Construir la URL que purgas en Cloudflare
+        return { 
+          widgetUrl: `https://menu.maxmenu.com/menu-widget.php?id=${encodeURIComponent(restaurantId)}&v=${v}`,
+          v 
+        };
+      })
+      .then(({ widgetUrl, v }) => 
+        // 3️⃣ Cargar el HTML versionado
+        fetch(widgetUrl, { mode: 'cors' })
+          .then(res => {
+            if (!res.ok) throw new Error('[MaxMenu] Error al cargar el widget.');
+            return res.text();
+          })
+          .then(html => ({ html, v }))
+      )
+      .then(({ html, v }) => {
         // 4️⃣ Inyectar el HTML dentro del contenedor
         container.innerHTML = html;
 
@@ -55,7 +75,7 @@
           document.body.appendChild(newScript);
         });
 
-        console.log(`[MaxMenu] Widget cargado con éxito.`);
+        console.log(`[MaxMenu] Widget versión ${v} cargado con éxito.`);
       })
       .catch(err => {
         console.error(err);

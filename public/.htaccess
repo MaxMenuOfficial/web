@@ -13,7 +13,7 @@
   RewriteRule ^api/menu-version$ api/menu-version.php [QSA,L]
 
   # Reescribe internamente: /menu-widget -> menu-widget.php
-  RewriteRule ^menu-widget$ menu-widget.php [QSA,L]
+  #RewriteRule ^menu-widget$ menu-widget.php [QSA,L]
 
   # Reescribe internamente: /<restaurantId> (URL amigable) -> menu.php?id=<restaurantId>
   RewriteRule ^([A-Za-z0-9_-]+)$ menu.php?id=$1 [QSA,L]
