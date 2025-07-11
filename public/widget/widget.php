@@ -3,20 +3,20 @@
 header('Content-Type: text/html; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 
-include '../get/get_restaurant_id.php';
-include '../get/get_logo.php';
-include '../get/get_idiomas.php'; 
-include '../get/get_categoria.php';
-include '../get/get_plataformas.php';
-include '../get/get_restaurant_moneda.php';
-include '../get/get_idiomas_for_items.php';
-include '../get/get_simbolo_moneda.php';
-include '../get/get_cat_and_subcat_for_item.php';
-include '../get/get_brunch.php';
-include '../get/get_daily_menu.php';
-include '../get/get_traducciones.php';
-include '../get/get_alergenos.php';
-include '../get/get_colors.php'; 
+include '../../get/get_restaurant_id.php';
+include '../../get/get_logo.php';
+include '../../get/get_idiomas.php'; 
+include '../../get/get_categoria.php';
+include '../../get/get_plataformas.php';
+include '../../get/get_restaurant_moneda.php';
+include '../../get/get_idiomas_for_items.php';
+include '../../get/get_simbolo_moneda.php';
+include '../../get/get_cat_and_subcat_for_item.php';
+include '../../get/get_brunch.php';
+include '../../get/get_daily_menu.php';
+include '../../get/get_traducciones.php';
+include '../../get/get_alergenos.php';
+include '../../get/get_colors.php'; 
 
 ?>
 
