@@ -47,6 +47,8 @@ if (!class_exists('MenuService')) {
             if (!$force && isset(self::$cache[$restaurantId])) {
                 return self::$cache[$restaurantId];
             }
+        
+        
 
             $sql = <<<'SQL'
 WITH restaurant_data AS (
@@ -149,8 +151,37 @@ SQL;
             }
 
         }
+
+
+        public function updateMenuVersion(string $restaurantId, int $newVersion): void
+{
+    if ($newVersion <= 0) {
+        throw new \InvalidArgumentException("Versión inválida: debe ser un entero positivo.");
     }
+
+    try {
+        $this->database->executeUpdate(
+            'UPDATE restaurants SET menu_version=@version WHERE restaurant_id=@id',
+            [
+                'parameters' => [
+                    'version' => $newVersion,
+                    'id'      => $restaurantId
+                ]
+            ]
+        );
+        error_log("✅ MenuService::updateMenuVersion — $restaurantId actualizado a v$newVersion");
+    } catch (\Exception $e) {
+        error_log("❌ MenuService::updateMenuVersion error — {$e->getMessage()}");
+        throw new \RuntimeException("Falló la actualización de menu_version para $restaurantId.");
+    }
+       }
+
+       
+    }
+    
 }
+
+
 
 // ---------------------------------------------------------------------------
 // Inicialización de presentación: sólo si no es llamada de invalidador de cache
