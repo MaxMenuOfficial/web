@@ -2,6 +2,23 @@
 // File: public/menu-widget.php
 header('Access-Control-Allow-Origin: *');
 
+// 📁 widget/widget.php
+
+$restaurantId = $_SERVER['REDIRECT_RESTAURANT_ID'] ?? null;
+$version      = $_SERVER['REDIRECT_VERSION']      ?? null;
+
+if (!$restaurantId) {
+    http_response_code(400);
+    exit('Missing restaurant ID.');
+}
+
+// (Opcional) Validar que la versión es numérica
+if ($version !== null && !ctype_digit($version)) {
+    http_response_code(400);
+    exit('Invalid version format.');
+}
+
+
 require_once __DIR__ . '/../../get/get_restaurant_id.php';
 require_once __DIR__ . '/../../get/get_logo.php';
 require_once __DIR__ . '/../../get/get_idiomas.php'; 

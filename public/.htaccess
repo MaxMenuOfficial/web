@@ -2,17 +2,20 @@
   RewriteEngine On
   RewriteBase /
 
-  # Sirve archivos/carpetas reales (CSS, JS, imágenes, etc.)
+  # 🧱 Permitir servir archivos estáticos directamente
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-  # /api/menu-version → api/menu-version.php
+  # ✅ API menu-version
   RewriteRule ^api/menu-version$ api/menu-version.php [QSA,L]
 
-  # /widget/<restaurantId> → widget/widget.php?id=...
-  RewriteRule ^widget/([A-Za-z0-9_-]+)$ widget/widget.php?id=$1 [QSA,L]
+  # ✅ Widget versionado: /widget/<id>/v/<version>
+  RewriteRule ^widget/([A-Za-z0-9_-]+)/v/([0-9]+)$ widget.php [QSA,END,E=RESTAURANT_ID:$1,E=VERSION:$2]
 
-  # /<restaurantId> → menu.php?id=...
-  RewriteRule ^([A-Za-z0-9_-]+)$ menu.php?id=$1 [QSA,L]
+  # ✅ Widget no versionado (fallback legacy)
+  RewriteRule ^widget/([A-Za-z0-9_-]+)$ widget.php [QSA,END,E=RESTAURANT_ID:$1]
+
+  # ✅ URL pública: /<restaurantId>
+  RewriteRule ^([A-Za-z0-9_-]+)$ menu.php [QSA,END,E=RESTAURANT_ID:$1]
 </IfModule>

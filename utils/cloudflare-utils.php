@@ -1,6 +1,7 @@
 <?php
 // File: utils/cloudflare-utils.php
-function purgeCloudflareCacheForRestaurant(string $restaurantId): void {
+
+function purgeCloudflareCacheForRestaurant(string $restaurantId, int $menuVersion): void {
     $zoneId   = getenv('CLOUDFLARE_ZONE_ID');
     $apiToken = getenv('CLOUDFLARE_API_TOKEN');
 
@@ -9,11 +10,12 @@ function purgeCloudflareCacheForRestaurant(string $restaurantId): void {
         return;
     }
 
+    // 🌐 Rutas limpias exactas que se cachean
     $base = 'https://menu.maxmenu.com';
 
     $urls = [
-        "$base/$restaurantId",
-        "$base/widget/$restaurantId"
+        "$base/$restaurantId",                         // Página amigable
+        "$base/widget/$restaurantId/v/$menuVersion",   // Widget embebido versión cacheada
     ];
 
     $payload = json_encode(['files' => $urls]);

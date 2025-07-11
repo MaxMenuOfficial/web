@@ -1,19 +1,20 @@
 // File: public/widget.js
 (function () {
+  // ➊ Detectar el <script> embebido y leer restaurantId
   const scripts      = document.getElementsByTagName('script');
   const myScript     = scripts[scripts.length - 1];
   const restaurantId = myScript?.getAttribute('data-restaurant-id');
-
   if (!restaurantId) {
     return console.error('[MaxMenu] Falta el atributo data-restaurant-id en el <script>.');
   }
 
+  // ➋ Localizar el contenedor donde inyectar el widget
   const container = document.getElementById('maxmenu-menuContainer');
   if (!container) {
     return console.error('[MaxMenu] No se encontró el contenedor con id="maxmenu-menuContainer".');
   }
 
-  // ➊ Inyectar los CSS necesarios (no cacheados por restaurante)
+  // ➌ Inyectar CSS fijos (no cacheables por versión)
   const cssFiles = [
     'https://menu.maxmenu.com/menu_api/styles/view-items.css',
     'https://menu.maxmenu.com/menu_api/styles/view-plataformas.css',
@@ -29,34 +30,59 @@
     }
   });
 
-  // ➋ Construir la nueva URL amigable sin versión
-  const widgetUrl = `https://menu.maxmenu.com/widget/${encodeURIComponent(restaurantId)}`;
+  // ➍ Función principal: obtiene versión, carga HTML limpio y lo inyecta
+  function loadWidget() {
+    // 1️⃣ Obtener la versión del menú vía API REST limpia
+    fetch(`https://menu.maxmenu.com/api/menu-version/${encodeURIComponent(restaurantId)}`, { mode: 'cors' })
+      .then(res => {
+        if (!res.ok) throw new Error('[MaxMenu] Error al obtener la versión del menú.');
+        return res.json();
+      })
+      .then(data => {
+        const v = data.version;
+        if (typeof v !== 'number' || v <= 0) {
+          throw new Error('[MaxMenu] Versión inválida recibida: ' + v);
+        }
 
-  // ➌ Cargar el HTML del widget
-  fetch(widgetUrl, { mode: 'cors' })
-    .then(res => {
-      if (!res.ok) throw new Error(`[MaxMenu] Error al cargar el widget para ${restaurantId}`);
-      return res.text();
-    })
-    .then(html => {
-      container.innerHTML = html;
+        // 2️⃣ Construir URL versión limpia
+        return {
+          widgetUrl: `https://menu.maxmenu.com/widget/${restaurantId}/v/${v}`,
+          v
+        };
+      })
+      .then(({ widgetUrl, v }) =>
+        // 3️⃣ Cargar el HTML del widget versión limpio
+        fetch(widgetUrl, { mode: 'cors' })
+          .then(res => {
+            if (!res.ok) throw new Error('[MaxMenu] Error al cargar el widget.');
+            return res.text();
+          })
+          .then(html => ({ html, v }))
+      )
+      .then(({ html, v }) => {
+        // 4️⃣ Inyectar HTML en el contenedor
+        container.innerHTML = html;
 
-      // ➍ Ejecutar scripts embebidos que vinieron en el HTML
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = html;
-      tempDiv.querySelectorAll('script').forEach(oldScript => {
-        const newScript = document.createElement('script');
-        Array.from(oldScript.attributes).forEach(attr =>
-          newScript.setAttribute(attr.name, attr.value)
-        );
-        newScript.textContent = oldScript.textContent;
-        document.body.appendChild(newScript);
+        // 5️⃣ Reejecutar scripts inline incluidos en el HTML cargado
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
+        tempDiv.querySelectorAll('script').forEach(oldScript => {
+          const newScript = document.createElement('script');
+          Array.from(oldScript.attributes).forEach(attr =>
+            newScript.setAttribute(attr.name, attr.value)
+          );
+          newScript.textContent = oldScript.textContent;
+          document.body.appendChild(newScript);
+        });
+
+        console.log(`[MaxMenu] Widget versión ${v} cargado con éxito.`);
+      })
+      .catch(err => {
+        console.error(err);
+        container.innerHTML = '<p>[MaxMenu] No se pudo cargar el menú.</p>';
       });
+  }
 
-      console.log(`[MaxMenu] Widget cargado con éxito desde /widget/${restaurantId}`);
-    })
-    .catch(err => {
-      console.error(err);
-      container.innerHTML = '<p>[MaxMenu] No se pudo cargar el menú.</p>';
-    });
+  // ➏ Ejecutar
+  loadWidget();
 })();
