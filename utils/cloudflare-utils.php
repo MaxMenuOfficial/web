@@ -1,26 +1,24 @@
 <?php
 // File: utils/cloudflare-utils.php
 
-function purgeCloudflareCacheForRestaurant(string $restaurantId): void {
+function purgeCloudflareCacheForRestaurant(string $restaurantId, int $version): void {
     $zoneId   = getenv('CLOUDFLARE_ZONE_ID');
     $apiToken = getenv('CLOUDFLARE_API_TOKEN');
+    $base     = rtrim(getenv('CLOUDFLARE_MENU_DOMAIN'), '/');
 
-    if (!$zoneId || !$apiToken) {
+    if (!$zoneId || !$apiToken || !$base) {
         error_log("❌ Cloudflare purge skipped: missing env vars.");
         return;
     }
 
-    // Construir las URLs a purgar para ese restaurante
-    $baseUrl = 'https://menu.maxmenu.com';
-    $urls = [
-        "$baseUrl/menu-widget.php?id=$restaurantId",
-        "$baseUrl/$restaurantId",
+    // URLs específicas a purgar (selectivas)
+    $files = [
+        "$base/menu-widget.php?id=$restaurantId",  // widget HTML versionado
+        "$base/$restaurantId",                                // URL amigable
     ];
 
-    // Construir payload
-    $payload = json_encode(['files' => $urls]);
+    $payload = json_encode(['files' => $files]);
 
-    // Ejecutar petición a Cloudflare
     $ch = curl_init("https://api.cloudflare.com/client/v4/zones/$zoneId/purge_cache");
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
@@ -37,10 +35,9 @@ function purgeCloudflareCacheForRestaurant(string $restaurantId): void {
     $status   = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
-    // Logging preciso y legible
     if ($error || $status !== 200) {
-        error_log("❌ Cloudflare purge FAILED [$status] for $restaurantId | $error | $response");
+        error_log("❌ Cloudflare purge failed ($status): $error | response: $response");
     } else {
-        error_log("✅ Cloudflare purge OK [$status] for $restaurantId → " . implode(', ', $urls));
+        error_log("✅ Cloudflare purge success for: " . implode(', ', $files));
     }
 }

@@ -6,7 +6,6 @@ header('Access-Control-Allow-Origin: *');
 
 // ➋ Obtener parámetros
 $restaurantId = $_GET['id'] ?? null;
-$version      = $_GET['v']  ?? null;
 
 if (!$restaurantId) {
     http_response_code(400);
