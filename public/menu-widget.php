@@ -4,14 +4,6 @@ header('Cache-Control: public, max-age=31536000, immutable');
 header('Content-Type: text/html; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 
-// ➋ Obtener parámetros
-$restaurantId = $_GET['id'] ?? null;
-
-if (!$restaurantId) {
-    http_response_code(400);
-    exit('<p>Restaurant ID requerido</p>');
-}
-
 include '../get/get_restaurant_id.php';
 include '../get/get_logo.php';
 include '../get/get_idiomas.php'; 

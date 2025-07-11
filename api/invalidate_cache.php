@@ -1,49 +1,36 @@
 <?php
-// File: api/invalidate_cache.php
+// File: menu.maxmenu.com/api/invalidate_cache.php
 
-// 1️⃣ Configuración de logging
-ini_set('display_errors', 0);
-ini_set('log_errors', 1);
-error_reporting(E_ALL);
+require_once __DIR__ . '/../config/menu-service.php';
+require_once __DIR__ . '/../utils/cloudflare-utils.php';
 
-// 2️⃣ Captura de parámetros POST
-$restaurantId = $_POST['restaurant_id'] ?? '';
-$token        = $_POST['token'] ?? '';
+header('Content-Type: application/json');
 
-error_log("🔔 invalidate_cache.php called — restaurantId={$restaurantId}");
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode(['error' => 'Método no permitido']);
+    exit;
+}
 
-// 3️⃣ Validación de seguridad
-$expectedToken = getenv('INTERNAL_CACHE_INVALIDATION_TOKEN') ?: '';
-if (!hash_equals($expectedToken, $token) || $restaurantId === '') {
-    error_log("❌ Invalid call — restaurantId={$restaurantId}");
+$restaurantId = $_POST['restaurant_id'] ?? null;
+$token = $_POST['token'] ?? null;
+$expectedToken = getenv('INTERNAL_CACHE_INVALIDATION_TOKEN');
+
+if (!$restaurantId || $token !== $expectedToken) {
     http_response_code(403);
-    exit('Unauthorized');
+    echo json_encode(['error' => 'No autorizado']);
+    exit;
 }
 
-// 4️⃣ Carga de dependencias
-require __DIR__ . '/../config/menu-service.php';
-require __DIR__ . '/../utils/cloudflare-utils.php';
+// 🧠 Invalidar caché en memoria (PHP)
+MenuService::clearMenuCache($restaurantId);
 
-// 5️⃣ Limpieza de caché in-memory de MenuService
-try {
-    MenuService::clearMenuCache($restaurantId);
-    error_log("✅ In-memory cache cleared — restaurantId={$restaurantId}");
-} catch (Throwable $e) {
-    error_log("❌ clearMenuCache failed: " . $e->getMessage());
-    http_response_code(500);
-    exit('Memory Cache Error');
-}
+// 🚀 Invalidar caché en Cloudflare
+purgeCloudflareCacheForRestaurant($restaurantId);
 
-// 6️⃣ Purga de Cloudflare (URLs específicas)
-try {
-    purgeCloudflareCacheForRestaurant($restaurantId);
-    error_log("✅ Cloudflare purged — restaurantId={$restaurantId}");
-} catch (Throwable $e) {
-    error_log("❌ purgeCloudflare failed: " . $e->getMessage());
-    http_response_code(500);
-    exit('Cloudflare Purge Error');
-}
-
-// 7️⃣ Respuesta de éxito
-http_response_code(200);
-echo 'OK';
+// 🟢 Éxito
+echo json_encode([
+    'status' => 'ok',
+    'message' => "Caché invalidada para restaurante $restaurantId"
+]);
+exit;
