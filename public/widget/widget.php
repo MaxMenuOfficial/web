@@ -1,19 +1,37 @@
 <?php
 
+header('Cache-Control: public, max-age=31536000');
+header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
-// 🔐 Obtener variables de forma universal
-$restaurantId = $_GET['restaurant_id'] ?? null;
-$version      = $_GET['version'] ?? null;
+require_once __DIR__ . '/../../config/menu-service.php';
+
+// 🔁 Extraer restaurantId desde la URL
+$path = $_SERVER['REDIRECT_URL'] ?? '';
+$parts = explode('/', trim($path, '/'));
+$restaurantId = $parts[count($parts) - 1]; // último segmento de la ruta
 
 if (!$restaurantId) {
     http_response_code(400);
-    exit('Missing restaurant ID.');
+    echo json_encode(['error' => 'Restaurant ID requerido']);
+    exit;
 }
 
-if ($version !== null && !ctype_digit($version)) {
-    http_response_code(400);
-    exit('Invalid version format.');
+try {
+    $svc  = new MenuService();
+    $data = $svc->getRestaurantPublicData($restaurantId, false);
+
+    if (!$data || !isset($data['menu_version'])) {
+        http_response_code(404);
+        echo json_encode(['error' => 'Datos no encontrados']);
+        exit;
+    }
+
+    echo json_encode(['version' => (int) $data['menu_version']]);
+} catch (Throwable $e) {
+    error_log("❌ menu-version.php error: " . $e->getMessage());
+    http_response_code(500);
+    echo json_encode(['error' => 'Error interno']);
 }
 
 
