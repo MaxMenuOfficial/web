@@ -2,20 +2,25 @@
   RewriteEngine On
   RewriteBase /
 
-  # 🧱 Permitir servir archivos estáticos directamente
+  # 🧱 1. Permitir servir archivos estáticos directamente (CSS, JS, PNG, etc.)
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-  # ✅ API menu-version
+  # 🧪 2. API REST limpia (sin parámetros GET)
+
+  ## 2.1 Versión del menú: /api/menu-version/maxmenu
+  RewriteRule ^api/menu-version/([A-Za-z0-9_-]+)$ api/menu-version.php?id=$1 [QSA,L]
+
+  ## 2.2 Fallback (antiguo): /api/menu-version?id=maxmenu
   RewriteRule ^api/menu-version$ api/menu-version.php [QSA,L]
 
-  # ✅ Widget versionado: /widget/<id>/v/<version>
+  # 🧩 3. Widget versionado: /widget/<id>/v/<version>
   RewriteRule ^widget/([A-Za-z0-9_-]+)/v/([0-9]+)$ widget.php [QSA,END,E=RESTAURANT_ID:$1,E=VERSION:$2]
 
-  # ✅ Widget no versionado (fallback legacy)
+  # ♻️ 4. Widget sin versión (legacy / fallback)
   RewriteRule ^widget/([A-Za-z0-9_-]+)$ widget.php [QSA,END,E=RESTAURANT_ID:$1]
 
-  # ✅ URL pública: /<restaurantId>
+  # 🌐 5. Página pública del restaurante: /<restaurantId>
   RewriteRule ^([A-Za-z0-9_-]+)$ menu.php [QSA,END,E=RESTAURANT_ID:$1]
 </IfModule>
