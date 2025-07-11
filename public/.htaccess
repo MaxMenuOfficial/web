@@ -11,10 +11,10 @@
   RewriteRule ^api/menu-version/([A-Za-z0-9_-]+)$ api/menu-version.php?id=$1 [QSA,L]
 
   # Widget versionado: /widget/<id>/v/<version>
-  RewriteRule ^widget/([A-Za-z0-9_-]+)/v/([0-9]+)$ widget.php?id=$1&version=$2 [QSA,L]
+  RewriteRule ^widget/([A-Za-z0-9_-]+)/v/([0-9]+)$ widget/widget.php?id=$1&version=$2 [QSA,L]
 
   # Widget sin versión (legacy fallback)
-  RewriteRule ^widget/([A-Za-z0-9_-]+)$ widget.php?id=$1 [QSA,L]
+  RewriteRule ^widget/([A-Za-z0-9_-]+)$ /widget/widget.php?id=$1 [QSA,L]
 
   # ✅ Menú público: /<id>
   RewriteRule ^([A-Za-z0-9_-]+)$ menu.php?id=$1 [QSA,L]
