@@ -1,18 +1,16 @@
 <?php
-// File: public/menu-widget.php
+
 header('Access-Control-Allow-Origin: *');
 
-// 📁 widget/widget.php
-
-$restaurantId = $_SERVER['REDIRECT_RESTAURANT_ID'] ?? null;
-$version      = $_SERVER['REDIRECT_VERSION']      ?? null;
+// 🔐 Obtener variables de forma universal
+$restaurantId = $_GET['restaurant_id'] ?? null;
+$version      = $_GET['version'] ?? null;
 
 if (!$restaurantId) {
     http_response_code(400);
     exit('Missing restaurant ID.');
 }
 
-// (Opcional) Validar que la versión es numérica
 if ($version !== null && !ctype_digit($version)) {
     http_response_code(400);
     exit('Invalid version format.');
