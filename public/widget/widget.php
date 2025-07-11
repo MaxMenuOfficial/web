@@ -7,9 +7,13 @@ header('Access-Control-Allow-Origin: *');
 require_once __DIR__ . '/../../config/menu-service.php';
 
 // 🔁 Extraer restaurantId desde la URL
-$path = $_SERVER['REDIRECT_URL'] ?? '';
-$parts = explode('/', trim($path, '/'));
-$restaurantId = $parts[count($parts) - 1]; // último segmento de la ruta
+// 🔁 Extraer restaurantId desde la URL real
+$uri = $_SERVER['REQUEST_URI'] ?? '';
+$path = parse_url($uri, PHP_URL_PATH);
+$segments = explode('/', trim($path, '/'));
+
+$restaurantId = $segments[count($segments) - 1] ?? null;
+
 
 if (!$restaurantId) {
     http_response_code(400);
