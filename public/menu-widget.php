@@ -1,6 +1,6 @@
 <?php
 // File: public/menu-widget.php
-header('Cache-Control: public, max-age=31536000');
+header('Cache-Control: public, max-age=31536000, immutable');
 header('Content-Type: text/html; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 
