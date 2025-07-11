@@ -1,6 +1,8 @@
 <?php
-
-header('Cache-Control: public, max-age=31536000');
+// 🔥 Prohibimos el cacheo por navegador o por Cloudflare (explícito)
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
+header('Expires: 0');
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
