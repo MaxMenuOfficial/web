@@ -1,53 +1,44 @@
 <?php
 // File: utils/cloudflare-utils.php
-function purgeCloudflareCacheForRestaurant(string $restaurantId): void
-{
-    $zoneId    = getenv('CLOUDFLARE_ZONE_ID');
-    $apiToken  = getenv('CLOUDFLARE_API_TOKEN');
-    $baseUrl   = rtrim(getenv('CLOUDFLARE_MENU_DOMAIN'), '/');
 
-    if (!$zoneId || !$apiToken || !$restaurantId || !$baseUrl) {
-        throw new RuntimeException("❌ Faltan datos esenciales para purgar caché de Cloudflare.");
+function purgeCloudflareCacheForRestaurant(string $restaurantId, int $menuVersion): void {
+    $zoneId   = getenv('CLOUDFLARE_ZONE_ID');
+    $apiToken = getenv('CLOUDFLARE_API_TOKEN');
+
+    if (!$zoneId || !$apiToken) {
+        error_log("❌ Cloudflare purge skipped: missing env vars.");
+        return;
     }
 
-    $endpoint = "https://api.cloudflare.com/client/v4/zones/{$zoneId}/purge_cache";
+    // 🌐 Rutas limpias exactas que se cachean
+    $base = 'https://menu.maxmenu.com';
 
-    $prefixes = [
-        "{$baseUrl}/widget/{$restaurantId}",
-        "{$baseUrl}/{$restaurantId}"
+    $urls = [
+        "$base/$restaurantId",                         // Página amigable
+        "$base/widget/$restaurantId/v/$menuVersion",   // Widget embebido versión cacheada
     ];
 
-    $payload = json_encode([
-        'prefixes' => $prefixes
-    ]);
+    $payload = json_encode(['files' => $urls]);
 
-    $ch = curl_init($endpoint);
+    $ch = curl_init("https://api.cloudflare.com/client/v4/zones/$zoneId/purge_cache");
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_CUSTOMREQUEST  => 'POST',
         CURLOPT_POSTFIELDS     => $payload,
         CURLOPT_HTTPHEADER     => [
-            "Authorization: Bearer {$apiToken}",
-            "Content-Type: application/json"
+            "Authorization: Bearer $apiToken",
+            'Content-Type: application/json',
         ],
-        CURLOPT_TIMEOUT        => 8
     ]);
 
     $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $curlErr  = curl_error($ch);
+    $error    = curl_error($ch);
+    $status   = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
-    if ($httpCode !== 200) {
-        error_log("❌ Cloudflare purge failed — HTTP $httpCode — $curlErr — Payload: $payload — Resp: $response");
-        throw new RuntimeException("Falló la purga de Cloudflare para restaurante {$restaurantId}");
+    if ($error || $status !== 200) {
+        error_log("❌ Cloudflare targeted purge failed ($status): $error | response: $response");
+    } else {
+        error_log("✅ Cloudflare targeted purge success — URLs: " . implode(', ', $urls));
     }
-
-    $data = json_decode($response, true);
-    if (!isset($data['success']) || $data['success'] !== true) {
-        error_log("⚠️ Cloudflare purge no fue exitosa: " . $response);
-        throw new RuntimeException("Cloudflare respondió con error al purgar el caché del restaurante {$restaurantId}");
-    }
-
-    error_log("✅ Cloudflare purgado correctamente para: " . implode(', ', $prefixes));
 }

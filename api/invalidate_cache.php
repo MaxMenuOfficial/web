@@ -14,40 +14,45 @@ $token        = trim($_POST['token'] ?? '');
 
 error_log("🔔 invalidate_cache.php called — restaurantId={$restaurantId}");
 
-// 2️⃣ Validación de seguridad
+// 2️⃣ Validación de token y parámetros
 $expectedToken = getenv('INTERNAL_CACHE_INVALIDATION_TOKEN') ?: '';
 if (!hash_equals($expectedToken, $token) || $restaurantId === '') {
-    error_log("❌ Invalid request — Token mismatch or missing restaurantId.");
+    error_log("❌ Unauthorized or missing restaurantId — restaurantId={$restaurantId}");
     http_response_code(403);
     exit('Unauthorized');
 }
 
-// 3️⃣ Obtener datos desde Spanner (verificación indirecta)
+// 3️⃣ Consultar la versión ACTUAL desde Spanner
 try {
-    $svc  = new MenuService();
-    $data = $svc->getRestaurantPublicData($restaurantId, true); // Forzar fresh load
+    $svc        = new MenuService();
+    $data       = $svc->getRestaurantPublicData($restaurantId, true); // Forzar consulta
+    $newVersion = (int)($data['menu_version'] ?? 0);
 
-    if (!$data || !isset($data['menu_version'])) {
-        throw new RuntimeException("No data or invalid menu_version for restaurantId={$restaurantId}");
+    if ($newVersion <= 0) {
+        throw new RuntimeException("❌ Versión inválida para purgado — restaurantId={$restaurantId}");
     }
 
-    error_log("📦 Datos válidos obtenidos desde Spanner — menu_version=" . $data['menu_version']);
+    error_log("📦 Versión actual obtenida: v{$newVersion} — restaurantId={$restaurantId}");
 } catch (Throwable $e) {
-    error_log("❌ Spanner error: " . $e->getMessage());
+    error_log("❌ Error al obtener versión actual de Spanner: " . $e->getMessage());
     http_response_code(500);
     exit('Spanner Query Failed');
 }
 
-// 4️⃣ Purgar Cloudflare por prefijos
+// 4️⃣ Calcular versión anterior: nueva - 1
+$oldVersion = $newVersion - 1;
+
+// 5️⃣ Ejecutar purga de ambas versiones
 try {
-    purgeCloudflareCacheForRestaurant($restaurantId);
-    error_log("✅ Cloudflare purgado exitosamente — restaurantId={$restaurantId}");
+    purgeCloudflareCacheForRestaurant($restaurantId, $newVersion);
+    purgeCloudflareCacheForRestaurant($restaurantId, $oldVersion);
+    error_log("✅ Cloudflare purgado para restaurantId={$restaurantId} — vOld={$oldVersion} | vNew={$newVersion}");
 } catch (Throwable $e) {
     error_log("❌ Error al purgar Cloudflare: " . $e->getMessage());
     http_response_code(500);
     exit('Cloudflare Purge Failed');
 }
 
-// 5️⃣ Final
+// 6️⃣ Fin exitoso
 http_response_code(200);
-echo "✅ Cache purged for restaurantId={$restaurantId}";
+echo "✅ Cache purged for restaurantId={$restaurantId}, versions={$oldVersion},{$newVersion}";
