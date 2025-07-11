@@ -10,7 +10,7 @@
   RewriteRule ^ - [L]
 
   # Reescribe internamente: /api/menu-version -> api/menu-version.php
-  RewriteRule ^api/menu-version$ api/menu-version.php [QSA,L]
+  # RewriteRule ^api/menu-version$ api/menu-version.php [QSA,L]
 
   # Reescribe internamente: /menu-widget -> menu-widget.php
   #RewriteRule ^menu-widget$ menu-widget.php [QSA,L]

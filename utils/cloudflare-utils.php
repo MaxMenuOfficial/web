@@ -1,24 +1,26 @@
 <?php
-function purgeCloudflareCacheForRestaurant(string $restaurantId): void {
-    $zoneId     = getenv('CLOUDFLARE_ZONE_ID');
-    $apiToken   = getenv('CLOUDFLARE_API_TOKEN');
-    $baseDomain = rtrim(getenv('CLOUDFLARE_MENU_DOMAIN'), '/'); // ejemplo: menu.maxmenu.com
+// File: utils/cloudflare-utils.php
 
-    if (!$zoneId || !$apiToken || !$baseDomain) {
+function purgeCloudflareCacheForRestaurant(string $restaurantId): void {
+    $zoneId   = getenv('CLOUDFLARE_ZONE_ID');
+    $apiToken = getenv('CLOUDFLARE_API_TOKEN');
+
+    if (!$zoneId || !$apiToken) {
         error_log("❌ Cloudflare purge skipped: missing env vars.");
         return;
     }
 
+    // Construir las URLs a purgar para ese restaurante
+    $baseUrl = 'https://menu.maxmenu.com';
     $urls = [
-        "https://{$baseDomain}/{$restaurantId}",                                        // URL amigable (menu.php?id=X)
-        "https://{$baseDomain}/menu.php?id={$restaurantId}",                            // URL real del menú
-        "https://{$baseDomain}/menu-widget?id={$restaurantId}",                         // Widget sin versión
-        "https://{$baseDomain}/menu-widget.php?id={$restaurantId}",                     // Widget archivo real
-        "https://{$baseDomain}/api/menu-version?id={$restaurantId}",                    // API de versión
+        "$baseUrl/menu-widget.php?id=$restaurantId",
+        "$baseUrl/$restaurantId",
     ];
 
+    // Construir payload
     $payload = json_encode(['files' => $urls]);
 
+    // Ejecutar petición a Cloudflare
     $ch = curl_init("https://api.cloudflare.com/client/v4/zones/$zoneId/purge_cache");
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
@@ -35,16 +37,10 @@ function purgeCloudflareCacheForRestaurant(string $restaurantId): void {
     $status   = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
+    // Logging preciso y legible
     if ($error || $status !== 200) {
-        error_log("❌ Cloudflare purge failed ($status): $error");
-        if ($response) {
-            error_log("🔁 Response: $response");
-        }
+        error_log("❌ Cloudflare purge FAILED [$status] for $restaurantId | $error | $response");
     } else {
-        error_log("✅ Cloudflare purge success for:\n" . implode("\n", $urls));
-    }
-
-    if (php_sapi_name() === 'cli' || $_ENV['APP_ENV'] === 'development') {
-        echo "🧹 Purged URLs:\n" . implode("\n", $urls) . "\n";
+        error_log("✅ Cloudflare purge OK [$status] for $restaurantId → " . implode(', ', $urls));
     }
 }
