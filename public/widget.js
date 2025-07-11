@@ -1,20 +1,19 @@
 // File: public/widget.js
 (function () {
-  // ➊ Detectar el <script> embebido y leer restaurantId
   const scripts      = document.getElementsByTagName('script');
   const myScript     = scripts[scripts.length - 1];
   const restaurantId = myScript?.getAttribute('data-restaurant-id');
+
   if (!restaurantId) {
     return console.error('[MaxMenu] Falta el atributo data-restaurant-id en el <script>.');
   }
 
-  // ➋ Localizar el contenedor donde inyectar el widget
   const container = document.getElementById('maxmenu-menuContainer');
   if (!container) {
     return console.error('[MaxMenu] No se encontró el contenedor con id="maxmenu-menuContainer".');
   }
 
-  // ➌ Inyectar CSS “fijos” del widget
+  // ➊ Inyectar los CSS necesarios (no cacheados por restaurante)
   const cssFiles = [
     'https://menu.maxmenu.com/menu_api/styles/view-items.css',
     'https://menu.maxmenu.com/menu_api/styles/view-plataformas.css',
@@ -30,16 +29,19 @@
     }
   });
 
-  // ➍ Cargar directamente el HTML del widget
-  fetch(`https://menu.maxmenu.com/menu-widget.php?id=${encodeURIComponent(restaurantId)}`, { mode: 'cors' })
+  // ➋ Construir la nueva URL amigable sin versión
+  const widgetUrl = `https://menu.maxmenu.com/widget/${encodeURIComponent(restaurantId)}`;
+
+  // ➌ Cargar el HTML del widget
+  fetch(widgetUrl, { mode: 'cors' })
     .then(res => {
-      if (!res.ok) throw new Error('[MaxMenu] Error al cargar el widget.');
+      if (!res.ok) throw new Error(`[MaxMenu] Error al cargar el widget para ${restaurantId}`);
       return res.text();
     })
     .then(html => {
       container.innerHTML = html;
 
-      // 🔁 Reejecutar scripts inline
+      // ➍ Ejecutar scripts embebidos que vinieron en el HTML
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = html;
       tempDiv.querySelectorAll('script').forEach(oldScript => {
@@ -51,7 +53,7 @@
         document.body.appendChild(newScript);
       });
 
-      console.log(`[MaxMenu] Widget cargado correctamente sin versión.`);
+      console.log(`[MaxMenu] Widget cargado con éxito desde /widget/${restaurantId}`);
     })
     .catch(err => {
       console.error(err);
