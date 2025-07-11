@@ -33,7 +33,7 @@
   // ➍ Función principal: obtiene versión, carga HTML limpio y lo inyecta
   function loadWidget() {
     // 1️⃣ Obtener la versión del menú vía API REST limpia
-    fetch(`https://menu.maxmenu.com/api/menu-version/${encodeURIComponent(restaurantId)}`, { mode: 'cors' })
+    fetch(`https://menu.maxmenu.com/api/menu-version.php?id=${encodeURIComponent(restaurantId)}`, { mode: 'cors' })
       .then(res => {
         if (!res.ok) throw new Error('[MaxMenu] Error al obtener la versión del menú.');
         return res.json();

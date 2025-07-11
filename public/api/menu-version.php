@@ -7,6 +7,7 @@ header('Access-Control-Allow-Origin: *');
 require_once __DIR__ . '/../../config/menu-service.php';
 
 $restaurantId = $_GET['restaurant_id'] ?? null;
+
 if (!$restaurantId) {
     http_response_code(400);
     echo json_encode(['error' => 'Restaurant ID requerido']);
