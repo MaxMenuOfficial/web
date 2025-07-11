@@ -1,36 +1,37 @@
 <?php
-/**
- * Invalida la caché de menu.maxmenu.com/$restaurantId
- */
-function purgeCloudflareCacheForRestaurant(string $restaurantId): void {
-    $zoneId     = getenv('CLOUDFLARE_ZONE_ID');
-    $apiToken   = getenv('CLOUDFLARE_API_TOKEN');
-    $baseDomain = rtrim(getenv('CLOUDFLARE_MENU_DOMAIN'), '/');
+// File: utils/cloudflare-utils.php
 
-    $targetUrls = [
-        "$baseDomain/$restaurantId",
-        "$baseDomain/menu-widget.php?id=$restaurantId"
-    ];
-    $data = json_encode(['files' => $targetUrls]);
+function purgeCloudflareCacheForRestaurant(string $restaurantId, int $version): void {
+    $zoneId   = getenv('CLOUDFLARE_ZONE_ID');
+    $apiToken = getenv('CLOUDFLARE_API_TOKEN');
+
+    if (!$zoneId || !$apiToken) {
+        error_log("❌ Cloudflare purge skipped: missing env vars.");
+        return;
+    }
+
+    // Payload para purga total
+    $payload = json_encode(['purge_everything' => true]);
 
     $ch = curl_init("https://api.cloudflare.com/client/v4/zones/$zoneId/purge_cache");
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_CUSTOMREQUEST  => 'POST',
-        CURLOPT_POSTFIELDS     => $data,
+        CURLOPT_POSTFIELDS     => $payload,
         CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $apiToken,
+            "Authorization: Bearer $apiToken",
             'Content-Type: application/json',
         ],
     ]);
 
     $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error    = curl_error($ch);
+    $status   = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
-    if ($httpCode !== 200) {
-        error_log("❌ Error purgando caché para $restaurantId: HTTP $httpCode");
+    if ($error || $status !== 200) {
+        error_log("❌ Cloudflare full purge failed ($status): $error | response: $response");
     } else {
-        error_log("✅ Cloudflare caché purgada con éxito para $restaurantId (menú + widget)");
+        error_log("✅ Cloudflare full purge success.");
     }
 }

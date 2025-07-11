@@ -155,7 +155,13 @@ SQL;
 // ---------------------------------------------------------------------------
 // Inicialización de presentación: sólo si no es llamada de invalidador de cache
 // ---------------------------------------------------------------------------
+$uri = $_SERVER['REQUEST_URI'] ?? '';
+$isCacheInvalidator = str_contains($uri, '/api/invalidate');
+$isMenuVersion = str_contains($uri, '/api/menu-version');
 
+if (!$isCacheInvalidator && !$isMenuVersion) {
+    // ✅ SIN session_start() - Este archivo solo muestra datos públicos
+    
     global 
         $restaurantId, $restaurantData,
         $categories, $subcategories, $items, $logos,
@@ -209,3 +215,4 @@ SQL;
         header('Location: https://maxmenu.com');
         exit;
     }
+}
