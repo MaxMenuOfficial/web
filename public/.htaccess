@@ -10,10 +10,10 @@
   # ✅ API limpia: /api/menu-version/<restaurantId>
   RewriteRule ^api/menu-version/([A-Za-z0-9_-]+)$ api/menu-version.php?restaurant_id=$1 [QSA,L]
 
-  # ✅ Widget versionado: /widget/<id>/v/<version>
+  # Widget versionado: /widget/<id>/v/<version>
   RewriteRule ^widget/([A-Za-z0-9_-]+)/v/([0-9]+)$ widget.php?restaurant_id=$1&version=$2 [QSA,L]
 
-  # ✅ Widget sin versión
+  # Widget sin versión (legacy fallback)
   RewriteRule ^widget/([A-Za-z0-9_-]+)$ widget.php?restaurant_id=$1 [QSA,L]
 
   # ✅ Menú público: /<id>
