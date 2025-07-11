@@ -1,7 +1,6 @@
 <?php
 // File: utils/cloudflare-utils.php
-
-function purgeCloudflareCacheForRestaurant(string $restaurantId, int $version): void {
+function purgeCloudflareCacheForRestaurant(string $restaurantId): void {
     $zoneId   = getenv('CLOUDFLARE_ZONE_ID');
     $apiToken = getenv('CLOUDFLARE_API_TOKEN');
 
@@ -10,8 +9,14 @@ function purgeCloudflareCacheForRestaurant(string $restaurantId, int $version): 
         return;
     }
 
-    // Payload para purga total
-    $payload = json_encode(['purge_everything' => true]);
+    $base = 'https://menu.maxmenu.com';
+
+    $urls = [
+        "$base/$restaurantId",
+        "$base/widget/$restaurantId"
+    ];
+
+    $payload = json_encode(['files' => $urls]);
 
     $ch = curl_init("https://api.cloudflare.com/client/v4/zones/$zoneId/purge_cache");
     curl_setopt_array($ch, [
@@ -30,8 +35,8 @@ function purgeCloudflareCacheForRestaurant(string $restaurantId, int $version): 
     curl_close($ch);
 
     if ($error || $status !== 200) {
-        error_log("❌ Cloudflare full purge failed ($status): $error | response: $response");
+        error_log("❌ Cloudflare targeted purge failed ($status): $error | response: $response");
     } else {
-        error_log("✅ Cloudflare full purge success.");
+        error_log("✅ Cloudflare targeted purge success — URLs: " . implode(', ', $urls));
     }
 }
