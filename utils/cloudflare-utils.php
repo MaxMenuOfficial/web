@@ -4,20 +4,14 @@
 function purgeCloudflareCacheForRestaurant(string $restaurantId, int $version): void {
     $zoneId   = getenv('CLOUDFLARE_ZONE_ID');
     $apiToken = getenv('CLOUDFLARE_API_TOKEN');
-    $base     = rtrim(getenv('CLOUDFLARE_MENU_DOMAIN'), '/');
 
-    if (!$zoneId || !$apiToken || !$base) {
+    if (!$zoneId || !$apiToken) {
         error_log("❌ Cloudflare purge skipped: missing env vars.");
         return;
     }
 
-    // URLs específicas a purgar (selectivas)
-    $files = [
-        "$base/menu-widget.php?id=$restaurantId",  // widget HTML versionado
-        "$base/$restaurantId",                                // URL amigable
-    ];
-
-    $payload = json_encode(['files' => $files]);
+    // Payload para purga total
+    $payload = json_encode(['purge_everything' => true]);
 
     $ch = curl_init("https://api.cloudflare.com/client/v4/zones/$zoneId/purge_cache");
     curl_setopt_array($ch, [
@@ -36,8 +30,8 @@ function purgeCloudflareCacheForRestaurant(string $restaurantId, int $version): 
     curl_close($ch);
 
     if ($error || $status !== 200) {
-        error_log("❌ Cloudflare purge failed ($status): $error | response: $response");
+        error_log("❌ Cloudflare full purge failed ($status): $error | response: $response");
     } else {
-        error_log("✅ Cloudflare purge success for: " . implode(', ', $files));
+        error_log("✅ Cloudflare full purge success.");
     }
 }
