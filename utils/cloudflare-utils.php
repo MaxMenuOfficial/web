@@ -18,9 +18,9 @@ function purgeCloudflareCacheForRestaurant(string $restaurantId): void {
     $urls = [
         "$base/{$restaurantId}",
         "$base/widget/{$restaurantId}",
-        "$base/js/{$restaurantId}",
-    ];
-
+        "$base/js/widget/{$restaurantId}.js",
+      ];
+      
     $payload = json_encode(['files' => $urls]);
 
     $ch = curl_init("https://api.cloudflare.com/client/v4/zones/{$zoneId}/purge_cache");
