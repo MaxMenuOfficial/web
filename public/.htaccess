@@ -9,7 +9,8 @@
 
   # 2️⃣ JS loader cacheado 1 año:
   #    /js/widget/<restaurantId>.js → /js/widget.js?id=<restaurantId>
-  RewriteRule ^js/widget/([A-Za-z0-9_-]+)\.js$ /js/widget.js?id=$1 [QSA,L]
+# 🚀 JS del widget (ruta limpia): /js/widget/{restaurantId}.js
+  RewriteRule ^js/widget/([A-Za-z0-9_-]+)\.js$ /js/widget/widget.js?id=$1 [QSA,L]
 
   # 3️⃣ HTML puro del widget:
   #    /widget/<restaurantId> → /widget/widget.php?id=<restaurantId>
