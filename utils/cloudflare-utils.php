@@ -10,13 +10,12 @@ function purgeCloudflareCacheForRestaurant(string $restaurantId, int $menuVersio
         return;
     }
 
-    // 🌐 Rutas limpias exactas que se cachean
     $base = 'https://menu.maxmenu.com';
 
     $urls = [
-        "$base/$restaurantId",                         // Página amigable
-        "$base/widget/$restaurantId",   // Widget embebido versión cacheada
-        "$base/widget/$restaurantId/v/$menuVersion",  
+        "$base/$restaurantId",                                             // Menú amigable
+        "$base/widget/$restaurantId/v/$menuVersion",                      // HTML del widget
+        "$base/widget/{$restaurantId}.v{$menuVersion}.js",               // JS versiónado sin query string
     ];
 
     $payload = json_encode(['files' => $urls]);
