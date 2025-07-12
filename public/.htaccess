@@ -2,17 +2,20 @@
   RewriteEngine On
   RewriteBase /
 
-  # Archivos físicos primero
+  # 1️⃣ Archivos físicos primero
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-  # /js/widget/{restaurantId}.js → public/js/widget.js?id={restaurantId}
-  RewriteRule ^js/widget/([A-Za-z0-9_-]+)\.js$ js/widget.js?id=$1 [QSA,L]
+  # 2️⃣ JS loader cacheado 1 año:
+  #    /js/widget/<restaurantId>.js → /js/widget.js?id=<restaurantId>
+  RewriteRule ^js/widget/([A-Za-z0-9_-]+)\.js$ /js/widget.js?id=$1 [QSA,L]
 
-  # HTML puro del widget
-  RewriteRule ^widget/([A-Za-z0-9_-]+)$ widget/widget.php?id=$1 [QSA,L]
+  # 3️⃣ HTML puro del widget:
+  #    /widget/<restaurantId> → /widget/widget.php?id=<restaurantId>
+  RewriteRule ^widget/([A-Za-z0-9_-]+)$ /widget/widget.php?id=$1 [QSA,L]
 
-  # Menú público
-  RewriteRule ^([A-Za-z0-9_-]+)$ menu.php?id=$1 [QSA,L]
+  # 4️⃣ Menú público “amigable”:
+  #    /<restaurantId> → /menu.php?id=<restaurantId>
+  RewriteRule ^([A-Za-z0-9_-]+)$ /menu.php?id=$1 [QSA,L]
 </IfModule>
