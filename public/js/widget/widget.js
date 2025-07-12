@@ -12,7 +12,7 @@
       return;
     }
 
-    // 📦 Inyectar estilos necesarios (solo si no existen)
+    // 📦 Inyectar estilos si no están ya
     ['view-items', 'view-plataformas', 'view-logo', 'view-menu'].forEach(name => {
       const href = `https://menu.maxmenu.com/assets/css/widget/styles/${name}.css`;
       if (!document.querySelector(`link[href="${href}"]`)) {
@@ -23,32 +23,36 @@
       }
     });
 
-    // 🎯 Seleccionar el contenedor del widget
+    // 🎯 Buscar el contenedor y hacerle hard-reset
     const container = document.getElementById('maxmenu-menuContainer');
     if (!container) {
       console.error('[MaxMenu] ❌ Contenedor #maxmenu-menuContainer no encontrado');
       return;
     }
 
-    // 📥 Cargar el HTML del widget
     fetch(`https://menu.maxmenu.com/widget/${restaurantId}`, { mode: 'cors' })
       .then(res => {
         if (!res.ok) throw new Error(`❌ Error HTTP ${res.status} al cargar el widget`);
         return res.text();
       })
       .then(html => {
-        // 🌪 Reemplazar completamente el contenido
+        // 🌪 Reemplazo estructural del contenedor (no solo innerHTML)
         const tmp = document.createElement('div');
         tmp.innerHTML = html;
-        container.innerHTML = tmp.innerHTML;
 
-        // ⚙️ Reinyectar <script> embebidos
-        tmp.querySelectorAll('script').forEach(old => {
-          const ns = document.createElement('script');
-          Array.from(old.attributes).forEach(a => ns.setAttribute(a.name, a.value));
-          ns.textContent = old.textContent;
-          container.appendChild(ns); // ✅ Usamos container, no document.body
+        const newContainer = container.cloneNode(false); // clonado limpio sin hijos
+        container.parentNode.replaceChild(newContainer, container); // 🔄 reemplazo real
+        newContainer.innerHTML = tmp.innerHTML;
+
+        // ⚙️ Reinyectar todos los <script> embebidos del HTML cargado
+        tmp.querySelectorAll('script').forEach(oldScript => {
+          const s = document.createElement('script');
+          Array.from(oldScript.attributes).forEach(attr => s.setAttribute(attr.name, attr.value));
+          s.textContent = oldScript.textContent;
+          newContainer.appendChild(s);
         });
+
+        console.log('[MaxMenu] ✅ Widget cargado y ejecutado correctamente');
       })
       .catch(err => {
         console.error('[MaxMenu] ❌ Error cargando el widget:', err);
