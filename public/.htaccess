@@ -8,8 +8,8 @@
   RewriteRule ^ - [L]
 
   # 2️⃣ JS loader del widget (cacheado 1 año)
-  RewriteRule ^js/widget\.js$ /js/widget.js [QSA,L]
-
+ # ✅ JS loader versionado 1 año: /js/{restaurantId}
+  RewriteRule ^js/([A-Za-z0-9_-]+)$ js/widget.js?id=$1 [QSA,L]
   # 3️⃣ HTML dinámico del widget
   RewriteRule ^widget/([A-Za-z0-9_-]+)$ widget/widget.php?id=$1 [QSA,L]
 

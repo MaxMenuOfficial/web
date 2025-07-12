@@ -1,7 +1,6 @@
 <?php
 
 header('Access-Control-Allow-Origin: *');
-
 // ✅ Leer parámetros desde GET
 $restaurantId = $_GET['id'] ?? null;
 
@@ -10,12 +9,6 @@ if (!$restaurantId) {
     http_response_code(400);
     exit('Missing restaurant ID.');
 }
-
-if ($version !== null && !ctype_digit($version)) {
-    http_response_code(400);
-    exit('Invalid version format.');
-}
-
 
 require_once __DIR__ . '/../../get/get_restaurant_id.php';
 require_once __DIR__ . '/../../get/get_logo.php';
