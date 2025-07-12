@@ -1,15 +1,17 @@
 // File: public/js/widget.js
 // 🚀 ESTE archivo se cachea 1 AÑO: Cloudflare + navegadores.
 (function(){
-    // 🔍 Detectar ID desde ?id=… en la URL del propio <script>
-    const scriptUrl = document.currentScript.src;
-    const params    = new URL(scriptUrl).searchParams;
-    const restaurantId = params.get('id');
+  try {
+    // 🔍 Detectar ID desde la URL del propio <script>
+    const scriptUrl = document.currentScript?.src || '';
+    const match = scriptUrl.match(/\/widget\/([A-Za-z0-9_-]+)\.js$/);
+    const restaurantId = match ? match[1] : null;
+
     if (!restaurantId) {
-      console.error('[MaxMenu] Falta el parámetro id en widget.js');
+      console.error('[MaxMenu] ❌ Falta el restaurantId en widget.js (URL no válida)');
       return;
     }
-  
+
     // 📦 Cargar CSS fijos
     ['view-items','view-plataformas','view-logo','view-menu'].forEach(name => {
       const href = `https://menu.maxmenu.com/assets/css/widget/styles/${name}.css`;
@@ -20,22 +22,23 @@
         document.head.appendChild(link);
       }
     });
-  
+
     // 📥 Fetch y render del HTML dinámico
     const container = document.getElementById('maxmenu-menuContainer');
     if (!container) {
-      console.error('[MaxMenu] Contenedor #maxmenu-menuContainer no encontrado');
+      console.error('[MaxMenu] ❌ Contenedor #maxmenu-menuContainer no encontrado');
       return;
     }
-  
+
     fetch(`https://menu.maxmenu.com/widget/${restaurantId}`, { mode: 'cors' })
       .then(res => {
-        if (!res.ok) throw new Error('Error cargando HTML del widget');
+        if (!res.ok) throw new Error(`❌ Error HTTP ${res.status} al cargar el widget`);
         return res.text();
       })
       .then(html => {
         container.innerHTML = html;
-        // ⚙️ Volver a ejecutar scripts inline
+
+        // ⚙️ Volver a ejecutar scripts inline embebidos en el HTML cargado
         const tmp = document.createElement('div');
         tmp.innerHTML = html;
         tmp.querySelectorAll('script').forEach(old => {
@@ -46,7 +49,10 @@
         });
       })
       .catch(err => {
-        console.error(err);
+        console.error('[MaxMenu] ❌ Error cargando el widget:', err);
         container.innerHTML = '<p>[MaxMenu] No se pudo cargar el menú.</p>';
       });
-  })();
+  } catch (err) {
+    console.error('[MaxMenu] ⚠️ Error crítico en widget.js:', err);
+  }
+})();
