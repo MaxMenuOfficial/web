@@ -2,6 +2,7 @@
 
 header('Access-Control-Allow-Origin: *');
 // ✅ Leer parámetros desde GET
+
 $restaurantId = $_GET['id'] ?? null;
 
 // 🛑 Validaciones básicas

@@ -2,18 +2,19 @@
   RewriteEngine On
   RewriteBase /
 
-  # 1️⃣ Archivos físicos & carpetas
+  # 🧱 Archivos físicos primero
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-  # 2️⃣ JS loader del widget (cacheado 1 año)
- # ✅ JS loader versionado 1 año: /js/{restaurantId}
+
+  # ✅ HTML versión limpia del widget: /widget/{id}
+  RewriteRule ^widget/([A-Za-z0-9_-]+)$ widget.php?id=$1 [QSA,L]
+
+  # ✅ JS loader versionado 1 año: /js/{restaurantId}
   RewriteRule ^js/([A-Za-z0-9_-]+)$ js/widget.js?id=$1 [QSA,L]
-  # 3️⃣ HTML dinámico del widget
-  RewriteRule ^widget/([A-Za-z0-9_-]+)$ widget/widget.php?id=$1 [QSA,L]
 
-  # 4️⃣ Menú público sin widget (opcional)
-  RewriteRule ^([A-Za-z0-9_-]+)$ /menu.php?id=$1 [QSA,L]
-
+  # ✅ Página pública: /{id}
+  RewriteRule ^([A-Za-z0-9_-]+)$ menu.php?id=$1 [QSA,L]
+  
 </IfModule>
