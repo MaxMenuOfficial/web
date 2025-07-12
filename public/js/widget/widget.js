@@ -1,9 +1,3 @@
-// File: public/js/widget.js
-// Añadir en PHP dinámico (widget.php, menu.php, etc.)
-header("Cache-Control: no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0");
-header("Pragma: no-cache");
-header("Expires: 0");
-
 (function () {
   try {
     // 🔍 Detectar restaurantId desde <script src=".../widget/maxmenu.js">
