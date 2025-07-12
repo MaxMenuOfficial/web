@@ -10,58 +10,34 @@
       return;
     }
 
-    // 📦 Inyectar estilos si no están presentes
-    ['view-items', 'view-plataformas', 'view-logo', 'view-menu'].forEach(name => {
-      const href = `https://menu.maxmenu.com/assets/css/widget/styles/${name}.css`;
-      if (!document.querySelector(`link[href="${href}"]`)) {
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = href;
-        document.head.appendChild(link);
-      }
-    });
-
-    // 🎯 Eliminar y reemplazar por un nuevo contenedor
+    // 🎯 Buscar contenedor existente
     const oldContainer = document.getElementById('maxmenu-menuContainer');
     if (!oldContainer || !oldContainer.parentNode) {
       console.error('[MaxMenu] ❌ Contenedor #maxmenu-menuContainer no encontrado o sin padre');
       return;
     }
 
-    // 💣 Destruir el contenedor antiguo del DOM
+    // 💣 Eliminar contenedor viejo
     oldContainer.remove();
 
-    // 🧬 Insertar uno nuevo limpio
+    // 🧬 Crear contenedor limpio
     const newContainer = document.createElement('div');
     newContainer.id = 'maxmenu-menuContainer';
-    document.body.appendChild(newContainer); // o el mismo parent si lo prefieres
+    document.body.appendChild(newContainer);
 
-    // 📥 Cargar HTML del widget
+    // 📥 Insertar solo el HTML del widget
     fetch(`https://menu.maxmenu.com/widget/${restaurantId}`, { mode: 'cors' })
       .then(res => {
         if (!res.ok) throw new Error(`❌ Error HTTP ${res.status} al cargar el widget`);
         return res.text();
       })
       .then(html => {
-        const tmp = document.createElement('div');
-        tmp.innerHTML = html;
-
-        // 🧱 Insertar HTML renderizado
-        newContainer.innerHTML = tmp.innerHTML;
-
-        // ⚙️ Ejecutar todos los <script> embebidos de forma viva
-        tmp.querySelectorAll('script').forEach(oldScript => {
-          const s = document.createElement('script');
-          [...oldScript.attributes].forEach(attr => s.setAttribute(attr.name, attr.value));
-          s.textContent = oldScript.textContent;
-          newContainer.appendChild(s);
-        });
-
-        console.log('[MaxMenu] ✅ Widget cargado y ejecutado correctamente');
+        newContainer.innerHTML = html;
+        console.log('[MaxMenu] ✅ Widget cargado sin estilos ni scripts');
       })
       .catch(err => {
         console.error('[MaxMenu] ❌ Error cargando el widget:', err);
-        newContainer.innerHTML = '<p style="color:white;">[MaxMenu] No se pudo cargar el menú.</p>';
+        newContainer.innerHTML = '<p>[MaxMenu] No se pudo cargar el menú.</p>';
       });
 
   } catch (err) {
