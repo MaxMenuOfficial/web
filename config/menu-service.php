@@ -162,13 +162,16 @@ SQL;
 // ---------------------------------------------------------------------------
 // Inicialización de presentación: sólo si no es llamada de invalidador de cache
 // ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// Inicialización de presentación: sólo si no es llamada de invalidador de cache
+// ---------------------------------------------------------------------------
 $uri = $_SERVER['REQUEST_URI'] ?? '';
 $isCacheInvalidator = str_contains($uri, '/api/invalidate');
 $isMenuVersion = str_contains($uri, '/api/menu-version');
 
 if (!$isCacheInvalidator && !$isMenuVersion) {
     // ✅ SIN session_start() - Este archivo solo muestra datos públicos
-    
+
     global 
         $restaurantId, $restaurantData,
         $categories, $subcategories, $items, $logos,
@@ -177,49 +180,42 @@ if (!$isCacheInvalidator && !$isMenuVersion) {
         $item_supplements, $brunches, $daily_menu,
         $menu_colors, $domains;
 
-    $restaurantId   = $_GET['id'] ?? null;
-    $restaurantData = null;
-    $categories     = [];
-    $subcategories  = [];
-    $items          = [];
-    $logos          = [];
-    $platforms      = [];
-    $languages      = [];
-    $category_translations    = [];
-    $subcategory_translations = [];
-    $item_translations        = [];
-    $item_supplements         = [];
-    $brunches      = [];
-    $daily_menu    = [];
-    $menu_colors   = [];
-    $domains       = [];
+    $restaurantId = $_GET['id'] ?? null;
 
-    if ($restaurantId) {
-        $svc  = new MenuService();
-        $data = $svc->getRestaurantPublicData($restaurantId);
-
-        if (!$data || !isset($data['restaurant_id'])) {
-            header('Location: https://maxmenu.com');
-            exit;
-        }
-
-        $restaurantData           = $data;
-        $categories               = $data['categories']               ?? [];
-        $subcategories            = $data['subcategories']            ?? [];
-        $items                    = $data['items']                    ?? [];
-        $logos                    = $data['logos']                    ?? [];
-        $platforms                = $data['platforms']                ?? [];
-        $languages                = $data['languages']                ?? [];
-        $category_translations    = $data['category_translations']    ?? [];
-        $subcategory_translations = $data['subcategory_translations'] ?? [];
-        $item_translations        = $data['item_translations']        ?? [];
-        $item_supplements         = $data['item_supplements']         ?? [];
-        $brunches                 = $data['brunches']                 ?? [];
-        $daily_menu               = $data['daily_menu']               ?? [];
-        $menu_colors              = $data['menu_colors']              ?? [];
-        $domains                  = $data['domains']                  ?? [];
-    } else {
-        header('Location: https://maxmenu.com');
+    if (!$restaurantId) {
+        http_response_code(400); // 🚫 Bad Request: faltan parámetros
+        echo json_encode(['error' => 'Missing restaurant ID']);
         exit;
     }
+
+    $svc  = new MenuService();
+    $data = $svc->getRestaurantPublicData($restaurantId);
+
+    if (!$data || !isset($data['restaurant_id'])) {
+        http_response_code(404); // 🚫 No encontrado
+        echo json_encode(['error' => 'Restaurant not found']);
+        exit;
+    }
+
+    // ✅ Todo correcto: aplicar headers de cacheo antes de cualquier salida
+    header('Cache-Control: public, max-age=86400, s-maxage=86400');
+    header('Content-Type: text/html; charset=utf-8');
+
+    // Inicialización de variables globales
+    $restaurantData           = $data;
+    $categories               = $data['categories']               ?? [];
+    $subcategories            = $data['subcategories']            ?? [];
+    $items                    = $data['items']                    ?? [];
+    $logos                    = $data['logos']                    ?? [];
+    $platforms                = $data['platforms']                ?? [];
+    $languages                = $data['languages']                ?? [];
+    $category_translations    = $data['category_translations']    ?? [];
+    $subcategory_translations = $data['subcategory_translations'] ?? [];
+    $item_translations        = $data['item_translations']        ?? [];
+    $item_supplements         = $data['item_supplements']         ?? [];
+    $brunches                 = $data['brunches']                 ?? [];
+    $daily_menu               = $data['daily_menu']               ?? [];
+    $menu_colors              = $data['menu_colors']              ?? [];
+    $domains                  = $data['domains']                  ?? [];
 }
+ 

@@ -1,4 +1,3 @@
-
 # ✅ Sí cachear widget.php (usando FilesMatch en widget/.htaccess)
 # 📍 Crea un archivo `.htaccess` dentro de /widget/ y añade esto:
 <IfModule mod_headers.c>
