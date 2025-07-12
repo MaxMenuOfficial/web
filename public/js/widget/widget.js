@@ -1,22 +1,19 @@
 // File: public/js/widget.js
-// 🚀 Este archivo se cachea 1 AÑO: Cloudflare + navegadores
-
-(function(){
+// 🚀 Cacheado 1 AÑO por Cloudflare + navegadores.
+(function () {
   try {
-    // 🔍 Detectar ID desde la URL del propio <script>
+    // 🔍 Detectar restaurantId desde la URL del <script src="">
     const scriptUrl = document.currentScript?.src || '';
-    const urlParams = new URL(scriptUrl).searchParams;
-    const restaurantId = urlParams.get('id');
+    const match = scriptUrl.match(/\/js\/widget\/([A-Za-z0-9_-]+)\.js$/);
+    const restaurantId = match ? match[1] : null;
 
     if (!restaurantId) {
-      console.error('[MaxMenu] ❌ Falta el parámetro ?id= en widget.js');
+      console.error('[MaxMenu] ❌ Falta el restaurantId en widget.js (URL no válida)');
       return;
     }
 
-    console.debug(`[MaxMenu] 🔍 Detectado ID del restaurante: ${restaurantId}`);
-
-    // 📦 Cargar CSS fijos si no están en el DOM
-    ['view-items','view-plataformas','view-logo','view-menu'].forEach(name => {
+    // 📦 Inyectar estilos necesarios (solo si no existen)
+    ['view-items', 'view-plataformas', 'view-logo', 'view-menu'].forEach(name => {
       const href = `https://menu.maxmenu.com/assets/css/widget/styles/${name}.css`;
       if (!document.querySelector(`link[href="${href}"]`)) {
         const link = document.createElement('link');
@@ -26,44 +23,36 @@
       }
     });
 
-    // 🧼 Eliminar contenedor anterior si existe
-    const existing = document.getElementById('maxmenu-menuContainer');
-    if (existing) {
-      existing.remove();
+    // 🎯 Seleccionar el contenedor del widget
+    const container = document.getElementById('maxmenu-menuContainer');
+    if (!container) {
+      console.error('[MaxMenu] ❌ Contenedor #maxmenu-menuContainer no encontrado');
+      return;
     }
 
-    // 🔁 Crear contenedor limpio
-    const container = document.createElement('div');
-    container.id = 'maxmenu-menuContainer';
-    document.body.appendChild(container);
-
-    // 📥 Fetch del contenido HTML del widget
+    // 📥 Cargar el HTML del widget
     fetch(`https://menu.maxmenu.com/widget/${restaurantId}`, { mode: 'cors' })
       .then(res => {
         if (!res.ok) throw new Error(`❌ Error HTTP ${res.status} al cargar el widget`);
         return res.text();
       })
       .then(html => {
-        console.debug('[MaxMenu] ✅ HTML del widget recibido, insertando...');
-
-        // Reemplazar HTML completamente
+        // 🌪 Reemplazar completamente el contenido
         const tmp = document.createElement('div');
         tmp.innerHTML = html;
         container.innerHTML = tmp.innerHTML;
 
-        // 🧠 Ejecutar scripts inline (comportamientos dinámicos)
+        // ⚙️ Reinyectar <script> embebidos
         tmp.querySelectorAll('script').forEach(old => {
           const ns = document.createElement('script');
           Array.from(old.attributes).forEach(a => ns.setAttribute(a.name, a.value));
           ns.textContent = old.textContent;
-          container.appendChild(ns); // No usar body
+          container.appendChild(ns); // ✅ Usamos container, no document.body
         });
-
-        console.debug('[MaxMenu] ⚙️ Widget completamente reconstruido');
       })
       .catch(err => {
         console.error('[MaxMenu] ❌ Error cargando el widget:', err);
-        container.innerHTML = '<p>[MaxMenu] No se pudo cargar el menú.</p>';
+        container.innerHTML = '<p style="color:white;">[MaxMenu] No se pudo cargar el menú.</p>';
       });
 
   } catch (err) {
