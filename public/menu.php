@@ -2,20 +2,20 @@
 // ================================
 // 📦 CARGA DE DATOS DEL MENÚ
 // ================================
-require_once __DIR__ . '/../../get/get_restaurant_id.php';
-require_once __DIR__ . '/../../get/get_logo.php';
-require_once __DIR__ . '/../../get/get_idiomas.php'; 
-require_once __DIR__ . '/../../get/get_categoria.php';
-require_once __DIR__ . '/../../get/get_plataformas.php';
-require_once __DIR__ . '/../../get/get_restaurant_moneda.php';
-require_once __DIR__ . '/../../get/get_idiomas_for_items.php';
-require_once __DIR__ . '/../../get/get_simbolo_moneda.php';
-require_once __DIR__ . '/../../get/get_cat_and_subcat_for_item.php';
-require_once __DIR__ . '/../../get/get_brunch.php';
-require_once __DIR__ . '/../../get/get_daily_menu.php';
-require_once __DIR__ . '/../../get/get_traducciones.php';
-require_once __DIR__ . '/../../get/get_alergenos.php';
-require_once __DIR__ . '/../../get/get_colors.php';
+require_once __DIR__ . '/../get/get_restaurant_id.php';
+require_once __DIR__ . '/../get/get_logo.php';
+require_once __DIR__ . '/../get/get_idiomas.php'; 
+require_once __DIR__ . '/../get/get_categoria.php';
+require_once __DIR__ . '/../get/get_plataformas.php';
+require_once __DIR__ . '/../get/get_restaurant_moneda.php';
+require_once __DIR__ . '/../get/get_idiomas_for_items.php';
+require_once __DIR__ . '/../get/get_simbolo_moneda.php';
+require_once __DIR__ . '/../get/get_cat_and_subcat_for_item.php';
+require_once __DIR__ . '/../get/get_brunch.php';
+require_once __DIR__ . '/../get/get_daily_menu.php';
+require_once __DIR__ . '/../get/get_traducciones.php';
+require_once __DIR__ . '/../get/get_alergenos.php';
+require_once __DIR__ . '/../get/get_colors.php';
 
 ?>
 
