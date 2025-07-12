@@ -2,20 +2,20 @@
 // ================================
 // 📦 CARGA DE DATOS DEL MENÚ
 // ================================
-require_once __DIR__ . '/../get/get_restaurant_id.php';
-require_once __DIR__ . '/../get/get_logo.php';
-require_once __DIR__ . '/../get/get_idiomas.php'; 
-require_once __DIR__ . '/../get/get_categoria.php';
-require_once __DIR__ . '/../get/get_plataformas.php';
-require_once __DIR__ . '/../get/get_restaurant_moneda.php';
-require_once __DIR__ . '/../get/get_idiomas_for_items.php';
-require_once __DIR__ . '/../get/get_simbolo_moneda.php';
-require_once __DIR__ . '/../get/get_cat_and_subcat_for_item.php';
-require_once __DIR__ . '/../get/get_brunch.php';
-require_once __DIR__ . '/../get/get_daily_menu.php';
-require_once __DIR__ . '/../get/get_traducciones.php';
-require_once __DIR__ . '/../get/get_alergenos.php';
-require_once __DIR__ . '/../get/get_colors.php';
+require_once __DIR__ . '/../../get/get_restaurant_id.php';
+require_once __DIR__ . '/../../get/get_logo.php';
+require_once __DIR__ . '/../../get/get_idiomas.php'; 
+require_once __DIR__ . '/../../get/get_categoria.php';
+require_once __DIR__ . '/../../get/get_plataformas.php';
+require_once __DIR__ . '/../../get/get_restaurant_moneda.php';
+require_once __DIR__ . '/../../get/get_idiomas_for_items.php';
+require_once __DIR__ . '/../../get/get_simbolo_moneda.php';
+require_once __DIR__ . '/../../get/get_cat_and_subcat_for_item.php';
+require_once __DIR__ . '/../../get/get_brunch.php';
+require_once __DIR__ . '/../../get/get_daily_menu.php';
+require_once __DIR__ . '/../../get/get_traducciones.php';
+require_once __DIR__ . '/../../get/get_alergenos.php';
+require_once __DIR__ . '/../../get/get_colors.php';
 
 ?>
 
@@ -31,12 +31,12 @@ require_once __DIR__ . '/../get/get_colors.php';
 
     <title>Menú del Restaurante</title>
 
-    <link rel="stylesheet" href="menu/styles/view-items.css">
-    <link rel="stylesheet" href="menu/styles/view-categorias.css">
-    <link rel="stylesheet" href="menu/styles/view-plataformas.css">
-    <link rel="stylesheet" href="menu/styles/view-idiomas.css">
-    <link rel="stylesheet" href="menu/styles/view-logo.css">
-    <link rel="stylesheet" href="menu/styles/view-menu.css">
+    <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-items.css">
+    <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-categorias.css">
+    <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-plataformas.css">
+    <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-idiomas.css">
+    <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-logo.css">
+    <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-menu.css">
   
 </head>
 

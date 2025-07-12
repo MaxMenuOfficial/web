@@ -18,21 +18,9 @@
 
   # ✅ Menú público: /<id>
   RewriteRule ^([A-Za-z0-9_-]+)$ menu.php?id=$1 [QSA,L]
-</IfModule>
 
-# ⛔ No cachear widget.js
-<IfModule mod_headers.c>
-  <Files "widget.js">
-    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
-    Header set Pragma "no-cache"
-    Header set Expires "0"
-  </Files>
-</IfModule>
+    # Widget sin versión (legacy fallback)
+  RewriteRule ^menu/([A-Za-z0-9_-]+)$ /menu/widget.php?id=$1 [QSA,L]
 
-# ✅ Sí cachear menu.php
-<IfModule mod_headers.c>
-  <Files "menu.php">
-    Header set Cache-Control "public, max-age=2592000, s-maxage=2592000"
-  </Files>
-</IfModule>
 
+</IfModule>

@@ -30,17 +30,40 @@
     }
   });
 
-  // ➍ Cargar HTML del widget directamente sin versión
+  // ➍ Función principal: obtiene versión, carga HTML limpio y lo inyecta
   function loadWidget() {
-    const widgetUrl = `https://menu.maxmenu.com/widget/${restaurantId}`;
-    fetch(widgetUrl, { mode: 'cors' })
+    // 1️⃣ Obtener la versión del menú vía API REST limpia
+    fetch(`https://menu.maxmenu.com/api/menu-version.php?id=${encodeURIComponent(restaurantId)}`, { mode: 'cors' })
       .then(res => {
-        if (!res.ok) throw new Error('[MaxMenu] Error al cargar el widget.');
-        return res.text();
+        if (!res.ok) throw new Error('[MaxMenu] Error al obtener la versión del menú.');
+        return res.json();
       })
-      .then(html => {
+      .then(data => {
+        const v = data.version;
+        if (typeof v !== 'number' || v <= 0) {
+          throw new Error('[MaxMenu] Versión inválida recibida: ' + v);
+        }
+
+        // 2️⃣ Construir URL versión limpia
+        return {
+          widgetUrl: `https://menu.maxmenu.com/widget/${restaurantId}/v/${v}`,
+          v
+        };
+      })
+      .then(({ widgetUrl, v }) =>
+        // 3️⃣ Cargar el HTML del widget versión limpio
+        fetch(widgetUrl, { mode: 'cors' })
+          .then(res => {
+            if (!res.ok) throw new Error('[MaxMenu] Error al cargar el widget.');
+            return res.text();
+          })
+          .then(html => ({ html, v }))
+      )
+      .then(({ html, v }) => {
+        // 4️⃣ Inyectar HTML en el contenedor
         container.innerHTML = html;
 
+        // 5️⃣ Reejecutar scripts inline incluidos en el HTML cargado
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = html;
         tempDiv.querySelectorAll('script').forEach(oldScript => {
@@ -51,6 +74,8 @@
           newScript.textContent = oldScript.textContent;
           document.body.appendChild(newScript);
         });
+
+        console.log(`[MaxMenu] Widget versión ${v} cargado con éxito.`);
       })
       .catch(err => {
         console.error(err);
@@ -58,6 +83,6 @@
       });
   }
 
-  // ➎ Ejecutar
+  // ➏ Ejecutar
   loadWidget();
 })();

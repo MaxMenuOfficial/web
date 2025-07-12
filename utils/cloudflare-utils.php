@@ -14,8 +14,9 @@ function purgeCloudflareCacheForRestaurant(string $restaurantId, int $menuVersio
     $base = 'https://menu.maxmenu.com';
 
     $urls = [
-        "$base/$restaurantId",                         // Página amigable
-        "$base/widget/$restaurantId/v/$menuVersion",   // Widget embebido versión cacheada
+        "$base/menu/$restaurantId",                         // Página amigable
+        "$base/widget/$restaurantId",   // Widget embebido versión cacheada
+        "$base/widget/$restaurantId/v/$menuVersion",  
     ];
 
     $payload = json_encode(['files' => $urls]);

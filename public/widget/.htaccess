@@ -1,7 +1,0 @@
-# ✅ Sí cachear widget.php (usando FilesMatch en widget/.htaccess)
-# 📍 Crea un archivo `.htaccess` dentro de /widget/ y añade esto:
-<IfModule mod_headers.c>
-  <Files "widget.php">
-    Header set Cache-Control "public, max-age=2592000, s-maxage=2592000"
-  </Files>
-</IfModule>
