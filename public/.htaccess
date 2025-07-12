@@ -2,21 +2,18 @@
   RewriteEngine On
   RewriteBase /
 
-  # Archivos físicos primero
+  # 1️⃣ Archivos físicos & carpetas
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-  # JS versionado del widget (único importante)
-# JS versiónado: /widget/lapanterarosa.v13.js
-  RewriteRule ^widget/([A-Za-z0-9_-]+)\.v([0-9]+)\.js$ widget/widget-js.php?id=$1&v=$2 [QSA,L]
+  # 2️⃣ JS loader del widget (cacheado 1 año)
+  RewriteRule ^js/widget\.js$ /js/widget.js [QSA,L]
 
-  # Widget HTML (NO necesita versión en URL)
-  RewriteRule ^widget/([A-Za-z0-9_-]+)/v/([0-9]+)$ widget/widget.php?id=$1 [QSA,L]
+  # 3️⃣ HTML dinámico del widget
+  RewriteRule ^widget/([A-Za-z0-9_-]+)$ /widget.php?id=$1 [QSA,L]
 
-  # API para obtener versión si hiciera falta
-  RewriteRule ^api/menu-version/([A-Za-z0-9_-]+)$ api/menu-version.php?id=$1 [QSA,L]
-
-  # Menú público por restaurante
-  RewriteRule ^([A-Za-z0-9_-]+)$ menu.php?id=$1 [QSA,L]
+  # 4️⃣ Menú público sin widget (opcional)
+  RewriteRule ^([A-Za-z0-9_-]+)$ /menu.php?id=$1 [QSA,L]
+  
 </IfModule>

@@ -1,7 +1,7 @@
 <?php
 // File: utils/cloudflare-utils.php
 
-function purgeCloudflareCacheForRestaurant(string $restaurantId, int $menuVersion): void {
+function purgeCloudflareCacheForRestaurant(string $restaurantId): void {
     $zoneId   = getenv('CLOUDFLARE_ZONE_ID');
     $apiToken = getenv('CLOUDFLARE_API_TOKEN');
 
@@ -12,21 +12,24 @@ function purgeCloudflareCacheForRestaurant(string $restaurantId, int $menuVersio
 
     $base = 'https://menu.maxmenu.com';
 
+    // ① Página pública
+    // ② HTML del widget
+    // ③ JS loader que el cliente incluye en su web
     $urls = [
-        "$base/$restaurantId",                                             // Menú amigable
-        "$base/widget/$restaurantId/v/$menuVersion",                      // HTML del widget
-        "$base/widget/{$restaurantId}.v{$menuVersion}.js",               // JS versiónado sin query string
+        "$base/{$restaurantId}",
+        "$base/widget/{$restaurantId}",
+        "$base/js/widget.js?id={$restaurantId}",
     ];
 
     $payload = json_encode(['files' => $urls]);
 
-    $ch = curl_init("https://api.cloudflare.com/client/v4/zones/$zoneId/purge_cache");
+    $ch = curl_init("https://api.cloudflare.com/client/v4/zones/{$zoneId}/purge_cache");
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_CUSTOMREQUEST  => 'POST',
         CURLOPT_POSTFIELDS     => $payload,
         CURLOPT_HTTPHEADER     => [
-            "Authorization: Bearer $apiToken",
+            "Authorization: Bearer {$apiToken}",
             'Content-Type: application/json',
         ],
     ]);
@@ -37,7 +40,7 @@ function purgeCloudflareCacheForRestaurant(string $restaurantId, int $menuVersio
     curl_close($ch);
 
     if ($error || $status !== 200) {
-        error_log("❌ Cloudflare targeted purge failed ($status): $error | response: $response");
+        error_log("❌ Cloudflare targeted purge failed ({$status}): {$error} | response: {$response}");
     } else {
         error_log("✅ Cloudflare targeted purge success — URLs: " . implode(', ', $urls));
     }
