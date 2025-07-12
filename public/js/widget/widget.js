@@ -1,5 +1,4 @@
 // File: public/js/widget.js
-// 🚀 Cacheado 1 AÑO por Cloudflare + navegadores
 (function () {
   try {
     // 🔍 Detectar restaurantId desde <script src=".../widget/maxmenu.js">
