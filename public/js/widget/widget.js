@@ -19,6 +19,8 @@
 
     // 💣 Eliminar contenedor viejo
     oldContainer.remove();
+    // 🔥 Eliminar todo el contenido del contenedor antes de removerlo (por seguridad extrema)
+    oldContainer.innerHTML = '';
 
     // 🧬 Crear contenedor limpio
     const newContainer = document.createElement('div');
