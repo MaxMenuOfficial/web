@@ -53,7 +53,7 @@ require_once __DIR__ . '/../get/get_colors.php';
 
  
     <div class="flecha-up">
-        <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="http://menu.maxmenu.com/menu/img/up.png" alt=""></a>
+        <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="https://menu.maxmenu.com/assets/css/menu/img/up.png" alt=""></a>
     </div>
 
 

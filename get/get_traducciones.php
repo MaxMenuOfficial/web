@@ -47,20 +47,20 @@ foreach ($languages as $language) {
 
 // --- Array de banderas (para idiomas disponibles) ---
 $banderas = [
-    'en' => 'https://menu.maxmenu.com/menu/img/flags/flag-england.png',
-    'es' => 'https://menu.maxmenu.com/menu/img/flags/flag-spain.png',
-    'fr' => 'https://menu.maxmenu.com/menu/img/flags/flag-france.png',
-    'de' => 'https://menu.maxmenu.com/menu/img/flags/flag-germany.png',
-    'it' => 'https://menu.maxmenu.com/menu/img/flags/flag-italy.png',
-    'pt' => 'https://menu.maxmenu.com/menu/img/flags/flag-portugal.png',
-    'ru' => 'https://menu.maxmenu.com/menu/img/flags/flag-russia.png',
-    'nl' => 'https://menu.maxmenu.com/menu/img/flags/flag-netherlands.png',
-    'pl' => 'https://menu.maxmenu.com/menu/img/flags/flag-poland.png',
-    'sv' => 'https://menu.maxmenu.com/menu/img/flags/flag-sweden.png',
-    'zh' => 'https://menu.maxmenu.com/menu/img/flags/flag-china.png',
-    'ca' => 'https://menu.maxmenu.com/menu/img/flags/flag-catalonia.png',
-    'ro' => 'https://menu.maxmenu.com/menu/img/flags/flag-romania.png',
-    'ar' => 'https://menu.maxmenu.com/menu/img/flags/flag-arabe.png'
+    'en' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-england.png',
+    'es' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-spain.png',
+    'fr' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-france.png',
+    'de' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-germany.png',
+    'it' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-italy.png',
+    'pt' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-portugal.png',
+    'ru' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-russia.png',
+    'nl' => 'https://menu.maxmenu.com/assets/css/menu/flags/flag-netherlands.png',
+    'pl' => 'https://menu.maxmenu.com/assets/css/menu/flags/flag-poland.png',
+    'sv' => 'https://menu.maxmenu.com/assets/css/menu/flags/flag-sweden.png',
+    'zh' => 'https://menu.maxmenu.com/assets/css/menu/flags/flag-china.png',
+    'ca' => 'https://menu.maxmenu.com/assets/css/menu/flags/flag-catalonia.png',
+    'ro' => 'https://menu.maxmenu.com/assets/css/menu/flags/flag-romania.png',
+    'ar' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-arabe.png'
 ];
 
 // Del array devuelto por menu-service.php
