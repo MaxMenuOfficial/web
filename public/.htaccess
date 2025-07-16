@@ -8,9 +8,7 @@
   RewriteRule ^ - [L]
 
 
-  #    /js/widget/<restaurantId>.js → /js/widget.js?id=<restaurantId>
-# 🚀 JS del widget (ruta limpia): /js/widget/{restaurantId}.js
-  RewriteRule ^js/widget/([A-Za-z0-9_-]+)\.js$ /js/widget/widget.js?id=$1 [QSA,L]
+  
 
   # 3️⃣ HTML puro del widget:
   #    /widget/<restaurantId> → /widget/widget.php?id=<restaurantId>
@@ -19,5 +17,13 @@
   # 4️⃣ Menú público “amigable”:
   #    /<restaurantId> → /menu.php?id=<restaurantId>
   RewriteRule ^([A-Za-z0-9_-]+)$ /menu.php?id=$1 [QSA,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.js$">
+    Header set Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
 </IfModule>
 
