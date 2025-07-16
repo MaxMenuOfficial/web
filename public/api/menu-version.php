@@ -1,4 +1,6 @@
 <?php
+//api/menu-version
+
 // 🔥 Prohibimos el cacheo por navegador o por Cloudflare (explícito)
 header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 header('Pragma: no-cache');

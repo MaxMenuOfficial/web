@@ -1,10 +1,7 @@
 <?php
 
 header('Access-Control-Allow-Origin: *');
-// Añadir en PHP dinámico (widget.php, menu.php, etc.)
-header("Cache-Control: no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0");
-header("Pragma: no-cache");
-header("Expires: 0");
+
 
 // ✅ Leer parámetros desde GET
 
