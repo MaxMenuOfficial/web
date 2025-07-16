@@ -9,7 +9,7 @@
   }
 
   // 2️⃣ Ruta al archivo latest.json en Google Cloud Storage
-  const latestUrl = `https://storage.googleapis.com/maxmenu-storage/${restaurantId}/widget/latest.json`;
+  const latestUrl = `https://storage.googleapis.com/maxmenu-storage/${restaurantId}/widget/latest.json?_=${Date.now()}`;
 
   try {
     // 3️⃣ Obtener la versión sin cache
