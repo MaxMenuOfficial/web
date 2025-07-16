@@ -18,9 +18,9 @@
 
     const data = await res.json();
     const version = data.version;
-
+    
     if (!version) throw new Error('latest.json no contiene campo "version" válido');
-
+    
     // 4️⃣ Ruta al widget versionado
     const widgetUrl = `https://storage.googleapis.com/maxmenu-storage/${restaurantId}/widget/${version}/widget.js`;
 

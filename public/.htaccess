@@ -8,9 +8,6 @@
   RewriteRule ^ - [L]
 
 
-  # Redirige /js/widget/abc123.js → /js/widget/router.php?id=abc123
-  RewriteRule ^([A-Za-z0-9_-]+)\.js$ router.php?id=$1 [QSA,L]
-  # 2️⃣ JS loader cacheado 1 año:
   #    /js/widget/<restaurantId>.js → /js/widget.js?id=<restaurantId>
 # 🚀 JS del widget (ruta limpia): /js/widget/{restaurantId}.js
   RewriteRule ^js/widget/([A-Za-z0-9_-]+)\.js$ /js/widget/widget.js?id=$1 [QSA,L]
