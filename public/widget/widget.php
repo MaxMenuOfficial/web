@@ -1,44 +1,52 @@
 <?php
+/* ───────── CONFIGURACIÓN DE DEPURACIÓN ───────── */
+$debug = true;                       //  pon false en producción
+if ($debug) {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+}
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
+/* ─────────  CORS ───────── */
 header('Access-Control-Allow-Origin: *');
 
-// 🧠 Obtener la URI actual
-$uri = $_SERVER['REQUEST_URI'];
-$parts = explode('/', $uri);
+/* ─────────  PARSEO DE LA URL ───────── */
+$uri   = $_SERVER['REQUEST_URI'];          //  e.g. /widget/maxmenu/1752762209/widget.php
+$parts = explode('/', trim($uri, '/'));    //  ['widget','maxmenu','1752762209','widget.php']
 
-// 🧩 Debug opcional (desactívalo si no estás desarrollando)
-$debug = true;
+$restaurantId = $parts[1] ?? null;         //  índice 1
+$version      = $parts[2] ?? null;         //  índice 2
 
-// Esperamos: /widget/<restaurantId>/<version>/widget.php
-$restaurantId = $parts[2] ?? null;
-$version      = $parts[3] ?? null;
-
-
-if (!$restaurantId) {
+/* ─────────  VALIDACIÓN ───────── */
+if (!$restaurantId || !$version) {
     http_response_code(400);
-    echo json_encode(['error' => 'Missing restaurant ID']);
+    header('Content-Type: application/json');
+    echo json_encode([
+        'error' => 'Missing restaurant ID or version',
+        'debug' => $debug ? $parts : null
+    ]);
     exit;
 }
 
-// 🧩 CONTINÚA LÓGICA SI TODO ESTÁ CORRECTO
-require_once __DIR__ . '/../../get/get_restaurant_id.php';
-require_once __DIR__ . '/../../get/get_logo.php';
-require_once __DIR__ . '/../../get/get_idiomas.php'; 
-require_once __DIR__ . '/../../get/get_categoria.php';
-require_once __DIR__ . '/../../get/get_plataformas.php';
-require_once __DIR__ . '/../../get/get_restaurant_moneda.php';
-require_once __DIR__ . '/../../get/get_idiomas_for_items.php';
-require_once __DIR__ . '/../../get/get_simbolo_moneda.php';
-require_once __DIR__ . '/../../get/get_cat_and_subcat_for_item.php';
-require_once __DIR__ . '/../../get/get_brunch.php';
-require_once __DIR__ . '/../../get/get_daily_menu.php';
-require_once __DIR__ . '/../../get/get_traducciones.php';
-require_once __DIR__ . '/../../get/get_alergenos.php';
-require_once __DIR__ . '/../../get/get_colors.php';
+/* ─────────  CARGA DE DEPENDENCIAS ───────── */
+require_once __DIR__.'/../../get/get_restaurant_id.php';
+require_once __DIR__.'/../../get/get_logo.php';
+require_once __DIR__.'/../../get/get_idiomas.php';
+require_once __DIR__.'/../../get/get_categoria.php';
+require_once __DIR__.'/../../get/get_plataformas.php';
+require_once __DIR__.'/../../get/get_restaurant_moneda.php';
+require_once __DIR__.'/../../get/get_idiomas_for_items.php';
+require_once __DIR__.'/../../get/get_simbolo_moneda.php';
+require_once __DIR__.'/../../get/get_cat_and_subcat_for_item.php';
+require_once __DIR__.'/../../get/get_brunch.php';
+require_once __DIR__.'/../../get/get_daily_menu.php';
+require_once __DIR__.'/../../get/get_traducciones.php';
+require_once __DIR__.'/../../get/get_alergenos.php';
+require_once __DIR__.'/../../get/get_colors.php';
+
+/* ─────────  A PARTIR DE AQUÍ… renderiza tu HTML dinámico ───────── */
+// ejemplo mínimo:
+header('Content-Type: text/html; charset=utf-8');
 ?>
 
 <body id="#maxmenu-menuContainer">
