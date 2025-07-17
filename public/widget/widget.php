@@ -8,12 +8,12 @@ header('Access-Control-Allow-Origin: *');
 
 // ✅ Leer parámetros desde GET
 
-$restaurantId = $_GET['id'] ?? null;
+$restaurantId = $_GET['restaurantId'] ?? null;
+$version = $_GET['version'] ?? null;
 
-// 🛑 Validaciones básicas
-if (!$restaurantId) {
+if (!$restaurantId || !$version) {
     http_response_code(400);
-    exit('Missing restaurant ID.');
+    exit('Missing parameters');
 }
 
 require_once __DIR__ . '/../../get/get_restaurant_id.php';
