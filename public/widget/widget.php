@@ -1,13 +1,5 @@
 <?php
-/* ───── AJUSTES DE DEPURACIÓN ───── */
-$debug = true;                //  pon true solo mientras pruebas
-if ($debug) {
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-}
 
-/* ───── CORS ───── */
 header('Access-Control-Allow-Origin: *');
 
 /* ───── PARAMETROS VÍA GET (ya añadidos por mod_rewrite) ───── */
@@ -41,11 +33,6 @@ require_once __DIR__.'/../../get/get_traducciones.php';
 require_once __DIR__.'/../../get/get_alergenos.php';
 require_once __DIR__.'/../../get/get_colors.php';
 
-/* ───── CACHE (inmutable por versión) ───── */
-header('Cache-Control: public, max-age=31536000, immutable');
-
-/* ───── SALIDA HTML (mínima de prueba) ───── */
-header('Content-Type: text/html; charset=utf-8');
 ?>
 
 <body id="#maxmenu-menuContainer">
