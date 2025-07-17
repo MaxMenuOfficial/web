@@ -1,7 +1,10 @@
 <?php
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
 
 // 🧠 Obtener la URI actual
 $uri = $_SERVER['REQUEST_URI'];
@@ -14,15 +17,6 @@ $debug = true;
 $restaurantId = $parts[2] ?? null;
 $version      = $parts[3] ?? null;
 
-if ($debug) {
-    echo json_encode([
-        'uri'         => $uri,
-        'parsed_uri'  => $parts,
-        'restaurantId'=> $restaurantId,
-        'version'     => $version
-    ]);
-    exit;
-}
 
 if (!$restaurantId) {
     http_response_code(400);
