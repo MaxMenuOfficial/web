@@ -1,24 +1,22 @@
 (async () => {
-  const containerOriginal = document.getElementById('maxmenu-menuContainer');
-  const restaurantId = containerOriginal?.dataset?.restaurantId;
+  const originalContainer = document.getElementById('maxmenu-menuContainer');
+  const restaurantId = originalContainer?.dataset?.restaurantId;
 
   if (!restaurantId) {
     console.error('[MaxMenu] ❌ data-restaurant-id no definido en #maxmenu-menuContainer');
     return;
   }
 
-  // 🔥 1️⃣ ELIMINAR CONTENIDO PREVIO DEL DOM
-  if (containerOriginal) containerOriginal.remove();
+  originalContainer.remove();
 
   document.querySelectorAll('script[maxmenu-script]').forEach(el => el.remove());
   document.querySelectorAll('link[maxmenu-style]').forEach(el => el.remove());
 
-  // 🧱 2️⃣ CREAR NUEVO CONTENEDOR VACÍO
   const newContainer = document.createElement('div');
   newContainer.id = 'maxmenu-menuContainer';
+  newContainer.setAttribute('data-restaurant-id', restaurantId);
   document.body.appendChild(newContainer);
 
-  // 🧭 3️⃣ CARGAR latest.json (sin caché)
   const latestUrl = `https://storage.googleapis.com/maxmenu-storage/${restaurantId}/widget/latest.json?_=${Date.now()}`;
 
   try {
@@ -28,11 +26,10 @@
     const { version } = await res.json();
     if (!version) throw new Error('Campo "version" no válido');
 
-    // 🚀 4️⃣ CARGAR widget.js VERSIONADO
     const widgetUrl = `https://storage.googleapis.com/maxmenu-storage/${restaurantId}/widget/${version}/widget.js`;
 
     const script = document.createElement('script');
-    script.src = widgetUrl + '?_=' + Date.now(); // ⏱️ evitar caché del navegador
+    script.src = widgetUrl + '?_=' + Date.now();
     script.async = false;
     document.head.appendChild(script);
 
