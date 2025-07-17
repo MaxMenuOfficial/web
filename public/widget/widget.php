@@ -1,34 +1,31 @@
 <?php
-/* ───────── CONFIGURACIÓN DE DEPURACIÓN ───────── */
-$debug = true;                       //  pon false en producción
+/* ───── AJUSTES DE DEPURACIÓN ───── */
+$debug = true;                //  pon true solo mientras pruebas
 if ($debug) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 }
 
-/* ─────────  CORS ───────── */
+/* ───── CORS ───── */
 header('Access-Control-Allow-Origin: *');
 
-/* ─────────  PARSEO DE LA URL ───────── */
-$uri   = $_SERVER['REQUEST_URI'];          //  e.g. /widget/maxmenu/1752762209/widget.php
-$parts = explode('/', trim($uri, '/'));    //  ['widget','maxmenu','1752762209','widget.php']
+/* ───── PARAMETROS VÍA GET (ya añadidos por mod_rewrite) ───── */
+$restaurantId = $_GET['restaurantId'] ?? null;
+$version      = $_GET['version']      ?? null;
 
-$restaurantId = $parts[1] ?? null;         //  índice 1
-$version      = $parts[2] ?? null;         //  índice 2
-
-/* ─────────  VALIDACIÓN ───────── */
+/* ───── VALIDACIÓN ───── */
 if (!$restaurantId || !$version) {
     http_response_code(400);
     header('Content-Type: application/json');
     echo json_encode([
         'error' => 'Missing restaurant ID or version',
-        'debug' => $debug ? $parts : null
-    ]);
+        'GET'   => $_GET
+    ], JSON_PRETTY_PRINT);
     exit;
 }
 
-/* ─────────  CARGA DE DEPENDENCIAS ───────── */
+/* ───── DEPENDENCIAS ───── */
 require_once __DIR__.'/../../get/get_restaurant_id.php';
 require_once __DIR__.'/../../get/get_logo.php';
 require_once __DIR__.'/../../get/get_idiomas.php';
@@ -44,14 +41,20 @@ require_once __DIR__.'/../../get/get_traducciones.php';
 require_once __DIR__.'/../../get/get_alergenos.php';
 require_once __DIR__.'/../../get/get_colors.php';
 
-/* ─────────  A PARTIR DE AQUÍ… renderiza tu HTML dinámico ───────── */
-// ejemplo mínimo:
+/* ───── CACHE (inmutable por versión) ───── */
+header('Cache-Control: public, max-age=31536000, immutable');
+
+/* ───── SALIDA HTML (mínima de prueba) ───── */
 header('Content-Type: text/html; charset=utf-8');
 ?>
 
 <body id="#maxmenu-menuContainer">
 
+
     <main>
+    <h3>Widget cargado para <strong><?=htmlspecialchars($restaurantId)?></strong>
+      (versión <?=htmlspecialchars($version)?>)</h3>
+  <!-- aquí inyecta tu vista real -->
   
        <div class="flecha-up">
           <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="https://menu.maxmenu.com/menu/img/up.png" alt=""></a>
