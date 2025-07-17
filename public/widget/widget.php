@@ -1,21 +1,36 @@
 <?php
 
 header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
 
+// 🧠 Obtener la URI actual
 $uri = $_SERVER['REQUEST_URI'];
 $parts = explode('/', $uri);
 
+// 🧩 Debug opcional (desactívalo si no estás desarrollando)
+$debug = true;
+
 // Esperamos: /widget/<restaurantId>/<version>/widget.php
 $restaurantId = $parts[2] ?? null;
-$version = $parts[3] ?? null;
+$version      = $parts[3] ?? null;
+
+if ($debug) {
+    echo json_encode([
+        'uri'         => $uri,
+        'parsed_uri'  => $parts,
+        'restaurantId'=> $restaurantId,
+        'version'     => $version
+    ]);
+    exit;
+}
 
 if (!$restaurantId) {
     http_response_code(400);
-    header('Content-Type: application/json');
     echo json_encode(['error' => 'Missing restaurant ID']);
     exit;
 }
 
+// 🧩 CONTINÚA LÓGICA SI TODO ESTÁ CORRECTO
 require_once __DIR__ . '/../../get/get_restaurant_id.php';
 require_once __DIR__ . '/../../get/get_logo.php';
 require_once __DIR__ . '/../../get/get_idiomas.php'; 
@@ -30,8 +45,6 @@ require_once __DIR__ . '/../../get/get_daily_menu.php';
 require_once __DIR__ . '/../../get/get_traducciones.php';
 require_once __DIR__ . '/../../get/get_alergenos.php';
 require_once __DIR__ . '/../../get/get_colors.php';
-
-
 ?>
 
 <body id="#maxmenu-menuContainer">
