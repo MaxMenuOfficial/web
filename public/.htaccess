@@ -12,8 +12,8 @@
   # 3️⃣ Menú público amigable: /<restaurantId> → /menu.php?id=<restaurantId>
   RewriteRule ^([A-Za-z0-9_-]+)$ /menu.php?id=$1 [QSA,L]
 
-   #    /widget/<restaurantId> → /widget/widget.php?id=<restaurantId>
-  RewriteRule ^widget/([A-Za-z0-9_-]+)$ /widget/widget.php?id=$1 [QSA,L]
+  # Reescribe /widget/<restaurantId>/<version> a widget.php?id=<restaurantId>&version=<version>
+  RewriteRule ^widget/([A-Za-z0-9_-]+)/([0-9]+)$ /widget/widget.php?id=$1&version=$2 [QSA,L]
 
 </IfModule>
 
