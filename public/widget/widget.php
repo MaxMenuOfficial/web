@@ -1,6 +1,26 @@
 <?php
 
+// 🔥 Prohibimos el cacheo por navegador o por Cloudflare (explícito)
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
+header('Expires: 0');
+header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
+
+/* ───── PARAMETROS VÍA GET (ya añadidos por mod_rewrite) ───── */
+$restaurantId = $_GET['restaurantId'] ?? null;
+$version      = $_GET['version']      ?? null;
+
+/* ───── VALIDACIÓN ───── */
+if (!$restaurantId || !$version) {
+    http_response_code(400);
+    header('Content-Type: application/json');
+    echo json_encode([
+        'error' => 'Missing restaurant ID or version',
+        'GET'   => $_GET
+    ], JSON_PRETTY_PRINT);
+    exit;
+}
 
 /* ───── DEPENDENCIAS ───── */
 require_once __DIR__.'/../../get/get_restaurant_id.php';
