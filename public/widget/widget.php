@@ -1,9 +1,5 @@
 <?php
 
-// 🔥 Prohibimos el cacheo por navegador o por Cloudflare (explícito)
-header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
-header('Pragma: no-cache');
-header('Expires: 0');
 header('Access-Control-Allow-Origin: *');
 
 /* ───── PARAMETROS VÍA GET (ya añadidos por mod_rewrite) ───── */
@@ -21,7 +17,6 @@ if (!$version) {
   http_response_code(400);
   exit('Missing version ');
 }
-
 
 /* ───── DEPENDENCIAS ───── */
 require_once __DIR__.'/../../get/get_restaurant_id.php';
