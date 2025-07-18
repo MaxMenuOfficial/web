@@ -22,7 +22,6 @@ if (!$version) {
   exit('Missing version ');
 }
 
-var_dump($_GET);
 
 /* ───── DEPENDENCIAS ───── */
 require_once __DIR__.'/../../get/get_restaurant_id.php';
