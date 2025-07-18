@@ -4,23 +4,25 @@
 header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 header('Pragma: no-cache');
 header('Expires: 0');
-header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
 /* ───── PARAMETROS VÍA GET (ya añadidos por mod_rewrite) ───── */
-$restaurantId = $_GET['restaurantId'] ?? null;
-$version      = $_GET['version']      ?? null;
 
-/* ───── VALIDACIÓN ───── */
-if (!$restaurantId || !$version) {
+$restaurantId = $_GET['id'] ?? null;
+$version      = $_GET['version']     ?? null;
+
+// 🛑 Validaciones básicas
+if (!$restaurantId) {
     http_response_code(400);
-    header('Content-Type: application/json');
-    echo json_encode([
-        'error' => 'Missing restaurant ID or version',
-        'GET'   => $_GET
-    ], JSON_PRETTY_PRINT);
-    exit;
+    exit('Missing restaurant ID ');
 }
+
+if (!$version) {
+  http_response_code(400);
+  exit('Missing version ');
+}
+
+var_dump($_GET);
 
 /* ───── DEPENDENCIAS ───── */
 require_once __DIR__.'/../../get/get_restaurant_id.php';
