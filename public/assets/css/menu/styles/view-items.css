@@ -520,8 +520,8 @@ img.alergen {
 .item-info h3{
 
   letter-spacing: 1px;
-  font-size: 16px;
-  
+  font-size: 17px;
+  font-weight: bold;
 }
 
 .item-info p {
@@ -532,6 +532,7 @@ img.alergen {
   word-wrap: break-word;
   letter-spacing: 1px;
   font-size: 12;
+  font-weight: 500;
 }
 
 .item-image {
@@ -1036,9 +1037,9 @@ button img.arrow-icon {
 .category-button-atajo {
   font-weight: bolder;
   background-color: #ffffff00;
-  border: 2px solid #000000;
+  border: 5px solid #000000;
   color: black;
-  padding: 20px 20px;
+  padding: 18px 20px;
   margin: 2px auto; 
   border-radius: 80px;
   cursor: pointer;
