@@ -1,5 +1,7 @@
 <?php
 
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
 header('Access-Control-Allow-Origin: *');
 
 /* ───── PARAMETROS VÍA GET (ya añadidos por mod_rewrite) ───── */
