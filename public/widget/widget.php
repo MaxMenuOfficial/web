@@ -38,11 +38,12 @@ require_once __DIR__.'/../../get/get_colors.php';
 
 <body id="#maxmenu-menuContainer">
 
-
+  <!--
     <main>
     <h3>Widget cargado para <strong><?=htmlspecialchars($restaurantId)?></strong>
       (versión <?=htmlspecialchars($version)?>)</h3>
-  <!-- aquí inyecta tu vista real -->
+  aquí inyecta tu vista real 
+  -->
   
        <div class="flecha-up">
           <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="https://menu.maxmenu.com/menu/img/up.png" alt=""></a>
