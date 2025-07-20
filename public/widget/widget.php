@@ -2,7 +2,6 @@
 
 header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 header('Pragma: no-cache');
-header('Access-Control-Allow-Origin: *');
 
 /* ───── PARAMETROS VÍA GET (ya añadidos por mod_rewrite) ───── */
 
@@ -21,7 +20,7 @@ if (!$version) {
 }
 
 /* ───── DEPENDENCIAS ───── */
-require_once __DIR__.'/../../get/get_restaurant_id.php';
+require_once __DIR__.'/../../get/get_domains.php';
 require_once __DIR__.'/../../get/get_logo.php';
 require_once __DIR__.'/../../get/get_idiomas.php';
 require_once __DIR__.'/../../get/get_categoria.php';
@@ -48,7 +47,7 @@ require_once __DIR__.'/../../get/get_colors.php';
   -->
   
        <div class="flecha-up">
-          <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="https://menu.maxmenu.com/menu/img/up.png" alt=""></a>
+          <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="https://menu.maxmenu.com/assets/widget/img/up.png" alt=""></a>
       </div>
 
 
