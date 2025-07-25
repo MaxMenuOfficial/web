@@ -1,11 +1,5 @@
 <?php
 
-// Incluir el script que obtiene y valida el restaurantId vía GET (sin usar la sesión)
-require_once __DIR__ . '/get_restaurant_id.php';
-
-// Incluir el servicio que carga los datos completos del restaurante y sus relaciones.
-require_once __DIR__ . '/../config/menu-service.php';
-
 
 // Especificamos el Content-Type para HTML (o JSON, según necesidad)
 if (!headers_sent()) {
@@ -14,7 +8,7 @@ if (!headers_sent()) {
 
 // Verificar que se haya recibido el parámetro "id" (estándar en la aplicación)
 if (empty($restaurantId)) {
-  
+ 
 }
 
 // --- Construir el array global de traducciones ---
@@ -54,12 +48,12 @@ $banderas = [
     'it' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-italy.png',
     'pt' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-portugal.png',
     'ru' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-russia.png',
-    'nl' => 'https://menu.maxmenu.com/assets/css/menu/flags/flag-netherlands.png',
-    'pl' => 'https://menu.maxmenu.com/assets/css/menu/flags/flag-poland.png',
-    'sv' => 'https://menu.maxmenu.com/assets/css/menu/flags/flag-sweden.png',
-    'zh' => 'https://menu.maxmenu.com/assets/css/menu/flags/flag-china.png',
-    'ca' => 'https://menu.maxmenu.com/assets/css/menu/flags/flag-catalonia.png',
-    'ro' => 'https://menu.maxmenu.com/assets/css/menu/flags/flag-romania.png',
+    'nl' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-netherlands.png',
+    'pl' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-poland.png',
+    'sv' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-sweden.png',
+    'zh' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-china.png',
+    'ca' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-catalonia.png',
+    'ro' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-romania.png',
     'ar' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-arabe.png'
 ];
 
@@ -73,7 +67,7 @@ $banderaUrlOriginal = $banderas[$originalLanguageCode] ?? 'menu/img/flags/defaul
 // Ahora sí, manejar la selección del idioma
 if ($originalLanguageCode) {
     $_SESSION['language_selected'] = $originalLanguageCode;
-    $_SESSION['flag_selected'] = $banderas[$originalLanguageCode] ?? 'menu/img/flags/flag-spain.png';
+    $_SESSION['flag_selected'] = $banderas[$originalLanguageCode] ?? 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-spain.png';
 } else {
     $_SESSION['flag_selected'] = $banderaUrlOriginal;
 }

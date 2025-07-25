@@ -1,8 +1,4 @@
 <?php
-// ---------------------------------------------------------
-// 🔗 Inicialización de entorno y obtención de restaurantId
-// ---------------------------------------------------------
-require_once __DIR__ . '/../config/menu-service.php';     // inicializa global $domains
 
 // ✅ Solo continuar si $domains está disponible
 if (!isset($domains) || !is_array($domains) || empty($domains)) {

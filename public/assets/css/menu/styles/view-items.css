@@ -309,54 +309,56 @@ form input::placeholder, form select::placeholder {
 
 
 
+
+
  /* Alergenico formulario item */
 
  .alergenicos {
 
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: center;
-    margin: 15px auto ;
-    background-color: rgb(255, 255, 255);
-   
-}
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 10px auto ;
+  background-color: rgb(255, 255, 255);
  
+}
+
 .alergenicos .alergenico {
-    
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: row;
-    flex-wrap: wrap;
-    min-width: 160px;
-    background-color: rgb(255, 255, 255);
-    margin: 15px;
-    align-items: center;
+  
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  min-width: 160px;
+  background-color: rgb(255, 255, 255);
+  margin: 10px;
+  align-items: center;
 }
 
 .alergenicos .alergenico input {
-    display: flex;
-    height: 20px;
-    width: 20px;
-    align-items: center;
-    background-color: rgb(255, 255, 255);
+  display: flex;
+  height: 16px;
+  width: 16px;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
 }
 
 .alergenico label {
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    background-color: rgb(255, 255, 255);
- 
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
+
 }
 
 img.alergen {
-    width: 18px;
-    height: 18px;
-    margin-left: 5px;
-    background-color: rgb(255, 255, 255);
+  width: 15px;
+  height: 15px;
+  margin-left: 5px;
+  background-color: rgb(255, 255, 255);
 }
 
 
