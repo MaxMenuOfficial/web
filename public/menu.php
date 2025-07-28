@@ -1007,9 +1007,7 @@ if (!isset($brunches) || !is_array($brunches)) {
               <?php endforeach; ?>
             <?php else: ?>
               <?php 
-              if (empty($itemsSinSubcategoria) && empty($brunchesDeEstaCategoria)) {
-                
-              }
+            
               ?>
             <?php endif; ?>
           </div> <!-- /.category-items -->

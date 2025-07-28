@@ -58,7 +58,7 @@
   
   .close:hover,
   .close:focus {
-    color: rgb(97, 97, 97);
+    color: rgb(189, 189, 189);
     text-decoration: none;
     cursor: pointer;
   }
@@ -144,10 +144,6 @@ form.form-flag {
     height: 40px;
   }
   
-
-.idioma-btn:hover ,  .modal-content button[type="submit"]:hover , .form-flag button:hover {
-    background-color: #e7e7e7;
-}
 
 form {
     margin: 0; /* Remueve cualquier margen predeterminado del formulario */

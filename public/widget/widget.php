@@ -70,21 +70,21 @@ require_once __DIR__.'/../../get/get_colors.php';
             </div>
 
 
-    <div class="añadidas">
-        <div class="categorias">
-            <?php 
-                if (!empty($plataformasExistentes)):
-                    foreach ($plataformasExistentes as $plataforma): ?>
-                    <div class="categoria" id="maxmenu-plataformas">
-                        <a id="maxmenu-plataforma-button" href="<?php echo htmlspecialchars($plataforma['platform_url']); ?>" 
-                           class="visitar-btn <?php echo strtolower(htmlspecialchars($plataforma['platform_name'])); ?>" 
-                        ></a>
-                    </div>
-                    <?php endforeach;
-                else: ?>
-                <?php endif; ?>
-        </div>
-    </div>
+      <div class="añadidas">
+          <div class="categorias">
+              <?php 
+                  if (!empty($plataformasExistentes)):
+                      foreach ($plataformasExistentes as $plataforma): ?>
+                      <div class="categoria" id="maxmenu-plataformas">
+                          <a id="maxmenu-plataforma-button" href="<?php echo htmlspecialchars($plataforma['platform_url']); ?>" 
+                            class="visitar-btn <?php echo strtolower(htmlspecialchars($plataforma['platform_name'])); ?>" 
+                          ></a>
+                      </div>
+                      <?php endforeach;
+                  else: ?>
+                  <?php endif; ?>
+          </div>
+      </div>
 
 
     <!-- 2) Botón para abrir el modal de selección de idioma -->
@@ -685,9 +685,7 @@ if (!isset($brunches) || !is_array($brunches)) {
               <?php endforeach; ?>
             <?php else: ?>
               <?php 
-              if (empty($itemsSinSubcategoria) && empty($brunchesDeEstaCategoria)) {
-                  echo "<p>No hay subcategorías ni ítems disponibles en esta categoría.</p>";
-              }
+           
               ?>
             <?php endif; ?>
           </div> <!-- /.category-items -->
