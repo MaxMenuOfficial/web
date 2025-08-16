@@ -38,7 +38,7 @@ if (!$isActive && !$isActiveForAll) {
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
 
-        #menu-locked-modal h1 {
+        #menu-locked-modal h2 {
             font-size: 1.6em;
             margin-bottom: 15px;
         }
@@ -66,9 +66,9 @@ if (!$isActive && !$isActiveForAll) {
     </style>
     <div id='menu-locked-overlay'>
         <div id='menu-locked-modal'>
-            <h1>Este menú no está disponible temporalmente</h1>
-            <p>Gracias por tu paciencia.</p>
-            <a href='https://maxmenu.com'>Cerrar</a>
+            <h2>Este menú no está disponible</h2>
+            <p>Si eres el propietario/a ingresa en tu area privada para resolverlo</p>
+            <a href='https://maxmenu.com/'>Resolver</a>
         </div>
     </div>";
 }
