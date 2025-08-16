@@ -9,14 +9,40 @@ $isActiveForAll = !empty($restaurantData['is_active_for_all']);
 
 // Caso menú oculto (ninguno activo)
 if (!$isActive && !$isActiveForAll) {
-    echo "<!DOCTYPE html>
-    <html><head><title>Menú no disponible</title></head>
-    <body style='text-align: center; padding: 100px 20px; font-family: sans-serif;'>
-        <h1>Este menú no está disponible temporalmente.</h1>
-        <p>Gracias por tu paciencia.</p>
-    </body></html>";
-    exit;
+    echo "<style>
+        /* Overlay oscuro */
+        #menu-locked-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5); /* negro con 50% opacidad */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999; /* siempre encima */
+        }
+        #menu-locked-modal {
+            background: #fff;
+            padding: 40px 30px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            font-family: sans-serif;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        #menu-locked-modal h1 {
+            font-size: 1.6em;
+            margin-bottom: 15px;
+        }
+        #menu-locked-modal p {
+            color: #555;
+            font-size: 1.1em;
+        }
+    </style>
+    <div id='menu-locked-overlay'>
+        <div id='menu-locked-modal'>
+            <h1>Este menú no está disponible temporalmente</h1>
+            <p>Gracias por tu paciencia.</p>
+        </div>
+    </div>";
 }
-
-
-// ✅ Caso válido → sigue el flujo normal y se muestra el menú
