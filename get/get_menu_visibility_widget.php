@@ -22,6 +22,7 @@ if (!$isActive && !$isActiveForAll) {
             text-align: center;
             padding: 20px;
             box-sizing: border-box;
+           
         }
         #menu-widget-unavailable h2 {
             margin: 0;

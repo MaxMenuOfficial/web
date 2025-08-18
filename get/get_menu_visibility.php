@@ -19,11 +19,12 @@ if (!$isActive && !$isActiveForAll) {
         #menu-locked-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5); /* negro con 50% opacidad */
+            background: rgba(0,0,0,0.6); /* negro con 50% opacidad */
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 9999; /* siempre encima */
+            margin: 0px 10px;
         }
 
         /* Caja del modal */
@@ -51,7 +52,7 @@ if (!$isActive && !$isActiveForAll) {
 
         #menu-locked-modal a {
             display: inline-block;
-            background: #007BFF;
+            background: #000000;
             color: #fff;
             text-decoration: none;
             padding: 12px 25px;
