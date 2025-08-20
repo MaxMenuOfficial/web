@@ -1,8 +1,3 @@
-
-
-
-/* CSS para el modal */
-
 .modal {
     display: none; 
     position: fixed; 
@@ -16,6 +11,7 @@
 }
 
 .modal-content {
+
     background-color: #ffffff00;
     margin: 5px auto;
     padding: 40px;
@@ -44,23 +40,12 @@
 }
 
 
-
-
-
 .close {
     color: rgb(189, 189, 189);
     float: right;
     font-size: 28px;
     font-weight: bold;
     background-color: #00000000;
-  }
-
-  
-  .close:hover,
-  .close:focus {
-    color: rgb(189, 189, 189);
-    text-decoration: none;
-    cursor: pointer;
   }
 
 

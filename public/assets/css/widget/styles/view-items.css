@@ -75,11 +75,6 @@ h3{
 }
 
 
-
-
-
-
-
 /* CSS para el modal */
 
 .modal {
@@ -506,6 +501,7 @@ img.alergen {
   width: 100%;
 
 }
+
 .item-info h3 , .item-info p , .alergenicos-show{
   margin:  10px auto;
   display: flex;
@@ -543,7 +539,6 @@ img.alergen {
   width: 100%;
   max-width: 100px;
 }
-
 
 .alergenicos-show {
   display: flex;
@@ -1362,10 +1357,6 @@ input:checked + .slider:before {
 
 
 
-
-
-
-
 #traduccionesContainer, .translateItemModal , .traduccion-idioma , label , input , .original-info, .modal-content h2, .traduccion-idioma h3 {
   background-color: white;
   color: #000000;
@@ -1543,8 +1534,6 @@ input:checked + .slider:before {
   flex-direction: column;
   align-items: flex-start;
   width: 100% ;
-  
-	
 }
 
 .item-image {

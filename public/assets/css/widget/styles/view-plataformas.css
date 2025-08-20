@@ -10,7 +10,7 @@
     color: #ffffff; /* Cambia el color del texto, si es necesario */
     margin: 10px auto;
     width: 30px;
-    background-color: #ffffff7a;
+    background-color: hsla(0, 0%, 100%, 0.478);
   
   }
   
@@ -79,10 +79,8 @@
     text-align: center; /* Para centrar el texto */
     line-height: 50px; /* Ajusta esto al tamaño de tu botón para centrar el texto verticalmente */
     text-decoration: none; /* Elimina el subrayado de los enlaces */
-    padding: 15px 25px;
+    padding: 20px 30px;
     background-color: #ffffff7a;
-
-  
   }
   
   
@@ -91,8 +89,6 @@
     background-image: url('../img/plataformas/uber-eats.png');
     object-fit: contain;
     background-color: #ffffff7a;
- 
-  
 
   }
   
@@ -133,6 +129,7 @@
   
   
   .platform a.boton img {
+    
     object-fit: cover;
     height: 25px; 
 
