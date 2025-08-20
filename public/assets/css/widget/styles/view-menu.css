@@ -1,3 +1,8 @@
+
+
+
+/* CSS para el modal */
+
 .modal {
     display: none; 
     position: fixed; 
@@ -11,7 +16,6 @@
 }
 
 .modal-content {
-
     background-color: #ffffff00;
     margin: 5px auto;
     padding: 40px;
@@ -45,6 +49,15 @@
     float: right;
     font-size: 28px;
     font-weight: bold;
+    background-color: #00000000;
+  }
+
+  
+  .close:hover,
+  .close:focus {
+    color: rgb(189, 189, 189);
+    text-decoration: none;
+    cursor: pointer;
     background-color: #00000000;
   }
 
@@ -137,6 +150,9 @@ form {
 }
 
 
+.idioma-btn:hover , .modal-content button[type="submit"]:hover {
+ background-color: #00000000;
+}
 
 
 
