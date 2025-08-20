@@ -8,6 +8,7 @@
 * , body{
   word-wrap: break-word;
 }
+
 .contenedor-principal {
     width: 100%;
     margin: 0px auto;
@@ -192,41 +193,6 @@ form input::placeholder, form select::placeholder {
     color: rgb(0, 0, 0);
     padding-left: 15px;
 }  
-
-/* Estilos para el botón de cerrar formulario */
-.close {
-  display: flex;
-  justify-content: center;
-  color: rgb(161, 0, 0);
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  background-color: rgb(255, 255, 255);
-}
-
-.close:hover,
-.close:focus {
-  color: red;
-  text-decoration: none;
-  cursor: pointer;
-  background-color: rgb(255, 255, 255);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -666,8 +632,6 @@ hr {
   background-color: #808080;
   border: none;
 }
-
-
 
 
 
@@ -1214,7 +1178,7 @@ svg.arrow-icon-left:hover {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-	backdrop-filter: blur(5px);
+	  backdrop-filter: blur(5px);
     justify-content: center;
     align-items: center;
 }

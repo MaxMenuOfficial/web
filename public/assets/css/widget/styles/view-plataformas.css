@@ -3,7 +3,7 @@
   
   .glovo , .uber , .justeat , .deliveroo , .doordash {
     display: inline-block; /* Esto permite aplicar padding */
-    padding: 6px 12px;
+    padding: 6px 20px;
     background-size: cover; /* Esto asegura que la imagen de fondo cubra todo el botón */
     background-position: center; /* Centra la imagen de fondo */
     text-decoration: none; /* Elimina el subrayado del enlace, si es necesario */
@@ -117,7 +117,6 @@
     object-fit: cover;
   
   }
-  
   
 
   

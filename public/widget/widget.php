@@ -102,7 +102,7 @@ require_once __DIR__.'/../../get/get_colors.php';
     <!-- Modal para la selección de idioma -->
 <div id="translateItemModalMenu" class="modal" style="display:none;">
   <div id="modal-content-translate" class="modal-content">
-    <span class="close">&times;</span>
+    <span id="close-btn-modal-translate"class="close">&times;</span>
     <br><br>
     <div id="idiomasContainer">
       <!-- Botón para ver el idioma original -->

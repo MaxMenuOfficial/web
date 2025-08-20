@@ -1,8 +1,4 @@
 
-
-
-/* CSS para el modal */
-
 .modal {
     display: none; 
     position: fixed; 
@@ -52,15 +48,15 @@
     background-color: #00000000;
   }
 
-  
-  .close:hover,
-  .close:focus {
+  #close-btn-modal-translate:focus ,
+  #close-btn-modal-translate:hover {
+
     color: rgb(189, 189, 189);
     text-decoration: none;
     cursor: pointer;
     background-color: #00000000;
-  }
 
+  }
 
   .container-traducir {
 
@@ -151,7 +147,11 @@ form {
 
 
 .idioma-btn:hover , .modal-content button[type="submit"]:hover {
- background-color: #00000000;
+ background-color: #e4e4e400;
+}
+
+button.form-flag-button:hover , button.idioma-btn:hover {
+ background-color: #e9e9e900;
 }
 
 
