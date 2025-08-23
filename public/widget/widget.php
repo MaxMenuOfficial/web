@@ -39,7 +39,8 @@ require_once __DIR__.'/../../get/get_colors.php';
 
 ?>
 
-<body id="#maxmenu-menuContainer">
+
+<body id="maxmenu-menuContainer">
 
   <!--
     <main>
@@ -48,9 +49,9 @@ require_once __DIR__.'/../../get/get_colors.php';
   aquí inyecta tu vista real 
   -->
   
-       <div class="flecha-up">
+       <div class="flecha-up" id="maxmenu-up">
           <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="https://menu.maxmenu.com/assets/css/widget/img/up.png" alt=""></a>
-      </div>
+       </div>
 
 
             <div class="logo-container">
@@ -247,9 +248,10 @@ if (!isset($brunches) || !is_array($brunches)) {
           class="carousel-category" 
           data-category-id="<?php echo $categoria['category_id']; ?>"
         >
+        
           <!-- Título de la categoría -->
-            <h3>
-                <span class="nombre-categoria menu-icon" data-translate="category" data-category-id="<?php echo $categoria['category_id']; ?>">
+            <h3 class="h3">
+                <span class="nombre-categoria menu-icon" id="maxmenu-categories-name" data-translate="category" data-category-id="<?php echo $categoria['category_id']; ?>">
                     <?php echo htmlspecialchars($categoria['category_name'], ENT_QUOTES, 'UTF-8'); ?>
                 </span>
             </h3>
@@ -288,7 +290,7 @@ if (!isset($brunches) || !is_array($brunches)) {
                   <div class="item-img-texto">
                     <div class="item-info">
 
-                      <h3 class="titulo menu-title" data-translate="item-title"><?php echo safe_output($item['title']); ?></h3>
+                      <h3 class="titulo menu-title h3" data-translate="item-title"><?php echo safe_output($item['title']); ?></h3>
                       <p class="descripcion menu-description" data-translate="item-description"><?php echo safe_output($item['description']); ?></p>
 
                       <?php if (!empty($item['allergens'])): ?>
@@ -327,7 +329,7 @@ if (!isset($brunches) || !is_array($brunches)) {
                         <div class="item-image-doble">
                           <?php if (!empty($item['price'])): ?>
                             <div class="item-image-simple">
-                              <h3 class="menu-price" ><?php echo mostrarPrecio($item['price'], $simbolo_moneda, $moneda); ?></h3>
+                              <h3 class="menu-price h3" ><?php echo mostrarPrecio($item['price'], $simbolo_moneda, $moneda); ?></h3>
                             </div>
                           <?php endif; ?>
                         </div>
@@ -357,7 +359,7 @@ if (!isset($brunches) || !is_array($brunches)) {
                 <div class="item-img-texto">
                     <div class="item-info">
                         <!-- Horario como título -->
-                        <h3 class="titulo-item menu-title">
+                        <h3 class="titulo-item menu-title h3">
                             <p><?php echo safe_output($brunch['horarios'] ?? 'Brunch'); ?></p>
                         </h3>
 
@@ -484,7 +486,7 @@ if (!isset($brunches) || !is_array($brunches)) {
         <div class="item-img-texto">
           <div class="item-info">
             <!-- Mostrar el schedule (horarios) como título -->
-            <h3 class="titulo-item">
+            <h3 class="titulo-item h3">
               <p class="menu-title"><?php echo safe_output($menu['schedules'] ?? 'Menú del Día'); ?></p>
             </h3>
 
@@ -629,7 +631,7 @@ if (!isset($brunches) || !is_array($brunches)) {
                     <div class="item-container" data-item-id="<?php echo $item['item_id']; ?>">
                       <div class="item-img-texto">
                         <div class="item-info">
-                        <h3 class="titulo menu-title" data-translate="item-title"><?php echo safe_output($item['title']); ?></h3>
+                        <h3 class="titulo menu-title h3" data-translate="item-title"><?php echo safe_output($item['title']); ?></h3>
                          <p class="descripcion menu-description" data-translate="item-description"><?php echo safe_output($item['description']); ?></p>
                           <?php if (!empty($item['allergens'])): ?>
                             <div class="alergenos-items">
@@ -665,7 +667,7 @@ if (!isset($brunches) || !is_array($brunches)) {
                             <div class="item-image-doble">
                               <?php if (!empty($item['price'])): ?>
                                 <div class="item-image-simple">
-                                  <h3 class="menu-price" ><?php echo mostrarPrecio($item['price'], $simbolo_moneda, $moneda); ?></h3>
+                                  <h3 class="menu-price h3" ><?php echo mostrarPrecio($item['price'], $simbolo_moneda, $moneda); ?></h3>
                                 </div>
                               <?php endif; ?>
                             </div>

@@ -1,6 +1,6 @@
 
 
-.logo-container {
+#maxmenu-menuContainer .logo-container {
     width: 100%;
     background-color: rgba(231, 0, 0, 0);
     align-items: center;
@@ -8,7 +8,7 @@
     justify-content: center;
 }
 
-  .logo-item {
+#maxmenu-menuContainer .logo-item {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -19,7 +19,7 @@
 }
 
 
-.logo-item img {
+#maxmenu-menuContainer .logo-item img {
     margin: 0px auto;
     border-radius: 100px;
     border: 0 px solid #afdaf831;
@@ -31,7 +31,7 @@
 
 
 
-a.traduccion img {
+#maxmenu-menuContainer a.traduccion img {
     display: flex;
     width: 25px;
     height: 25px;

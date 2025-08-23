@@ -1,7 +1,7 @@
 
 
   
-  .glovo , .uber , .justeat , .deliveroo , .doordash {
+  #maxmenu-menuContainer .glovo , #maxmenu-menuContainer .uber , #maxmenu-menuContainer .justeat , #maxmenu-menuContainer .deliveroo , #maxmenu-menuContainer .doordash {
     display: inline-block; /* Esto permite aplicar padding */
     padding: 6px 20px;
     background-size: cover; /* Esto asegura que la imagen de fondo cubra todo el botón */
@@ -14,19 +14,19 @@
   
   }
   
-  .glovo {
+  #maxmenu-menuContainer .glovo {
     background-image: url('menu/img/plataformas/glovo-2.png'); /* Reemplaza con la URL de tu imagen de fondo deseada */
   }
-  .uber {
+  #maxmenu-menuContainer .uber {
     background-image: url('menu/img/plataformas/uber-eats.png'); /* Reemplaza con la URL de tu imagen de fondo deseada */
   }
-  .justeat  {
+  #maxmenu-menuContainer .justeat  {
     background-image: url('menu/img/plataformas/justeat.png'); /* Reemplaza con la URL de tu imagen de fondo deseada */
   }
-  .deliveroo {
+  #maxmenu-menuContainer .deliveroo {
     background-image: url('menu/img/plataformas/deliveroo.png'); /* Reemplaza con la URL de tu imagen de fondo deseada */
   }
-  .doordash {
+  #maxmenu-menuContainer .doordash {
     background-image: url('menu/img/plataformas/doordash.png'); /* Reemplaza con la URL de tu imagen de fondo deseada */
   }
 
@@ -34,7 +34,7 @@
 
   
   
-  .plataformas{
+  #maxmenu-menuContainer .plataformas{
  
     display: flex;
     flex-direction: row;
@@ -45,7 +45,7 @@
     
   }
   
-  .plataformas .menu-plataformas{
+  #maxmenu-menuContainer .plataformas .menu-plataformas{
     width: 100%;
     max-width: 80px;
     display: flex;
@@ -57,7 +57,7 @@
   }
   
 
-  .categorias .categoria form input {
+  #maxmenu-menuContainer .categorias .categoria form input {
     color:  #ff0000;
     align-items: center;
     border: 5px solid  #ff0000;
@@ -72,7 +72,7 @@
   
   /* Añade reglas adicionales para otras plataformas según sea necesario */
   
-  .visitar-btn {
+  #maxmenu-menuContainer .visitar-btn {
    
     background-size: cover; /* O contain, dependiendo del aspecto deseado */
     text-align: center; /* Para centrar el texto */
@@ -84,14 +84,14 @@
   
   
   
-  .visitar-btn.uber {
+  #maxmenu-menuContainer .visitar-btn.uber {
     background-image: url('../img/plataformas/uber-eats.png');
     object-fit: contain;
     background-color: #ffffff7a;
 
   }
   
-  .visitar-btn.glovo {
+  #maxmenu-menuContainer .visitar-btn.glovo {
     background-image: url('../img/plataformas/glovo1.png');
     object-fit: contain;
     background-color: #ffffff7a;
@@ -99,20 +99,20 @@
   
   }
   
-  .visitar-btn.justeat {
+  #maxmenu-menuContainer .visitar-btn.justeat {
     background-image: url('../img/plataformas/justeat.png');
     object-fit: cover;
     
   }
   
-  .visitar-btn.deliveroo {
+  #maxmenu-menuContainer .visitar-btn.deliveroo {
     background-image: url('../img/plataformas/deliveroo.png');
     object-fit: cover;
   
   }
 
     
-  .visitar-btn.doordash {
+  #maxmenu-menuContainer .visitar-btn.doordash {
     background-image: url('../img/plataformas/doordash.png');
     object-fit: cover;
   
@@ -120,13 +120,13 @@
   
 
   
-  form h2  {
+  #maxmenu-menuContainer form h2  {
     text-align: center;
   
   }
   
   
-  .platform a.boton img {
+  #maxmenu-menuContainer .platform a.boton img {
     object-fit: cover;
     height: 25px; 
 
