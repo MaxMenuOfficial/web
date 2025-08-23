@@ -40,9 +40,7 @@ require_once __DIR__.'/../../get/get_colors.php';
 ?>
 
 
-<div id="maxmenu-menuContainer">
-
-  <main> 
+  <main id="maxmenu-menuContainer"> 
   
        <div class="flecha-up" id="maxmenu-up">
           <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="https://menu.maxmenu.com/assets/css/widget/img/up.png" alt=""></a>
@@ -98,7 +96,7 @@ require_once __DIR__.'/../../get/get_colors.php';
     <!-- Modal para la selección de idioma -->
 <div id="translateItemModalMenu" class="modal" style="display:none;">
   <div id="modal-content-translate" class="modal-content">
-    <span id="close-btn-modal-translate"class="close">&times;</span>
+    <span id="close-btn-modal-translate" class="close">&times;</span>
     <br><br>
     <div id="idiomasContainer">
       <!-- Botón para ver el idioma original -->
@@ -165,7 +163,7 @@ $banderaUrlOriginal   = $banderas[$originalLanguageCode] ?? 'menu/img/flags/defa
           onclick="scrollToCategory('<?php echo $categoria['category_id']; ?>')"
         >
           <!-- Título de la categoría con data-translate -->
-          <span id="maxmenu-category-buttom"class="nombre-categoria menu-icon" data-translate="category">
+          <span id="maxmenu-category-buttom" class="nombre-categoria menu-icon" data-translate="category">
             <?php echo htmlspecialchars($categoria['category_name'], ENT_QUOTES, 'UTF-8'); ?>
           </span>
         </button>
@@ -695,8 +693,6 @@ if (!isset($brunches) || !is_array($brunches)) {
 
 
 
-
-
 <div id="image-modal">
   <span id="image-modal-close">&times;</span>
   <img id="image-modal-content" alt="Imagen ampliada">
@@ -720,10 +716,6 @@ if (!isset($brunches) || !is_array($brunches)) {
 <script src="https://menu.maxmenu.com/assets/js/widget/subcategories.js"></script>
 
 </main>
-</div>
-
-
-
 
 
 
