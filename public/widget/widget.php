@@ -42,6 +42,7 @@ require_once __DIR__.'/../../get/get_colors.php';
 
 <div id="maxmenu-menuContainer">
 
+  <main> 
   <!--
     <main>
     <h3>Widget cargado para <strong><?=htmlspecialchars($restaurantId)?></strong>
@@ -697,7 +698,11 @@ if (!isset($brunches) || !is_array($brunches)) {
     </div> <!-- /.carousel-track -->
   </div> <!-- /.carousel -->
 </div> <!-- /.añadidas -->
+
+
+
 </main>
+
 
 <div id="image-modal">
   <span id="image-modal-close">&times;</span>
