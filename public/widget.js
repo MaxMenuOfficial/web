@@ -6,16 +6,17 @@
     console.error('[MaxMenu] ❌ data-restaurant-id no definido en #maxmenu-menuContainer');
     return;
   }
+  
+  // Limpia contenido sin remover el div original
+  originalContainer.innerHTML = '';
 
-  originalContainer.remove();
-
+  // Limpia scripts y estilos anteriores si los hubiera
   document.querySelectorAll('script[maxmenu-script]').forEach(el => el.remove());
   document.querySelectorAll('link[maxmenu-style]').forEach(el => el.remove());
 
-  const newContainer = document.createElement('div');
-  newContainer.id = 'maxmenu-menuContainer';
-  newContainer.setAttribute('data-restaurant-id', restaurantId);
-  document.body.appendChild(newContainer);
+  const newContainer = originalContainer; // Reutiliza el original, no crees uno nuevo
+
+
 
   const latestUrl = `https://storage.googleapis.com/maxmenu-storage/${restaurantId}/widget/latest.json?_=${Date.now()}`;
 
