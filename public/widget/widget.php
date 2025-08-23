@@ -40,7 +40,7 @@ require_once __DIR__.'/../../get/get_colors.php';
 ?>
 
 
-<body id="maxmenu-menuContainer">
+<div id="maxmenu-menuContainer">
 
   <!--
     <main>
@@ -722,7 +722,7 @@ if (!isset($brunches) || !is_array($brunches)) {
 <script src="https://menu.maxmenu.com/assets/js/widget/subcategories.js"></script>
 
 
-</body>
+</div>
 
 
 
