@@ -1,7 +1,8 @@
 
 
   
-  #maxmenu-menuContainer .glovo , #maxmenu-menuContainer .uber , #maxmenu-menuContainer .justeat , #maxmenu-menuContainer .deliveroo , #maxmenu-menuContainer .doordash {
+ #maxmenu-menuContainer .glovo ,#maxmenu-menuContainer  .uber ,#maxmenu-menuContainer  .justeat ,#maxmenu-menuContainer  .deliveroo , #maxmenu-menuContainer  .doordash {
+
     display: inline-block; /* Esto permite aplicar padding */
     padding: 6px 20px;
     background-size: cover; /* Esto asegura que la imagen de fondo cubra todo el botón */
@@ -30,19 +31,16 @@
     background-image: url('menu/img/plataformas/doordash.png'); /* Reemplaza con la URL de tu imagen de fondo deseada */
   }
 
-  
 
   
-  
-  #maxmenu-menuContainer .plataformas{
- 
+  #maxmenu-menuContainer .plataformas {
     display: flex;
     flex-direction: row;
-    margin: 0px auto;
     justify-content: center;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0); 
+    width: 100%;
+    margin: 0px auto;
 
-    
   }
   
   #maxmenu-menuContainer .plataformas .menu-plataformas{
@@ -56,23 +54,19 @@
     background-color: rgba(0, 0, 0, 0);
   }
   
-
   #maxmenu-menuContainer .categorias .categoria form input {
     color:  #ff0000;
     align-items: center;
     border: 5px solid  #ff0000;
     border-radius: 30px;
     cursor: pointer;
- 
-  
-  
+
   }
 
   
-  
   /* Añade reglas adicionales para otras plataformas según sea necesario */
   
-  #maxmenu-menuContainer .visitar-btn {
+  #maxmenu-menuContainer  .visitar-btn {
    
     background-size: cover; /* O contain, dependiendo del aspecto deseado */
     text-align: center; /* Para centrar el texto */
@@ -91,7 +85,7 @@
 
   }
   
-  #maxmenu-menuContainer .visitar-btn.glovo {
+  #maxmenu-menuContainer  .visitar-btn.glovo {
     background-image: url('../img/plataformas/glovo1.png');
     object-fit: contain;
     background-color: #ffffff7a;
@@ -99,13 +93,13 @@
   
   }
   
-  #maxmenu-menuContainer .visitar-btn.justeat {
+  #maxmenu-menuContainer  .visitar-btn.justeat {
     background-image: url('../img/plataformas/justeat.png');
     object-fit: cover;
     
   }
   
-  #maxmenu-menuContainer .visitar-btn.deliveroo {
+  #maxmenu-menuContainer  .visitar-btn.deliveroo {
     background-image: url('../img/plataformas/deliveroo.png');
     object-fit: cover;
   

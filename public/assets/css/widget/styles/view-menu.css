@@ -1,62 +1,20 @@
 
-#maxmenu-menuContainer .modal {
-    display: none; 
-    position: fixed; 
-    z-index: 999999; 
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0); 
-}
 
-#maxmenu-menuContainer .modal-content {
-    background-color: #ffffff00;
-    margin: 5px auto;
-    padding: 40px;
-    max-width: 200px;
-    min-width: 200px;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border: 0px solid #000000;  
-    border-radius: 20px;
-
-}
-
-
-#maxmenu-menuContainer .modal-content form  {
-    
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    background-color: rgba(255, 0, 0, 0);
-    color: rgb(0, 0, 0);
-    border: 0px solid black;
-    border-radius: 40px;
-
-}
-
-
-#maxmenu-menuContainer .close {
+  #maxmenu-menuContainer .close {
     color: rgb(189, 189, 189);
     float: right;
     font-size: 28px;
     font-weight: bold;
     background-color: #00000000;
   }
-
-  #maxmenu-menuContainer  #close-btn-modal-translate:focus ,
-  #maxmenu-menuContainer #close-btn-modal-translate:hover {
-
-    color: rgb(189, 189, 189);
+  
+  #maxmenu-menuContainer .close:hover,
+  #maxmenu-menuContainer .close:focus {
+    color: rgb(97, 97, 97);
     text-decoration: none;
     cursor: pointer;
-    background-color: #00000000;
-
   }
+
 
   #maxmenu-menuContainer .container-traducir {
 
@@ -78,6 +36,8 @@
   }
 
 
+
+
   #maxmenu-menuContainer .modal-content {
     text-align: center; /* Centra el contenido textual como los títulos */
 }
@@ -92,7 +52,7 @@
     background-color: #00000000;
 }
 
-#maxmenu-menuContainer.idioma-btn , #maxmenu-menuContainer .modal-content button[type="submit"]  {
+#maxmenu-menuContainer .idioma-btn , #maxmenu-menuContainer .modal-content button[type="submit"]  {
     /* Estilos comunes para todos los botones */
     display: flex;
     margin: 5px;
@@ -138,38 +98,12 @@
     height: 40px;
   }
   
+  #maxmenu-menuContainer .idioma-btn:hover , #maxmenu-menuContainer .modal-content button[type="submit"]:hover , #maxmenu-menuContainer .form-flag button:hover {
+    background-color: #e7e7e7;
+}
 
-  #maxmenu-menuContainer form {
+#maxmenu-menuContainer form {
     margin: 0; /* Remueve cualquier margen predeterminado del formulario */
     display: flex;
     justify-content: center; /* Centra el botón dentro del formulario */
 }
-
-
-#maxmenu-menuContainer .idioma-btn:hover ,#maxmenu-menuContainer .modal-content button[type="submit"]:hover {
- background-color: #e4e4e400;
-}
-
-#maxmenu-menuContainer button.form-flag-button:hover , #maxmenu-menuContainer button.idioma-btn:hover {
- background-color: #e9e9e900;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
