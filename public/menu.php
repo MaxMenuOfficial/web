@@ -31,7 +31,9 @@ require_once __DIR__ . '/../get/get_colors.php';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Menú del Restaurante</title>
+      <!-- Favicon -->
+    <link rel="icon"  href="assets/css/menu/img/logo-app.png">
+    <title>MaxMenu | Menu </title>
 
     <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-items.css">
     <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-categorias.css">

@@ -43,12 +43,6 @@ require_once __DIR__.'/../../get/get_colors.php';
 <div id="maxmenu-menuContainer">
 
   <main> 
-  <!--
-    <main>
-    <h3>Widget cargado para <strong><?=htmlspecialchars($restaurantId)?></strong>
-      (versión <?=htmlspecialchars($version)?>)</h3>
-  aquí inyecta tu vista real 
-  -->
   
        <div class="flecha-up" id="maxmenu-up">
           <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="https://menu.maxmenu.com/assets/css/widget/img/up.png" alt=""></a>
@@ -701,7 +695,6 @@ if (!isset($brunches) || !is_array($brunches)) {
 
 
 
-</main>
 
 
 <div id="image-modal">
@@ -726,7 +719,7 @@ if (!isset($brunches) || !is_array($brunches)) {
 <script src="https://menu.maxmenu.com/assets/js/widget/language.js"></script>
 <script src="https://menu.maxmenu.com/assets/js/widget/subcategories.js"></script>
 
-
+</main>
 </div>
 
 
