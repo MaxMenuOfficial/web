@@ -15,13 +15,13 @@ body.modal-open *:not(.modal-image) {
 
 
 #maxmenu-menuContainer {
-
+  all: unset;
   display: block;
   width: 100%;
-  background-color: transparent;
-  color: black;
-  box-sizing: border-box;
-
+  margin: 0 !important;
+  padding: 0 !important;
+  position: relative !important;
+  z-index: 1;
 }
 
 #maxmenu-menuContainer *,
