@@ -3,34 +3,15 @@ html {
   scroll-behavior: smooth;
 }
 
-body.modal-open {
-  overflow: hidden; /* Prevent scrolling */
-  backdrop-filter: blur(5px); /* Blur background */
-  background-color: none; /* Semi-transparent background */
-}
-
-body.modal-open *:not(.modal-image) {
-  filter: blur(5px);
-}
-
-
 #maxmenu-menuContainer {
-  all: unset;
   display: block;
+  position: relative;
   width: 100%;
-  margin: 0 !important;
-  padding: 0 !important;
-  position: relative !important;
-  z-index: 1;
-}
-
-#maxmenu-menuContainer *,
-#maxmenu-menuContainer *::before,
-#maxmenu-menuContainer *::after {
-
-  margin: 0;
-  padding: 0;
-
+  min-height: 100px;
+  box-sizing: border-box;
+  font-family: inherit;
+  line-height: inherit;
+  background: transparent;
 }
 
 
@@ -74,6 +55,7 @@ body.modal-open *:not(.modal-image) {
     max-width: 750px;
 
 }
+
 #maxmenu-menuContainer .back-edit img {
     width: 50px;
     height: 50px;
