@@ -708,13 +708,6 @@ if (!isset($brunches) || !is_array($brunches)) {
 </script>
 <!-- Lógica del widget separada por responsabilidad -->
 
-<!-- Después de esto, ahora sí puedes cargar los archivos que usan esas variables -->
-<script src="https://menu.maxmenu.com/assets/js/widget/colors.js"></script>
-<script src="https://menu.maxmenu.com/assets/js/widget/image.js"></script>
-<script src="https://menu.maxmenu.com/assets/js/widget/language.js"></script>
-<script src="https://menu.maxmenu.com/assets/js/widget/subcategories.js"></script>
-
-
 </div>
 
 
