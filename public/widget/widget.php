@@ -39,8 +39,7 @@ require_once __DIR__.'/../../get/get_colors.php';
 
 ?>
 
-
-  <main id="maxmenu-menuContainer"> 
+<div class="maxmenu-root">
   
        <div class="flecha-up" id="maxmenu-up">
           <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="https://menu.maxmenu.com/assets/css/widget/img/up.png" alt=""></a>
@@ -715,7 +714,8 @@ if (!isset($brunches) || !is_array($brunches)) {
 <script src="https://menu.maxmenu.com/assets/js/widget/language.js"></script>
 <script src="https://menu.maxmenu.com/assets/js/widget/subcategories.js"></script>
 
-</main>
+
+</div>
 
 
 
