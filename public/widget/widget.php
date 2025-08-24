@@ -38,8 +38,16 @@ require_once __DIR__.'/../../get/get_alergenos.php';
 require_once __DIR__.'/../../get/get_colors.php';
 
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
 
-  
        <div class="flecha-up" id="maxmenu-up">
           <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="https://menu.maxmenu.com/assets/css/widget/img/up.png" alt=""></a>
        </div>
@@ -714,3 +722,6 @@ if (!isset($brunches) || !is_array($brunches)) {
 <script src="https://menu.maxmenu.com/assets/js/widget/subcategories.js"></script>
 
 
+  
+</body>
+</html>
