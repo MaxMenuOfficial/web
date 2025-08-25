@@ -296,15 +296,11 @@ html {
   cursor: pointer;
   border: 0px solid white;
   margin: 1px;
-
-
 }
-
 
 #maxmenu-menuContainer .btn-edit {
   color: white;
 }
-
 
 #maxmenu-menuContainer form .btn-delete {
 
@@ -334,8 +330,8 @@ html {
   height: 30px;
   margin: 0px 30px;
  
-
 }
+
 
 #maxmenu-menuContainer .toggle-switch {
   position: relative;
@@ -447,7 +443,6 @@ html {
   border-radius: 30px;
   background-color: rgb(255, 255, 255);
 }
-
 
 
 #maxmenu-menuContainer .margen-menu-dia {

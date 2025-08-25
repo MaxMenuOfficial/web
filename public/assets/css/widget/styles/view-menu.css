@@ -36,8 +36,6 @@
   }
 
 
-
-
   #maxmenu-menuContainer .modal-content {
     text-align: center; /* Centra el contenido textual como los títulos */
 }
@@ -102,8 +100,8 @@
     background-color: #e7e7e7;
 }
 
-#maxmenu-menuContainer form {
-    margin: 0; /* Remueve cualquier margen predeterminado del formulario */
-    display: flex;
-    justify-content: center; /* Centra el botón dentro del formulario */
-}
+  #maxmenu-menuContainer form {
+      margin: 0; /* Remueve cualquier margen predeterminado del formulario */
+      display: flex;
+      justify-content: center; /* Centra el botón dentro del formulario */
+  }

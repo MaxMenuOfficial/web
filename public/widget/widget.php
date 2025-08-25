@@ -41,7 +41,7 @@ require_once __DIR__.'/../../get/get_colors.php';
 
  <div class="maxmenu-root">
 
-       <div class="flecha-up" id="maxmenu-up">
+       <div class="flecha-up maxmenu-up" id="maxmenu-up">
           <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="https://menu.maxmenu.com/assets/css/widget/img/up.png" alt=""></a>
        </div>
 
@@ -50,7 +50,7 @@ require_once __DIR__.'/../../get/get_colors.php';
 
                 <?php if (!empty($logos) && is_array($logos)): ?>
                     <?php foreach ($logos as $logoItem): ?>
-                        <div id="maxmenu-logo" class="logo-item">
+                        <div id="maxmenu-logo" class="logo-item maxmenu-logo">
                             <?php if (!empty($logoItem['logo_url'])): ?>
                                 <img src="<?php echo htmlspecialchars($logoItem['logo_url']); ?>" alt="Logo del restaurante">
                             <?php else: ?>
@@ -69,7 +69,7 @@ require_once __DIR__.'/../../get/get_colors.php';
               <?php 
                   if (!empty($plataformasExistentes)):
                       foreach ($plataformasExistentes as $plataforma): ?>
-                      <div class="categoria" id="maxmenu-plataformas">
+                      <div class="categoria maxmenu-plataformas" id="maxmenu-plataformas">
                           <a id="maxmenu-plataforma-button" href="<?php echo htmlspecialchars($plataforma['platform_url']); ?>" 
                             class="visitar-btn <?php echo strtolower(htmlspecialchars($plataforma['platform_name'])); ?>" 
                           ></a>
@@ -97,7 +97,7 @@ require_once __DIR__.'/../../get/get_colors.php';
   <div id="modal-content-translate" class="modal-content">
     <span id="close-btn-modal-translate" class="close">&times;</span>
     <br><br>
-    <div id="idiomasContainer">
+    <div id="idiomasContainer" class="maxmenu-languaguesContainer" >
       <!-- Botón para ver el idioma original -->
         <div class="form-flag">
 
