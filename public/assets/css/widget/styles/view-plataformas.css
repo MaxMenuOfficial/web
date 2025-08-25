@@ -1,7 +1,5 @@
 
-
-  
- #maxmenu-menuContainer .glovo ,#maxmenu-menuContainer  .uber ,#maxmenu-menuContainer  .justeat ,#maxmenu-menuContainer  .deliveroo , #maxmenu-menuContainer  .doordash {
+ .glovo ,  .uber ,  .justeat ,  .deliveroo ,   .doordash {
 
     display: inline-block; /* Esto permite aplicar padding */
     padding: 6px 20px;
@@ -15,19 +13,19 @@
 
   }
   
-  #maxmenu-menuContainer .glovo {
+ .glovo {
     background-image: url('menu/img/plataformas/glovo-2.png'); /* Reemplaza con la URL de tu imagen de fondo deseada */
   }
-  #maxmenu-menuContainer .uber {
+ .uber {
     background-image: url('menu/img/plataformas/uber-eats.png'); /* Reemplaza con la URL de tu imagen de fondo deseada */
   }
-  #maxmenu-menuContainer .justeat  {
+ .justeat  {
     background-image: url('menu/img/plataformas/justeat.png'); /* Reemplaza con la URL de tu imagen de fondo deseada */
   }
-  #maxmenu-menuContainer .deliveroo {
+ .deliveroo {
     background-image: url('menu/img/plataformas/deliveroo.png'); /* Reemplaza con la URL de tu imagen de fondo deseada */
   }
-  #maxmenu-menuContainer .doordash {
+.doordash {
     background-image: url('menu/img/plataformas/doordash.png'); /* Reemplaza con la URL de tu imagen de fondo deseada */
   }
 
@@ -77,14 +75,14 @@
   
   
   
-  #maxmenu-menuContainer .visitar-btn.uber {
+   .visitar-btn.uber {
     background-image: url('../img/plataformas/uber-eats.png');
     object-fit: contain;
     background-color: #ffffff7a;
 
   }
   
-  #maxmenu-menuContainer  .visitar-btn.glovo {
+.visitar-btn.glovo {
     background-image: url('../img/plataformas/glovo1.png');
     object-fit: contain;
     background-color: #ffffff7a;
@@ -92,20 +90,20 @@
   
   }
   
-  #maxmenu-menuContainer  .visitar-btn.justeat {
+ .visitar-btn.justeat {
     background-image: url('../img/plataformas/justeat.png');
     object-fit: cover;
     
   }
   
-  #maxmenu-menuContainer  .visitar-btn.deliveroo {
+ .visitar-btn.deliveroo {
     background-image: url('../img/plataformas/deliveroo.png');
     object-fit: cover;
   
   }
 
     
-  #maxmenu-menuContainer .visitar-btn.doordash {
+.visitar-btn.doordash {
     background-image: url('../img/plataformas/doordash.png');
     object-fit: cover;
   
@@ -113,17 +111,26 @@
   
 
   
-  #maxmenu-menuContainer form h2  {
+  form h2  {
     text-align: center;
-
   }
   
   
-  #maxmenu-menuContainer .platform a.boton img {
+  .platform a.boton img {
     object-fit: cover;
     height: 25px; 
 
   }
   
+  #maxmenu-plataformas {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0); 
+    width: 100%;
+    margin: 0px auto;
+
+  }
   
   
