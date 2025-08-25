@@ -17,7 +17,6 @@
   const newContainer = originalContainer; // Reutiliza el original, no crees uno nuevo
 
 
-
   const latestUrl = `https://storage.googleapis.com/maxmenu-storage/${restaurantId}/widget/latest.json?_=${Date.now()}`;
 
   try {

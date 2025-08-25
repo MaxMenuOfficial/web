@@ -12,7 +12,7 @@
     margin: 10px auto;
     width: 30px;
     background-color: hsla(0, 0%, 100%, 0.478);
-  
+
   }
   
   #maxmenu-menuContainer .glovo {
@@ -33,17 +33,16 @@
 
 
   
-  #maxmenu-menuContainer .plataformas {
+  .plataformas {
     display: flex;
     flex-direction: row;
     justify-content: center;
     background-color: rgba(0, 0, 0, 0); 
     width: 100%;
     margin: 0px auto;
-
   }
   
-  #maxmenu-menuContainer .plataformas .menu-plataformas{
+  .plataformas .menu-plataformas{
     width: 100%;
     max-width: 80px;
     display: flex;
@@ -54,7 +53,7 @@
     background-color: rgba(0, 0, 0, 0);
   }
   
-  #maxmenu-menuContainer .categorias .categoria form input {
+   .categorias .categoria form input {
     color:  #ff0000;
     align-items: center;
     border: 5px solid  #ff0000;
@@ -66,7 +65,7 @@
   
   /* Añade reglas adicionales para otras plataformas según sea necesario */
   
-  #maxmenu-menuContainer  .visitar-btn {
+  .visitar-btn {
    
     background-size: cover; /* O contain, dependiendo del aspecto deseado */
     text-align: center; /* Para centrar el texto */
@@ -116,7 +115,7 @@
   
   #maxmenu-menuContainer form h2  {
     text-align: center;
-  
+
   }
   
   
