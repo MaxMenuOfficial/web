@@ -24,9 +24,9 @@
     });
 
 
-    // 🔹 Aplicar color a elementos con clase .papito
-    document.querySelectorAll('.papito').forEach(el => {
-      el.style.color = menuColors.titleColor; // o el color que quieras
+    document.querySelectorAll('.translate-buttom').forEach(btn => {
+      btn.style.backgroundColor = menuColors.titleColor;
+      btn.style.color = menuColors.descriptionColor;
     });
   
     // 🔹 Aplicar color a precios
