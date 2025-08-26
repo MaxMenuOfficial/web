@@ -22,6 +22,12 @@
     document.querySelectorAll('.menu-description').forEach(desc => {
       desc.style.color = menuColors.descriptionColor;
     });
+
+
+    // 🔹 Aplicar color a elementos con clase .papito
+    document.querySelectorAll('.papito').forEach(el => {
+      el.style.color = menuColors.titleColor; // o el color que quieras
+    });
   
     // 🔹 Aplicar color a precios
     document.querySelectorAll('.menu-price').forEach(price => {

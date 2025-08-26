@@ -83,7 +83,7 @@ require_once __DIR__.'/../../get/get_colors.php';
 
     <!-- 2) Botón para abrir el modal de selección de idioma -->
     <div class="container-menu-buttom-translate">
-        <button id="BtnTranslateMenu">
+        <button id="BtnTranslateMenu" class="traslate-buttom">
             <!-- Muestra la bandera seleccionada en sesión o, si no existe, la del idioma original -->
            <img id="maxmenu-img-flag" 
                 src="<?php echo htmlspecialchars($_SESSION['flag_selected'] ?? $banderaUrlOriginal, ENT_QUOTES, 'UTF-8'); ?>" 
@@ -101,7 +101,7 @@ require_once __DIR__.'/../../get/get_colors.php';
       <!-- Botón para ver el idioma original -->
         <div class="form-flag">
 
-        <button class="form-flag-button" type="button" id="BtnViewOriginal" onclick="cargarIdiomaOriginal()">
+        <button class="form-flag-button traslate-buttom"  type="button" id="BtnViewOriginal" onclick="cargarIdiomaOriginal()">
             <img class="idioma-btn-flag" src="<?php echo htmlspecialchars($banderaUrlOriginal, ENT_QUOTES, 'UTF-8'); ?>" alt="Original Flag">
             <?php echo htmlspecialchars($originalLanguageName, ENT_QUOTES, 'UTF-8'); ?>
         </button>
