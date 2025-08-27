@@ -83,7 +83,7 @@ require_once __DIR__.'/../../get/get_colors.php';
 
     <!-- 2) Botón para abrir el modal de selección de idioma -->
     <div class="container-menu-buttom-translate">
-        <button id="BtnTranslateMenu" class="traslate-buttom">
+        <button id="BtnTranslateMenu" class="">
             <!-- Muestra la bandera seleccionada en sesión o, si no existe, la del idioma original -->
            <img id="maxmenu-img-flag" 
                 src="<?php echo htmlspecialchars($_SESSION['flag_selected'] ?? $banderaUrlOriginal, ENT_QUOTES, 'UTF-8'); ?>" 
@@ -101,26 +101,26 @@ require_once __DIR__.'/../../get/get_colors.php';
       <!-- Botón para ver el idioma original -->
         <div class="form-flag">
 
-        <button class="form-flag-button traslate-buttom"  type="button" id="BtnViewOriginal" onclick="cargarIdiomaOriginal()">
+        <button class="form-flag-button translate-buttom"  type="button" id="BtnViewOriginal" onclick="cargarIdiomaOriginal()">
             <img class="idioma-btn-flag" src="<?php echo htmlspecialchars($banderaUrlOriginal, ENT_QUOTES, 'UTF-8'); ?>" alt="Original Flag">
             <?php echo htmlspecialchars($originalLanguageName, ENT_QUOTES, 'UTF-8'); ?>
         </button>
 
         </div>
       
-      <!-- Botones para cambiar de idioma -->
-        <?php 
-            // Recorremos $languages usando los nombres correctos de las columnas: language_id, language_name, language_code, is_active
-            foreach ($languages as $langRow):
-            if (empty($langRow['is_active'])) { continue; }
-            $languageId   = $langRow['language_id']   ?? '';
-            $languageName = $langRow['language_name'] ?? '';
-            $languageCode = $langRow['language_code'] ?? '';
-            $banderaUrl   = $banderas[$languageCode] ?? 'menu/img/flags/default.png';
-        ?>
-        
+        <!-- Botones para cambiar de idioma -->
+          <?php 
+              // Recorremos $languages usando los nombres correctos de las columnas: language_id, language_name, language_code, is_active
+              foreach ($languages as $langRow):
+              if (empty($langRow['is_active'])) { continue; }
+              $languageId   = $langRow['language_id']   ?? '';
+              $languageName = $langRow['language_name'] ?? '';
+              $languageCode = $langRow['language_code'] ?? '';
+              $banderaUrl   = $banderas[$languageCode] ?? 'menu/img/flags/default.png';
+          ?>
+          
         <div class="form-flag">
-            <button class="idioma-btn" 
+            <button class="idioma-btn translate-buttom" 
 
                     data-idioma="<?php echo htmlspecialchars($languageId, ENT_QUOTES, 'UTF-8'); ?>" 
                     data-flag="<?php echo htmlspecialchars($banderaUrl, ENT_QUOTES, 'UTF-8'); ?>">
