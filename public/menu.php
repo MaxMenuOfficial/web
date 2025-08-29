@@ -33,6 +33,7 @@ require_once __DIR__ . '/../get/get_colors.php';
 
       <!-- Favicon -->
     <link rel="icon"  href="assets/css/menu/img/logo-app.png">
+    
     <title>MaxMenu | Menu </title>
 
     <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-items.css">

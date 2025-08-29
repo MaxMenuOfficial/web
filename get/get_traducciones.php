@@ -41,22 +41,46 @@ foreach ($languages as $language) {
 
 // --- Array de banderas (para idiomas disponibles) ---
 $banderas = [
-    'en' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-england.png',
-    'es' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-spain.png',
-    'fr' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-france.png',
-    'de' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-germany.png',
-    'it' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-italy.png',
-    'pt' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-portugal.png',
-    'ru' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-russia.png',
-    'nl' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-netherlands.png',
-    'pl' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-poland.png',
-    'sv' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-sweden.png',
-    'zh' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-china.png',
-    'ca' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-catalonia.png',
-    'ro' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-romania.png',
-    'ar' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-arabe.png'
-];
 
+    // ======================
+    // 🌍 Idiomas principales
+    // ======================
+    'en'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-england.png',
+    'es'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-spain.png',
+    'fr'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-france.png',
+    'de'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-germany.png',
+    'it'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-italy.png',
+    'pt'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-portugal.png',
+    'ro'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-romania.png',
+    'nl'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-netherlands.png',
+    'ar'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-arabic.png',
+
+    // ================================
+    // 🇪🇸 Idiomas cooficiales de España
+    // ================================
+    'ca'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-catalonia.png',
+    'eu'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-basque.jpg',
+    'gl'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-galicia.png',
+
+    // ===============================
+    // 🌏 Chino diferenciado correctamente
+    // ===============================
+    'zh'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-china.png',      // Simplificado
+    'zh-TW' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-taiwan.png',     // Tradicional
+
+    // ======================================
+    // ⭐ Idiomas Michelin prioritarios globales
+    // ======================================
+    'ja'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-japan.png',
+    'ko'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-korea.png',
+    'sv'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-sweden.png',
+    'da'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-denmark.png',
+    'no'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-norway.png',
+    'el'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-greece.png',
+    'pl'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-poland.png',
+    'cs'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-czech.png',
+    'hu'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-hungary.png',
+];
 // Del array devuelto por menu-service.php
 $originalLanguageName = $restaurantData['original_language'] ?? ''; // p. ej. "Español"
 $originalLanguageCode = $restaurantData['language_code'] ?? '';     // p. ej. "es"

@@ -3,11 +3,19 @@
 
 global $restaurantData, $restaurantId;
 
-// 🔒 Evaluamos flags de visibilidad
+// 🔒 Flags de visibilidad actuales
 $isActive       = !empty($restaurantData['is_active']);
 $isActiveForAll = !empty($restaurantData['is_active_for_all']);
 
-// Caso menú oculto (ninguno activo)
+// 🏷️ Tier del plan (puede ser null). Normalizamos a minúsculas.
+$planTier = strtolower(trim((string)($restaurantData['plan_tier'] ?? '')));
+
+// 📌 Regla de negocio: el widget SOLO se muestra si:
+//  - el restaurante está activo (is_active || is_active_for_all)
+//  - y el plan es MAX (plan_tier === 'max')
+$canShowWidget = ($isActive || $isActiveForAll) && ($planTier === 'max');
+
+// Si NO está activo → mensaje original
 if (!$isActive && !$isActiveForAll) {
     echo "<style>
         #menu-widget-unavailable {
@@ -15,14 +23,13 @@ if (!$isActive && !$isActiveForAll) {
             align-items: center;
             justify-content: center;
             height: 100%;
-            min-height: 150px; /* fallback si el contenedor no define altura */
+            min-height: 150px;
             background: #fff5f5; /* rojo muy claro */
-            color: #c53030;       /* rojo fuerte */
+            color: #c53030;      /* rojo fuerte */
             font-family: sans-serif;
             text-align: center;
             padding: 20px;
             box-sizing: border-box;
-           
         }
         #menu-widget-unavailable h2 {
             margin: 0;
@@ -31,7 +38,38 @@ if (!$isActive && !$isActiveForAll) {
         }
     </style>
     <div id='menu-widget-unavailable'>
-        <h2> Este menú no está disponible, Para resolverlo ingresa en tu area privada | MaxMenu </h2>
+        <h2>Este menú no está disponible. Para resolverlo, ingresa en tu área privada | MaxMenu</h2>
     </div>";
     exit;
 }
+
+// Si está activo pero NO es MAX → bloquear widget y sugerir upgrade
+if (!$canShowWidget) {
+    echo "<style>
+        #menu-widget-upgrade {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            min-height: 150px;
+            background: #f7fafc; /* gris azulado muy claro */
+            color: #2d3748;      /* gris oscuro */
+            font-family: sans-serif;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px dashed #a0aec0;
+        }
+        #menu-widget-upgrade h2 {
+            margin: 0;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+    </style>
+    <div id='menu-widget-upgrade'>
+        <h2>El widget embebible está disponible solo en el plan Max. Actualiza tu plan para activarlo.</h2>
+    </div>";
+    exit;
+}
+
+// ✅ Si llegamos aquí, el widget puede renderizarse normalmente.
