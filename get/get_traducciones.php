@@ -66,7 +66,7 @@ $banderas = [
     // 🌏 Chino diferenciado correctamente
     // ===============================
     'zh'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-china.png',      // Simplificado
-    'zh-TW' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-russia.png',     // Tradicional
+    'ru'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-russia.png',     // Tradicional
 
     // ======================================
     // ⭐ Idiomas Michelin prioritarios globales
@@ -75,7 +75,7 @@ $banderas = [
     'ko'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-korea.png',
     'sv'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-sweden.png',
     'da'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-denmark.png',
-    'no'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-norway.png',
+    'nb'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-norway.png',
     'el'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-greece.png',
     'pl'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-poland.png',
     'cs'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-czech.png',
