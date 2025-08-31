@@ -66,7 +66,7 @@ $banderas = [
     // 🌏 Chino diferenciado correctamente
     // ===============================
     'zh'    => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-china.png',      // Simplificado
-    'zh-TW' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-taiwan.png',     // Tradicional
+    'zh-TW' => 'https://menu.maxmenu.com/assets/css/menu/img/flags/flag-russia.png',     // Tradicional
 
     // ======================================
     // ⭐ Idiomas Michelin prioritarios globales

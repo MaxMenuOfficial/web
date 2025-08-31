@@ -12,8 +12,8 @@ $planTier = strtolower(trim((string)($restaurantData['plan_tier'] ?? '')));
 
 // 📌 Regla de negocio: el widget SOLO se muestra si:
 //  - el restaurante está activo (is_active || is_active_for_all)
-//  - y el plan es MAX (plan_tier === 'max')
-$canShowWidget = ($isActive || $isActiveForAll) && ($planTier === 'max');
+//  - y el plan es MAX **o** ELITE
+$canShowWidget = ($isActive || $isActiveForAll) && in_array($planTier, ['max', 'elite'], true);
 
 // Si NO está activo → mensaje original
 if (!$isActive && !$isActiveForAll) {
@@ -43,7 +43,7 @@ if (!$isActive && !$isActiveForAll) {
     exit;
 }
 
-// Si está activo pero NO es MAX → bloquear widget y sugerir upgrade
+// Si está activo pero NO es MAX ni ELITE → bloquear widget y sugerir upgrade
 if (!$canShowWidget) {
     echo "<style>
         #menu-widget-upgrade {
@@ -67,7 +67,7 @@ if (!$canShowWidget) {
         }
     </style>
     <div id='menu-widget-upgrade'>
-        <h2>El widget embebible está disponible solo en el plan Max. Actualiza tu plan para activarlo.</h2>
+        <h2>El widget embebible está disponible solo en el plan Max o Elite. Actualiza tu plan para activarlo.</h2>
     </div>";
     exit;
 }
