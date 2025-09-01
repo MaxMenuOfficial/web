@@ -42,7 +42,11 @@ require_once __DIR__ . '/../get/get_colors.php';
     <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-idiomas.css">
     <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-logo.css">
     <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-menu.css">
-  
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+      
 </head>
 
 
