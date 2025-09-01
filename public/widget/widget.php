@@ -39,20 +39,20 @@ require_once __DIR__.'/../../get/get_colors.php';
 
 ?>
 
- <div class="maxmenu-root">
+ <div class="maxmenu-root .mmx-root">
 
-       <div class="flecha-up maxmenu-up" id="maxmenu-up">
-          <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img src="https://menu.maxmenu.com/assets/css/widget/img/up.png" alt=""></a>
+       <div class="flecha-up maxmenu-up mmx-back-to-top" id="maxmenu-up">
+          <a class="enlace enlace-flecha" href="#BtnTranslateMenu"><img class="mmx-back-to-top-link "src="https://menu.maxmenu.com/assets/css/widget/img/up.png" alt=""></a>
        </div>
 
 
-            <div class="logo-container">
+            <div class="logo-container mmx-logo-container">
 
                 <?php if (!empty($logos) && is_array($logos)): ?>
                     <?php foreach ($logos as $logoItem): ?>
-                        <div id="maxmenu-logo" class="logo-item maxmenu-logo">
+                        <div id="maxmenu-logo" class="logo-item maxmenu-logo mmx-logo">
                             <?php if (!empty($logoItem['logo_url'])): ?>
-                                <img src="<?php echo htmlspecialchars($logoItem['logo_url']); ?>" alt="Logo del restaurante">
+                                <img  class="mmx-logo-img" src="<?php echo htmlspecialchars($logoItem['logo_url']); ?>" alt="Logo del restaurante">
                             <?php else: ?>
                              
                             <?php endif; ?>
@@ -69,8 +69,8 @@ require_once __DIR__.'/../../get/get_colors.php';
               <?php 
                   if (!empty($plataformasExistentes)):
                       foreach ($plataformasExistentes as $plataforma): ?>
-                      <div class="categoria maxmenu-plataformas" id="maxmenu-plataformas">
-                          <a id="maxmenu-plataforma-button" href="<?php echo htmlspecialchars($plataforma['platform_url']); ?>" 
+                      <div class="categoria maxmenu-plataformas mmx-platforms" id="maxmenu-plataformas">
+                          <a class="mmx-platform" id="maxmenu-plataforma-button" href="<?php echo htmlspecialchars($plataforma['platform_url']); ?>" 
                             class="visitar-btn <?php echo strtolower(htmlspecialchars($plataforma['platform_name'])); ?>" 
                           ></a>
                       </div>
@@ -82,10 +82,11 @@ require_once __DIR__.'/../../get/get_colors.php';
 
 
     <!-- 2) Botón para abrir el modal de selección de idioma -->
-    <div class="container-menu-buttom-translate">
-        <button id="BtnTranslateMenu" class="">
+    <div class="container-menu-buttom-translate ">
+        <button id="BtnTranslateMenu" >
             <!-- Muestra la bandera seleccionada en sesión o, si no existe, la del idioma original -->
-           <img id="maxmenu-img-flag" 
+           <img 
+                id="maxmenu-img-flag" 
                 src="<?php echo htmlspecialchars($_SESSION['flag_selected'] ?? $banderaUrlOriginal, ENT_QUOTES, 'UTF-8'); ?>" 
                 alt="Current Flag"
             >
