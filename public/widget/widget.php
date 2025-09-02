@@ -94,15 +94,15 @@ require_once __DIR__.'/../../get/get_colors.php';
     </div>
 
     <!-- Modal para la selección de idioma -->
-<div id="translateItemModalMenu" class="modal" style="display:none;">
-  <div id="modal-content-translate" class="modal-content">
-    <span id="close-btn-modal-translate" class="close">&times;</span>
+<div id="translateItemModalMenu" class="modal mmx-lang-modal" style="display:none;">
+  <div id="modal-content-translate" class="modal-content mmx-lang-modal-content">
+    <span id="close-btn-modal-translate .mmx-lang-close" class="close">&times;</span>
     <br><br>
-    <div id="idiomasContainer" class="maxmenu-languaguesContainer" >
+    <div id="idiomasContainer" class="maxmenu-languaguesContainer mmx-lang-list" >
       <!-- Botón para ver el idioma original -->
-        <div class="form-flag">
+        <div class="form-flag ">
 
-        <button class="form-flag-button translate-buttom"  type="button" id="BtnViewOriginal" onclick="cargarIdiomaOriginal()">
+        <button class="form-flag-button translate-buttom mmx-lang-btn"  type="button" id="BtnViewOriginal" onclick="cargarIdiomaOriginal()">
             <img class="idioma-btn-flag" src="<?php echo htmlspecialchars($banderaUrlOriginal, ENT_QUOTES, 'UTF-8'); ?>" alt="Original Flag">
             <?php echo htmlspecialchars($originalLanguageName, ENT_QUOTES, 'UTF-8'); ?>
         </button>
@@ -121,7 +121,7 @@ require_once __DIR__.'/../../get/get_colors.php';
           ?>
           
         <div class="form-flag">
-            <button class="idioma-btn translate-buttom" 
+            <button class="idioma-btn translate-buttom mmx-lang-btn" 
 
                     data-idioma="<?php echo htmlspecialchars($languageId, ENT_QUOTES, 'UTF-8'); ?>" 
                     data-flag="<?php echo htmlspecialchars($banderaUrl, ENT_QUOTES, 'UTF-8'); ?>">
@@ -151,19 +151,19 @@ $banderaUrlOriginal   = $banderas[$originalLanguageCode] ?? 'menu/img/flags/defa
 <!-- 2) Ahora inyectas las variables en JS -->
 
 
-<div class="category-shortcuts">
+<div class="category-shortcuts mmx-categories-shortcuts">
   <?php foreach ($estructuraMenu as $categoria): ?>
-    <div class="category-shortcut">
+    <div class="category-shortcut mmx-category-shortcut">
       <!-- Botón de la categoría -->
-      <div class="category-container" id="maxmenu-category-container" >
+      <div class="category-container mmx-category-shortcut-row" id="maxmenu-category-container" >
         <button 
           id="category-<?php echo $categoria['category_id']; ?>-shortcut" 
-          class="category-button-atajo menu-icon" 
+          class="category-button-atajo menu-icon mmx-category-button" 
           data-category-id="<?php echo $categoria['category_id']; ?>" 
           onclick="scrollToCategory('<?php echo $categoria['category_id']; ?>')"
         >
           <!-- Título de la categoría con data-translate -->
-          <span id="maxmenu-category-buttom" class="nombre-categoria menu-icon" data-translate="category">
+          <span id="maxmenu-category-buttom" class="nombre-categoria menu-icon mmx-category-button-label" data-translate="category">
             <?php echo htmlspecialchars($categoria['category_name'], ENT_QUOTES, 'UTF-8'); ?>
           </span>
         </button>
@@ -171,7 +171,7 @@ $banderaUrlOriginal   = $banderas[$originalLanguageCode] ?? 'menu/img/flags/defa
         <?php if (!empty($categoria['subcategorias'])): ?>
           <button 
             id="maxmenu-subcategory-buttom"
-            class="subcategory-toggle" 
+            class="subcategory-toggle mmx-subcategory-toggle" 
             data-category-id="<?php echo $categoria['category_id']; ?>" 
             onclick="toggleSubcategories('<?php echo $categoria['category_id']; ?>')"
           >
@@ -180,7 +180,7 @@ $banderaUrlOriginal   = $banderas[$originalLanguageCode] ?? 'menu/img/flags/defa
                 viewBox="0 -960 960 960" 
                 width="24px" 
                 fill="currentColor" 
-                class="arrow-icon-left menu-icon" 
+                class="arrow-icon-left menu-icon mmx-subcategory-toggle-icon" 
                 id="arrow-<?php echo $categoria['category_id']; ?>">
                 <path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/>
           </svg>
@@ -188,7 +188,7 @@ $banderaUrlOriginal   = $banderas[$originalLanguageCode] ?? 'menu/img/flags/defa
           </button>
         <?php else: ?>
           <!-- Espacio reservado para mantener alineación -->
-          <span class="arrow-placeholder"></span>
+          <span class="arrow-placeholder mmx-subcategory-toggle-placeholder"></span>
         <?php endif; ?>
       </div>
 
@@ -196,18 +196,18 @@ $banderaUrlOriginal   = $banderas[$originalLanguageCode] ?? 'menu/img/flags/defa
         <!-- Contenedor oculto de subcategorías -->
         <div 
           id="subcategories-<?php echo $categoria['category_id']; ?>" 
-          class="subcategory-shortcuts" 
+          class="subcategory-shortcuts mmx-subcategory-shortcuts" 
           style="display: none;"
         >
           <?php foreach ($categoria['subcategorias'] as $subcategoria): ?>
             <button 
               id="maxmenu-subcategory-buttom" 
-              class="subcategory-button-atajo menu-icon" 
+              class="subcategory-button-atajo menu-icon mmx-subcategory-button" 
               data-subcategory-id="<?php echo $subcategoria['subcategory_id']; ?>" 
               onclick="scrollToSubcategory('<?php echo $categoria['category_id']; ?>','<?php echo $subcategoria['subcategory_id']; ?>')"
             >
               <!-- Título de la subcategoría con data-translate -->
-              <span class="nombre-subcategoria menu-icon" data-translate="subcategory">
+              <span class="nombre-subcategoria menu-icon mmx-subcategory-button-label" data-translate="subcategory">
                 <?php echo htmlspecialchars($subcategoria['subcategory_name'], ENT_QUOTES, 'UTF-8'); ?>
               </span>
             </button>
@@ -231,10 +231,10 @@ if (!isset($brunches) || !is_array($brunches)) {
 }
 ?>
 
-<div class="añadidas">
-  <div id="category-carousel" class="carousel">
+<div class="añadidas mmx-category-container">
+  <div id="category-carousel" class="carousel mmx-category-section">
     <!-- Contenedor del carrusel para las categorías -->
-    <div id="items-container" class="carousel-track">
+    <div id="items-container mmx-items" class="carousel-track">
       <?php foreach ($estructuraMenu as $categoria): ?>
         <div 
           id="category-<?php echo $categoria['category_id']; ?>" 
@@ -244,7 +244,7 @@ if (!isset($brunches) || !is_array($brunches)) {
         
           <!-- Título de la categoría -->
             <h3 class="h3">
-                <span class="nombre-categoria menu-icon" id="maxmenu-categories-name" data-translate="category" data-category-id="<?php echo $categoria['category_id']; ?>">
+                <span class="nombre-categoria menu-icon mmx-category-titles" id="maxmenu-categories-name" data-translate="category" data-category-id="<?php echo $categoria['category_id']; ?>">
                     <?php echo htmlspecialchars($categoria['category_name'], ENT_QUOTES, 'UTF-8'); ?>
                 </span>
             </h3>
@@ -279,17 +279,17 @@ if (!isset($brunches) || !is_array($brunches)) {
             <!-- Mostrar ítems sin subcategoría -->
             <?php if (!empty($itemsSinSubcategoria)): ?>
               <?php foreach ($itemsSinSubcategoria as $item): ?>
-                <div class="item-container" data-item-id="<?php echo $item['item_id']; ?>">
-                  <div class="item-img-texto">
-                    <div class="item-info">
+                <div class="item-container mmx-items" data-item-id="<?php echo $item['item_id']; ?>">
+                  <div class="item-img-texto mmx-item">
+                    <div class="item-info mmx-item-info">
 
-                      <h3 class="titulo menu-title h3" data-translate="item-title"><?php echo safe_output($item['title']); ?></h3>
-                      <p class="descripcion menu-description" data-translate="item-description"><?php echo safe_output($item['description']); ?></p>
+                      <h3 class="titulo menu-title h3 mmx-item-title" data-translate="item-title"><?php echo safe_output($item['title']); ?></h3>
+                      <p class="descripcion menu-description mmx-item-desc" data-translate="item-description"><?php echo safe_output($item['description']); ?></p>
 
                       <?php if (!empty($item['allergens'])): ?>
                         
-                        <div class="alergenos-items">
-                        <div class="alergenos-show">
+                        <div class="alergenos-items mmx-item-allergens">
+                        <div class="alergenos-show mmx-item-allergens-list">
                                 <?php 
                                 // 📌 Determinar la carpeta de alérgenos según el diseño configurado en la BD
                                 $carpetaAlergenos = "https://menu.maxmenu.com/assets/css/menu/alergenos" . intval($diseñoAlergenos); 
@@ -300,11 +300,11 @@ if (!isset($brunches) || !is_array($brunches)) {
                                     foreach ($alergenos as $alergeno):
                                         $alergeno_trimmed = strtolower(trim($alergeno));
                                 ?>
-                                        <img 
-                                            src="<?php echo htmlspecialchars($carpetaAlergenos . '/' . $alergeno_trimmed . '.svg', ENT_QUOTES, 'UTF-8'); ?>" 
-                                            alt="<?php echo htmlspecialchars($alergeno_trimmed, ENT_QUOTES, 'UTF-8'); ?>" 
-                                            style="width: 30px; height: 30px;"
-                                        >
+                                        <img class="mmx-item-allergen"
+                                              src="<?php echo htmlspecialchars($carpetaAlergenos . '/' . $alergeno_trimmed . '.svg', ENT_QUOTES, 'UTF-8'); ?>" 
+                                              alt="<?php echo htmlspecialchars($alergeno_trimmed, ENT_QUOTES, 'UTF-8'); ?>" 
+                                              style="width: 30px; height: 30px;"
+                                          >
                                 <?php 
                                     endforeach; 
                                 else:
@@ -321,17 +321,17 @@ if (!isset($brunches) || !is_array($brunches)) {
                       <div class="item-agrupar-precios">
                         <div class="item-image-doble">
                           <?php if (!empty($item['price'])): ?>
-                            <div class="item-image-simple">
-                              <h3 class="menu-price h3" ><?php echo mostrarPrecio($item['price'], $simbolo_moneda, $moneda); ?></h3>
+                            <div class="item-image-simple mmx-item-price-box">
+                              <h3 class="menu-price h3 mmx-item-price" ><?php echo mostrarPrecio($item['price'], $simbolo_moneda, $moneda); ?></h3>
                             </div>
                           <?php endif; ?>
                         </div>
                       </div>
                     </div> <!-- /.item-info -->
-                    <div class="item-image <?php echo empty($item['image']) ? 'no-image' : ''; ?>">
+                    <div class="mmx-item-image item-image <?php echo empty($item['image']) ? 'no-image' : ''; ?>">
                       <?php if (!empty($item['image'])): ?>
                         <img 
-                             class="expandable-image"
+                             class="expandable-image mmx-item-image-img"
                              src="<?php echo htmlspecialchars($item['image'], ENT_QUOTES, 'UTF-8'); ?>" 
                              alt="Imagen del item" 
                              style="max-width: 100px; min-width: 100px; min-height: 100px; max-height: 100px; object-fit: cover; border-radius: 30px; margin: 5px;">
@@ -346,70 +346,70 @@ if (!isset($brunches) || !is_array($brunches)) {
             <?php endif; ?>
 
             <?php if (!empty($brunchesDeEstaCategoria)): ?>
-    <div class="brunch-section">
+    <div class="brunch-section ">
         <?php foreach ($brunchesDeEstaCategoria as $brunch): ?>
-            <div class="item-container">
-                <div class="item-img-texto">
-                    <div class="item-info">
+            <div class="item-container mmx-brunch-section">
+                <div class="item-img-texto mmx-brunch">
+                    <div class="item-info mmx-brunch-time">
                         <!-- Horario como título -->
-                        <h3 class="titulo-item menu-title h3">
+                        <h3 class="titulo-item menu-title h3 mmx-brunch-group-title">
                             <p><?php echo safe_output($brunch['horarios'] ?? 'Brunch'); ?></p>
                         </h3>
 
                         <!-- Descripción del brunch -->
                         <?php if (!empty($brunch['description'])): ?>
-                            <p class="menu-description" ><?php echo safe_output($brunch['description']); ?></p>
+                            <p class="menu-description mmx-brunch-group-list" ><?php echo safe_output($brunch['description']); ?></p>
                         <?php endif; ?>
 
                         <!-- Arrays de ítems: infusions, main_course, etc. -->
                         <?php if (!empty($brunch['infusions_items'])): ?>
-                            <strong class="menu-title">Infusiones:</strong>
+                            <strong class="menu-title mmx-brunch-group-title">Infusiones:</strong>
                             <ul>
                                 <?php foreach ($brunch['infusions_items'] as $inf): ?>
-                                    <li class="menu-description"><?php echo safe_output($inf); ?></li>
+                                    <li class="menu-description mmx-brunch-group-list"><?php echo safe_output($inf); ?></li>
                                 <?php endforeach; ?>
                             </ul>
                         <?php endif; ?>
 
                         <?php if (!empty($brunch['main_course_items'])): ?>
-                            <strong class="menu-title" >Plato Principal:</strong>
+                            <strong class="menu-title mmx-brunch-group-title" >Plato Principal:</strong>
                             <ul>
                                 <?php foreach ($brunch['main_course_items'] as $plato): ?>
-                                    <li class="menu-description" ><?php echo safe_output($plato); ?></li>
+                                    <li class="menu-description mmx-brunch-group-list" ><?php echo safe_output($plato); ?></li>
                                 <?php endforeach; ?>
                             </ul>
                         <?php endif; ?>
 
                         <?php if (!empty($brunch['bakery_items'])): ?>
-                            <strong class="menu-title" >Panadería & Pastelería:</strong>
+                            <strong class="menu-title mmx-brunch-group-title" >Panadería & Pastelería:</strong>
                             <ul>
                                 <?php foreach ($brunch['bakery_items'] as $bakery): ?>
-                                    <li class="menu-description" ><?php echo safe_output($bakery); ?></li>
+                                    <li class="menu-description mmx-brunch-group-list" ><?php echo safe_output($bakery); ?></li>
                                 <?php endforeach; ?>
                             </ul>
                         <?php endif; ?>
 
                         <?php if (!empty($brunch['drinks_items'])): ?>
-                            <strong class="menu-title" >Bebidas & Cócteles:</strong>
+                            <strong class="menu-title mmx-brunch-group-title" >Bebidas & Cócteles:</strong>
                             <ul>
                                 <?php foreach ($brunch['drinks_items'] as $drink): ?>
-                                    <li class="menu-description" ><?php echo safe_output($drink); ?></li>
+                                    <li class="menu-description mmx-brunch-group-list" ><?php echo safe_output($drink); ?></li>
                                 <?php endforeach; ?>
                             </ul>
                         <?php endif; ?>
 
                         <?php if (!empty($brunch['additional_items'])): ?>
-                            <strong class="menu-title" >Adicionales:</strong>
+                            <strong class="menu-title mmx-brunch-group-title" >Adicionales:</strong>
                             <ul>
                                 <?php foreach ($brunch['additional_items'] as $add): ?>
-                                    <li class="menu-description"><?php echo safe_output($add); ?></li>
+                                    <li class="menu-description mmx-brunch-group-list"><?php echo safe_output($add); ?></li>
                                 <?php endforeach; ?>
                             </ul>
                         <?php endif; ?>
 
                         <!-- Precio -->
                         <?php if (isset($brunch['price'])): ?>
-                            <p class="menu-price"><?php echo mostrarPrecio($brunch['price'], $simbolo_moneda, $moneda); ?></p>
+                            <p class="menu-price mmx-brunch-group-title"><?php echo mostrarPrecio($brunch['price'], $simbolo_moneda, $moneda); ?></p>
                         <?php endif; ?>
 
                      
@@ -473,79 +473,79 @@ if (!isset($brunches) || !is_array($brunches)) {
       
 
 <?php if (!empty($filteredDailyMenu)): ?>
-  <div class="daily-menu-section">
+  <div class="daily-menu-section mmx-dailymenu-section">
     <?php foreach ($filteredDailyMenu as $menu): ?>
-      <div class="item-container">
-        <div class="item-img-texto">
-          <div class="item-info">
+      <div class="item-container mmx-dailymenu">
+        <div class="item-img-texto mmx-dailymenu-time">
+          <div class="item-info mmx-dailymenu-container">
             <!-- Mostrar el schedule (horarios) como título -->
-            <h3 class="titulo-item h3">
+            <h3 class="titulo-item h3 mmx-dailymenu-group-title">
               <p class="menu-title"><?php echo safe_output($menu['schedules'] ?? 'Menú del Día'); ?></p>
             </h3>
 
             <!-- Mostrar descripción si existe (puedes tener una columna description si la usas) -->
             <?php if (!empty($menu['description'])): ?>
-              <p class="menu-description" ><?php echo safe_output($menu['description']); ?></p>
+              <p class="menu-description mmx-dailymenu-group-list " ><?php echo safe_output($menu['description']); ?></p>
             <?php endif; ?>
 
             <!-- Mostrar los arrays de ítems -->
             <?php if (!empty($menu['starter_options'])): ?>
-              <strong class="menu-title" >Entrantes:</strong>
+              <strong class="menu-title mmx-dailymenu-group-title" >Entrantes:</strong>
               <ul>
                 <?php foreach ($menu['starter_options'] as $item): ?>
-                  <li class="menu-description"><?php echo safe_output($item); ?></li>
+                  <li class="menu-description mmx-dailymenu-group-list "><?php echo safe_output($item); ?></li>
                 <?php endforeach; ?>
               </ul>
             <?php endif; ?>
 
             <?php if (!empty($menu['main_options'])): ?>
-              <strong class="menu-title" >Plato Principal:</strong>
+              <strong class="menu-title mmx-dailymenu-group-title" >Plato Principal:</strong>
               <ul>
                 <?php foreach ($menu['main_options'] as $item): ?>
-                  <li class="menu-description" ><?php echo safe_output($item); ?></li>
+                  <li class="menu-description mmx-dailymenu-group-list " ><?php echo safe_output($item); ?></li>
                 <?php endforeach; ?>
               </ul>
             <?php endif; ?>
 
             <?php if (!empty($menu['second_options'])): ?>
-              <strong class="menu-title" >Segundo Plato:</strong>
+              <strong class="menu-title mmx-dailymenu-group-title" >Segundo Plato:</strong>
               <ul>
                 <?php foreach ($menu['second_options'] as $item): ?>
-                  <li class="menu-description"><?php echo safe_output($item); ?></li>
+                  <li class="menu-description mmx-dailymenu-group-list "><?php echo safe_output($item); ?></li>
                 <?php endforeach; ?>
               </ul>
             <?php endif; ?>
 
             <?php if (!empty($menu['dessert_options'])): ?>
-              <strong class="menu-title">Postres:</strong>
+              <strong class="menu-title mmx-dailymenu-group-title">Postres:</strong>
               <ul>
                 <?php foreach ($menu['dessert_options'] as $item): ?>
-                  <li class="menu-description" ><?php echo safe_output($item); ?></li>
+                  <li class="menu-description mmx-dailymenu-group-list " ><?php echo safe_output($item); ?></li>
                 <?php endforeach; ?>
               </ul>
             <?php endif; ?>
 
             <?php if (!empty($menu['drinks_items'])): ?>
-              <strong class="menu-title">Bebidas:</strong>
+              <strong class="menu-title mmx-dailymenu-group-title">Bebidas:</strong>
               <ul>
                 <?php foreach ($menu['drinks_items'] as $item): ?>
-                  <li class="menu-description"><?php echo safe_output($item); ?></li>
+                  <li class="menu-description mmx-dailymenu-group-list "><?php echo safe_output($item); ?></li>
                 <?php endforeach; ?>
               </ul>
             <?php endif; ?>
 
             <?php if (!empty($menu['additional_items'])): ?>
-              <strong class="menu-title" >Adicionales:</strong>
+              <strong class="menu-title mmx-dailymenu-group-title" >Adicionales:</strong>
               <ul>
                 <?php foreach ($menu['additional_items'] as $item): ?>
-                  <li class="menu-description"><?php echo safe_output($item); ?></li>
+                  <li class="menu-description mmx-dailymenu-group-list"><?php echo safe_output($item); ?></li>
                 <?php endforeach; ?>
               </ul>
             <?php endif; ?>
 
             <!-- Mostrar Precio -->
             <?php if (isset($menu['price'])): ?>
-              <p class="menu-price" ><?php echo mostrarPrecio($menu['price'], $simbolo_moneda, $moneda); ?></p>
+              <p class="menu-price mmx-dailymenu-group-title" ><?php echo mostrarPrecio($menu['price'], $simbolo_moneda, $moneda); ?></p>
             <?php endif; ?>
 
          
@@ -615,7 +615,7 @@ if (!isset($brunches) || !is_array($brunches)) {
                   data-subcategory-id="<?php echo $subcategoria['subcategory_id']; ?>"
                 >
                <h4>
-                    <span class="nombre-subcategoria menu-icon" data-translate="subcategory" data-subcategory-id="<?php echo $subcategoria['subcategory_id']; ?>">
+                    <span class="nombre-subcategoria menu-icon mmx-subcategory-titles" data-translate="subcategory" data-subcategory-id="<?php echo $subcategoria['subcategory_id']; ?>">
                         <?php echo htmlspecialchars($subcategoria['subcategory_name'], ENT_QUOTES, 'UTF-8'); ?>
                     </span>
                 </h4>
@@ -624,8 +624,8 @@ if (!isset($brunches) || !is_array($brunches)) {
                     <div class="item-container" data-item-id="<?php echo $item['item_id']; ?>">
                       <div class="item-img-texto">
                         <div class="item-info">
-                        <h3 class="titulo menu-title h3" data-translate="item-title"><?php echo safe_output($item['title']); ?></h3>
-                         <p class="descripcion menu-description" data-translate="item-description"><?php echo safe_output($item['description']); ?></p>
+                        <h3 class="titulo menu-title h3 mmx-item-title " data-translate="item-title"><?php echo safe_output($item['title']); ?></h3>
+                         <p class="descripcion menu-description mmx-item-desc" data-translate="item-description"><?php echo safe_output($item['description']); ?></p>
                           <?php if (!empty($item['allergens'])): ?>
                             <div class="alergenos-items">
                             <div class="alergenos-show">
@@ -660,7 +660,7 @@ if (!isset($brunches) || !is_array($brunches)) {
                             <div class="item-image-doble">
                               <?php if (!empty($item['price'])): ?>
                                 <div class="item-image-simple">
-                                  <h3 class="menu-price h3" ><?php echo mostrarPrecio($item['price'], $simbolo_moneda, $moneda); ?></h3>
+                                  <h3 class="menu-price h3 mmx-item-price" ><?php echo mostrarPrecio($item['price'], $simbolo_moneda, $moneda); ?></h3>
                                 </div>
                               <?php endif; ?>
                             </div>
