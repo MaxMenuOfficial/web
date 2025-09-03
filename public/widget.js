@@ -39,4 +39,5 @@
     console.error('[MaxMenu] ❌ Error cargando el widget:', err);
     newContainer.innerHTML = '<p style="color:red;">[MaxMenu] No se pudo cargar el menú.</p>';
   }
+  
 })();
