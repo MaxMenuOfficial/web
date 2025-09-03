@@ -513,6 +513,7 @@ function toggleSubcategories(categoryId) {
                 <?php echo htmlspecialchars($subcategoria['subcategory_name'], ENT_QUOTES, 'UTF-8'); ?>
               </span>
             </button>
+
           <?php endforeach; ?>
         </div>
       <?php endif; ?>
@@ -1122,12 +1123,6 @@ document.addEventListener("DOMContentLoaded", function () {
 var menuColors = <?php echo json_encode($colores ?? [], JSON_UNESCAPED_UNICODE); ?>;
 
 // ===== Tipografías =====
-// Estructura esperada:
-// {
-//   titleFont: "Cormorant SC", titleWeight: 600, titleSize: 20,
-//   bodyFont: "Outfit",        bodyWeight: 400, bodySize: 15,
-//   priceFont:"Lexend Exa",    priceWeight:600, priceSize:16
-// }
 var menuTypography = <?php echo json_encode($tipografias ?? [], JSON_UNESCAPED_UNICODE); ?>;
 
 // Pila de fallbacks por familia
@@ -1193,6 +1188,22 @@ document.addEventListener('DOMContentLoaded', function () {
     el.style.fontSize   = px(menuTypography.bodySize || 15);
   });
 
+  // ✅ NUEVO: Categorías → usan la misma tipografía que descripción
+  var categoryNames = document.querySelectorAll('.nombre-categoria');
+  categoryNames.forEach(function (el) {
+    el.style.fontFamily = fontStack(menuTypography.bodyFont || 'Outfit');
+    el.style.fontWeight = String(menuTypography.bodyWeight || 400);
+    el.style.fontSize   = px(menuTypography.bodySize || 15);
+  });
+
+  // ✅ NUEVO: Subcategorías → usan la misma tipografía que descripción
+  var subcategoryNames = document.querySelectorAll('.nombre-subcategoria');
+  subcategoryNames.forEach(function (el) {
+    el.style.fontFamily = fontStack(menuTypography.bodyFont || 'Outfit');
+    el.style.fontWeight = String(menuTypography.bodyWeight || 400);
+    el.style.fontSize   = px(menuTypography.bodySize || 15);
+  });
+
   // Precios
   menuPrices.forEach(function (el) {
     el.style.fontFamily = fontStack(menuTypography.priceFont || 'Lexend Exa');
@@ -1200,7 +1211,34 @@ document.addEventListener('DOMContentLoaded', function () {
     el.style.fontSize   = px(menuTypography.priceSize || 16);
   });
 });
+</script>
 
+
+<script>
+// Bordes del menú normalizados (solo los campos que necesitamos)
+var menuBorders = <?php echo json_encode([
+  'border_style' => $menuBorders['border_style'] ?? 'round',
+  'border_width' => $menuBorders['border_width'] ?? 2,
+], JSON_UNESCAPED_UNICODE); ?>;
+
+// Esperado: { border_style: "round|semi|square", border_width: <int> }
+
+document.addEventListener('DOMContentLoaded', function () {
+  if (!menuBorders || typeof menuBorders !== 'object') return;
+
+  // Mapeo estilo → radio
+  var radiusMap = { square: '0px', semi: '20px', round: '100px' };
+  var borderRadius = radiusMap[menuBorders.border_style] || '0px';
+  var borderWidth  = (parseInt(menuBorders.border_width, 10) || 0) + 'px';
+
+  // Aplicar a categorías y subcategorías
+  var targets = document.querySelectorAll('.category-button-atajo, .subcategory-button-atajo');
+  targets.forEach(function (el) {
+    el.style.borderStyle = 'solid';
+    el.style.borderWidth = borderWidth;
+    el.style.borderRadius = borderRadius;
+  });
+});
 </script>
 
 </body>

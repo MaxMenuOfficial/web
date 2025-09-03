@@ -22,6 +22,7 @@ $tipografias = [
 /**
  * Catálogo oficial MaxMenu (familias y pesos reales)
  */
+
 $MM_FONT_CATALOG = [
   'Cormorant SC' => [300,400,500,600,700],
   'Tangerine'    => [400,700],
