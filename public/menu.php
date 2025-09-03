@@ -1231,9 +1231,16 @@ document.addEventListener('DOMContentLoaded', function () {
   var borderRadius = radiusMap[menuBorders.border_style] || '0px';
   var borderWidth  = (parseInt(menuBorders.border_width, 10) || 0) + 'px';
 
-  // Aplicar a categorías y subcategorías
-  var targets = document.querySelectorAll('.category-button-atajo, .subcategory-button-atajo');
-  targets.forEach(function (el) {
+  // ✅ Categorías → solo aplicamos border-radius
+  var categoryButtons = document.querySelectorAll('.category-button-atajo');
+  categoryButtons.forEach(function (el) {
+    el.style.borderRadius = borderRadius;
+    // No tocamos el grosor ni border-style aquí
+  });
+
+  // ✅ Subcategorías → aplicamos border-radius + grosor + estilo
+  var subcategoryButtons = document.querySelectorAll('.subcategory-button-atajo');
+  subcategoryButtons.forEach(function (el) {
     el.style.borderStyle = 'solid';
     el.style.borderWidth = borderWidth;
     el.style.borderRadius = borderRadius;
