@@ -16,8 +16,8 @@
 
   const newContainer = originalContainer; // Reutiliza el original, no crees uno nuevo
 
-
-  const latestUrl = `https://storage.googleapis.com/maxmenu-storage/${restaurantId}/widget/latest.json?_=${Date.now()}`;
+  // 🔹 Ahora sin timestamp
+  const latestUrl = `https://storage.googleapis.com/maxmenu-storage/${restaurantId}/widget/latest.json`;
 
   try {
     const res = await fetch(latestUrl, { cache: 'no-store' });
@@ -29,8 +29,9 @@
     const widgetUrl = `https://storage.googleapis.com/maxmenu-storage/${restaurantId}/widget/${version}/widget.js`;
 
     const script = document.createElement('script');
-    script.src = widgetUrl + '?_=' + Date.now();
+    script.src = widgetUrl; // 🔹 sin timestamp
     script.async = false;
+    script.setAttribute("maxmenu-script", "true"); // para poder limpiarlo en recargas
     document.head.appendChild(script);
 
     console.log(`[MaxMenu] ✅ Cargado widget.js v${version} para ${restaurantId}`);
