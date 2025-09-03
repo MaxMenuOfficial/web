@@ -11,7 +11,8 @@ if (!class_exists('MenuService')) {
     {
         /** @var \Google\Cloud\Spanner\Database */
         private $database;
-        /** @var array<string,array> */
+
+        /** @var array<string,array> Cache interno in-memory */
         private static array $cache = [];
 
         public function __construct()
@@ -38,18 +39,20 @@ if (!class_exists('MenuService')) {
         }
 
         /**
-         * Obtiene todos los datos públicos del restaurante con caching in-memory
+         * Obtiene todos los datos públicos del restaurante con caching in-memory.
+         *
          * @param string $restaurantId
+         * @param bool $force  Forzar lectura directa de Spanner ignorando cache.
          * @return array|null
          */
         public function getRestaurantPublicData(string $restaurantId, bool $force = false): ?array
         {
+            // ✅ Cache interno para optimizar menús
             if (!$force && isset(self::$cache[$restaurantId])) {
                 return self::$cache[$restaurantId];
             }
-        
-        
 
+            // SQL optimizado: trae solo lo que necesitamos
             $sql = <<<'SQL'
 WITH restaurant_data AS (
   SELECT *
@@ -59,112 +62,52 @@ WITH restaurant_data AS (
 )
 SELECT
   r.*,
-  ARRAY(
-    SELECT AS STRUCT c.*
-      FROM categories c
-     WHERE c.restaurant_id = r.restaurant_id
-  ) AS categories,
-  ARRAY(
-    SELECT AS STRUCT s.*
-      FROM subcategories s
-     WHERE s.restaurant_id = r.restaurant_id
-  ) AS subcategories,
-  ARRAY(
-    SELECT AS STRUCT i.*
-      FROM items i
-     WHERE i.restaurant_id = r.restaurant_id
-  ) AS items,
-  ARRAY(
-    SELECT AS STRUCT l.*
-      FROM logos l
-     WHERE l.restaurant_id = r.restaurant_id
-  ) AS logos,
-  ARRAY(
-    SELECT AS STRUCT p.*
-      FROM platforms p
-     WHERE p.restaurant_id = r.restaurant_id
-  ) AS platforms,
-  ARRAY(
-    SELECT AS STRUCT lang.*
-      FROM languages lang
-     WHERE lang.restaurant_id = r.restaurant_id
-  ) AS languages,
-  ARRAY(
-    SELECT AS STRUCT ct.*
-      FROM category_translations ct
-     WHERE ct.restaurant_id = r.restaurant_id
-  ) AS category_translations,
-  ARRAY(
-    SELECT AS STRUCT st.*
-      FROM subcategory_translations st
-     WHERE st.restaurant_id = r.restaurant_id
-  ) AS subcategory_translations,
-  ARRAY(
-    SELECT AS STRUCT it.*
-      FROM item_translations it
-     WHERE it.restaurant_id = r.restaurant_id
-  ) AS item_translations,
-  ARRAY(
-    SELECT AS STRUCT sup.*
-      FROM item_supplements sup
-     WHERE sup.restaurant_id = r.restaurant_id
-  ) AS item_supplements,
-  ARRAY(
-    SELECT AS STRUCT b.*
-      FROM brunch b
-     WHERE b.restaurant_id = r.restaurant_id
-  ) AS brunches,
-  ARRAY(
-    SELECT AS STRUCT dm.*
-      FROM daily_menu dm
-     WHERE dm.restaurant_id = r.restaurant_id
-  ) AS daily_menu,
-  ARRAY(
-    SELECT AS STRUCT mc.*
-      FROM menu_colors mc
-     WHERE mc.restaurant_id = r.restaurant_id
-  ) AS menu_colors,
-  ARRAY(
-    SELECT AS STRUCT rd.*
-      FROM restaurant_domains rd
-     WHERE rd.restaurant_id = r.restaurant_id
-  ) AS domains
-
+  ARRAY(SELECT AS STRUCT c.*  FROM categories c              WHERE c.restaurant_id = r.restaurant_id)  AS categories,
+  ARRAY(SELECT AS STRUCT s.*  FROM subcategories s           WHERE s.restaurant_id = r.restaurant_id)  AS subcategories,
+  ARRAY(SELECT AS STRUCT i.*  FROM items i                   WHERE i.restaurant_id = r.restaurant_id)  AS items,
+  ARRAY(SELECT AS STRUCT l.*  FROM logos l                   WHERE l.restaurant_id = r.restaurant_id)  AS logos,
+  ARRAY(SELECT AS STRUCT p.*  FROM platforms p               WHERE p.restaurant_id = r.restaurant_id)  AS platforms,
+  ARRAY(SELECT AS STRUCT lang.* FROM languages lang          WHERE lang.restaurant_id = r.restaurant_id) AS languages,
+  ARRAY(SELECT AS STRUCT ct.* FROM category_translations ct  WHERE ct.restaurant_id = r.restaurant_id)  AS category_translations,
+  ARRAY(SELECT AS STRUCT st.* FROM subcategory_translations st WHERE st.restaurant_id = r.restaurant_id) AS subcategory_translations,
+  ARRAY(SELECT AS STRUCT it.* FROM item_translations it      WHERE it.restaurant_id = r.restaurant_id)  AS item_translations,
+  ARRAY(SELECT AS STRUCT sup.* FROM item_supplements sup     WHERE sup.restaurant_id = r.restaurant_id)  AS item_supplements,
+  ARRAY(SELECT AS STRUCT b.*  FROM brunch b                  WHERE b.restaurant_id = r.restaurant_id)  AS brunches,
+  ARRAY(SELECT AS STRUCT dm.* FROM daily_menu dm             WHERE dm.restaurant_id = r.restaurant_id)  AS daily_menu,
+  ARRAY(SELECT AS STRUCT mc.* FROM menu_colors mc            WHERE mc.restaurant_id = r.restaurant_id)  AS menu_colors,
+  ARRAY(SELECT AS STRUCT rd.* FROM restaurant_domains rd     WHERE rd.restaurant_id = r.restaurant_id)  AS domains,
+  -- ✅ NUEVO: incluir tipografías públicas del menú
+  ARRAY(SELECT AS STRUCT mt.*
+         FROM menu_typography mt
+        WHERE mt.restaurant_id = r.restaurant_id) AS menu_typography
 FROM restaurant_data r;
 SQL;
 
-                        
             try {
-              $result = $this->database->execute($sql, [
-                  'parameters' => ['restaurant_id' => $restaurantId]
-              ]);
-              $data = iterator_to_array($result->rows())[0] ?? null;
-              if (!$data) {
-                  return null;
-              }
+                $result = $this->database->execute($sql, [
+                    'parameters' => ['restaurant_id' => $restaurantId]
+                ]);
 
-              self::$cache[$restaurantId] = $data;
-              return $data;
+                $data = iterator_to_array($result->rows())[0] ?? null;
+                if (!$data) {
+                    return null;
+                }
+
+                // Cachear en memoria para próximas llamadas
+                self::$cache[$restaurantId] = $data;
+                return $data;
             } catch (\Exception $e) {
-              error_log('❌ MenuService::getRestaurantPublicData error: ' . $e->getMessage());
-              return null;
+                error_log('❌ MenuService::getRestaurantPublicData error: ' . $e->getMessage());
+                return null;
             }
-
         }
-
-
     }
-    
 }
 
-
-
 // ---------------------------------------------------------------------------
 // Inicialización de presentación: sólo si no es llamada de invalidador de cache
 // ---------------------------------------------------------------------------
-// ---------------------------------------------------------------------------
-// Inicialización de presentación: sólo si no es llamada de invalidador de cache
-// ---------------------------------------------------------------------------
+
 $uri = $_SERVER['REQUEST_URI'] ?? '';
 $isCacheInvalidator = str_contains($uri, '/api/invalidate');
 $isMenuVersion = str_contains($uri, '/api/menu-version');
@@ -178,7 +121,7 @@ if (!$isCacheInvalidator && !$isMenuVersion) {
         $platforms, $languages, $category_translations,
         $subcategory_translations, $item_translations,
         $item_supplements, $brunches, $daily_menu,
-        $menu_colors, $domains;
+        $menu_colors, $domains, $menuTypography;
 
     $restaurantId = $_GET['id'] ?? null;
 
@@ -201,7 +144,7 @@ if (!$isCacheInvalidator && !$isMenuVersion) {
     header('Cache-Control: public, max-age=86400, s-maxage=86400');
     header('Content-Type: text/html; charset=utf-8');
 
-    // Inicialización de variables globales
+    // Inicialización de variables globales para el resto de la app
     $restaurantData           = $data;
     $categories               = $data['categories']               ?? [];
     $subcategories            = $data['subcategories']            ?? [];
@@ -217,5 +160,6 @@ if (!$isCacheInvalidator && !$isMenuVersion) {
     $daily_menu               = $data['daily_menu']               ?? [];
     $menu_colors              = $data['menu_colors']              ?? [];
     $domains                  = $data['domains']                  ?? [];
+    // ✅ NUEVO: tipografías del menú
+    $menuTypography           = $data['menu_typography'][0] ?? [];
 }
- 
