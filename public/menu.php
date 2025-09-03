@@ -17,6 +17,8 @@ require_once __DIR__ . '/../get/get_brunch.php';
 require_once __DIR__ . '/../get/get_daily_menu.php';
 require_once __DIR__ . '/../get/get_traducciones.php';
 require_once __DIR__ . '/../get/get_alergenos.php';
+require_once __DIR__ . '/../get/get_bordes.php';
+require_once __DIR__ . '/../get/get_tipografias.php';
 require_once __DIR__ . '/../get/get_colors.php';
 
 ?>
@@ -47,6 +49,27 @@ require_once __DIR__ . '/../get/get_colors.php';
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
       
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;500;600;700&family=Lexend+Exa:wght@100..900&family=Marcellus+SC&family=Outfit:wght@100..900&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;500;600;700&family=Marcellus+SC&family=Outfit:wght@100..900&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;500;600;700&family=Outfit:wght@100..900&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+
+
 </head>
 
 
@@ -1093,52 +1116,93 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
-
-
-<!-- Inyectamos la variable PHP $colores en JavaScript -->
+<!-- Inyectamos colores y tipografías -->
 <script>
-// Convertir el array PHP a un objeto JS usando json_encode
-var menuColors = <?php echo json_encode($colores); ?>;
+// ===== Colores =====
+var menuColors = <?php echo json_encode($colores ?? [], JSON_UNESCAPED_UNICODE); ?>;
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Aplicar el color de fondo al contenedor principal del menú
-    var menuContainer = document.getElementById('menu-container');
-    if (menuContainer) {
-        menuContainer.style.backgroundColor = menuColors.backgroundColor;
-    } else {
-        console.warn('No se encontró el contenedor con id "menu-container".');
+// ===== Tipografías =====
+// Estructura esperada:
+// {
+//   titleFont: "Cormorant SC", titleWeight: 600, titleSize: 20,
+//   bodyFont: "Outfit",        bodyWeight: 400, bodySize: 15,
+//   priceFont:"Lexend Exa",    priceWeight:600, priceSize:16
+// }
+var menuTypography = <?php echo json_encode($tipografias ?? [], JSON_UNESCAPED_UNICODE); ?>;
+
+// Pila de fallbacks por familia
+var FONT_FALLBACKS = {
+  "Cormorant SC": "serif",
+  "Tangerine": "cursive",
+  "Outfit": "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif",
+  "Marcellus SC": "serif",
+  "Lexend Exa": "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif"
+};
+
+document.addEventListener('DOMContentLoaded', function () {
+  // ====== COLORES ======
+  var menuContainer = document.getElementById('menu-container');
+  if (menuContainer && menuColors?.backgroundColor) {
+    menuContainer.style.backgroundColor = menuColors.backgroundColor;
+  }
+
+  var menuTitles = document.querySelectorAll('.menu-title');
+  menuTitles.forEach(function (title) {
+    if (menuColors?.titleColor) title.style.color = menuColors.titleColor;
+  });
+
+  var menuDescriptions = document.querySelectorAll('.menu-description');
+  menuDescriptions.forEach(function (desc) {
+    if (menuColors?.descriptionColor) desc.style.color = menuColors.descriptionColor;
+  });
+
+  var menuPrices = document.querySelectorAll('.menu-price');
+  menuPrices.forEach(function (price) {
+    if (menuColors?.priceColor) price.style.color = menuColors.priceColor;
+  });
+
+  var menuIcons = document.querySelectorAll('.menu-icon');
+  menuIcons.forEach(function (icon) {
+    if (menuColors?.iconColor) {
+      icon.style.color = menuColors.iconColor;
+      icon.style.borderColor = menuColors.iconColor;
     }
-    
-    // Aplicar estilos a los elementos del menú:
-    // Títulos
-    var menuTitles = document.querySelectorAll('.menu-title');
-    menuTitles.forEach(function(title) {
-        title.style.color = menuColors.titleColor;
-    });
+  });
 
-    // Descripciones
-    var menuDescriptions = document.querySelectorAll('.menu-description');
-    menuDescriptions.forEach(function(desc) {
-        desc.style.color = menuColors.descriptionColor;
-    });
+  // ====== TIPOGRAFÍAS ======
+  if (!menuTypography) return;
 
-    // Precios
-    var menuPrices = document.querySelectorAll('.menu-price');
-    menuPrices.forEach(function(price) {
-        price.style.color = menuColors.priceColor;
-    });
+  function fontStack(f) {
+    return "'" + f + "', " + (FONT_FALLBACKS[f] || "system-ui, sans-serif");
+  }
+  function px(n) {
+    return (typeof n === 'number' ? n : parseInt(n, 10)) + 'px';
+  }
 
-    // Íconos
-    var menuIcons = document.querySelectorAll('.menu-icon');
-    menuIcons.forEach(function(icon) {
-        icon.style.color = menuColors.iconColor;
-        icon.style.borderColor = menuColors.iconColor;
-    });
+  // Títulos
+  menuTitles.forEach(function (el) {
+    el.style.fontFamily = fontStack(menuTypography.titleFont || 'Cormorant SC');
+    el.style.fontWeight = String(menuTypography.titleWeight || 600);
+    el.style.fontSize   = px(menuTypography.titleSize || 20);
+  });
+
+  // Descripciones
+  menuDescriptions.forEach(function (el) {
+    el.style.fontFamily = fontStack(menuTypography.bodyFont || 'Outfit');
+    el.style.fontWeight = String(menuTypography.bodyWeight || 400);
+    el.style.fontSize   = px(menuTypography.bodySize || 15);
+  });
+
+  // Precios
+  menuPrices.forEach(function (el) {
+    el.style.fontFamily = fontStack(menuTypography.priceFont || 'Lexend Exa');
+    el.style.fontWeight = String(menuTypography.priceWeight || 600);
+    el.style.fontSize   = px(menuTypography.priceSize || 16);
+  });
 });
+
 </script>
 
-  
 </body>
 </html>
 
