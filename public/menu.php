@@ -967,11 +967,13 @@ if (!isset($brunches) || !is_array($brunches)) {
             <!-- 4. Mostrar ítems dentro de subcategorías -->
             <?php if (!empty($categoria['subcategorias'])): ?>
               <?php foreach ($categoria['subcategorias'] as $subcategoria): ?>
+
                 <div 
                   id="subcategory-<?php echo $subcategoria['subcategory_id']; ?>" 
                   class="subcategory-container" 
                   data-subcategory-id="<?php echo $subcategoria['subcategory_id']; ?>"
                 >
+                
                   <h4>
                     <span class="nombre-subcategoria menu-icon" data-translate="subcategory" data-subcategory-id="<?php echo $subcategoria['subcategory_id']; ?>">
                         <?php echo htmlspecialchars($subcategoria['subcategory_name'], ENT_QUOTES, 'UTF-8'); ?>

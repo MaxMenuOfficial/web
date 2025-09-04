@@ -138,15 +138,15 @@ require_once __DIR__.'/../../get/get_colors.php';
     </div>
 
     <!-- Modal para la selección de idioma -->
-<div id="translateItemModalMenu" class="modal mmx-lang-modal" style="display:none;">
+<div id="translateItemModalMenu" class="modal " style="display:none;">
   <div id="modal-content-translate" class="modal-content mmx-lang-modal-content">
     <span id="close-btn-modal-translate .mmx-lang-close" class="close">&times;</span>
     <br><br>
-    <div id="idiomasContainer" class="maxmenu-languaguesContainer mmx-lang-list" >
+    <div id="idiomasContainer" class="maxmenu-languaguesContainer " >
       <!-- Botón para ver el idioma original -->
         <div class="form-flag ">
 
-        <button class="form-flag-button translate-buttom mmx-lang-btn"  type="button" id="BtnViewOriginal" onclick="cargarIdiomaOriginal()">
+        <button class="form-flag-button translate-buttom translate-buttom-mmx"  type="button" id="BtnViewOriginal" onclick="cargarIdiomaOriginal()">
             <img class="idioma-btn-flag" src="<?php echo htmlspecialchars($banderaUrlOriginal, ENT_QUOTES, 'UTF-8'); ?>" alt="Original Flag">
             <?php echo htmlspecialchars($originalLanguageName, ENT_QUOTES, 'UTF-8'); ?>
         </button>
@@ -165,7 +165,8 @@ require_once __DIR__.'/../../get/get_colors.php';
           ?>
           
         <div class="form-flag">
-            <button class="idioma-btn translate-buttom mmx-lang-btn" 
+
+            <button class="idioma-btn translate-buttom translate-buttom-mmx" 
 
                     data-idioma="<?php echo htmlspecialchars($languageId, ENT_QUOTES, 'UTF-8'); ?>" 
                     data-flag="<?php echo htmlspecialchars($banderaUrl, ENT_QUOTES, 'UTF-8'); ?>">
@@ -175,6 +176,7 @@ require_once __DIR__.'/../../get/get_colors.php';
             <?php echo htmlspecialchars($languageName, ENT_QUOTES, 'UTF-8'); ?>
             
             </button>
+
         </div>
 
       <?php endforeach; ?>
@@ -202,7 +204,7 @@ $banderaUrlOriginal   = $banderas[$originalLanguageCode] ?? 'menu/img/flags/defa
       <div class="category-container mmx-category-shortcut-row" id="maxmenu-category-container" >
         <button 
           id="category-<?php echo $categoria['category_id']; ?>-shortcut" 
-          class="category-button-atajo menu-icon mmx-category-button" 
+          class="category-button-atajo menu-icon " 
           data-category-id="<?php echo $categoria['category_id']; ?>" 
           onclick="scrollToCategory('<?php echo $categoria['category_id']; ?>')"
         >
@@ -267,12 +269,13 @@ $banderaUrlOriginal   = $banderas[$originalLanguageCode] ?? 'menu/img/flags/defa
 // ----------------------------------------------------------------------
 // Contenedor principal de los ítems (y brunches)
 // ----------------------------------------------------------------------
-
 // Aseguramos que la variable $brunches existe y es un array
+
 global $brunches;
 if (!isset($brunches) || !is_array($brunches)) {
     $brunches = [];
 }
+
 ?>
 
 <div class="añadidas mmx-category-container">
@@ -327,7 +330,7 @@ if (!isset($brunches) || !is_array($brunches)) {
                   <div class="item-img-texto mmx-item">
                     <div class="item-info mmx-item-info">
 
-                      <h3 class="titulo menu-title h3 mmx-item-title" data-translate="item-title"><?php echo safe_output($item['title']); ?></h3>
+                      <h3 class="titulo menu-title " data-translate="item-title"><?php echo safe_output($item['title']); ?></h3>
                       <p class="descripcion menu-description mmx-item-desc" data-translate="item-description"><?php echo safe_output($item['description']); ?></p>
 
                       <?php if (!empty($item['allergens'])): ?>
