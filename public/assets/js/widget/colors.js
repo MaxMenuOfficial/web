@@ -1,184 +1,151 @@
 
 (function bootMaxMenuWidgetStyling() {
-  // ================== helpers ==================
   const FONT_FALLBACKS = {
-    "Cormorant SC": "serif",
-    "Tangerine": "cursive",
-    "Outfit": "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif",
-    "Marcellus SC": "serif",
-    "Lexend Exa": "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif"
+    "Cormorant SC":"serif",
+    "Tangerine":"cursive",
+    "Outfit":"ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif",
+    "Marcellus SC":"serif",
+    "Lexend Exa":"ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif"
   };
-  const toPx = n => (isNaN(parseInt(n,10)) ? '' : parseInt(n,10)) + 'px';
-  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
-  const qsa = sel => Array.prototype.slice.call(document.querySelectorAll(sel));
-  const safeSet = (nodes, fn) => nodes.forEach(el => { try { fn(el); } catch(_){} });
+  const qsa = s => Array.prototype.slice.call(document.querySelectorAll(s));
+  const setAll = (nodes, fn) => nodes.forEach(el => { try{ fn(el); }catch(_){ } });
+  const px = n => (isNaN(parseInt(n,10)) ? '' : parseInt(n,10)) + 'px';
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const RADIUS = { square:'0px', semi:'20px', round:'100px' };
 
-  // Google Fonts loader (sólo si hace falta)
-  const GF_NAME = f => encodeURIComponent(f).replace(/%20/g,'+');
-  function ensureGoogleFontsLoaded(families) {
-    // families: [{name:'Cormorant SC', weights:[400,600,700]}, ...]
-    if (!families || !families.length) return;
-    const key = families.map(f => `${f.name}:${(f.weights||[]).join(',')}`).join('|');
-    const id  = 'mm-gfonts-' + btoa(key).replace(/=+$/,'');
+  function ensureFonts(fams) {
+    if (!fams || !fams.length) return;
+    const key = fams.map(f => `${f.name}:${(f.weights||[]).join(',')}`).join('|');
+    const id  = 'mmx-gf-' + btoa(key).replace(/=+$/,'');
     if (document.getElementById(id)) return;
-
-    const qs = families.map(f => `family=${GF_NAME(f.name)}:wght@${(f.weights||[400]).join(';')}`).join('&');
-    const href = `https://fonts.googleapis.com/css2?${qs}&display=swap`;
-
+    const qs = fams.map(f => `family=${encodeURIComponent(f.name).replace(/%20/g,'+')}%3Awght@${(f.weights||[400,600,700]).join(';')}`).join('&');
     const link = document.createElement('link');
-    link.id   = id;
-    link.rel  = 'stylesheet';
-    link.href = href;
+    link.id = id; link.rel='stylesheet';
+    link.href = `https://fonts.googleapis.com/css2?${qs}&display=swap`;
     document.head.appendChild(link);
   }
 
-  const RADIUS = { square: '0px', semi: '20px', round: '100px' };
-
-  // ================== main apply ==================
   function applyAll() {
-    const cfg = window.MaxMenuConfig || {};
-    const menuColors     = cfg.menuColors     || {};
-    const menuTypography = cfg.menuTypography || {};
-    const menuBorders    = cfg.menuBorders    || {};
+    const root  = document.getElementById('maxmenu-menuContainer') || document.body;
+    const conf  = window.MaxMenuConfig || {};
+    const colors = conf.menuColors || {};
+    const typo   = conf.menuTypography || {};
+    const bord   = conf.menuBorders || {};
 
-    // --- Fondo: SIEMPRE transparente en widget ---
-    const container = document.getElementById('maxmenu-menuContainer');
-    if (container) container.style.backgroundColor = 'transparent';
+    // 1) Fondo: SIEMPRE transparente
+    if (root) root.style.backgroundColor = 'transparent';
 
-    // --- Tipografías: cargar Google Fonts si faltan ---
-    const gFamilies = [];
-    const addFam = (name, w) => {
-      if (!name) return;
-      const weights = Array.isArray(w) ? w : (w ? [w] : []);
-      // normalizamos a 400/600/700 (soportadas en el panel)
-      const norm = Array.from(new Set(weights.map(n => +n).filter(x => [400,600,700].includes(x))));
-      gFamilies.push({ name, weights: norm.length ? norm : [400,600,700] });
-    };
-    addFam(menuTypography.titleFont, menuTypography.titleWeight);
-    addFam(menuTypography.bodyFont,  menuTypography.bodyWeight);
-    addFam(menuTypography.priceFont, menuTypography.priceWeight);
-    ensureGoogleFontsLoaded(gFamilies);
+    // 2) Variables CSS de color (evitan negro si el JS tarda)
+    if (root && root.style) {
+      root.style.setProperty('--mm-title', colors.titleColor || '#ffffff');
+      root.style.setProperty('--mm-body',  colors.descriptionColor || '#e6e6e6');
+      root.style.setProperty('--mm-price', colors.priceColor || '#ffffff');
+      root.style.setProperty('--mm-icon',  colors.iconColor || '#ffffff');
+    }
 
-    // ===== COLORES =====
-    safeSet(qsa('.menu-title'), el => {
-      if (menuColors.titleColor) el.style.color = menuColors.titleColor;
-    });
-    safeSet(qsa('.menu-description'), el => {
-      if (menuColors.descriptionColor) el.style.color = menuColors.descriptionColor;
-    });
-    safeSet(qsa('.menu-price'), el => {
-      if (menuColors.priceColor) el.style.color = menuColors.priceColor;
-    });
-    safeSet(qsa('.menu-icon'), el => {
-      if (menuColors.iconColor) {
-        el.style.color = menuColors.iconColor;
-        el.style.borderColor = menuColors.iconColor;
+    // 3) Aplica colores directos a los nodos (por si hay CSS más específico)
+    setAll(qsa('.menu-title'),       el => { if (colors.titleColor) el.style.color = colors.titleColor; });
+    setAll(qsa('.menu-description'), el => { if (colors.descriptionColor) el.style.color = colors.descriptionColor; });
+    setAll(qsa('.menu-price'),       el => { if (colors.priceColor) el.style.color = colors.priceColor; });
+    setAll(qsa('.menu-icon'),        el => {
+      if (colors.iconColor) {
+        el.style.color = colors.iconColor;
+        el.style.borderColor = colors.iconColor;
       }
     });
 
-    // ===== TIPOGRAFÍAS =====
+    // 4) Tipografías: títulos ≠ descripciones ≠ precios
     const fontStack = f => `'${f}', ${FONT_FALLBACKS[f] || "system-ui, sans-serif"}`;
 
-    const titleFont   = menuTypography.titleFont   || 'Cormorant SC';
-    const titleWeight = String(menuTypography.titleWeight || 600);
-    const titleSize   = toPx(clamp(parseInt(menuTypography.titleSize||20,10), 10, 99));
+    const tFont = typo.titleFont   || 'Cormorant SC';
+    const tW    = String(typo.titleWeight || 600);
+    const tSize = px(clamp(parseInt(typo.titleSize||20,10), 10, 99));
 
-    const bodyFont    = menuTypography.bodyFont    || 'Outfit';
-    const bodyWeight  = String(menuTypography.bodyWeight  || 400);
-    const bodySize    = toPx(clamp(parseInt(menuTypography.bodySize||15,10), 10, 99));
+    const bFont = typo.bodyFont    || 'Outfit';
+    const bW    = String(typo.bodyWeight  || 400);
+    const bSize = px(clamp(parseInt(typo.bodySize||15,10), 10, 99));
 
-    const priceFont   = menuTypography.priceFont   || 'Lexend Exa';
-    const priceWeight = String(menuTypography.priceWeight || 600);
-    const priceSize   = toPx(clamp(parseInt(menuTypography.priceSize||16,10), 10, 99));
+    const pFont = typo.priceFont   || 'Lexend Exa';
+    const pW    = String(typo.priceWeight || 600);
+    const pSize = px(clamp(parseInt(typo.priceSize||16,10), 10, 99));
 
-    // TITULOS -> SOLO .menu-title
-    safeSet(qsa('.menu-title'), el => {
-      el.style.fontFamily = fontStack(titleFont);
-      el.style.fontWeight = titleWeight;
-      if (titleSize) el.style.fontSize = titleSize;
+    ensureFonts([
+      {name:tFont, weights:[+tW||600]},
+      {name:bFont, weights:[+bW||400]},
+      {name:pFont, weights:[+pW||600]},
+    ]);
+
+    // títulos
+    setAll(qsa('.menu-title'), el => {
+      el.style.fontFamily = fontStack(tFont);
+      el.style.fontWeight = tW;
+      if (tSize) el.style.fontSize = tSize;
     });
-
-    // DESCRIPCIONES -> SOLO .menu-description
-    safeSet(qsa('.menu-description'), el => {
-      el.style.fontFamily = fontStack(bodyFont);
-      el.style.fontWeight = bodyWeight;
-      if (bodySize) el.style.fontSize = bodySize;
-    });
-
-    // Categorías / Subcategorías usan tipografía de descripción
-    safeSet(qsa('.nombre-categoria, .nombre-subcategoria'), el => {
-      el.style.fontFamily = fontStack(bodyFont);
-      el.style.fontWeight = bodyWeight;
-      if (bodySize) el.style.fontSize = bodySize;
-    });
-
-    // PRECIOS
-    safeSet(qsa('.menu-price'), el => {
-      el.style.fontFamily = fontStack(priceFont);
-      el.style.fontWeight = priceWeight;
-      if (priceSize) el.style.fontSize = priceSize;
-    });
-
-    // Botón de traducción (ambas clases por compatibilidad)
-    const styleTranslateBtn = el => {
-      // fuente como descripción
-      el.style.fontFamily  = fontStack(bodyFont);
-      el.style.fontWeight  = bodyWeight;
-      if (bodySize) el.style.fontSize = bodySize;
-
-      // Colores (NO fondo del contenedor; sólo botón)
-      if (menuColors.titleColor)       el.style.backgroundColor = menuColors.titleColor;
-      if (menuColors.descriptionColor) el.style.color           = menuColors.descriptionColor;
-
-      el.style.transition = 'background-color .25s ease, color .25s ease, border-color .25s ease';
+    // descripciones + categorías + subcategorías + botón traducción
+    const applyBody = el => {
+      el.style.fontFamily = fontStack(bFont);
+      el.style.fontWeight = bW;
+      if (bSize) el.style.fontSize = bSize;
     };
-    safeSet(qsa('.translate-buttom, .translate-buttom-mmx'), styleTranslateBtn);
+    setAll(qsa('.menu-description, .nombre-categoria, .nombre-subcategoria, .translate-buttom, .translate-buttom-mmx'), applyBody);
 
-    // ===== BORDES =====
-    const styleKey  = (menuBorders.border_style || 'round');
-    const radius    = RADIUS[styleKey] || '0px';
-    const widthPx   = toPx(clamp(parseInt(menuBorders.border_width ?? 2,10), 0, 20));
+    // precios
+    setAll(qsa('.menu-price'), el => {
+      el.style.fontFamily = fontStack(pFont);
+      el.style.fontWeight = pW;
+      if (pSize) el.style.fontSize = pSize;
+    });
+
+    // Botón de traducción: colores del botón (no del fondo global)
+    setAll(qsa('.translate-buttom, .translate-buttom-mmx'), el => {
+      if (colors.titleColor)       el.style.backgroundColor = colors.titleColor;
+      if (colors.descriptionColor) el.style.color = colors.descriptionColor;
+      el.style.transition = 'background-color .25s ease, color .25s ease, border-color .25s ease';
+    });
+
+    // 5) Bordes
+    const rKey = (bord.border_style || 'round');
+    const radius = RADIUS[rKey] || '0px';
+    const bWidth = px(clamp(parseInt(bord.border_width ?? 2,10), 0, 20));
 
     // Categorías: radio + grosor
-    safeSet(qsa('.category-button-atajo'), el => {
+    setAll(qsa('.category-button-atajo'), el => {
       el.style.borderRadius = radius;
       el.style.borderStyle  = 'solid';
-      el.style.borderWidth  = widthPx;
+      el.style.borderWidth  = bWidth;
     });
     // Subcategorías: radio + grosor 0
-    safeSet(qsa('.subcategory-button-atajo'), el => {
+    setAll(qsa('.subcategory-button-atajo'), el => {
       el.style.borderRadius = radius;
       el.style.borderStyle  = 'none';
       el.style.borderWidth  = '0px';
     });
-    // Botón de traducción: igual que categoría
-    safeSet(qsa('.translate-buttom, .translate-buttom-mmx'), el => {
+    // Botón traducción igual que categoría
+    setAll(qsa('.translate-buttom, .translate-buttom-mmx'), el => {
       el.style.borderRadius = radius;
       el.style.borderStyle  = 'solid';
-      el.style.borderWidth  = widthPx;
+      el.style.borderWidth  = bWidth;
     });
   }
 
-  // ================== wait for config & DOM ==================
   function waitReady() {
-    const ready = typeof window.MaxMenuConfig !== 'undefined'
+    const ok = typeof window.MaxMenuConfig !== 'undefined'
       && document.getElementById('maxmenu-menuContainer');
-    if (!ready) return requestAnimationFrame(waitReady);
+    if (!ok) return requestAnimationFrame(waitReady);
 
-    // si aún no llegaron los colores/tipografías, seguimos esperando un frame
+    // esperamos a que lleguen tipografías/colores si el fetch es asíncrono
     if (!window.MaxMenuConfig.menuColors || !window.MaxMenuConfig.menuTypography) {
       return requestAnimationFrame(waitReady);
     }
 
     applyAll();
 
-    // Re-aplicar ante re-render (modal, idioma, paginación…)
+    // Reaplicar al abrir modal/cambios de DOM
     const root = document.getElementById('maxmenu-menuContainer');
     if (root && typeof MutationObserver !== 'undefined') {
       const mo = new MutationObserver(() => applyAll());
       mo.observe(root, { childList:true, subtree:true, attributes:true });
     }
-
     const openBtn = document.getElementById('BtnTranslateMenu');
     if (openBtn) openBtn.addEventListener('click', () => requestAnimationFrame(applyAll));
   }
