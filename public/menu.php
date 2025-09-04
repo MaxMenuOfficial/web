@@ -153,7 +153,7 @@ require_once __DIR__ . '/../get/get_colors.php';
       <!-- Botón para ver el idioma original -->
         <div class="form-flag">
 
-        <button class="form-flag-button" type="button" id="BtnViewOriginal" onclick="cargarIdiomaOriginal()">
+        <button class="form-flag-button translate-buttom-mmx" type="button" id="BtnViewOriginal" onclick="cargarIdiomaOriginal()">
             <img class="idioma-btn-flag" src="<?php echo htmlspecialchars($banderaUrlOriginal, ENT_QUOTES, 'UTF-8'); ?>" alt="Original Flag">
             <?php echo htmlspecialchars($originalLanguageName, ENT_QUOTES, 'UTF-8'); ?>
         </button>
@@ -172,7 +172,7 @@ require_once __DIR__ . '/../get/get_colors.php';
         ?>
         
         <div class="form-flag">
-            <button class="idioma-btn" 
+            <button class="idioma-btn translate-buttom-mmx" 
 
                     data-idioma="<?php echo htmlspecialchars($languageId, ENT_QUOTES, 'UTF-8'); ?>" 
                     data-flag="<?php echo htmlspecialchars($banderaUrl, ENT_QUOTES, 'UTF-8'); ?>">
@@ -1116,7 +1116,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
 <!-- Inyectamos colores y tipografías -->
 <script>
 // ===== Colores =====
@@ -1182,26 +1181,28 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // Descripciones
+  var bodyFamily = menuTypography.bodyFont || 'Outfit';
+  var bodyWeight = menuTypography.bodyWeight || 400;
+  var bodySize   = menuTypography.bodySize || 15;
+
   menuDescriptions.forEach(function (el) {
-    el.style.fontFamily = fontStack(menuTypography.bodyFont || 'Outfit');
-    el.style.fontWeight = String(menuTypography.bodyWeight || 400);
-    el.style.fontSize   = px(menuTypography.bodySize || 15);
+    el.style.fontFamily = fontStack(bodyFamily);
+    el.style.fontWeight = String(bodyWeight);
+    el.style.fontSize   = px(bodySize);
   });
 
-  // ✅ NUEVO: Categorías → usan la misma tipografía que descripción
-  var categoryNames = document.querySelectorAll('.nombre-categoria');
-  categoryNames.forEach(function (el) {
-    el.style.fontFamily = fontStack(menuTypography.bodyFont || 'Outfit');
-    el.style.fontWeight = String(menuTypography.bodyWeight || 400);
-    el.style.fontSize   = px(menuTypography.bodySize || 15);
+  // ✅ NUEVO: Categorías → tipografía como descripción
+  document.querySelectorAll('.nombre-categoria').forEach(function (el) {
+    el.style.fontFamily = fontStack(bodyFamily);
+    el.style.fontWeight = String(bodyWeight);
+    el.style.fontSize   = px(bodySize);
   });
 
-  // ✅ NUEVO: Subcategorías → usan la misma tipografía que descripción
-  var subcategoryNames = document.querySelectorAll('.nombre-subcategoria');
-  subcategoryNames.forEach(function (el) {
-    el.style.fontFamily = fontStack(menuTypography.bodyFont || 'Outfit');
-    el.style.fontWeight = String(menuTypography.bodyWeight || 400);
-    el.style.fontSize   = px(menuTypography.bodySize || 15);
+  // ✅ NUEVO: Subcategorías → tipografía como descripción
+  document.querySelectorAll('.nombre-subcategoria').forEach(function (el) {
+    el.style.fontFamily = fontStack(bodyFamily);
+    el.style.fontWeight = String(bodyWeight);
+    el.style.fontSize   = px(bodySize);
   });
 
   // Precios
@@ -1210,43 +1211,54 @@ document.addEventListener('DOMContentLoaded', function () {
     el.style.fontWeight = String(menuTypography.priceWeight || 600);
     el.style.fontSize   = px(menuTypography.priceSize || 16);
   });
+
+  // ✅ NUEVO: Botón de traducción → tipografía como descripción
+  document.querySelectorAll('.translate-buttom-mmx').forEach(function (el) {
+    el.style.fontFamily = fontStack(bodyFamily);
+    el.style.fontWeight = String(bodyWeight);
+    el.style.fontSize   = px(bodySize);
+  });
 });
 </script>
-
 
 <script>
 // Bordes del menú normalizados (solo los campos que necesitamos)
 var menuBorders = <?php echo json_encode([
-  'border_style' => $menuBorders['border_style'] ?? 'round',
-  'border_width' => $menuBorders['border_width'] ?? 2,
+  'border_style' => $menuBorders['border_style'] ?? 'round', // square | semi | round
+  'border_width' => $menuBorders['border_width'] ?? 2        // px
 ], JSON_UNESCAPED_UNICODE); ?>;
-
-// Esperado: { border_style: "round|semi|square", border_width: <int> }
 
 document.addEventListener('DOMContentLoaded', function () {
   if (!menuBorders || typeof menuBorders !== 'object') return;
 
-  // Mapeo estilo → radio
-  var radiusMap = { square: '0px', semi: '20px', round: '100px' };
+  // Mapeo estilo → border-radius
+  var radiusMap    = { square: '0px', semi: '20px', round: '100px' };
   var borderRadius = radiusMap[menuBorders.border_style] || '0px';
   var borderWidth  = (parseInt(menuBorders.border_width, 10) || 0) + 'px';
 
-  // ✅ Categorías → solo aplicamos border-radius
-  var categoryButtons = document.querySelectorAll('.category-button-atajo');
-  categoryButtons.forEach(function (el) {
+  // CATEGORÍAS: aplicar radio + grosor seleccionado
+  document.querySelectorAll('.category-button-atajo').forEach(function (el) {
     el.style.borderRadius = borderRadius;
-    // No tocamos el grosor ni border-style aquí
+    el.style.borderStyle  = 'solid';
+    el.style.borderWidth  = borderWidth;
   });
 
-  // ✅ Subcategorías → aplicamos border-radius + grosor + estilo
-  var subcategoryButtons = document.querySelectorAll('.subcategory-button-atajo');
-  subcategoryButtons.forEach(function (el) {
-    el.style.borderStyle = 'solid';
-    el.style.borderWidth = borderWidth;
+  // SUBCATEGORÍAS: aplicar solo radio; grosor SIEMPRE 0px
+  document.querySelectorAll('.subcategory-button-atajo').forEach(function (el) {
     el.style.borderRadius = borderRadius;
+    el.style.borderWidth  = '0px'; // siempre 0
+    // (opcional) el.style.borderStyle = 'none';
+  });
+
+  // ✅ NUEVO: Botón de traducción → mismo borde que categoría
+  document.querySelectorAll('.translate-buttom-mmx').forEach(function (el) {
+    el.style.borderRadius = borderRadius;
+    el.style.borderStyle  = 'solid';
+    el.style.borderWidth  = borderWidth;
   });
 });
 </script>
+
 
 </body>
 </html>
