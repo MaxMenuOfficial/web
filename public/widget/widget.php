@@ -79,12 +79,12 @@ require_once __DIR__.'/../../get/get_tipografias.php';
 
 
 
-      <style>
+   <style>
   /* Fondo SIEMPRE transparente */
-  #maxmenu-menuContainer,
-  .maxmenu-root, .mmx-root, body {
-    background: transparent !important;
-  }
+      #maxmenu-menuContainer,
+      .maxmenu-root, .mmx-root, body {
+        background: transparent !important;
+      }
 
   /* Variables de color con fallbacks elegantes (evitan texto negro/transparent) */
   #maxmenu-menuContainer {
