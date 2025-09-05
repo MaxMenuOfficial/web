@@ -42,42 +42,14 @@ require_once __DIR__.'/../../get/get_tipografias.php';
 ?>
 
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
+  <!DOCTYPE html>
+  <html lang="es">
+  <head>
 
-    <meta charset="UTF-8">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/widget/styles/view-items.css">
-    <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/widget/styles/view-plataformas.css">
-    <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/widget/styles/view-logo.css">
-    <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/widget/styles/view-menu.css">
-
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;500;600;700&family=Lexend+Exa:wght@100..900&family=Marcellus+SC&family=Outfit:wght@100..900&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;500;600;700&family=Marcellus+SC&family=Outfit:wght@100..900&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;500;600;700&family=Outfit:wght@100..900&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
-
-
+      <meta charset="UTF-8">
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
    <style>
   /* Fondo SIEMPRE transparente */
