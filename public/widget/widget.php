@@ -113,22 +113,22 @@ require_once __DIR__.'/../../get/get_tipografias.php';
             </div>
 
 
-         <div class="añadidas">
-              <div class="categorias">
-                  <?php 
-                      if (!empty($plataformasExistentes)):
-                          foreach ($plataformasExistentes as $plataforma): ?>
-                          <div class="categoria">
-                              <a href="<?php echo htmlspecialchars($plataforma['platform_url']); ?>" 
-                                class="visitar-btn <?php echo strtolower(htmlspecialchars($plataforma['platform_name'])); ?>" 
-                              ></a>
-                          </div>
-                          <?php endforeach;
-                      else: ?>
-                      <?php endif; ?>
-              </div>
-          </div>
+            <div class="maxmenu-platforms">
+              <div class="maxmenu-platforms-container">
+                <?php if (!empty($plataformasExistentes)):
+                  foreach ($plataformasExistentes as $plataforma): 
+                    $platformName = strtolower($plataforma['platform_name']); ?>
+                    
+                    <div class="maxmenu-platform-item">
+                      <a href="<?php echo htmlspecialchars($plataforma['platform_url']); ?>"
+                        class="maxmenu-platform-btn maxmenu-platform-<?php echo htmlspecialchars($platformName); ?>"
+                        aria-label="<?php echo htmlspecialchars($plataforma['platform_name']); ?>"
+                        rel="noopener noreferrer" target="_blank"></a>
+                    </div>
 
+                <?php endforeach; endif; ?>
+              </div>
+            </div>
 
     <!-- 2) Botón para abrir el modal de selección de idioma -->
     <div class="container-menu-buttom-translate ">
