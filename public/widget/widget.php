@@ -113,19 +113,17 @@ require_once __DIR__.'/../../get/get_tipografias.php';
             </div>
 
 
-            <div class="maxmenu-platforms">
-              <div class="maxmenu-platforms-container">
+            <div class="mmx-platforms">  <!-- NUEVO wrapper específico -->
+              <div class="categorias">
                 <?php if (!empty($plataformasExistentes)):
                   foreach ($plataformasExistentes as $plataforma): 
-                    $platformName = strtolower($plataforma['platform_name']); ?>
-                    
-                    <div class="maxmenu-platform-item">
+                    $name = strtolower($plataforma['platform_name']); ?>
+                    <div class="categoria">
                       <a href="<?php echo htmlspecialchars($plataforma['platform_url']); ?>"
-                        class="maxmenu-platform-btn maxmenu-platform-<?php echo htmlspecialchars($platformName); ?>"
+                        class="visitar-btn <?php echo htmlspecialchars($name); ?>"
                         aria-label="<?php echo htmlspecialchars($plataforma['platform_name']); ?>"
-                        rel="noopener noreferrer" target="_blank"></a>
+                        target="_blank" rel="noopener noreferrer"></a>
                     </div>
-
                 <?php endforeach; endif; ?>
               </div>
             </div>
