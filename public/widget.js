@@ -1,55 +1,42 @@
-// 📦 Widget.js — simple y determinista (versión __VERSION__)
 (async () => {
-  const containerId  = 'maxmenu-menuContainer';
-  const container    = document.getElementById(containerId);
-  const restaurantId = container?.dataset?.restaurantId;
-  const version      = '__VERSION__';
+  const originalContainer = document.getElementById('maxmenu-menuContainer');
+  const restaurantId = originalContainer?.dataset?.restaurantId;
 
-  if (!container || !restaurantId) return;
+  if (!restaurantId) {
+    console.error('[MaxMenu] ❌ data-restaurant-id no definido en #maxmenu-menuContainer');
+    return;
+  }
+  
+  // Limpia contenido sin remover el div original
+  originalContainer.innerHTML = '';
 
-  // Limpieza mínima de restos anteriores del widget
-  container.innerHTML = '';
-  document.querySelectorAll('link[maxmenu-style]').forEach(el => el.remove());
+  // Limpia scripts y estilos anteriores si los hubiera
   document.querySelectorAll('script[maxmenu-script]').forEach(el => el.remove());
+  document.querySelectorAll('link[maxmenu-style]').forEach(el => el.remove());
 
-  // 1) Lista de estilos (en orden). No seguimos hasta que TODOS terminen.
-  const cssHrefs = [
-    'https://menu.maxmenu.com/assets/css/widget/styles/view-items.css',
-    'https://menu.maxmenu.com/assets/css/widget/styles/view-logo.css',
-    'https://menu.maxmenu.com/assets/css/widget/styles/view-plataformas.css',
-    'https://menu.maxmenu.com/assets/css/widget/styles/view-menu.css',
-  ];
+  const newContainer = originalContainer; // Reutiliza el original, no crees uno nuevo
 
-  function loadCssSequential(href) {
-    return new Promise((resolve, reject) => {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = href;
-      link.setAttribute('maxmenu-style', '');
-      link.onload = () => resolve();
-      link.onerror = () => reject(new Error('CSS failed: ' + href));
-      document.head.appendChild(link);
-    });
+  // 🔹 Ahora sin timestamp
+  const latestUrl = `https://cdn.maxmenu.com/s/${restaurantId}/widget/latest.json`;
+
+  try {
+    const res = await fetch(latestUrl, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`HTTP ${res.status} al cargar latest.json`);
+
+    const { version } = await res.json();
+    if (!version) throw new Error('Campo "version" no válido');
+
+    const widgetUrl = `https://cdn.maxmenu.com/s/${restaurantId}/widget/${version}/widget.js`;
+
+    const script = document.createElement('script');
+    script.src = widgetUrl; // 🔹 sin timestamp
+    script.async = false;
+    script.setAttribute("maxmenu-script", "true"); // para poder limpiarlo en recargas
+    document.head.appendChild(script);
+
+    console.log(`[MaxMenu] ✅ Cargado widget.js v${version} para ${restaurantId}`);
+  } catch (err) {
+    console.error('[MaxMenu] ❌ Error cargando el widget:', err);
+    newContainer.innerHTML = '<p style="color:red;">[MaxMenu] No se pudo cargar el menú.</p>';
   }
-
-  // Cargar cada CSS secuencialmente, garantizando orden y bloqueo total
-  for (const href of cssHrefs) {
-    await loadCssSequential(href); // si falla, se aborta y NO se inserta HTML
-  }
-
-  // 2) Cuando TODOS los CSS estén cargados → insertar HTML
-  const widgetHtmlUrl = `https://menu.maxmenu.com/widget/${restaurantId}/${version}`;
-  const res = await fetch(widgetHtmlUrl, { cache: 'no-store' });
-  if (!res.ok) return; // simple: si falla, no pintamos nada
-  const html = await res.text();
-  container.innerHTML = html;
-
-  // 3) Reejecutar <script> embebidos del HTML insertado (necesario en DOM)
-  container.querySelectorAll('script').forEach(old => {
-    const s = document.createElement('script');
-    for (const a of old.attributes) s.setAttribute(a.name, a.value);
-    s.setAttribute('maxmenu-script', '');
-    s.textContent = old.textContent;
-    old.replaceWith(s);
-  });
 })();
