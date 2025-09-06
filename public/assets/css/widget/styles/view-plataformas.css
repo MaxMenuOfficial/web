@@ -1,43 +1,48 @@
 
- .glovo ,  .uber ,  .justeat ,  .deliveroo ,   .doordash {
 
+  
+  .glovo , .uber , .justeat , .deliveroo , .doordash {
     display: inline-block; /* Esto permite aplicar padding */
-    padding: 6px 20px;
+    padding: 6px 12px;
     background-size: cover; /* Esto asegura que la imagen de fondo cubra todo el botón */
     background-position: center; /* Centra la imagen de fondo */
     text-decoration: none; /* Elimina el subrayado del enlace, si es necesario */
     color: #ffffff; /* Cambia el color del texto, si es necesario */
     margin: 10px auto;
     width: 30px;
-    background-color: hsla(0, 0%, 100%, 0.478);
-
+    background-color: #ffffff7a;
+  
   }
   
- .glovo {
+  .glovo {
     background-image: url('menu/img/plataformas/glovo-2.png'); /* Reemplaza con la URL de tu imagen de fondo deseada */
   }
- .uber {
+  .uber {
     background-image: url('menu/img/plataformas/uber-eats.png'); /* Reemplaza con la URL de tu imagen de fondo deseada */
   }
- .justeat  {
+  .justeat  {
     background-image: url('menu/img/plataformas/justeat.png'); /* Reemplaza con la URL de tu imagen de fondo deseada */
   }
- .deliveroo {
+  .deliveroo {
     background-image: url('menu/img/plataformas/deliveroo.png'); /* Reemplaza con la URL de tu imagen de fondo deseada */
   }
-.doordash {
+  .doordash {
     background-image: url('menu/img/plataformas/doordash.png'); /* Reemplaza con la URL de tu imagen de fondo deseada */
   }
 
+  
 
   
-  .plataformas {
+  
+  .plataformas{
+ 
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0); 
-    width: 100%;
     margin: 0px auto;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0);
+
+    
   }
   
   .plataformas .menu-plataformas{
@@ -51,15 +56,20 @@
     background-color: rgba(0, 0, 0, 0);
   }
   
-   .categorias .categoria form input {
+
+  .categorias .categoria form input {
     color:  #ff0000;
     align-items: center;
     border: 5px solid  #ff0000;
     border-radius: 30px;
     cursor: pointer;
-
+ 
+  
+  
+  
   }
 
+  
   
   /* Añade reglas adicionales para otras plataformas según sea necesario */
   
@@ -69,20 +79,24 @@
     text-align: center; /* Para centrar el texto */
     line-height: 50px; /* Ajusta esto al tamaño de tu botón para centrar el texto verticalmente */
     text-decoration: none; /* Elimina el subrayado de los enlaces */
-    padding: 16px 35px;
+    padding: 15px 25px;
     background-color: #ffffff7a;
+
+  
   }
   
   
   
-   .visitar-btn.uber {
+  .visitar-btn.uber {
     background-image: url('../img/plataformas/uber-eats.png');
     object-fit: contain;
     background-color: #ffffff7a;
+ 
+  
 
   }
   
-.visitar-btn.glovo {
+  .visitar-btn.glovo {
     background-image: url('../img/plataformas/glovo1.png');
     object-fit: contain;
     background-color: #ffffff7a;
@@ -90,27 +104,31 @@
   
   }
   
- .visitar-btn.justeat {
+  .visitar-btn.justeat {
     background-image: url('../img/plataformas/justeat.png');
     object-fit: cover;
     
   }
   
- .visitar-btn.deliveroo {
+  .visitar-btn.deliveroo {
     background-image: url('../img/plataformas/deliveroo.png');
     object-fit: cover;
+  
   }
 
     
-.visitar-btn.doordash {
+  .visitar-btn.doordash {
     background-image: url('../img/plataformas/doordash.png');
     object-fit: cover;
   
   }
   
   
+
+  
   form h2  {
     text-align: center;
+
   }
   
   
@@ -120,15 +138,5 @@
 
   }
   
-  #maxmenu-plataformas {
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0); 
-    width: 100%;
-    margin: 0px auto;
-
-  }
   
   
