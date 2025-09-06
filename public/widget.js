@@ -40,3 +40,4 @@
     container.innerHTML = '<p style="color:red;">[MaxMenu] No se pudo cargar el menú.</p>';
   }
 })();
+
