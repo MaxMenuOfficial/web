@@ -1,4 +1,3 @@
-
 /* MaxMenu Skeleton v2 — layout: plataformas + bandera + lista de categorías */
 (function () {
   if (window.MaxMenuSkeleton) return;
@@ -60,24 +59,37 @@
 
 /* Loader: latest.json -> widget.js versionado + skeleton */
 (async () => {
-  const container = document.getElementById('maxmenu-menuContainer');
+  // Espera robusta por el contenedor, por si Shopify lo inyecta tarde
+  async function waitForContainer(id='maxmenu-menuContainer', tmo=5000){
+    const el = document.getElementById(id);
+    if (el) return el;
+    return new Promise((res, rej) => {
+      const t = setTimeout(()=>{ obs.disconnect(); rej(new Error('container timeout')); }, tmo);
+      const obs = new MutationObserver(() => {
+        const e = document.getElementById(id);
+        if (e){ clearTimeout(t); obs.disconnect(); res(e); }
+      });
+      obs.observe(document.documentElement, { childList:true, subtree:true });
+    });
+  }
+
+  const container = await waitForContainer();
   const restaurantId = container?.dataset?.restaurantId;
-  if (!container || !restaurantId) { console.error('[MaxMenu] Falta #maxmenu-menuContainer o data-restaurant-id'); return; }
+  if (!restaurantId) { console.error('[MaxMenu] Falta data-restaurant-id'); return; }
 
-  // Skeleton inmediato (0ms)
-  const skel = window.MaxMenuSkeleton.mount(container, {
-    minHeight: 1000,     // ajusta al alto “fold” de tu página
-    categories: 7,       // cuántos botones fantasma
-    errorAfterMs: 12000
-  });
-
-  // Limpieza ligera
+  // 🔴 Limpia PRIMERO (no borres el skeleton después)
   container.innerHTML = '';
   document.querySelectorAll('script[maxmenu-script]').forEach(el => el.remove());
 
+  // 🟢 Luego monta el skeleton (así no lo borras)
+  const skel = window.MaxMenuSkeleton.mount(container, {
+    minHeight: 1000,
+    categories: 7,
+    errorAfterMs: 12000
+  });
+
   const latestUrl = `https://cdn.maxmenu.com/s/${restaurantId}/widget/latest.json`;
 
-  // Resuelve cuando el widget real haya pintado algo
   function waitRendered(timeout = 15000) {
     return new Promise((res, rej) => {
       let done = false;
@@ -90,13 +102,11 @@
   }
 
   try {
-    // 1) obtener versión
     const res = await fetch(latestUrl, { cache: 'no-store' });
     if (!res.ok) throw new Error(`HTTP ${res.status} al cargar latest.json`);
     const { version } = await res.json();
     if (!version) throw new Error('Campo "version" vacío en latest.json');
 
-    // 2) inyectar widget
     const widgetUrl = `https://cdn.maxmenu.com/s/${restaurantId}/widget/${version}/widget.js`;
     await new Promise((resolve, reject) => {
       const s = document.createElement('script');
@@ -106,14 +116,12 @@
       document.head.appendChild(s);
     });
 
-    // 3) esperar render real
     await waitRendered();
     console.log(`[MaxMenu] ✅ widget.js v${version} renderizado para ${restaurantId}`);
   } catch (err) {
     console.error('[MaxMenu] ❌', err);
     skel?.showError('[MaxMenu] No se pudo cargar el menú. Reintenta en unos segundos.');
   } finally {
-    // 4) retirar skeleton cuando ya hay DOM o tras error
     setTimeout(() => skel?.destroy(), 50);
   }
 })();
