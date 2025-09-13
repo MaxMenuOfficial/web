@@ -1538,7 +1538,6 @@ html {
   flex-wrap: nowrap;          /* ❌ Nunca permite saltar de línea */
   justify-content: space-between;
   align-items: flex-start;
-  gap: 7px;
 }
 
 /* Texto flexible */
