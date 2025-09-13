@@ -384,7 +384,7 @@ if (!isset($brunches) || !is_array($brunches)) {
                              class="expandable-image mmx-item-image-img"
                              src="<?php echo htmlspecialchars($item['image'], ENT_QUOTES, 'UTF-8'); ?>" 
                              alt="Imagen del item" 
-                             style="max-width: 100px; min-width: 100px; min-height: 100px; max-height: 100px; object-fit: cover; border-radius: 30px; margin: 5px;">
+                             style="max-width: 100px; min-width: 100px; min-height: 100px; max-height: 100px; object-fit: cover; border-radius: 30px; ">
                       <?php else: ?>
                         <p></p>
                       <?php endif; ?>
