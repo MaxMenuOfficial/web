@@ -212,10 +212,8 @@ html {
   flex-direction: row;
   width: 100%;
   height: auto;
-  margin: 10px;
   justify-content: space-between;
   align-items: center; 
- 
 }
 
 #maxmenu-menuContainer .item-info {
@@ -241,9 +239,9 @@ html {
 
 #maxmenu-menuContainer .item-info h3{
 
-  letter-spacing: 1px;
+  letter-spacing: 0px;
   font-weight: bold;
-  
+  word-wrap: break-word;
 }
 
 #maxmenu-menuContainer .item-info p {
