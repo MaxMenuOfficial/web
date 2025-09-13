@@ -1533,3 +1533,30 @@ html {
 }
 
 
+/* Forzar que la fila de item se adapte al contenido */
+#maxmenu-menuContainer .item-img-texto {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  flex-wrap: nowrap;        /* evitar que texto e imagen colapsen raro */
+  width: 100%;
+}
+
+/* Imagen debe ocupar su espacio y empujar */
+#maxmenu-menuContainer .item-image {
+  flex: 0 0 auto;           /* que no se colapse */
+  margin-left: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Imagen flexible: no cortar al texto */
+#maxmenu-menuContainer .item-image img {
+  width: auto;
+  max-width: 110px;        /* más natural en móvil */
+  height: auto;
+  max-height: 110px;
+  border-radius: 20px;
+  object-fit: contain;     /* ✅ contain hace que no corte */
+}
