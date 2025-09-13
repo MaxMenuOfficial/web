@@ -1536,28 +1536,34 @@ html {
 
 #maxmenu-menuContainer .item-img-texto {
   display: flex;
-  flex-wrap: wrap;            /* 💡 Permite que los elementos bajen si no entran */
+  flex-direction: row;        /* Siempre en fila */
+  flex-wrap: nowrap;          /* ❌ Nunca permite saltar de línea */
   justify-content: space-between;
   align-items: flex-start;
-  gap: 15px;
-}
-
-/* Imagen fija en tamaño */
-#maxmenu-menuContainer .item-image {
-  flex: 0 0 120px;            /* ancho fijo (no se deforma) */
-  max-width: 120px;
-  max-height: 120px;
-}
-
-#maxmenu-menuContainer .item-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 20px;
+  gap: 10px;
 }
 
 /* Texto flexible */
 #maxmenu-menuContainer .item-info {
-  flex: 1 1 200px;            /* Se adapta, y si no cabe → baja */
-  min-width: 200px;
+  flex: 1 1 auto;             /* Crece y se encoge según lo que quede */
+  min-width: 0;               /* ⚡ clave: permite que se encoja más */
+  word-wrap: break-word;
+  overflow-wrap: break-word;  /* Evita desbordes */
+}
+
+/* Imagen fija a la derecha */
+#maxmenu-menuContainer .item-image {
+  flex: 0 0 100px;            /* Fija ancho */
+  max-width: 100px;
+  max-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#maxmenu-menuContainer .item-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 20px;
 }
