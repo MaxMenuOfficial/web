@@ -1,6 +1,5 @@
 <?php
 
-
 // Verificamos que se haya obtenido el restaurantId
 if (!isset($restaurantId) || empty($restaurantId)) {
     die("❌ No se proporcionó el restaurantId.");
@@ -37,6 +36,13 @@ function obtenerEstructuraMenu($restaurantId) {
         $subcategoria['items'] = array_values(array_filter($itemsFiltrados, function ($item) use ($subcategoria) {
             return trim((string)$item['subcategory_id']) === trim((string)$subcategoria['subcategory_id']);
         }));
+
+        // Ordenar ítems dentro de la subcategoría por sort_order
+        usort($subcategoria['items'], function ($a, $b) {
+            $ordenA = $a['sort_order'] ?? PHP_INT_MAX;
+            $ordenB = $b['sort_order'] ?? PHP_INT_MAX;
+            return $ordenA <=> $ordenB;
+        });
     }
     unset($subcategoria);
 
@@ -52,14 +58,28 @@ function obtenerEstructuraMenu($restaurantId) {
             return trim((string)$subcategoria['category_id']) === trim((string)$categoria['category_id']);
         }));
 
+        // Ordenar subcategorías por sort_order
+        usort($categoria['subcategorias'], function ($a, $b) {
+            $ordenA = $a['sort_order'] ?? PHP_INT_MAX;
+            $ordenB = $b['sort_order'] ?? PHP_INT_MAX;
+            return $ordenA <=> $ordenB;
+        });
+
         // Ítems sin subcategoría para esta categoría
         $categoria['items'] = array_values(array_filter($itemsSinSubcategoria, function ($item) use ($categoria) {
             return trim((string)$item['category_id']) === trim((string)$categoria['category_id']);
         }));
+
+        // Ordenar ítems sin subcategoría por sort_order
+        usort($categoria['items'], function ($a, $b) {
+            $ordenA = $a['sort_order'] ?? PHP_INT_MAX;
+            $ordenB = $b['sort_order'] ?? PHP_INT_MAX;
+            return $ordenA <=> $ordenB;
+        });
     }
     unset($categoria);
 
-    // Ordenar las categorías por su nombre
+    // Ordenar las categorías por sort_order
     usort($categorias, function ($a, $b) {
         $ordenA = $a['sort_order'] ?? PHP_INT_MAX;
         $ordenB = $b['sort_order'] ?? PHP_INT_MAX;
@@ -71,6 +91,3 @@ function obtenerEstructuraMenu($restaurantId) {
 
 // Obtener la estructura completa del menú usando el restaurantId obtenido vía GET
 $estructuraMenu = obtenerEstructuraMenu($restaurantId);
-
-
-

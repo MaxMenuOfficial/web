@@ -1,29 +1,29 @@
 <?php
+// 📁 backend/php/show/get_categories.php
 // Accedemos a la variable global $categories (cargada en menu-service.php)
 global $categories;
 
-$restaurantId = $_SESSION['restaurant_id'] ?? null;
-
-if (!$userId || !$restaurantId) {
-    echo "❌ Error: Usuario o restaurante no seleccionado.";
+// Verificamos que el restaurantId fue obtenido correctamente
+if (!isset($restaurantId) || empty($restaurantId)) {
+  
     exit;
 }
 
-// ✅ Aseguramos que $categories es un array
-if (!is_array($categories)) {
-    $categories = [];
+// Asegurar que la variable global $categories esté definida
+if (!isset($categories) || !is_array($categories)) {
+    $categories = []; // En caso de no estar inicializado, forzamos un array vacío
 }
 
-// 🔍 Filtrar solo las categorías del restaurante actual
+// Filtrar las categorías que pertenezcan al restaurante actual
 $filteredCategories = array_filter($categories, function ($cat) use ($restaurantId) {
     return isset($cat['restaurant_id']) && $cat['restaurant_id'] === $restaurantId;
 });
 
-// 🔢 Ordenar las categorías por sort_order (ASC)
-usort($filteredCategories, function ($a, $b) {
-    $orderA = isset($a['sort_order']) ? (int)$a['sort_order'] : 0;
-    $orderB = isset($b['sort_order']) ? (int)$b['sort_order'] : 0;
-    return $orderA <=> $orderB;
-});
+// Convertir a array indexado para evitar problemas con claves asociativas
+$filteredCategories = array_values($filteredCategories);
 
-// ✅ Ahora $filteredCategories contiene las categorías del restaurante actual, ordenadas por sort_order
+// (Opcional) Puedes descomentar estas líneas para devolver la respuesta en JSON
+// header('Content-Type: application/json');
+// echo json_encode($filteredCategories, JSON_PRETTY_PRINT);
+// exit;
+?>
