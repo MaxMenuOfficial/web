@@ -1,5 +1,5 @@
 <?php
-// 📁 backend/php/show/get_categories.php
+// 📁 backend/php/show/show_categories.php
 // Accedemos a la variable global $categories (cargada en menu-service.php)
 global $categories;
 
