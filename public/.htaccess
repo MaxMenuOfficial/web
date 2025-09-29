@@ -2,9 +2,10 @@
   RewriteEngine On
   RewriteBase /
 
-  # 🚫 1. Si accede a la raíz, redirige a maxmenu.com
+  # 1️⃣ Si accede a la raíz de menu.maxmenu.com, redirige a maxmenu.com
+  RewriteCond %{HTTP_HOST} ^menu\.maxmenu\.com$ [NC]
   RewriteCond %{REQUEST_URI} ^/?$
-  RewriteRule ^$ https://maxmenu.com [R=301,L]
+  RewriteRule ^ https://maxmenu.com [R=301,L]
 
   # 🔁 2. Si la URL contiene mayúsculas, redirige a lowercase.php
   RewriteCond %{REQUEST_URI} [A-Z]
