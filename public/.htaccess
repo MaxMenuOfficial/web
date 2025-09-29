@@ -2,27 +2,27 @@
   RewriteEngine On
   RewriteBase /
 
-  # 🔁 Redirige a versión en minúsculas si contiene mayúsculas
+  # 🚫 1. Redirige acceso directo a raíz → maxmenu.com
+  RewriteCond %{REQUEST_URI} ^/?$
+  RewriteRule ^.*$ https://maxmenu.com [R=302,L]
+
+  # 🔁 2. Redirige a versión en minúsculas si contiene mayúsculas
   RewriteCond %{REQUEST_URI} [A-Z]
   RewriteRule ^(.*)$ https://menu.maxmenu.com/${lc:$1} [R=301,L]
 
-  # 🚫 Si accede al dominio raíz, redirige a maxmenu.com
-  RewriteCond %{REQUEST_URI} ^/$
-  RewriteRule ^.*$ https://maxmenu.com [R=302,L]
-  
-  # ► No reescribas si es archivo/carpeta real
+  # ✅ 3. Bloquea listing de directorios (opcional si no hay DirectoryIndex)
+  Options -Indexes
+
+  # 🔒 4. No reescribas si es archivo o carpeta real
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-
-
-  # 3️⃣ Menú público amigable: /<restaurantId> → /menu.php?id=<restaurantId>
+  # 🌐 5. Ruta amigable: /<restaurantId> → /menu.php?id=<restaurantId>
   RewriteRule ^([A-Za-z0-9_.-]+)$ /menu.php?id=$1 [QSA,L]
 
-  # Reescribe /widget/<restaurantId>/<version> a widget.php?id=<restaurantId>&version=<version>
+  # 🌐 6. Widget con versión: /widget/<id>/<version> → widget.php
   RewriteRule ^widget/([A-Za-z0-9_-]+)/([0-9]+)$ /widget/widget.php?id=$1&version=$2 [QSA,L]
-
 </IfModule>
 
 <IfModule mod_headers.c>
@@ -32,6 +32,3 @@
     Header set Expires "0"
   </FilesMatch>
 </IfModule>
-
-
-
