@@ -2,26 +2,24 @@
   RewriteEngine On
   RewriteBase /
 
-  # 🚫 1. Redirige acceso directo a raíz → maxmenu.com
+  # 🚫 1. Si accede a la raíz, redirige a maxmenu.com
   RewriteCond %{REQUEST_URI} ^/?$
-  RewriteRule ^.*$ https://maxmenu.com [R=302,L]
+  RewriteRule ^$ https://maxmenu.com [R=301,L]
 
-  # 🔁 2. Redirige a versión en minúsculas si contiene mayúsculas
+  # 🔁 2. Si la URL contiene mayúsculas, redirige a lowercase.php
   RewriteCond %{REQUEST_URI} [A-Z]
-  RewriteRule ^(.*)$ https://menu.maxmenu.com/${lc:$1} [R=301,L]
+  RewriteRule ^(.*)$ redirect-to-lowercase.php [L]
 
-  # ✅ 3. Bloquea listing de directorios (opcional si no hay DirectoryIndex)
-  Options -Indexes
-
-  # 🔒 4. No reescribas si es archivo o carpeta real
+  # ► 3. No reescribas si es archivo o carpeta real
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-  # 🌐 5. Ruta amigable: /<restaurantId> → /menu.php?id=<restaurantId>
+  # 4️⃣ Menú público amigable: /<restaurantId> → /menu.php?id=<restaurantId>
   RewriteRule ^([A-Za-z0-9_.-]+)$ /menu.php?id=$1 [QSA,L]
 
-  # 🌐 6. Widget con versión: /widget/<id>/<version> → widget.php
+  # 5️⃣ Widget: /widget/<restaurantId>/<version> → widget.php?id=<restaurantId>&version=<version>
+  # ⚠️ Esto NO se toca, queda exactamente como lo tenías
   RewriteRule ^widget/([A-Za-z0-9_-]+)/([0-9]+)$ /widget/widget.php?id=$1&version=$2 [QSA,L]
 </IfModule>
 
