@@ -2,6 +2,14 @@
   RewriteEngine On
   RewriteBase /
 
+  # 🔁 Redirige a versión en minúsculas si contiene mayúsculas
+  RewriteCond %{REQUEST_URI} [A-Z]
+  RewriteRule ^(.*)$ https://menu.maxmenu.com/${lc:$1} [R=301,L]
+
+  # 🚫 Si accede al dominio raíz, redirige a maxmenu.com
+  RewriteCond %{REQUEST_URI} ^/$
+  RewriteRule ^.*$ https://maxmenu.com [R=302,L]
+  
   # ► No reescribas si es archivo/carpeta real
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d

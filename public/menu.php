@@ -21,6 +21,10 @@ require_once __DIR__ . '/../get/get_bordes.php';
 require_once __DIR__ . '/../get/get_tipografias.php';
 require_once __DIR__ . '/../get/get_colors.php';
 
+
+
+$restaurantId = strtolower($_GET['id'] ?? '');
+echo '<link rel="canonical" href="https://menu.maxmenu.com/' . htmlspecialchars($restaurantId) . '" />';
 ?>
 
 
