@@ -21,38 +21,29 @@ require_once __DIR__ . '/../get/get_bordes.php';
 require_once __DIR__ . '/../get/get_tipografias.php';
 require_once __DIR__ . '/../get/get_colors.php';
 
+// =====================================
+// 🔤 CARGA DE GOOGLE FONTS (todas las familias completas)
+// =====================================
 
-$fontWeights = [];
+// Se obtienen las familias seleccionadas (una por cada bloque tipográfico)
+$familias = array_unique([
+  trim($tipografias['titleFont'] ?? ''),
+  trim($tipografias['bodyFont'] ?? ''),
+  trim($tipografias['priceFont'] ?? '')
+]);
 
-// Recorremos los campos del array $tipografias
-foreach (['titleFont', 'bodyFont', 'priceFont'] as $key) {
-    $font = $tipografias[$key] ?? null;
-    $weightKey = str_replace('Font', 'Weight', $key);
-    $weight = $tipografias[$weightKey] ?? null;
-
-    if ($font && $weight) {
-        $font = trim($font);
-        if (!isset($fontWeights[$font])) {
-            $fontWeights[$font] = [];
-        }
-
-        if (!in_array($weight, $fontWeights[$font], true)) {
-            $fontWeights[$font][] = $weight;
-        }
+// Eliminamos valores vacíos y generamos query para cada familia
+$familiasEncoded = [];
+foreach ($familias as $familia) {
+    if ($familia !== '') {
+        $encoded = str_replace(' ', '+', $familia);
+        // No especificamos pesos → se carga toda la familia completa
+        $familiasEncoded[] = "family={$encoded}";
     }
 }
 
-// Generamos URL de Google Fonts correctamente
-$familiasEncoded = [];
-
-foreach ($fontWeights as $font => $weights) {
-    $encodedFont = str_replace(' ', '+', $font);
-    sort($weights); // Para mantener orden
-    $weightString = implode(';', $weights);
-    $familiasEncoded[] = "family={$encodedFont}:wght@{$weightString}";
-}
-
-$googleFontsUrl = 'https://fonts.googleapis.com/css2?' . implode('&', $familiasEncoded) . '&display=swap';
+// Construimos la URL final de Google Fonts
+$googleFontsUrl = "https://fonts.googleapis.com/css2?" . implode('&', $familiasEncoded) . "&display=swap";
 
 // =====================================
 // 🔗 Canonical URL
@@ -85,11 +76,9 @@ $canonicalUrl = "https://menu.maxmenu.com/" . htmlspecialchars($restaurantId);
     <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-menu.css">
 
     <!-- Carga dinámica de fuentes elegidas -->
-    <!-- Carga dinámica de fuentes elegidas por el restaurante -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="<?= htmlspecialchars($googleFontsUrl) ?>" rel="stylesheet">
-    
 </head>
 
 <body id="menu-container">
