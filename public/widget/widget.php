@@ -39,6 +39,29 @@ require_once __DIR__.'/../../get/get_colors.php';
 require_once __DIR__.'/../../get/get_bordes.php';
 require_once __DIR__.'/../../get/get_tipografias.php';
 
+
+
+// =====================================
+// 🔤 Carga dinámica de Google Fonts
+// =====================================
+$familias = array_unique([
+  $tipografias['titleFont'],
+  $tipografias['bodyFont'],
+  $tipografias['priceFont']
+]);
+
+$familiasEncoded = [];
+foreach ($familias as $familia) {
+    $encoded = str_replace(' ', '+', trim($familia));
+    $familiasEncoded[] = "family={$encoded}";
+}
+$googleFontsUrl = "https://fonts.googleapis.com/css2?" . implode('&', $familiasEncoded) . "&display=swap";
+
+
+
+
+
+
 ?>
 
 
@@ -50,13 +73,17 @@ require_once __DIR__.'/../../get/get_tipografias.php';
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Carga dinámica de fuentes elegidas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="<?= htmlspecialchars($googleFontsUrl) ?>" rel="stylesheet">
 
    <style>
   /* Fondo SIEMPRE transparente */
       #maxmenu-menuContainer,
       .maxmenu-root, .mmx-root, body {
         background: transparent !important;
-      }
+     }
 
   /* Variables de color con fallbacks elegantes (evitan texto negro/transparent) */
   #maxmenu-menuContainer {

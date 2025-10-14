@@ -1,12 +1,16 @@
 <?php
 // =============================
-// get_typography.php (final)
+// get_typography.php (final corregido)
 // =============================
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 /**
- * Defaults por si no hay tipografías guardadas.
+ * Defaults si no hay tipografías guardadas.
  */
+
 $tipografias = [
   'titleFont'   => 'Cormorant SC',
   'titleWeight' => 600,
@@ -22,7 +26,6 @@ $tipografias = [
 /**
  * Catálogo oficial MaxMenu (familias y pesos reales)
  */
-
 $MM_FONT_CATALOG = [
   'Cormorant SC' => [300,400,500,600,700],
   'Tangerine'    => [400,700],
@@ -31,7 +34,7 @@ $MM_FONT_CATALOG = [
   'Lexend Exa'   => [300,400,500,600,700,800,900],
 ];
 
-// Si no tenemos restaurantId, mantenemos defaults y salimos
+// Si no tenemos restaurantId, salimos
 if (!isset($restaurantId)) {
   error_log("⚠️ [get_typography] restaurantId no definido en la sesión.");
   return;
@@ -39,16 +42,20 @@ if (!isset($restaurantId)) {
 
 /**
  * Fuente de datos:
- * - preferente: $menuTypography (traído desde usuario-service.php)
- * - fallback: $restaurantData['menu_typography'] (latest.json)
+ * - preferente: $menuTypography (desde usuario-service.php o latest.json)
  */
-$source = $menuTypography ?? null;
-if (!$source && isset($restaurantData['menu_typography'])) {
-  $source = $restaurantData['menu_typography'];
+$source = $menuTypography ?? ($restaurantData['menu_typography'] ?? []);
+
+/**
+ * 🧩 CORRECCIÓN CLAVE
+ * Si el JSON devuelve una lista (array indexado), tomamos el primer registro.
+ */
+if (isset($source[0]) && is_array($source[0])) {
+    $source = $source[0];
 }
 
-// Helper: verificar si un array es asociativo
-$isAssoc = static function($v){
+// Helper para detectar arrays asociativos
+$isAssoc = static function($v) {
   return is_array($v) && array_keys($v) !== range(0, count($v) - 1);
 };
 
@@ -66,7 +73,6 @@ $pickFontSafe = static function($font, $catalog, $def) {
 $nearestWeight = static function($w, array $allowed, $def) {
   $w = (int)($w ?? $def);
   if (in_array($w, $allowed, true)) return $w;
-  // Si el peso no es válido, usamos el más cercano permitido
   $best = $allowed[0];
   $bestDiff = abs($w - $best);
   foreach ($allowed as $opt) {
@@ -79,19 +85,16 @@ $nearestWeight = static function($w, array $allowed, $def) {
   return $best;
 };
 
-// Mapper principal: normaliza cada campo y devuelve tipografías correctas
+// Mapper principal
 $map = function(array $row) use ($tipografias, $MM_FONT_CATALOG, $pickFontSafe, $nearestWeight, $clampSize) {
-  // Fonts
   $titleFont = $pickFontSafe($row['title_font'] ?? null, $MM_FONT_CATALOG, $tipografias['titleFont']);
   $bodyFont  = $pickFontSafe($row['body_font']  ?? null, $MM_FONT_CATALOG, $tipografias['bodyFont']);
   $priceFont = $pickFontSafe($row['price_font'] ?? null, $MM_FONT_CATALOG, $tipografias['priceFont']);
 
-  // Pesos por familia
   $titleWeight = $nearestWeight($row['title_weight'] ?? null, $MM_FONT_CATALOG[$titleFont], $tipografias['titleWeight']);
   $bodyWeight  = $nearestWeight($row['body_weight']  ?? null, $MM_FONT_CATALOG[$bodyFont],  $tipografias['bodyWeight']);
   $priceWeight = $nearestWeight($row['price_weight'] ?? null, $MM_FONT_CATALOG[$priceFont], $tipografias['priceWeight']);
 
-  // Tamaños
   $titleSize = $clampSize($row['title_size'] ?? null, $tipografias['titleSize']);
   $bodySize  = $clampSize($row['body_size']  ?? null, $tipografias['bodySize']);
   $priceSize = $clampSize($row['price_size'] ?? null, $tipografias['priceSize']);
@@ -110,25 +113,12 @@ $map = function(array $row) use ($tipografias, $MM_FONT_CATALOG, $pickFontSafe, 
 };
 
 // Procesar fuente de datos
-if ($source) {
-  if (is_array($source)) {
-    if ($isAssoc($source)) {
-      // latest.json
-      $tipografias = $map($source);
-    } else {
-      // usuario-service.php: lista de filas
-      $rows = array_values(array_filter($source, function($row) use ($restaurantId){
-        return isset($row['restaurant_id']) ? $row['restaurant_id'] === $restaurantId : true;
-      }));
-      if (!empty($rows)) {
-        $tipografias = $map($rows[0]);
-      } else {
-        error_log("ℹ️ [get_typography] No se encontró fila para {$restaurantId}. Usando defaults.");
-      }
-    }
+if ($source && is_array($source)) {
+  if ($isAssoc($source)) {
+    $tipografias = $map($source);
   } else {
-    error_log("⚠️ [get_typography] Fuente inválida (no array). Usando defaults.");
+    error_log("⚠️ [get_typography] Estructura inesperada en menu_typography.");
   }
 } else {
-  error_log("ℹ️ [get_typography] Sin fuente (menu_typography). Usando defaults.");
+  error_log("ℹ️ [get_typography] Sin tipografías, usando defaults.");
 }

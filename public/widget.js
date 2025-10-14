@@ -6,7 +6,6 @@
     console.error('[MaxMenu] ❌ data-restaurant-id no definido.');
     return;
   }
-
   const KEY_STORAGE_VERSION = `mmx_last_version_${restaurantId}`;
   const fallbackVersion = '__VERSION__'; // 🔧 Reemplazar en build si se desea
   let currentVersion = localStorage.getItem(KEY_STORAGE_VERSION) || fallbackVersion;
