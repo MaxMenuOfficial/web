@@ -26,54 +26,20 @@ require_once __DIR__ . '/../get/get_colors.php';
 // 🔤 CONSTRUCCIÓN DE URL DE GOOGLE FONTS
 // ================================
 
-// Aseguramos que tenemos los datos de tipografías
 $familias = array_unique([
-    trim($tipografias['titleFont']),
-    trim($tipografias['bodyFont']),
-    trim($tipografias['priceFont']),
+  $tipografias['titleFont'],
+  $tipografias['bodyFont'],
+  $tipografias['priceFont'],
 ]);
 
-$fontWeights = [];
-
-foreach (['titleFont', 'bodyFont', 'priceFont'] as $key) {
-    $font = trim($tipografias[$key] ?? '');
-    $weightKey = str_replace('Font', 'Weight', $key);
-    $weight = $tipografias[$weightKey] ?? null;
-
-    if ($font) {
-        if (!isset($fontWeights[$font])) {
-            $fontWeights[$font] = [];
-        }
-
-        // Añadimos el peso aunque sea inválido
-        if ($weight && !in_array($weight, $fontWeights[$font], true)) {
-            $fontWeights[$font][] = $weight;
-        }
-
-        // Aseguramos que al menos un peso exista
-        if (!$weight) {
-            $fontWeights[$font][] = 400;
-        }
-    }
-}
-
-// Construcción final del URL de Google Fonts
 $familiasEncoded = [];
 
 foreach ($familias as $font) {
-    $encodedFont = str_replace(' ', '+', $font);
-
-    if (!empty($fontWeights[$font])) {
-        $pesos = implode(';', array_map('intval', $fontWeights[$font]));
-        $familiasEncoded[] = "family={$encodedFont}:wght@{$pesos}";
-    } else {
-        // Si no hay pesos, cargamos la familia entera (cualquier peso que Google quiera servir)
-        $familiasEncoded[] = "family={$encodedFont}";
-    }
+  $encodedFont = str_replace(' ', '+', trim($font));
+  $familiasEncoded[] = "family={$encodedFont}";
 }
 
 $googleFontsUrl = 'https://fonts.googleapis.com/css2?' . implode('&', $familiasEncoded) . '&display=swap';
-
 // Canonical
 $restaurantId = strtolower($_GET['id'] ?? '');
 echo '<link rel="canonical" href="https://menu.maxmenu.com/' . htmlspecialchars($restaurantId) . '" />';
@@ -101,7 +67,29 @@ echo '<link rel="canonical" href="https://menu.maxmenu.com/' . htmlspecialchars(
   <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-menu.css">
 
   <!-- Tipografías personalizadas del restaurante -->
-  <link href="<?= htmlspecialchars($googleFontsUrl) ?>" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="<?= htmlspecialchars($googleFontsUrl) ?>" rel="stylesheet">
+
+  <style>
+  .js-font {
+    font-family: '<?= $tipografias['titleFont'] ?>', <?= "'" . $tipografias['titleFont'] . "'" ?>;
+    font-weight: <?= $tipografias['titleWeight'] ?>;
+    font-size: <?= $tipografias['titleSize'] ?>px;
+  }
+
+  .js-body {
+    font-family: '<?= $tipografias['bodyFont'] ?>', <?= "'" . $tipografias['bodyFont'] . "'" ?>;
+    font-weight: <?= $tipografias['bodyWeight'] ?>;
+    font-size: <?= $tipografias['bodySize'] ?>px;
+  }
+
+  .js-price {
+    font-family: '<?= $tipografias['priceFont'] ?>', <?= "'" . $tipografias['priceFont'] . "'" ?>;
+    font-weight: <?= $tipografias['priceWeight'] ?>;
+    font-size: <?= $tipografias['priceSize'] ?>px;
+  }
+  </style>
 
 </head>
 
