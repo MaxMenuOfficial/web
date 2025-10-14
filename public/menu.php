@@ -21,53 +21,41 @@ require_once __DIR__ . '/../get/get_bordes.php';
 require_once __DIR__ . '/../get/get_tipografias.php';
 require_once __DIR__ . '/../get/get_colors.php';
 
-// =====================================
-// 🔤 CARGA DE GOOGLE FONTS (todas las familias completas)
-// =====================================
 
-// Se obtienen las familias seleccionadas (una por cada bloque tipográfico)
+
 $familias = array_unique([
-  trim($tipografias['titleFont'] ?? ''),
-  trim($tipografias['bodyFont'] ?? ''),
-  trim($tipografias['priceFont'] ?? '')
+    trim($tipografias['titleFont']),
+    trim($tipografias['bodyFont']),
+    trim($tipografias['priceFont']),
 ]);
 
-// Eliminamos valores vacíos y generamos query para cada familia
 $familiasEncoded = [];
-foreach ($familias as $familia) {
-    if ($familia !== '') {
-        $encoded = str_replace(' ', '+', $familia);
-        // No especificamos pesos → se carga toda la familia completa
-        $familiasEncoded[] = "family={$encoded}";
-    }
+foreach ($familias as $font) {
+    $encoded = str_replace(' ', '+', $font);
+    $familiasEncoded[] = "family={$encoded}";
 }
 
-// Construimos la URL final de Google Fonts
-$googleFontsUrl = "https://fonts.googleapis.com/css2?" . implode('&', $familiasEncoded) . "&display=swap";
+$googleFontsUrl = 'https://fonts.googleapis.com/css2?' . implode('&', $familiasEncoded) . '&display=swap';
 
-// =====================================
-// 🔗 Canonical URL
-// =====================================
 $restaurantId = strtolower($_GET['id'] ?? '');
-$canonicalUrl = "https://menu.maxmenu.com/" . htmlspecialchars($restaurantId);
+echo '<link rel="canonical" href="https://menu.maxmenu.com/' . htmlspecialchars($restaurantId) . '" />';
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
+    <meta charset="UTF-8">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Canonical -->
-    <link rel="canonical" href="<?= $canonicalUrl ?>">
+      <!-- Favicon -->
+    <link rel="icon"  href="assets/css/menu/img/logo-app.png">
+    
+    <title>MaxMenu | Menu </title>
 
-    <!-- Favicon -->
-    <link rel="icon" href="assets/css/menu/img/logo-app.png">
-
-    <title>MaxMenu | Menu</title>
-
-    <!-- Estilos principales -->
     <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-items.css">
     <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-categorias.css">
     <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-plataformas.css">
@@ -75,11 +63,10 @@ $canonicalUrl = "https://menu.maxmenu.com/" . htmlspecialchars($restaurantId);
     <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-logo.css">
     <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-menu.css">
 
-    <!-- Carga dinámica de fuentes elegidas -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="<?= htmlspecialchars($googleFontsUrl) ?>" rel="stylesheet">
+    
 </head>
+
 
 <body id="menu-container">
 
