@@ -22,51 +22,88 @@ require_once __DIR__ . '/../get/get_tipografias.php';
 require_once __DIR__ . '/../get/get_colors.php';
 
 
+// ================================
+// 🔤 CONSTRUCCIÓN DE URL DE GOOGLE FONTS
+// ================================
 
+// Aseguramos que tenemos los datos de tipografías
 $familias = array_unique([
     trim($tipografias['titleFont']),
     trim($tipografias['bodyFont']),
     trim($tipografias['priceFont']),
 ]);
 
+$fontWeights = [];
+
+foreach (['titleFont', 'bodyFont', 'priceFont'] as $key) {
+    $font = trim($tipografias[$key] ?? '');
+    $weightKey = str_replace('Font', 'Weight', $key);
+    $weight = $tipografias[$weightKey] ?? null;
+
+    if ($font) {
+        if (!isset($fontWeights[$font])) {
+            $fontWeights[$font] = [];
+        }
+
+        // Añadimos el peso aunque sea inválido
+        if ($weight && !in_array($weight, $fontWeights[$font], true)) {
+            $fontWeights[$font][] = $weight;
+        }
+
+        // Aseguramos que al menos un peso exista
+        if (!$weight) {
+            $fontWeights[$font][] = 400;
+        }
+    }
+}
+
+// Construcción final del URL de Google Fonts
 $familiasEncoded = [];
+
 foreach ($familias as $font) {
-    $encoded = str_replace(' ', '+', $font);
-    $familiasEncoded[] = "family={$encoded}";
+    $encodedFont = str_replace(' ', '+', $font);
+
+    if (!empty($fontWeights[$font])) {
+        $pesos = implode(';', array_map('intval', $fontWeights[$font]));
+        $familiasEncoded[] = "family={$encodedFont}:wght@{$pesos}";
+    } else {
+        // Si no hay pesos, cargamos la familia entera (cualquier peso que Google quiera servir)
+        $familiasEncoded[] = "family={$encodedFont}";
+    }
 }
 
 $googleFontsUrl = 'https://fonts.googleapis.com/css2?' . implode('&', $familiasEncoded) . '&display=swap';
 
+// Canonical
 $restaurantId = strtolower($_GET['id'] ?? '');
 echo '<link rel="canonical" href="https://menu.maxmenu.com/' . htmlspecialchars($restaurantId) . '" />';
 ?>
-
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
 
-    <meta charset="UTF-8">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-      <!-- Favicon -->
-    <link rel="icon"  href="assets/css/menu/img/logo-app.png">
-    
-    <title>MaxMenu | Menu </title>
+  <!-- Favicon -->
+  <link rel="icon" href="assets/css/menu/img/logo-app.png">
 
-    <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-items.css">
-    <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-categorias.css">
-    <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-plataformas.css">
-    <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-idiomas.css">
-    <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-logo.css">
-    <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-menu.css">
+  <!-- Título -->
+  <title>MaxMenu | Menu</title>
 
-    <link href="<?= htmlspecialchars($googleFontsUrl) ?>" rel="stylesheet">
-    
+  <!-- Estilos del menú -->
+  <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-items.css">
+  <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-plataformas.css">
+  <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-idiomas.css">
+  <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-logo.css">
+  <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-menu.css">
+
+  <!-- Tipografías personalizadas del restaurante -->
+  <link href="<?= htmlspecialchars($googleFontsUrl) ?>" rel="stylesheet">
+
 </head>
-
 
 <body id="menu-container">
 
