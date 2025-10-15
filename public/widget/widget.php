@@ -41,26 +41,24 @@ require_once __DIR__.'/../../get/get_tipografias.php';
 
 
 
-// =====================================
-// 🔤 Carga dinámica de Google Fonts
-// =====================================
+// ================================
+// 🔤 CONSTRUCCIÓN DE URL DE GOOGLE FONTS
+// ================================
+
 $familias = array_unique([
   $tipografias['titleFont'],
   $tipografias['bodyFont'],
-  $tipografias['priceFont']
+  $tipografias['priceFont'],
 ]);
 
 $familiasEncoded = [];
-foreach ($familias as $familia) {
-    $encoded = str_replace(' ', '+', trim($familia));
-    $familiasEncoded[] = "family={$encoded}";
+
+foreach ($familias as $font) {
+  $encodedFont = str_replace(' ', '+', trim($font));
+  $familiasEncoded[] = "family={$encodedFont}";
 }
-$googleFontsUrl = "https://fonts.googleapis.com/css2?" . implode('&', $familiasEncoded) . "&display=swap";
 
-
-
-
-
+$googleFontsUrl = 'https://fonts.googleapis.com/css2?' . implode('&', $familiasEncoded) . '&display=swap';
 
 ?>
 
@@ -73,11 +71,31 @@ $googleFontsUrl = "https://fonts.googleapis.com/css2?" . implode('&', $familiasE
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Carga dinámica de fuentes elegidas -->
+
+   <!-- Tipografías personalizadas del restaurante -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="<?= htmlspecialchars($googleFontsUrl) ?>" rel="stylesheet">
 
+  <style>
+  .js-font {
+    font-family: '<?= $tipografias['titleFont'] ?>', <?= "'" . $tipografias['titleFont'] . "'" ?>;
+    font-weight: <?= $tipografias['titleWeight'] ?>;
+    font-size: <?= $tipografias['titleSize'] ?>px;
+  }
+
+  .js-body {
+    font-family: '<?= $tipografias['bodyFont'] ?>', <?= "'" . $tipografias['bodyFont'] . "'" ?>;
+    font-weight: <?= $tipografias['bodyWeight'] ?>;
+    font-size: <?= $tipografias['bodySize'] ?>px;
+  }
+
+  .js-price {
+    font-family: '<?= $tipografias['priceFont'] ?>', <?= "'" . $tipografias['priceFont'] . "'" ?>;
+    font-weight: <?= $tipografias['priceWeight'] ?>;
+    font-size: <?= $tipografias['priceSize'] ?>px;
+  }
+  </style>
    <style>
   /* Fondo SIEMPRE transparente */
       #maxmenu-menuContainer,
