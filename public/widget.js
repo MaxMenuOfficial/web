@@ -10,7 +10,6 @@
   const fallbackVersion = '__VERSION__'; // 🔧 Reemplazar en build si se desea
   let currentVersion = localStorage.getItem(KEY_STORAGE_VERSION) || fallbackVersion;
 
-  // 1️⃣ Obtener versión cacheada desde Cloudflare (RÁPIDO - EDGE)
   try {
     const versionJsonURL = `https://cdn.maxmenu.com/s/${restaurantId}/widget/${currentVersion}/version.json`;
     const versionRes = await fetch(versionJsonURL, { cache: 'force-cache' });
@@ -29,7 +28,6 @@
     console.warn('[MaxMenu] ⚠️ Error al obtener version.json cacheado:', err);
   }
 
-  // 2️⃣ Validación contra latest.json (NO CACHED - siempre nuevo)
   (async () => {
     try {
       const latestUrl = `https://cdn.maxmenu.com/s/${restaurantId}/widget/latest.json`;
@@ -46,11 +44,10 @@
         console.warn('[MaxMenu] ⚠️ latest.json sin campo "version" válido.');
         return;
       }
-
       if (latestVersion !== currentVersion) {
         console.log(`[MaxMenu] 🔁 Versión desactualizada detectada: ${currentVersion} → ${latestVersion}`);
         localStorage.setItem(KEY_STORAGE_VERSION, latestVersion);
-        location.reload(); // 🚨 Fuerza recarga para tomar los nuevos recursos
+        location.reload();
       } else {
         console.log('[MaxMenu] ✅ Versión actual es la más reciente.');
       }
@@ -59,12 +56,10 @@
     }
   })();
 
-  // 3️⃣ Limpieza de scripts y estilos previos (si los hubiera)
   container.innerHTML = '';
   document.querySelectorAll('script[maxmenu-script]').forEach(s => s.remove());
   document.querySelectorAll('link[maxmenu-style]').forEach(l => l.remove());
 
-  // 4️⃣ Cargar widget.js desde la versión exacta (EDGE)
   try {
     const widgetUrl = `https://cdn.maxmenu.com/s/${restaurantId}/widget/${currentVersion}/widget.js`;
     const script = document.createElement('script');
@@ -75,8 +70,8 @@
 
     console.log(`[MaxMenu] ✅ widget.js v${currentVersion} inyectado para ${restaurantId}`);
   } catch (err) {
-    console.error('[MaxMenu] ❌ Error cargando el widget.js:', err);
-    container.innerHTML = '<p style="color:red;">[MaxMenu] Error al cargar el menú.</p>';
+    console.error('[MaxMenu] loading Error the widget.js:', err);
+    container.innerHTML = '<p width:100%;text-aling:center; style="color:red;">[MaxMenu] Error loading the menu.</p>';
   }
 })();
 

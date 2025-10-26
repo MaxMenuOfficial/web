@@ -1,88 +1,77 @@
-// File: public/widget.js
-(function () {
-  // ➊ Detectar el <script> embebido y leer restaurantId
-  const scripts      = document.getElementsByTagName('script');
-  const myScript     = scripts[scripts.length - 1];
-  const restaurantId = myScript?.getAttribute('data-restaurant-id');
-  if (!restaurantId) {
-    return console.error('[MaxMenu] Falta el atributo data-restaurant-id en el <script>.');
-  }
-
-  // ➋ Localizar el contenedor donde inyectar el widget
+(async () => {
   const container = document.getElementById('maxmenu-menuContainer');
-  if (!container) {
-    return console.error('[MaxMenu] No se encontró el contenedor con id="maxmenu-menuContainer".');
-  }
+  const restaurantId = container?.dataset?.restaurantId;
 
-  // ➌ Inyectar CSS fijos (no cacheables por versión)
-  const cssFiles = [
-    'https://menu.maxmenu.com/assets/css/widget/styles/view-items.css',
-    'https://menu.maxmenu.com/assets/css/widget/styles/view-plataformas.css',
-    'https://menu.maxmenu.com/assets/css/widget/styles/view-logo.css',
-    'https://menu.maxmenu.com/assets/css/widget/styles/view-menu.css'
-  ];
-  cssFiles.forEach(href => {
-    if (!document.querySelector(`link[href="${href}"]`)) {
-      const link = document.createElement('link');
-      link.rel  = 'stylesheet';
-      link.href = href;
-      document.head.appendChild(link);
+  if (!restaurantId) {
+    console.error('[MaxMenu] ❌ data-restaurant-id no definido.');
+    return;
+  }
+  const KEY_STORAGE_VERSION = `mmx_last_version_${restaurantId}`;
+  const fallbackVersion = '__VERSION__'; // 🔧 Reemplazar en build si se desea
+  let currentVersion = localStorage.getItem(KEY_STORAGE_VERSION) || fallbackVersion;
+
+  try {
+    const versionJsonURL = `https://cdn.maxmenu.com/s/${restaurantId}/widget/${currentVersion}/version.json`;
+    const versionRes = await fetch(versionJsonURL, { cache: 'force-cache' });
+
+    if (versionRes.ok) {
+      const versionData = await versionRes.json();
+      if (versionData.version) {
+        currentVersion = versionData.version;
+      } else {
+        console.warn('[MaxMenu] ⚠️ version.json sin campo "version" válido.');
+      }
+    } else {
+      console.warn(`[MaxMenu] ⚠️ No se pudo obtener version.json (${versionRes.status}).`);
     }
-  });
-
-  // ➍ Función principal: obtiene versión, carga HTML limpio y lo inyecta
-  function loadWidget() {
-    // 1️⃣ Obtener la versión del menú vía API REST limpia
-    fetch(`https://menu.maxmenu.com/api/menu-version.php?id=${encodeURIComponent(restaurantId)}`, { mode: 'cors' })
-      .then(res => {
-        if (!res.ok) throw new Error('[MaxMenu] Error al obtener la versión del menú.');
-        return res.json();
-      })
-      .then(data => {
-        const v = data.version;
-        if (typeof v !== 'number' || v <= 0) {
-          throw new Error('[MaxMenu] Versión inválida recibida: ' + v);
-        }
-
-        // 2️⃣ Construir URL versión limpia
-        return {
-          widgetUrl: `https://menu.maxmenu.com/widget/${restaurantId}/v/${v}`,
-          v
-        };
-      })
-      .then(({ widgetUrl, v }) =>
-        // 3️⃣ Cargar el HTML del widget versión limpio
-        fetch(widgetUrl, { mode: 'cors' })
-          .then(res => {
-            if (!res.ok) throw new Error('[MaxMenu] Error al cargar el widget.');
-            return res.text();
-          })
-          .then(html => ({ html, v }))
-      )
-      .then(({ html, v }) => {
-        // 4️⃣ Inyectar HTML en el contenedor
-        container.innerHTML = html;
-
-        // 5️⃣ Reejecutar scripts inline incluidos en el HTML cargado
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = html;
-        tempDiv.querySelectorAll('script').forEach(oldScript => {
-          const newScript = document.createElement('script');
-          Array.from(oldScript.attributes).forEach(attr =>
-            newScript.setAttribute(attr.name, attr.value)
-          );
-          newScript.textContent = oldScript.textContent;
-          document.body.appendChild(newScript);
-        });
-
-        console.log(`[MaxMenu] Widget versión ${v} cargado con éxito.`);
-      })
-      .catch(err => {
-        console.error(err);
-        container.innerHTML = '<p>[MaxMenu] No se pudo cargar el menú.</p>';
-      });
+  } catch (err) {
+    console.warn('[MaxMenu] ⚠️ Error al obtener version.json cacheado:', err);
   }
 
-  // ➏ Ejecutar
-  loadWidget();
+  (async () => {
+    try {
+      const latestUrl = `https://cdn.maxmenu.com/s/${restaurantId}/widget/latest.json`;
+      const latestRes = await fetch(latestUrl, { cache: 'no-store' });
+
+      if (!latestRes.ok) {
+        console.warn(`[MaxMenu] ⚠️ latest.json no disponible (${latestRes.status})`);
+        return;
+      }
+
+      const { version: latestVersion } = await latestRes.json();
+
+      if (!latestVersion) {
+        console.warn('[MaxMenu] ⚠️ latest.json sin campo "version" válido.');
+        return;
+      }
+      if (latestVersion !== currentVersion) {
+        console.log(`[MaxMenu] 🔁 Versión desactualizada detectada: ${currentVersion} → ${latestVersion}`);
+        localStorage.setItem(KEY_STORAGE_VERSION, latestVersion);
+        location.reload();
+      } else {
+        console.log('[MaxMenu] ✅ Versión actual es la más reciente.');
+      }
+    } catch (err) {
+      console.warn('[MaxMenu] ⚠️ Error al verificar latest.json:', err);
+    }
+  })();
+
+  container.innerHTML = '';
+  document.querySelectorAll('script[maxmenu-script]').forEach(s => s.remove());
+  document.querySelectorAll('link[maxmenu-style]').forEach(l => l.remove());
+
+  try {
+    const widgetUrl = `https://cdn.maxmenu.com/s/${restaurantId}/widget/${currentVersion}/widget.js`;
+    const script = document.createElement('script');
+    script.src = widgetUrl;
+    script.async = false;
+    script.setAttribute('maxmenu-script', 'true');
+    document.head.appendChild(script);
+
+    console.log(`[MaxMenu] ✅ widget.js v${currentVersion} inyectado para ${restaurantId}`);
+  } catch (err) {
+    console.error('[MaxMenu] loading Error the widget.js:', err);
+    container.innerHTML = '<p width:100%;text-aling:center; style="color:red;">[MaxMenu] Error loading the menu.</p>';
+  }
 })();
+

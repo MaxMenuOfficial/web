@@ -38,8 +38,8 @@ if (!$isActive && !$isActiveForAll) {
         }
     </style>
     <div id='menu-widget-unavailable'>
-        <h2>Este menú no está disponible. Para resolverlo, ingresa en tu área privada | MaxMenu</h2>
-    </div>";
+      <h2>This menu is not available. To resolve it, log in to your private area | MaxMenu</h2>
+</div>";
     exit;
 }
 
@@ -66,9 +66,9 @@ if (!$canShowWidget) {
             font-weight: bold;
         }
     </style>
-    <div id='menu-widget-upgrade'>
-        <h2>El widget embebible está disponible solo en el plan Max o Elite. Actualiza tu plan para activarlo.</h2>
-    </div>";
+  <div id='menu-widget-upgrade'>
+    <h2>The embeddable widget is available only on the Max or Elite plan. Upgrade your plan to activate it.</h2>
+</div>";
     exit;
 }
 

@@ -3,7 +3,7 @@
 // 📦 CARGA DE DATOS DEL MENÚ
 // ================================
 require_once __DIR__ . '/../config/menu-service.php';
-require_once __DIR__ . '/../get/get_menu_visibility.php';
+//require_once __DIR__ . '/../get/get_menu_visibility.php';
 require_once __DIR__ . '/../get/get_restaurant_id.php';
 require_once __DIR__ . '/../get/get_logo.php';
 require_once __DIR__ . '/../get/get_idiomas.php'; 
