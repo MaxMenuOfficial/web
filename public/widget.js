@@ -7,7 +7,7 @@
     return;
   }
 
-  // === 1. INYECTAR SKELETON ===
+  // === 1. INYECTAR SKELETON SIN LAPSUS ===
   const skeletonHTML = `
     <style id="maxmenu-skeleton-style">
       #maxmenu-loading {
@@ -70,9 +70,16 @@
     </div>
   `;
 
-  container.innerHTML = skeletonHTML;
+  // Inyectamos sin borrar el contenido previo (evita lapsus visual)
+  container.insertAdjacentHTML('afterbegin', skeletonHTML);
+  // Forzamos render inmediato antes de limpiar
+  void container.offsetHeight;
 
-  console.log('[MaxMenu] ⏳ Skeleton transparente activo...');
+  // Ahora eliminamos lo anterior, ya con el skeleton pintado
+  const prev = container.querySelectorAll(':scope > :not(#maxmenu-loading):not(style)');
+  prev.forEach(el => el.remove());
+
+  console.log('[MaxMenu] ⏳ Skeleton transparente activo sin lapsus...');
 
   // === 2. LÓGICA DE VERSIÓN ===
   const KEY_STORAGE_VERSION = `mmx_last_version_${restaurantId}`;
@@ -116,8 +123,12 @@
     // Cuando el widget real esté listo → eliminar skeleton
     window.addEventListener('MaxMenuReady', () => {
       const loader = document.getElementById('maxmenu-loading');
-      if (loader) loader.remove();
-      console.log('[MaxMenu] ✅ Skeleton eliminado, menú visible.');
+      if (loader) {
+        loader.style.transition = 'opacity 0.25s ease';
+        loader.style.opacity = '0';
+        setTimeout(() => loader.remove(), 250);
+      }
+      console.log('[MaxMenu] ✅ Skeleton eliminado suavemente, menú visible.');
     });
 
     // Fallback: si pasan 10s sin cargar
