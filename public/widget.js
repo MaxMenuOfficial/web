@@ -1,3 +1,4 @@
+
 (async () => {
   const container = document.getElementById('maxmenu-menuContainer');
   const restaurantId = container?.dataset?.restaurantId;
@@ -16,28 +17,24 @@
   overlay.id = 'maxmenu-skeleton-overlay';
   overlay.innerHTML = `
     <style>
-      #maxmenu-skeleton-overlay { pointer-events: none; }
-      #maxmenu-skeleton {
-        position: absolute; inset: 0;
-        display: flex; flex-direction: column; align-items: center;
-        justify-content: flex-start; padding-top: 10px;
-        background: transparent; transition: opacity 0.35s ease;
-        z-index: 2; opacity: 1;
-        will-change: opacity, transform; transform: translateZ(0);
-        contain: layout paint; backface-visibility: hidden;
+      #maxmenu-skeleton-overlay { pointer-events:none; }
+      #maxmenu-skeleton{
+        position:absolute; inset:0; display:flex; flex-direction:column; align-items:center;
+        justify-content:flex-start; padding-top:10px; background:transparent;
+        transition:opacity .35s ease; z-index:2; opacity:1;
+        will-change:opacity,transform; transform:translateZ(0); contain:layout paint;
       }
-      #maxmenu-skeleton-flag {
-        width: 30px; height: 30px; border-radius: 50%;
-        background-color: #e7e7e7; margin: 10px 0;
+      #maxmenu-skeleton-flag{
+        width:30px; height:30px; border-radius:50%; background-color:#e7e7e7; margin:10px 0;
       }
-      .skeleton-button {
-        font-weight: bolder; background-color: #e7e7e7; border: 6px solid #e7e7e7;
-        color: transparent; padding: 30px 20px; margin: 6px auto; border-radius: 0;
-        font-size: 14px; max-width: 250px; min-width: 250px; text-align: center; opacity: .95;
-        background: linear-gradient(90deg, #eee 25%, #f6f6f6 50%, #eee 75%);
-        background-size: 400% 100%; animation: shimmer 1.8s infinite linear;
+      .skeleton-button{
+        font-weight:bolder; background-color:#e7e7e7; border:6px solid #e7e7e7; color:transparent;
+        padding:30px 20px; margin:6px auto; border-radius:0; font-size:14px;
+        max-width:250px; min-width:250px; text-align:center; opacity:.95;
+        background:linear-gradient(90deg,#eee 25%,#f6f6f6 50%,#eee 75%);
+        background-size:400% 100%; animation:shimmer 1.8s infinite linear;
       }
-      @keyframes shimmer { 0%{background-position:200% 0;} 100%{background-position:-200% 0;} }
+      @keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
     </style>
     <div id="maxmenu-skeleton">
       <div id="maxmenu-skeleton-flag"></div>
@@ -55,25 +52,33 @@
     spacer.style.height = sk?.offsetHeight ? `${sk.offsetHeight}px` : '60vh';
   });
 
-  // === KEYS & FLAGS ===
+  // === KEYS ===
   const KEY_STORAGE_VERSION = `mmx_last_version_${restaurantId}`;
+  const KEY_RELOAD_TS       = `mmx_reload_ts_${restaurantId}`;     // anti bucle
   const fallbackVersion     = '__VERSION__';
   let currentVersion        = localStorage.getItem(KEY_STORAGE_VERSION) || fallbackVersion;
 
-  const url = new URL(location.href);
-  const qMMXV  = url.searchParams.get('mmxv');    // versión en URL
-  const qSTEP  = url.searchParams.get('mmxstep'); // '1' | '2' | null
-
-  let reloadingNow = false; // si vamos a recargar, nunca ocultamos skeleton
+  // Si el navegador intenta restaurar desde BFCache, forzamos nueva carga
+  window.addEventListener('pageshow', (e) => { if (e.persisted) location.reload(); });
 
   const raf = () => new Promise(r => requestAnimationFrame(r));
+
+  // Skeleton: no lo quitamos JAMÁS si hay o habrá recarga.
+  let mustReload = false;
+
   const keepSkeletonLocked = () => {
     spacer.style.height = `${container.offsetHeight || spacer.offsetHeight || 0}px`;
     const skEl = document.getElementById('maxmenu-skeleton');
     if (skEl) { void skEl.offsetHeight; skEl.style.opacity = '1'; }
   };
-  const hideSkeleton = () => {
-    if (reloadingNow) return;
+
+  const hideSkeletonSafely = async () => {
+    if (mustReload) return; // si vamos a recargar, no ocultes
+    // doble RAF para asegurar DOM del menú ya pintado
+    await raf(); await raf();
+    if (mustReload) return;
+    if (!(container.offsetHeight > 0 || container.querySelector('*'))) return;
+
     const skEl = document.getElementById('maxmenu-skeleton');
     if (!skEl) return;
     requestAnimationFrame(() => {
@@ -83,21 +88,25 @@
       });
     });
   };
-  const hardReloadTo = async (latestVersion, step) => {
-    reloadingNow = true;
-    keepSkeletonLocked();
+
+  const hardReloadTo = async (latestVersion) => {
+    mustReload = true;
+    keepSkeletonLocked(); // queda a la vista hasta abandonar la página
+    // persistimos la versión destino
     localStorage.setItem(KEY_STORAGE_VERSION, latestVersion);
-    const newUrl = new URL(location.href);
-    newUrl.searchParams.set('mmxv', latestVersion);
-    newUrl.searchParams.set('mmxstep', String(step)); // "1" o "2"
-    await raf(); await raf(); // asegurar frame pintado con skeleton
-    location.replace(newUrl.toString());
+    // anti bucle simple (1.5s)
+    sessionStorage.setItem(KEY_RELOAD_TS, String(Date.now()));
+
+    // bust cache por query param de versión
+    const url = new URL(location.href);
+    url.searchParams.set('mmxv', latestVersion);
+
+    // asegurar al menos un frame con skeleton visible antes de irnos
+    await raf(); await raf();
+    location.replace(url.toString());
   };
 
-  // Bust BFCache: si el navegador intenta restaurar, forzamos nueva carga
-  window.addEventListener('pageshow', (e) => { if (e.persisted) location.reload(); });
-
-  // === 1) version.json cacheado → establecemos currentVersion de trabajo
+  // === 1) version.json (cacheado) → establecemos currentVersion
   try {
     const vRes = await fetch(`https://cdn.maxmenu.com/s/${restaurantId}/widget/${currentVersion}/version.json`, { cache: 'force-cache' });
     if (vRes.ok) {
@@ -106,8 +115,9 @@
     }
   } catch {}
 
-  // Si la URL ya trae mmxv (post-mismatch), úsala como versión objetivo
-  if (qMMXV) currentVersion = qMMXV;
+  // Si la URL trae mmxv (tras recarga), úsala como versión objetivo
+  const urlMMXV = new URL(location.href).searchParams.get('mmxv');
+  if (urlMMXV) currentVersion = urlMMXV;
 
   // === 2) Cargar widget de currentVersion (bajo skeleton)
   const loadWidget = (version) => {
@@ -116,22 +126,20 @@
     script.async = true;
     script.setAttribute('maxmenu-script', 'true');
     script.setAttribute('data-mm-version', version);
+
+    // Cuando el script esté cargado, intentamos ocultar skeleton solo si NO habrá recarga
     script.addEventListener('load', () => {
-      const tryHide = () => {
-        if (!reloadingNow && (container.offsetHeight > 0 || container.querySelector('*'))) {
-          hideSkeleton();
-        }
-      };
-      // varios intentos por si el script carga antes que el DOM completo
+      const tryHide = () => hideSkeletonSafely();
       setTimeout(tryHide, 80);
       setTimeout(tryHide, 220);
       setTimeout(tryHide, 600);
     });
+
     document.head.appendChild(script);
   };
   loadWidget(currentVersion);
 
-  // === 3) latest.json en paralelo (no-store)
+  // === 3) latest.json en paralelo (no-store). Si difiere: reload duro con skeleton fijado.
   (async () => {
     try {
       const latestRes = await fetch(`https://cdn.maxmenu.com/s/${restaurantId}/widget/latest.json`, { cache: 'no-store' });
@@ -139,26 +147,20 @@
       const { version: latestVersion } = await latestRes.json();
       if (!latestVersion) return;
 
-      // — LÓGICA DE RECARGA DOBLE —
       if (latestVersion !== currentVersion) {
-        // Primer salto: mismatch detectado → recargar a step=1 con mmxv=latest
-        await hardReloadTo(latestVersion, 1);
-        return; // detenemos aquí
-      }
+        // anti bucle: si acabamos de recargar, no recargues otra vez
+        const last = parseInt(sessionStorage.getItem(KEY_RELOAD_TS) || '0', 10);
+        if (Date.now() - last < 1500) return;
 
-      // Si ya venimos de step=1 (mmxv fijado), hacemos la segunda recarga "de confirmación"
-      if (qMMXV === latestVersion && qSTEP === '1') {
-        // Mantén skeleton fijado y recarga por segunda vez a step=2
-        await hardReloadTo(latestVersion, 2);
+        await hardReloadTo(latestVersion);
         return;
       }
 
-      // Si estamos en step=2 o sin step (todo coincide), flujo normal:
-      // el skeleton se ocultará sólo cuando el menú esté pintado (tryHide)
+      // Coinciden: no hay recarga → el skeleton se ocultará cuando el menú pinte (tryHide)
     } catch {}
   })();
 
-  // Seguridad: si a los 12s no hay nada, atenuamos skeleton (sin parpadeo)
+  // Seguridad: si a los 12s no hay nada, atenuamos skeleton
   setTimeout(() => {
     if (!(container.offsetHeight > 0 || container.querySelector('*'))) {
       const skEl = document.getElementById('maxmenu-skeleton');
@@ -166,6 +168,6 @@
     }
   }, 12000);
 
-  // No tocamos el skeleton en unload: debe permanecer hasta abandonar la página
+  // Nunca tocamos skeleton en unload
   window.addEventListener('beforeunload', () => {});
 })();
