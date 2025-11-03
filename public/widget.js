@@ -3,13 +3,11 @@
   const restaurantId = container?.dataset?.restaurantId;
   if (!restaurantId) return console.error('[MaxMenu] ❌ data-restaurant-id no definido.');
 
-  // === 0) PREPARAR HOST (WRAPPER) PARA COLOCAR SKELETON EN SU SITIO ===
   const host = document.createElement('div');
   host.id = 'maxmenu-host';
   host.style.position = 'relative';
   host.style.width = '100%';
 
-  // Insertar host antes del contenedor y mover el contenedor dentro (mantiene el flujo)
   container.parentNode.insertBefore(host, container);
   host.appendChild(container);
 
@@ -20,14 +18,22 @@
     <style>
       #maxmenu-skeleton-overlay { pointer-events: none; }
       #maxmenu-skeleton {
-        position: absolute; inset: 0;
-        display: flex; flex-direction: column; align-items: center; justify-content: center;
-        background: transparent; transition: opacity 0.35s ease;
-      }
-      #maxmenu-skeleton-flag {
-        width: 30px; height: 30px; border-radius: 50%;
-        background-color: #e7e7e7; margin: 10px 0 20px 0;
-      }
+      position: absolute; inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      /* antes: justify-content: center; */
+      justify-content: flex-start;     /* ⬅️ banderita arriba */
+      padding-top: 10px;               /* ⬅️ margen superior exacto */
+      background: transparent;
+      transition: opacity 0.35s ease;
+    }
+
+    #maxmenu-skeleton-flag {
+      width: 30px; height: 30px; border-radius: 50%;
+      background-color: #e7e7e7;
+      margin: 10px 0;                  /* 10px arriba y abajo como pediste */
+    }
       .skeleton-button {
         font-weight: bolder;
         background-color: #e7e7e7;
@@ -52,17 +58,18 @@
   `;
   host.appendChild(overlay);
 
-  // Spacer que ocupa exactamente el alto del skeleton para integrarse al layout
+
   const spacer = document.createElement('div');
   spacer.id = 'maxmenu-skeleton-spacer';
-  // Medimos después de insertar para capturar alto real
+
+
   host.appendChild(spacer);
   requestAnimationFrame(() => {
     const sk = overlay.querySelector('#maxmenu-skeleton');
     spacer.style.height = sk.offsetHeight ? `${sk.offsetHeight}px` : '60vh';
   });
 
-  // === 2) LÓGICA DE VERSIÓN (idéntica a la tuya) ===
+
   const KEY_STORAGE_VERSION = `mmx_last_version_${restaurantId}`;
   const fallbackVersion = '__VERSION__';
   let currentVersion = localStorage.getItem(KEY_STORAGE_VERSION) || fallbackVersion;
