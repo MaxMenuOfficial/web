@@ -3,76 +3,66 @@
   const restaurantId = container?.dataset?.restaurantId;
   if (!restaurantId) return console.error('[MaxMenu] ❌ data-restaurant-id no definido.');
 
-  // === 1. ESTRUCTURA DE ENVOLTURA (skeleton dentro del flujo del sitio) ===
-  const wrapper = document.createElement('div');
-  wrapper.id = 'maxmenu-wrapper';
-  wrapper.style.position = 'relative';
-  wrapper.style.width = '100%';
+  // === 0) PREPARAR HOST (WRAPPER) PARA COLOCAR SKELETON EN SU SITIO ===
+  const host = document.createElement('div');
+  host.id = 'maxmenu-host';
+  host.style.position = 'relative';
+  host.style.width = '100%';
 
-  // Creamos el skeleton
-  const skeleton = document.createElement('div');
-  skeleton.id = 'maxmenu-skeleton';
-  skeleton.innerHTML = `
+  // Insertar host antes del contenedor y mover el contenedor dentro (mantiene el flujo)
+  container.parentNode.insertBefore(host, container);
+  host.appendChild(container);
+
+  // === 1) OVERLAY + SPACER (el overlay no aporta altura; el spacer sí) ===
+  const overlay = document.createElement('div');
+  overlay.id = 'maxmenu-skeleton-overlay';
+  overlay.innerHTML = `
     <style>
+      #maxmenu-skeleton-overlay { pointer-events: none; }
       #maxmenu-skeleton {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        min-height: 60vh;
-        background: transparent;
-        animation: fadein 0.25s ease-out;
-        transition: opacity 0.4s ease;
+        position: absolute; inset: 0;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        background: transparent; transition: opacity 0.35s ease;
       }
-
       #maxmenu-skeleton-flag {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        background-color: #e7e7e7ff;
-        margin: 10px 0 20px 0;
+        width: 30px; height: 30px; border-radius: 50%;
+        background-color: #e7e7e7; margin: 10px 0 20px 0;
       }
-
       .skeleton-button {
         font-weight: bolder;
-        background-color: #e7e7e7ff;
-        border: 6px solid #e7e7e7ff;
+        background-color: #e7e7e7;
+        border: 6px solid #e7e7e7;
         color: transparent;
         padding: 30px 20px;
         margin: 6px auto;
         border-radius: 0;
         font-size: 14px;
-        max-width: 250px;
-        min-width: 250px;
-        text-align: center;
-        opacity: 0.95;
-        background: linear-gradient(90deg,#eeeeee 25%,#f6f6f6 50%,#eeeeee 75%);
+        max-width: 250px; min-width: 250px;
+        text-align: center; opacity: 0.95;
+        background: linear-gradient(90deg, #eee 25%, #f6f6f6 50%, #eee 75%);
         background-size: 400% 100%;
         animation: shimmer 1.8s infinite linear;
       }
-
-      @keyframes shimmer {
-        0% { background-position: 200% 0; }
-        100% { background-position: -200% 0; }
-      }
-      @keyframes fadein { from{opacity:0;} to{opacity:1;} }
+      @keyframes shimmer { 0%{background-position:200% 0;} 100%{background-position:-200% 0;} }
     </style>
-
-    <div id="maxmenu-skeleton-flag"></div>
-    ${'<div class="skeleton-button"></div>'.repeat(7)}
+    <div id="maxmenu-skeleton">
+      <div id="maxmenu-skeleton-flag"></div>
+      ${'<div class="skeleton-button"></div>'.repeat(7)}
+    </div>
   `;
+  host.appendChild(overlay);
 
-  // Insertamos el skeleton dentro del contenedor (flujo natural)
-  wrapper.appendChild(skeleton);
+  // Spacer que ocupa exactamente el alto del skeleton para integrarse al layout
+  const spacer = document.createElement('div');
+  spacer.id = 'maxmenu-skeleton-spacer';
+  // Medimos después de insertar para capturar alto real
+  host.appendChild(spacer);
+  requestAnimationFrame(() => {
+    const sk = overlay.querySelector('#maxmenu-skeleton');
+    spacer.style.height = sk.offsetHeight ? `${sk.offsetHeight}px` : '60vh';
+  });
 
-  // Movemos el contenido actual dentro del wrapper
-  container.parentNode.insertBefore(wrapper, container);
-  wrapper.appendChild(container);
-
-  console.log('[MaxMenu] 🩶 Skeleton integrado en el flujo visual.');
-
-  // === 2. LÓGICA DE VERSIÓN ===
+  // === 2) LÓGICA DE VERSIÓN (idéntica a la tuya) ===
   const KEY_STORAGE_VERSION = `mmx_last_version_${restaurantId}`;
   const fallbackVersion = '__VERSION__';
   let currentVersion = localStorage.getItem(KEY_STORAGE_VERSION) || fallbackVersion;
@@ -96,27 +86,67 @@
     }
   } catch {}
 
-  // === 3. INYECTAR WIDGET ===
-  try {
-    const widgetUrl = `https://cdn.maxmenu.com/s/${restaurantId}/widget/${currentVersion}/widget.js`;
-    const script = document.createElement('script');
-    script.src = widgetUrl;
-    script.async = true;
-    script.setAttribute('maxmenu-script', 'true');
+  // === 3) INYECTAR WIDGET ===
+  const widgetUrl = `https://cdn.maxmenu.com/s/${restaurantId}/widget/${currentVersion}/widget.js`;
+  const script = document.createElement('script');
+  script.src = widgetUrl;
+  script.async = true;
+  script.setAttribute('maxmenu-script', 'true');
 
-    // Eliminamos el skeleton cuando el menú esté completamente renderizado
-    window.addEventListener('MaxMenuReady', () => {
-      const skeleton = document.getElementById('maxmenu-skeleton');
-      if (!skeleton) return;
-
-      // fade-out suave
-      skeleton.style.opacity = '0';
-      setTimeout(() => skeleton.remove(), 400);
-      console.log('[MaxMenu] ✅ Skeleton eliminado, menú visible.');
+  // === 4) CRITERIOS DE "RENDER LISTO" (tres vías) ===
+  const removeSkeleton = () => {
+    const sk = document.querySelector('#maxmenu-skeleton');
+    if (!sk) return;
+    // Alinear altura al contenido final para evitar salto
+    spacer.style.height = `${container.offsetHeight || sk.offsetHeight || 0}px`;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        sk.style.opacity = '0';
+        setTimeout(() => {
+          overlay.remove();
+          spacer.remove();
+        }, 350);
+      });
     });
+    window.removeEventListener('MaxMenuReady', onMaxMenuReady);
+    if (observer) observer.disconnect();
+  };
 
-    document.head.appendChild(script);
-  } catch (err) {
-    console.error('[MaxMenu] ❌ Error cargando widget.js:', err);
-  }
+  // 4.1) Vía evento explícito del widget
+  const onMaxMenuReady = () => removeSkeleton();
+  window.addEventListener('MaxMenuReady', onMaxMenuReady);
+
+  // 4.2) Vía detección de cambios en el contenedor (por si el evento no existe)
+  const observer = new MutationObserver((mutations) => {
+    for (const m of mutations) {
+      if (m.addedNodes && m.addedNodes.length > 0) {
+        // Contenido real presente y con altura
+        if (container.offsetHeight > 0 && container.querySelector('*')) {
+          removeSkeleton();
+          break;
+        }
+      }
+    }
+  });
+  observer.observe(container, { childList: true, subtree: true });
+
+  // 4.3) Fallback por carga del script: si carga y vemos contenido, quitamos
+  script.addEventListener('load', () => {
+    setTimeout(() => {
+      if (container.offsetHeight > 0 && container.querySelector('*')) {
+        removeSkeleton();
+      }
+      // si no hay contenido aún, seguimos con el observer
+    }, 50);
+  });
+
+  // Seguridad: si a los 12s no hay nada, mantenemos skeleton atenuado (no flash)
+  setTimeout(() => {
+    const sk = document.querySelector('#maxmenu-skeleton');
+    if (sk && !(container.offsetHeight > 0 && container.querySelector('*'))) {
+      sk.style.opacity = '0.4';
+    }
+  }, 12000);
+
+  document.head.appendChild(script);
 })();
