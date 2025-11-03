@@ -22,10 +22,12 @@
         display: flex; flex-direction: column; align-items: center;
         justify-content: flex-start; padding-top: 10px;
         background: transparent; transition: opacity 0.35s ease;
+        z-index: 2; /* asegura stacking sobre el menú durante swaps */
+        opacity: 1; /* visible de inicio */
       }
       #maxmenu-skeleton-flag {
         width: 30px; height: 30px; border-radius: 50%;
-        background-color: #e7e7e7; margin: 10px 0;
+        background-color: #e7e7e7; margin: 10px 0; /* 10px arriba/abajo */
       }
       .skeleton-button {
         font-weight: bolder; background-color: #e7e7e7; border: 6px solid #e7e7e7;
@@ -67,7 +69,7 @@
     }
   } catch {}
 
-  // 2) En paralelo pedimos latest.json (no-store), pero SIN bloquear el primer render
+  // 2) En paralelo pedimos latest.json (no-store), SIN bloquear el primer render
   const latestPromise = (async () => {
     try {
       const latestRes = await fetch(`https://cdn.maxmenu.com/s/${restaurantId}/widget/latest.json`, { cache: 'no-store' });
@@ -79,13 +81,14 @@
     return null;
   })();
 
-  // === Helpers de montaje y swap ===
+  // === Helpers ===
+  const nextFrame = () => new Promise(r => requestAnimationFrame(() => r()));
+
   const removeExistingWidgetScripts = () => {
     document.querySelectorAll('script[maxmenu-script]').forEach(s => s.remove());
   };
 
   const loadWidget = (version) => {
-    // Inyecta el widget de la versión indicada
     const script = document.createElement('script');
     script.src = `https://cdn.maxmenu.com/s/${restaurantId}/widget/${version}/widget.js`;
     script.async = true;
@@ -106,20 +109,19 @@
   const showSkeleton = () => {
     // Re-skeletonizar sin parpadeo, ocupando el alto actual del menú
     spacer.style.height = `${container.offsetHeight || spacer.offsetHeight || 0}px`;
-    overlay.style.display = 'block';
-    // forzar reflow antes de cambiar opacity
-    void overlay.offsetHeight;
-    overlay.style.opacity = '1';
+    const skEl = overlay.querySelector('#maxmenu-skeleton');
+    // forzar reflow por si venía de transición
+    void skEl.offsetHeight;
+    skEl.style.opacity = '1';
   };
 
   const hideSkeleton = () => {
-    // Ocultamos (no removemos) para poder reusarlo en hot-swap
+    const skEl = overlay.querySelector('#maxmenu-skeleton');
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        overlay.style.opacity = '0';
+        skEl.style.opacity = '0';          // solo opacidad, no display
         setTimeout(() => {
-          overlay.style.display = 'none';
-          spacer.style.height = '0px'; // ahora el alto lo manda el menú real
+          spacer.style.height = '0px';     // ahora manda la altura real del menú
         }, 350);
       });
     });
@@ -129,14 +131,16 @@
     if (!nextVersion || nextVersion === currentVersion) return;
     console.log(`[MaxMenu] 🔄 Hot-swap → ${currentVersion} → ${nextVersion}`);
 
-    // 1) Reaparece skeleton encima, ocupando el alto actual del menú
+    // 1) Pinta skeleton antes de tocar el DOM (evita frame blanco)
     showSkeleton();
+    await nextFrame();
+    await nextFrame(); // garantizamos paint del overlay
 
-    // 2) Limpiamos el contenedor y los scripts del widget anterior
+    // 2) Limpia widget anterior
     removeExistingWidgetScripts();
     container.innerHTML = '';
 
-    // 3) Montamos la nueva versión sin recargar
+    // 3) Monta la nueva versión sin recargar
     currentVersion = nextVersion;
     localStorage.setItem(KEY_STORAGE_VERSION, nextVersion);
     loadWidget(nextVersion);
@@ -167,7 +171,8 @@
   // Seguridad: si a los 12s no hay nada, atenuamos skeleton (no flash)
   setTimeout(() => {
     if (!(container.offsetHeight > 0 && container.querySelector('*'))) {
-      overlay.style.opacity = '0.4';
+      const skEl = overlay.querySelector('#maxmenu-skeleton');
+      skEl.style.opacity = '0.4';
     }
   }, 12000);
 })();
