@@ -22,12 +22,17 @@
         display: flex; flex-direction: column; align-items: center;
         justify-content: flex-start; padding-top: 10px;
         background: transparent; transition: opacity 0.35s ease;
-        z-index: 2;  /* sobre el menú durante swaps */
-        opacity: 1;  /* visible de inicio */
+        z-index: 2;    /* sobre el menú durante swaps */
+        opacity: 1;    /* visible de inicio */
+        /* ⬇️ Promoción a capa + aislamiento para evitar flicker */
+        will-change: opacity, transform;
+        transform: translateZ(0);
+        contain: layout paint;
+        backface-visibility: hidden;
       }
       #maxmenu-skeleton-flag {
         width: 30px; height: 30px; border-radius: 50%;
-        background-color: #e7e7e7; margin: 10px 0;
+        background-color: #e7e7e7; margin: 10px 0; /* 10px arriba/abajo */
       }
       .skeleton-button {
         font-weight: bolder; background-color: #e7e7e7; border: 6px solid #e7e7e7;
@@ -48,10 +53,11 @@
   const spacer = document.createElement('div');
   spacer.id = 'maxmenu-skeleton-spacer';
   host.appendChild(spacer);
+  // Altura inicial para evitar micro-salto antes de medir
   spacer.style.height = '60vh';
   requestAnimationFrame(() => {
-    const sk = overlay.querySelector('#maxmenu-skeleton');
-    spacer.style.height = sk.offsetHeight ? `${sk.offsetHeight}px` : '60vh';
+    const sk = document.getElementById('maxmenu-skeleton');
+    spacer.style.height = sk?.offsetHeight ? `${sk.offsetHeight}px` : '60vh';
   });
 
   // === VERSIONING (optimistic-first) ===
@@ -59,9 +65,9 @@
   const fallbackVersion   = '__VERSION__';
   let currentVersion      = localStorage.getItem(KEY_STORAGE_VERSION) || fallbackVersion;
 
-  // Mantener skeleton visible hasta confirmar versión final si hay mismatch
-  let lockSkeleton = true;       // ⬅️ mientras true, no se oculta nunca
-  let finalTargetVersion = null; // informativo
+  // Bloqueo del skeleton hasta confirmar versión final si hay mismatch
+  let lockSkeleton = true;
+  let finalTargetVersion = null;
 
   // 1) version.json cacheado
   try {
@@ -86,19 +92,27 @@
 
   // === Helpers ===
   const nextFrame = () => new Promise(r => requestAnimationFrame(() => r()));
+  const ensureOverlayVisible = async () => {
+    // 1) ocupar altura actual
+    spacer.style.height = `${container.offsetHeight || spacer.offsetHeight || 0}px`;
+    // 2) asegurar opacidad 1 y estabilizar varios frames
+    const skEl = document.getElementById('maxmenu-skeleton');
+    if (skEl) {
+      void skEl.offsetHeight;    // reflow
+      skEl.style.opacity = '1';  // visible
+    }
+    await nextFrame();           // frame 1
+    await nextFrame();           // frame 2 (estable)
+    await nextFrame();           // frame 3 (extra robustez)
+  };
+
   const removeExistingWidgetScripts = () => {
     document.querySelectorAll('script[maxmenu-script]').forEach(s => s.remove());
   };
 
-  const showSkeleton = () => {
-    spacer.style.height = `${container.offsetHeight || spacer.offsetHeight || 0}px`;
-    const skEl = overlay.querySelector('#maxmenu-skeleton');
-    void skEl.offsetHeight;
-    skEl.style.opacity = '1';
-  };
-
   const hideSkeleton = () => {
-    const skEl = overlay.querySelector('#maxmenu-skeleton');
+    const skEl = document.getElementById('maxmenu-skeleton');
+    if (!skEl) return;
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         skEl.style.opacity = '0';
@@ -107,7 +121,6 @@
     });
   };
 
-  // Inyecta widget; si es versión final, desbloquea inmediatamente y prueba a ocultar varias veces
   const loadWidget = (version, unlockOnReady = false) => {
     const script = document.createElement('script');
     script.src = `https://cdn.maxmenu.com/s/${restaurantId}/widget/${version}/widget.js`;
@@ -116,10 +129,7 @@
     script.setAttribute('data-mm-version', version);
 
     script.addEventListener('load', () => {
-      // ⬇️ Desbloqueo inmediato si es la versión final (aunque aún no esté todo pintado)
-      if (unlockOnReady) lockSkeleton = false;
-
-      // Intentos escalonados de ocultar (cubre layouts que pintan tarde)
+      if (unlockOnReady) lockSkeleton = false; // desbloqueo inmediato si es la versión final
       const tryHide = () => {
         if (!lockSkeleton && (container.offsetHeight > 0 || container.querySelector('*'))) {
           hideSkeleton();
@@ -137,10 +147,10 @@
     if (!nextVersion || nextVersion === currentVersion) return;
     console.log(`[MaxMenu] 🔄 Hot-swap → ${currentVersion} → ${nextVersion}`);
 
-    // Skeleton debe seguir visible; aseguramos paint antes de limpiar
-    showSkeleton();
-    await nextFrame(); await nextFrame();
+    // ⬅️ Asegurar esqueletón 100% pintado ANTES de tocar el DOM
+    await ensureOverlayVisible();
 
+    // Limpiar widget anterior
     removeExistingWidgetScripts();
     container.innerHTML = '';
 
@@ -148,7 +158,7 @@
     finalTargetVersion  = nextVersion;
     localStorage.setItem(KEY_STORAGE_VERSION, nextVersion);
 
-    // Cargamos la versión final y desbloqueamos en load
+    // Cargar versión final y desbloquear en load
     loadWidget(nextVersion, /* unlockOnReady */ true);
   };
 
@@ -162,7 +172,6 @@
   observer.observe(container, { childList: true, subtree: true });
 
   window.addEventListener('MaxMenuReady', () => {
-    // Si ya podemos, ocultamos en cuanto el widget avisa
     if (!lockSkeleton) hideSkeleton();
   });
 
@@ -171,9 +180,8 @@
 
   // === Resolver latest y decidir ===
   const latestVersion = await latestPromise;
-
   if (latestVersion && latestVersion !== currentVersion) {
-    // Mismatch: mantener skeleton hasta latest
+    // Mismatch: mantener skeleton siempre visible hasta latest
     await hotSwapTo(latestVersion);
   } else {
     // Sin mismatch: desbloquear y ocultar cuando esté pintado
@@ -185,8 +193,8 @@
   // Seguridad: si a los 12s no hay nada, atenuamos skeleton (no flash)
   setTimeout(() => {
     if (!(container.offsetHeight > 0 || container.querySelector('*'))) {
-      const skEl = overlay.querySelector('#maxmenu-skeleton');
-      skEl.style.opacity = '0.4';
+      const skEl = document.getElementById('maxmenu-skeleton');
+      if (skEl) skEl.style.opacity = '0.4';
     }
   }, 12000);
 })();
