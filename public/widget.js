@@ -120,16 +120,22 @@
     script.async = true;
     script.setAttribute('maxmenu-script', 'true');
 
+
     // Cuando el widget real esté listo → eliminar skeleton
-    window.addEventListener('MaxMenuReady', () => {
-      const loader = document.getElementById('maxmenu-loading');
-      if (loader) {
-        loader.style.transition = 'opacity 0.25s ease';
-        loader.style.opacity = '0';
-        setTimeout(() => loader.remove(), 250);
-      }
-      console.log('[MaxMenu] ✅ Skeleton eliminado suavemente, menú visible.');
-    });
+  window.addEventListener('MaxMenuReady', () => {
+    const loader = document.getElementById('maxmenu-loading');
+    if (loader) {
+      // Esperamos dos frames para asegurar que el menú ya se haya renderizado
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          loader.style.transition = 'opacity 0.35s ease';
+          loader.style.opacity = '0';
+          setTimeout(() => loader.remove(), 400);
+        });
+      });
+    }
+    console.log('[MaxMenu] ✅ Skeleton eliminado después del render visual.');
+  });
 
     // Fallback: si pasan 10s sin cargar
     setTimeout(() => {
