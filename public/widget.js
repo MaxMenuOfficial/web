@@ -7,50 +7,54 @@
   const overlay = document.createElement('div');
   overlay.id = 'maxmenu-skeleton-overlay';
   overlay.innerHTML = `
-    <style>
-      #maxmenu-skeleton-overlay {
-        position: relative;
-      }
-      #maxmenu-skeleton-inner {
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background: transparent;
-        z-index: 9999;
-        transition: opacity 0.4s ease;
-      }
-      #maxmenu-skeleton-flag {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        background-color: #e7e7e7ff;
-        margin: 10px 0 20px 0;
-      }
-      .skeleton-button {
-        font-weight: bolder;
-        background-color: #e7e7e7ff;
-        border: 6px solid #e7e7e7ff;
-        color: transparent;
-        padding: 30px 20px;
-        margin: 6px auto;
-        border-radius: 0;
-        font-size: 14px;
-        max-width: 250px;
-        min-width: 250px;
-        text-align: center;
-        opacity: 0.95;
-        background: linear-gradient(90deg, #eeeeee 25%, #f6f6f6 50%, #eeeeee 75%);
-        background-size: 400% 100%;
-        animation: shimmer 1.8s infinite linear;
-      }
-      @keyframes shimmer {
-        0% { background-position: 200% 0; }
-        100% { background-position: -200% 0; }
-      }
-    </style>
+  <style>
+  #maxmenu-skeleton-overlay {
+    position: relative;
+  }
+
+  #maxmenu-skeleton-inner {
+    position: absolute;
+    inset: 0; /* ocupa exactamente el contenedor */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    z-index: 5; /* visible, pero no sobre toda la web */
+    transition: opacity 0.4s ease;
+  }
+
+  #maxmenu-skeleton-flag {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #e7e7e7ff;
+    margin: 10px 0 20px 0;
+  }
+
+  .skeleton-button {
+    font-weight: bolder;
+    background-color: #e7e7e7ff;
+    border: 6px solid #e7e7e7ff;
+    color: transparent;
+    padding: 30px 20px;
+    margin: 6px auto;
+    border-radius: 0;
+    font-size: 14px;
+    max-width: 250px;
+    min-width: 250px;
+    text-align: center;
+    opacity: 0.95;
+    background: linear-gradient(90deg, #eeeeee 25%, #f6f6f6 50%, #eeeeee 75%);
+    background-size: 400% 100%;
+    animation: shimmer 1.8s infinite linear;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+</style>
     <div id="maxmenu-skeleton-inner">
       <div id="maxmenu-skeleton-flag"></div>
       ${'<div class="skeleton-button"></div>'.repeat(7)}
