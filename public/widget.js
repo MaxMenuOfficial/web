@@ -40,7 +40,7 @@
     </style>
     <div id="maxmenu-skeleton">
       <div id="maxmenu-skeleton-flag"></div>
-      ${'<div class="skeleton-button"></div>'.repeat(7)}
+      ${'<div class="skeleton-button"></div>'.repeat(9)}
     </div>
   `;
   host.appendChild(overlay);
