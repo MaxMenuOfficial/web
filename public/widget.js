@@ -6,72 +6,130 @@
     console.error('[MaxMenu] ❌ data-restaurant-id no definido.');
     return;
   }
+
+  // === 1. INYECTAR SKELETON ===
+  const skeletonHTML = `
+    <style id="maxmenu-skeleton-style">
+      #maxmenu-loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        width: 100%;
+        background-color: transparent; /* fondo sin color */
+        animation: fadein 0.25s ease-out;
+      }
+
+      #maxmenu-skeleton-flag {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #d8d8d8;
+        margin: 10px 0 20px 0;
+      }
+
+      .skeleton-button {
+        font-weight: bolder;
+        background-color: #f1f1f1;
+        border: 6px solid #d0d0d0;
+        color: transparent;
+        padding: 20px 20px;
+        margin: 6px auto;
+        border-radius: 80px;
+        font-size: 14px;
+        max-width: 250px;
+        min-width: 250px;
+        text-align: center;
+        opacity: 0.95;
+        background: linear-gradient(90deg, #eeeeee 25%, #f6f6f6 50%, #eeeeee 75%);
+        background-size: 400% 100%;
+        animation: shimmer 1.8s infinite linear;
+      }
+
+      @keyframes shimmer {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+
+      @keyframes fadein {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+    </style>
+
+    <div id="maxmenu-loading">
+      <div id="maxmenu-skeleton-flag"></div>
+      <div class="skeleton-button"></div>
+      <div class="skeleton-button"></div>
+      <div class="skeleton-button"></div>
+      <div class="skeleton-button"></div>
+      <div class="skeleton-button"></div>
+      <div class="skeleton-button"></div>
+      <div class="skeleton-button"></div>
+    </div>
+  `;
+
+  container.innerHTML = skeletonHTML;
+
+  console.log('[MaxMenu] ⏳ Skeleton transparente activo...');
+
+  // === 2. LÓGICA DE VERSIÓN ===
   const KEY_STORAGE_VERSION = `mmx_last_version_${restaurantId}`;
-  const fallbackVersion = '__VERSION__'; // 🔧 Reemplazar en build si se desea
+  const fallbackVersion = '__VERSION__';
   let currentVersion = localStorage.getItem(KEY_STORAGE_VERSION) || fallbackVersion;
 
   try {
     const versionJsonURL = `https://cdn.maxmenu.com/s/${restaurantId}/widget/${currentVersion}/version.json`;
     const versionRes = await fetch(versionJsonURL, { cache: 'force-cache' });
-
     if (versionRes.ok) {
       const versionData = await versionRes.json();
-      if (versionData.version) {
-        currentVersion = versionData.version;
-      } else {
-        console.warn('[MaxMenu] ⚠️ version.json sin campo "version" válido.');
-      }
-    } else {
-      console.warn(`[MaxMenu] ⚠️ No se pudo obtener version.json (${versionRes.status}).`);
+      if (versionData.version) currentVersion = versionData.version;
     }
   } catch (err) {
-    console.warn('[MaxMenu] ⚠️ Error al obtener version.json cacheado:', err);
+    console.warn('[MaxMenu] ⚠️ Error obteniendo version.json:', err);
   }
 
-  (async () => {
-    try {
-      const latestUrl = `https://cdn.maxmenu.com/s/${restaurantId}/widget/latest.json`;
-      const latestRes = await fetch(latestUrl, { cache: 'no-store' });
-
-      if (!latestRes.ok) {
-        console.warn(`[MaxMenu] ⚠️ latest.json no disponible (${latestRes.status})`);
-        return;
-      }
-
+  try {
+    const latestUrl = `https://cdn.maxmenu.com/s/${restaurantId}/widget/latest.json`;
+    const latestRes = await fetch(latestUrl, { cache: 'no-store' });
+    if (latestRes.ok) {
       const { version: latestVersion } = await latestRes.json();
-
-      if (!latestVersion) {
-        console.warn('[MaxMenu] ⚠️ latest.json sin campo "version" válido.');
-        return;
-      }
-      if (latestVersion !== currentVersion) {
-        console.log(`[MaxMenu] 🔁 Versión desactualizada detectada: ${currentVersion} → ${latestVersion}`);
+      if (latestVersion && latestVersion !== currentVersion) {
+        console.log(`[MaxMenu] 🔁 Versión desactualizada: ${currentVersion} → ${latestVersion}`);
         localStorage.setItem(KEY_STORAGE_VERSION, latestVersion);
         location.reload();
-      } else {
-        console.log('[MaxMenu] ✅ Versión actual es la más reciente.');
       }
-    } catch (err) {
-      console.warn('[MaxMenu] ⚠️ Error al verificar latest.json:', err);
     }
-  })();
+  } catch (err) {
+    console.warn('[MaxMenu] ⚠️ Error verificando latest.json:', err);
+  }
 
-  container.innerHTML = '';
-  document.querySelectorAll('script[maxmenu-script]').forEach(s => s.remove());
-  document.querySelectorAll('link[maxmenu-style]').forEach(l => l.remove());
-
+  // === 3. INYECTAR WIDGET ===
   try {
     const widgetUrl = `https://cdn.maxmenu.com/s/${restaurantId}/widget/${currentVersion}/widget.js`;
     const script = document.createElement('script');
     script.src = widgetUrl;
-    script.async = false;
+    script.async = true;
     script.setAttribute('maxmenu-script', 'true');
-    document.head.appendChild(script);
 
-    console.log(`[MaxMenu] ✅ widget.js v${currentVersion} inyectado para ${restaurantId}`);
+    // Cuando el widget real esté listo → eliminar skeleton
+    window.addEventListener('MaxMenuReady', () => {
+      const loader = document.getElementById('maxmenu-loading');
+      if (loader) loader.remove();
+      console.log('[MaxMenu] ✅ Skeleton eliminado, menú visible.');
+    });
+
+    // Fallback: si pasan 10s sin cargar
+    setTimeout(() => {
+      const loader = document.getElementById('maxmenu-loading');
+      if (loader) loader.style.opacity = '0.4';
+    }, 10000);
+
+    document.head.appendChild(script);
+    console.log(`[MaxMenu] 📦 widget.js v${currentVersion} inyectado para ${restaurantId}`);
   } catch (err) {
-    console.error('[MaxMenu] loading Error the widget.js:', err);
-    container.innerHTML = '<p width:100%;text-aling:center; style="color:red;">[MaxMenu] Error loading the menu.</p>';
+    console.error('[MaxMenu] ❌ Error cargando widget.js:', err);
+    container.innerHTML = '<p style="color:red;text-align:center;">[MaxMenu] Error loading menu.</p>';
   }
 })();
-
