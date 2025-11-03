@@ -1,6 +1,6 @@
 (async () => {
-  const container = document.getElementById('maxmenu-menuContainer');
-  const restaurantId = container?.dataset?.restaurantId;
+  const containerInitial = document.getElementById('maxmenu-menuContainer');
+  const restaurantId = containerInitial?.dataset?.restaurantId;
   if (!restaurantId) return console.error('[MaxMenu] ❌ data-restaurant-id no definido.');
 
   // === HOST WRAPPER ===
@@ -8,10 +8,13 @@
   host.id = 'maxmenu-host';
   host.style.position = 'relative';
   host.style.width = '100%';
-  container.parentNode.insertBefore(host, container);
-  host.appendChild(container);
+  containerInitial.parentNode.insertBefore(host, containerInitial);
+  host.appendChild(containerInitial);
 
-  // === OVERLAY + SPACER (en el flujo, reusables) ===
+  // Mantendremos "container" apuntando al contenedor VISIBLE actual
+  let container = containerInitial;
+
+  // === OVERLAY + SPACER (en el flujo) ===
   const overlay = document.createElement('div');
   overlay.id = 'maxmenu-skeleton-overlay';
   overlay.innerHTML = `
@@ -22,8 +25,7 @@
         display: flex; flex-direction: column; align-items: center;
         justify-content: flex-start; padding-top: 10px;
         background: transparent; transition: opacity 0.35s ease;
-        z-index: 2;   /* sobre el menú durante swaps */
-        opacity: 1;   /* visible de inicio */
+        z-index: 2; opacity: 1;
         will-change: opacity, transform; transform: translateZ(0);
         contain: layout paint; backface-visibility: hidden;
       }
@@ -58,15 +60,15 @@
 
   // === VERSIONING (optimistic-first) ===
   const KEY_STORAGE_VERSION = `mmx_last_version_${restaurantId}`;
-  const fallbackVersion   = '__VERSION__';
-  let currentVersion      = localStorage.getItem(KEY_STORAGE_VERSION) || fallbackVersion;
+  const fallbackVersion = '__VERSION__';
+  let currentVersion = localStorage.getItem(KEY_STORAGE_VERSION) || fallbackVersion;
 
   // Estado de swap
-  let lockSkeleton = true;          // mientras true, el skeleton NO se oculta
-  let awaitingFinalPaint = false;   // true sólo durante hot-swap hasta pintar latest
-  let skeletonHidden = false;       // evita ocultar dos veces
+  let lockSkeleton = true;        // mientras true, jamás ocultamos el esqueletón
+  let awaitingFinalPaint = false; // true durante hot-swap (hasta pintar latest)
+  let skeletonHidden = false;
 
-  // 1) version.json cacheado
+  // 1) version.json cacheado (para montaje inmediato)
   try {
     const vRes = await fetch(`https://cdn.maxmenu.com/s/${restaurantId}/widget/${currentVersion}/version.json`, { cache: 'force-cache' });
     if (vRes.ok) {
@@ -88,18 +90,12 @@
   })();
 
   // === Helpers ===
-  const nextFrame = () => new Promise(r => requestAnimationFrame(() => r()));
+  const raf = () => new Promise(r => requestAnimationFrame(r));
   const ensureOverlayVisible = async () => {
     spacer.style.height = `${container.offsetHeight || spacer.offsetHeight || 0}px`;
     const skEl = document.getElementById('maxmenu-skeleton');
     if (skEl) { void skEl.offsetHeight; skEl.style.opacity = '1'; }
-    await nextFrame(); await nextFrame(); await nextFrame();
-  };
-
-  const removeOldWidgetScripts = (keepVersion) => {
-    document.querySelectorAll('script[maxmenu-script]').forEach(s => {
-      if (s.getAttribute('data-mm-version') !== keepVersion) s.remove();
-    });
+    await raf(); await raf(); // estabiliza la capa
   };
 
   const hideSkeleton = () => {
@@ -115,18 +111,23 @@
     });
   };
 
-  const loadWidget = (version) => {
+  const removeScriptsExcept = (keepVersion) => {
+    document.querySelectorAll('script[maxmenu-script]').forEach(s => {
+      if (s.getAttribute('data-mm-version') !== keepVersion) s.remove();
+    });
+  };
+
+  // Carga widget en el contenedor VISIBLE actual (primer render)
+  const loadWidgetVisible = (version) => {
     const script = document.createElement('script');
     script.src = `https://cdn.maxmenu.com/s/${restaurantId}/widget/${version}/widget.js`;
     script.async = true;
     script.setAttribute('maxmenu-script', 'true');
     script.setAttribute('data-mm-version', version);
 
-    // No desbloqueamos aquí: esperamos a ver DOM nuevo (o evento) para ocultar skeleton.
     script.addEventListener('load', () => {
-      // Fallbacks suaves por si el widget tarda en pintar tras cargar el script
       const tryHide = () => {
-        if (!awaitingFinalPaint && !lockSkeleton && (container.offsetHeight > 0 || container.querySelector('*'))) {
+        if (!lockSkeleton && (container.offsetHeight > 0 || container.querySelector('*'))) {
           hideSkeleton();
         }
       };
@@ -138,53 +139,103 @@
     document.head.appendChild(script);
   };
 
+  // === Doble buffer: staging off-screen con el MISMO id para que widget.js pinte ahí ===
   const hotSwapTo = async (nextVersion) => {
     if (!nextVersion || nextVersion === currentVersion) return;
-    console.log(`[MaxMenu] 🔄 Hot-swap → ${currentVersion} → ${nextVersion}`);
+    console.log(`[MaxMenu] 🔄 Hot-swap (double-buffer) ${currentVersion} → ${nextVersion}`);
 
-    // 1) Garantiza skeleton pintado ANTES de tocar scripts/DOM
+    // 1) Esqueletón pintado ANTES de cualquier operación
     await ensureOverlayVisible();
 
-    // 2) Marcamos que esperamos la pintura final (mantiene skeleton sí o sí)
+    // 2) Crear STAGING off-screen
+    const staging = document.createElement('div');
+    staging.style.cssText = 'position:absolute;left:-99999px;top:-99999px;visibility:hidden;pointer-events:none;';
+    staging.dataset.restaurantId = restaurantId;
+
+    // 3) Cambiar IDs: el staging toma el id oficial, el visible lo suelta
+    const officialId = container.id; // "maxmenu-menuContainer"
+    container.id = officialId + '__old';
+    staging.id = officialId;
+
+    host.appendChild(staging);
+
+    // 4) Estado: esperamos la pintura final en staging
     awaitingFinalPaint = true;
-    lockSkeleton = true;        // asegura que nadie oculte el skeleton aún
-    skeletonHidden = false;     // por si venimos de otro ciclo
+    lockSkeleton = true;
+    skeletonHidden = false;
 
-    // 3) Carga la nueva versión SIN limpiar aún el contenedor (evita frame blanco)
-    currentVersion = nextVersion;
-    localStorage.setItem(KEY_STORAGE_VERSION, nextVersion);
-    loadWidget(nextVersion);
-  };
+    // 5) Cargar script apuntando al STAGING
+    const script = document.createElement('script');
+    script.src = `https://cdn.maxmenu.com/s/${restaurantId}/widget/${nextVersion}/widget.js`;
+    script.async = true;
+    script.setAttribute('maxmenu-script', 'true');
+    script.setAttribute('data-mm-version', nextVersion);
 
-  // === Observadores para detectar pintura real y ocultar skeleton de forma atómica ===
-  const finalizeIfPainted = () => {
-    // Sólo cerramos el ciclo cuando vemos DOM real y altura > 0
-    if (awaitingFinalPaint && (container.offsetHeight > 0 || container.querySelector('*'))) {
+    // —— Finalización ATÓMICA con doble RAF tras el SWAP —— //
+    const finalizeSwap = async () => {
+      if (!awaitingFinalPaint) return;
+      // Requisito mínimo: staging ya tiene DOM (no sólo script cargado)
+      if (!staging.querySelector('*')) return;
+
+      // SWAP: staging pasa a visible (pero NO ocultamos aún el esqueletón)
+      staging.style.cssText = '';                 // vuelve a flujo normal
+      host.insertBefore(staging, container);      // staging ocupa lugar
+      host.removeChild(container);                // quitamos contenedor viejo
+      container = staging;                        // ahora el visible es staging
+
+      // Alinear altura para evitar salto mientras sigue visible el esqueletón
+      spacer.style.height = `${container.offsetHeight || spacer.offsetHeight || 0}px`;
+
+      // Esperar 2 frames para asegurar layout/paint completo en pantalla
+      await raf(); await raf();
+
+      // Ahora sí: desbloquear y ocultar esqueletón (sin frame blanco)
       awaitingFinalPaint = false;
-      lockSkeleton = false;      // ya puede ocultarse
-      hideSkeleton();            // oculta ahora
-      removeOldWidgetScripts(currentVersion); // limpieza de scripts antiguos
-    }
+      lockSkeleton = false;
+      hideSkeleton();
+
+      // Limpieza de scripts antiguos
+      removeScriptsExcept(nextVersion);
+
+      // Persistir versión actual
+      currentVersion = nextVersion;
+      localStorage.setItem(KEY_STORAGE_VERSION, nextVersion);
+
+      // Desenganchar observadores/handlers
+      stageObserver.disconnect();
+      window.removeEventListener('MaxMenuReady', onStageReady);
+    };
+
+    // Observer de DOM en staging
+    const stageObserver = new MutationObserver(finalizeSwap);
+    stageObserver.observe(staging, { childList: true, subtree: true });
+
+    // También respondemos a MaxMenuReady (si lo emite el widget)
+    const onStageReady = () => finalizeSwap();
+    window.addEventListener('MaxMenuReady', onStageReady);
+
+    // Reintentos por si sólo llega "load" del script pero tarda el DOM
+    script.addEventListener('load', () => {
+      setTimeout(finalizeSwap, 80);
+      setTimeout(finalizeSwap, 220);
+      setTimeout(finalizeSwap, 600);
+    });
+
+    document.head.appendChild(script);
   };
 
-  const observer = new MutationObserver(finalizeIfPainted);
-  observer.observe(container, { childList: true, subtree: true });
-
-  window.addEventListener('MaxMenuReady', finalizeIfPainted);
-
-  // === Primer render (version.json) ===
-  loadWidget(currentVersion);
+  // === Primer render inmediato con version.json ===
+  loadWidgetVisible(currentVersion);
 
   // === Resolver latest y decidir ===
   const latestVersion = await latestPromise;
 
   if (latestVersion && latestVersion !== currentVersion) {
-    // Mismatch: mantenemos skeleton TODO el tiempo hasta que pinte la latest
+    // Mismatch: doble buffer. Skeleton visible hasta que la latest YA está pintada y swappeada.
     await hotSwapTo(latestVersion);
   } else {
-    // Sin mismatch: desbloquear y ocultar cuando esté pintado el primer render
+    // Sin mismatch: desbloquear y ocultar cuando pinte
     lockSkeleton = false;
-    // Si ya hay DOM real, ocúltalo; si no, lo hará el observer/ready.
     if (container.offsetHeight > 0 || container.querySelector('*')) hideSkeleton();
   }
 
