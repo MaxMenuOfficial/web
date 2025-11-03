@@ -1,26 +1,27 @@
 (async () => {
   const container = document.getElementById('maxmenu-menuContainer');
   const restaurantId = container?.dataset?.restaurantId;
+  if (!restaurantId) return console.error('[MaxMenu] ❌ data-restaurant-id no definido.');
 
-  if (!restaurantId) {
-    console.error('[MaxMenu] ❌ data-restaurant-id no definido.');
-    return;
-  }
-
-  // === 1. INYECTAR SKELETON SIN LAPSUS ===
-  const skeletonHTML = `
-    <style id="maxmenu-skeleton-style">
-      #maxmenu-loading {
+  // === 1. INYECTAR SKELETON COMO OVERLAY EXTERNO ===
+  const overlay = document.createElement('div');
+  overlay.id = 'maxmenu-skeleton-overlay';
+  overlay.innerHTML = `
+    <style>
+      #maxmenu-skeleton-overlay {
+        position: relative;
+      }
+      #maxmenu-skeleton-inner {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        min-height: 60vh;
-        width: 100%;
-        background-color: transparent; /* fondo sin color */
-        animation: fadein 0.25s ease-out;
+        background: transparent;
+        z-index: 9999;
+        transition: opacity 0.4s ease;
       }
-
       #maxmenu-skeleton-flag {
         width: 30px;
         height: 30px;
@@ -28,7 +29,6 @@
         background-color: #e7e7e7ff;
         margin: 10px 0 20px 0;
       }
-
       .skeleton-button {
         font-weight: bolder;
         background-color: #e7e7e7ff;
@@ -36,7 +36,7 @@
         color: transparent;
         padding: 30px 20px;
         margin: 6px auto;
-        border-radius: 0px;
+        border-radius: 0;
         font-size: 14px;
         max-width: 250px;
         min-width: 250px;
@@ -46,40 +46,20 @@
         background-size: 400% 100%;
         animation: shimmer 1.8s infinite linear;
       }
-
       @keyframes shimmer {
         0% { background-position: 200% 0; }
         100% { background-position: -200% 0; }
       }
-
-      @keyframes fadein {
-        from { opacity: 0; }
-        to { opacity: 1; }
-      }
     </style>
-
-    <div id="maxmenu-loading">
+    <div id="maxmenu-skeleton-inner">
       <div id="maxmenu-skeleton-flag"></div>
-      <div class="skeleton-button"></div>
-      <div class="skeleton-button"></div>
-      <div class="skeleton-button"></div>
-      <div class="skeleton-button"></div>
-      <div class="skeleton-button"></div>
-      <div class="skeleton-button"></div>
-      <div class="skeleton-button"></div>
-    </div>
-  `;
+      ${'<div class="skeleton-button"></div>'.repeat(7)}
+    </div>`;
+  
+  // Lo colocamos justo después del contenedor, no dentro
+  container.parentNode.insertBefore(overlay, container.nextSibling);
 
-  // Inyectamos sin borrar el contenido previo (evita lapsus visual)
-  container.insertAdjacentHTML('afterbegin', skeletonHTML);
-  // Forzamos render inmediato antes de limpiar
-  void container.offsetHeight;
-
-  // Ahora eliminamos lo anterior, ya con el skeleton pintado
-  const prev = container.querySelectorAll(':scope > :not(#maxmenu-loading):not(style)');
-  prev.forEach(el => el.remove());
-
-  console.log('[MaxMenu] ⏳ Skeleton transparente activo sin lapsus...');
+  console.log('[MaxMenu] 🩶 Skeleton overlay activo sobre el menú.');
 
   // === 2. LÓGICA DE VERSIÓN ===
   const KEY_STORAGE_VERSION = `mmx_last_version_${restaurantId}`;
@@ -87,30 +67,23 @@
   let currentVersion = localStorage.getItem(KEY_STORAGE_VERSION) || fallbackVersion;
 
   try {
-    const versionJsonURL = `https://cdn.maxmenu.com/s/${restaurantId}/widget/${currentVersion}/version.json`;
-    const versionRes = await fetch(versionJsonURL, { cache: 'force-cache' });
-    if (versionRes.ok) {
-      const versionData = await versionRes.json();
-      if (versionData.version) currentVersion = versionData.version;
+    const vRes = await fetch(`https://cdn.maxmenu.com/s/${restaurantId}/widget/${currentVersion}/version.json`, { cache: 'force-cache' });
+    if (vRes.ok) {
+      const vData = await vRes.json();
+      if (vData.version) currentVersion = vData.version;
     }
-  } catch (err) {
-    console.warn('[MaxMenu] ⚠️ Error obteniendo version.json:', err);
-  }
+  } catch {}
 
   try {
-    const latestUrl = `https://cdn.maxmenu.com/s/${restaurantId}/widget/latest.json`;
-    const latestRes = await fetch(latestUrl, { cache: 'no-store' });
+    const latestRes = await fetch(`https://cdn.maxmenu.com/s/${restaurantId}/widget/latest.json`, { cache: 'no-store' });
     if (latestRes.ok) {
       const { version: latestVersion } = await latestRes.json();
       if (latestVersion && latestVersion !== currentVersion) {
-        console.log(`[MaxMenu] 🔁 Versión desactualizada: ${currentVersion} → ${latestVersion}`);
         localStorage.setItem(KEY_STORAGE_VERSION, latestVersion);
         location.reload();
       }
     }
-  } catch (err) {
-    console.warn('[MaxMenu] ⚠️ Error verificando latest.json:', err);
-  }
+  } catch {}
 
   // === 3. INYECTAR WIDGET ===
   try {
@@ -120,33 +93,17 @@
     script.async = true;
     script.setAttribute('maxmenu-script', 'true');
 
-
-    // Cuando el widget real esté listo → eliminar skeleton
-  window.addEventListener('MaxMenuReady', () => {
-    const loader = document.getElementById('maxmenu-loading');
-    if (loader) {
-      // Esperamos dos frames para asegurar que el menú ya se haya renderizado
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          loader.style.transition = 'opacity 0.35s ease';
-          loader.style.opacity = '0';
-          setTimeout(() => loader.remove(), 400);
-        });
-      });
-    }
-    console.log('[MaxMenu] ✅ Skeleton eliminado después del render visual.');
-  });
-
-    // Fallback: si pasan 10s sin cargar
-    setTimeout(() => {
-      const loader = document.getElementById('maxmenu-loading');
-      if (loader) loader.style.opacity = '0.4';
-    }, 10000);
+    // Cuando el menú esté realmente listo → fade out del skeleton overlay
+    window.addEventListener('MaxMenuReady', () => {
+      const skeleton = document.getElementById('maxmenu-skeleton-inner');
+      if (!skeleton) return;
+      skeleton.style.opacity = '0';
+      setTimeout(() => skeleton.parentElement.remove(), 400);
+      console.log('[MaxMenu] ✅ Skeleton eliminado, menú visible sin lapsus.');
+    });
 
     document.head.appendChild(script);
-    console.log(`[MaxMenu] 📦 widget.js v${currentVersion} inyectado para ${restaurantId}`);
   } catch (err) {
     console.error('[MaxMenu] ❌ Error cargando widget.js:', err);
-    container.innerHTML = '<p style="color:red;text-align:center;">[MaxMenu] Error loading menu.</p>';
   }
 })();
