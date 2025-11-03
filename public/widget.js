@@ -15,7 +15,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        min-height: 100vh;
+        min-height: 60vh;
         width: 100%;
         background-color: transparent; /* fondo sin color */
         animation: fadein 0.25s ease-out;
@@ -25,21 +25,21 @@
         width: 30px;
         height: 30px;
         border-radius: 50%;
-        background-color: #d8d8d8;
+        background-color: #e7e7e7ff;
         margin: 10px 0 20px 0;
       }
 
       .skeleton-button {
         font-weight: bolder;
-        background-color: #f1f1f1;
-        border: 6px solid #d0d0d0;
+        background-color: #e7e7e7ff;
+        border: 6px solid #e7e7e7ff;
         color: transparent;
         padding: 20px 20px;
         margin: 6px auto;
-        border-radius: 80px;
+        border-radius: 0px;
         font-size: 14px;
-        max-width: 250px;
-        min-width: 250px;
+        max-width: 350px;
+        min-width: 350px;
         text-align: center;
         opacity: 0.95;
         background: linear-gradient(90deg, #eeeeee 25%, #f6f6f6 50%, #eeeeee 75%);
