@@ -34,12 +34,12 @@
         background-color: #e7e7e7ff;
         border: 6px solid #e7e7e7ff;
         color: transparent;
-        padding: 20px 20px;
+        padding: 30px 20px;
         margin: 6px auto;
         border-radius: 0px;
         font-size: 14px;
-        max-width: 350px;
-        min-width: 350px;
+        max-width: 250px;
+        min-width: 250px;
         text-align: center;
         opacity: 0.95;
         background: linear-gradient(90deg, #eeeeee 25%, #f6f6f6 50%, #eeeeee 75%);
