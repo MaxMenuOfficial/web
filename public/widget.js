@@ -48,10 +48,10 @@
   const spacer = document.createElement('div');
   spacer.id = 'maxmenu-skeleton-spacer';
   host.appendChild(spacer);
-  spacer.style.height = '60vh';
+  spacer.style.height = '100vh';
   requestAnimationFrame(() => {
     const sk = overlay.querySelector('#maxmenu-skeleton');
-    spacer.style.height = sk.offsetHeight ? `${sk.offsetHeight}px` : '60vh';
+    spacer.style.height = sk.offsetHeight ? `${sk.offsetHeight}px` : '100vh';
   });
 
   // === VERSIONING (optimistic-first) ===
