@@ -11,7 +11,7 @@
   container.parentNode.insertBefore(host, container);
   host.appendChild(container);
 
-  // === OVERLAY + SPACER (siempre presente hasta pintar menú) ===
+  // === SKELETON (siempre visible hasta menú pintado) ===
   const overlay = document.createElement('div');
   overlay.id = 'maxmenu-skeleton-overlay';
   overlay.innerHTML = `
@@ -55,19 +55,25 @@
     spacer.style.height = sk?.offsetHeight ? `${sk.offsetHeight}px` : '60vh';
   });
 
-  // === FLAGS DE CONTROL ENTRE RECARGAS ===
+  // === KEYS & FLAGS ===
   const KEY_STORAGE_VERSION = `mmx_last_version_${restaurantId}`;
-  const KEY_RELOAD_GUARD   = `mmx_reload_guard_${restaurantId}`; // evita bucles
-  const fallbackVersion    = '__VERSION__';
-  let   currentVersion     = localStorage.getItem(KEY_STORAGE_VERSION) || fallbackVersion;
+  const fallbackVersion     = '__VERSION__';
+  let currentVersion        = localStorage.getItem(KEY_STORAGE_VERSION) || fallbackVersion;
 
-  // Si venimos de una recarga forzada recientemente, no intentamos otra durante 2s
-  const now = Date.now();
-  const lastReload = parseInt(localStorage.getItem(KEY_RELOAD_GUARD) || '0', 10);
-  const reloadCooldownMs = 2000;
+  const url = new URL(location.href);
+  const qMMXV  = url.searchParams.get('mmxv');    // versión en URL
+  const qSTEP  = url.searchParams.get('mmxstep'); // '1' | '2' | null
 
-  // === HELPERS SKELETON ===
+  let reloadingNow = false; // si vamos a recargar, nunca ocultamos skeleton
+
+  const raf = () => new Promise(r => requestAnimationFrame(r));
+  const keepSkeletonLocked = () => {
+    spacer.style.height = `${container.offsetHeight || spacer.offsetHeight || 0}px`;
+    const skEl = document.getElementById('maxmenu-skeleton');
+    if (skEl) { void skEl.offsetHeight; skEl.style.opacity = '1'; }
+  };
   const hideSkeleton = () => {
+    if (reloadingNow) return;
     const skEl = document.getElementById('maxmenu-skeleton');
     if (!skEl) return;
     requestAnimationFrame(() => {
@@ -77,15 +83,21 @@
       });
     });
   };
-
-  const keepSkeletonLocked = () => {
-    // Mantener visible y fijar altura sobre el alto actual del contenedor (si lo hay)
-    spacer.style.height = `${container.offsetHeight || spacer.offsetHeight || 0}px`;
-    const skEl = document.getElementById('maxmenu-skeleton');
-    if (skEl) { void skEl.offsetHeight; skEl.style.opacity = '1'; }
+  const hardReloadTo = async (latestVersion, step) => {
+    reloadingNow = true;
+    keepSkeletonLocked();
+    localStorage.setItem(KEY_STORAGE_VERSION, latestVersion);
+    const newUrl = new URL(location.href);
+    newUrl.searchParams.set('mmxv', latestVersion);
+    newUrl.searchParams.set('mmxstep', String(step)); // "1" o "2"
+    await raf(); await raf(); // asegurar frame pintado con skeleton
+    location.replace(newUrl.toString());
   };
 
-  // === 1) version.json (cacheado) → versión operativa inmediata
+  // Bust BFCache: si el navegador intenta restaurar, forzamos nueva carga
+  window.addEventListener('pageshow', (e) => { if (e.persisted) location.reload(); });
+
+  // === 1) version.json cacheado → establecemos currentVersion de trabajo
   try {
     const vRes = await fetch(`https://cdn.maxmenu.com/s/${restaurantId}/widget/${currentVersion}/version.json`, { cache: 'force-cache' });
     if (vRes.ok) {
@@ -94,52 +106,59 @@
     }
   } catch {}
 
-  // === 2) Cargar widget.js de la versión actual (pinta por debajo del skeleton)
+  // Si la URL ya trae mmxv (post-mismatch), úsala como versión objetivo
+  if (qMMXV) currentVersion = qMMXV;
+
+  // === 2) Cargar widget de currentVersion (bajo skeleton)
   const loadWidget = (version) => {
     const script = document.createElement('script');
     script.src = `https://cdn.maxmenu.com/s/${restaurantId}/widget/${version}/widget.js`;
     script.async = true;
     script.setAttribute('maxmenu-script', 'true');
     script.setAttribute('data-mm-version', version);
-    // Ocultamos skeleton solo cuando realmente hay DOM del menú visible
     script.addEventListener('load', () => {
       const tryHide = () => {
-        if (container.offsetHeight > 0 || container.querySelector('*')) {
+        if (!reloadingNow && (container.offsetHeight > 0 || container.querySelector('*'))) {
           hideSkeleton();
         }
       };
+      // varios intentos por si el script carga antes que el DOM completo
       setTimeout(tryHide, 80);
       setTimeout(tryHide, 220);
       setTimeout(tryHide, 600);
     });
     document.head.appendChild(script);
   };
-
   loadWidget(currentVersion);
 
-  // === 3) latest.json (no-store) en paralelo → si difiere, RECARGA con skeleton permanente
+  // === 3) latest.json en paralelo (no-store)
   (async () => {
     try {
       const latestRes = await fetch(`https://cdn.maxmenu.com/s/${restaurantId}/widget/latest.json`, { cache: 'no-store' });
       if (!latestRes.ok) return;
       const { version: latestVersion } = await latestRes.json();
+      if (!latestVersion) return;
 
-      if (latestVersion && latestVersion !== currentVersion) {
-        // Mantener skeleton SIEMPRE visible
-        keepSkeletonLocked();
-
-        // Persistir next version y setear guard para evitar bucles
-        localStorage.setItem(KEY_STORAGE_VERSION, latestVersion);
-        if (now - lastReload > reloadCooldownMs) {
-          localStorage.setItem(KEY_RELOAD_GUARD, String(Date.now()));
-          // Recarga dura: el skeleton volverá a mostrarse instantáneamente al iniciar (este mismo script)
-          location.reload();
-        }
+      // — LÓGICA DE RECARGA DOBLE —
+      if (latestVersion !== currentVersion) {
+        // Primer salto: mismatch detectado → recargar a step=1 con mmxv=latest
+        await hardReloadTo(latestVersion, 1);
+        return; // detenemos aquí
       }
+
+      // Si ya venimos de step=1 (mmxv fijado), hacemos la segunda recarga "de confirmación"
+      if (qMMXV === latestVersion && qSTEP === '1') {
+        // Mantén skeleton fijado y recarga por segunda vez a step=2
+        await hardReloadTo(latestVersion, 2);
+        return;
+      }
+
+      // Si estamos en step=2 o sin step (todo coincide), flujo normal:
+      // el skeleton se ocultará sólo cuando el menú esté pintado (tryHide)
     } catch {}
   })();
 
-  // Seguridad: si a los 12s no hay nada, atenuamos skeleton (no flash)
+  // Seguridad: si a los 12s no hay nada, atenuamos skeleton (sin parpadeo)
   setTimeout(() => {
     if (!(container.offsetHeight > 0 || container.querySelector('*'))) {
       const skEl = document.getElementById('maxmenu-skeleton');
@@ -147,8 +166,6 @@
     }
   }, 12000);
 
-  // Aún mejor UX: si el host va a descargar, no toques nada (skeleton ya está visible)
-  window.addEventListener('beforeunload', () => {
-    // no ocultamos nada, dejamos el skeleton tal cual
-  });
+  // No tocamos el skeleton en unload: debe permanecer hasta abandonar la página
+  window.addEventListener('beforeunload', () => {});
 })();
