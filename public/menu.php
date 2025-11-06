@@ -57,7 +57,26 @@ echo '<link rel="canonical" href="https://menu.maxmenu.com/' . htmlspecialchars(
   <link rel="icon" href="assets/css/menu/img/logo-app.png">
 
   <!-- Título -->
-  <title>MaxMenu | Menu</title>
+    <!-- Primary Meta Tags -->
+  <title>Author-grade embeddable menu</title>
+  <meta name="title" content="Author-grade embeddable menu" />
+  <meta name="description" content="Built with precision. Designed for excellence. MaxMenu is where technology and aesthetics merge into a seamless dining experience." />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://metatags.io/" />
+  <meta property="og:title" content="Author-grade embeddable menu" />
+  <meta property="og:description" content="Built with precision. Designed for excellence. MaxMenu is where technology and aesthetics merge into a seamless dining experience." />
+  <meta property="og:image" content="https://metatags.io/images/meta-tags.png" />
+
+  <!-- X (Twitter) -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://metatags.io/" />
+  <meta property="twitter:title" content="Author-grade embeddable menu" />
+  <meta property="twitter:description" content="Built with precision. Designed for excellence. MaxMenu is where technology and aesthetics merge into a seamless dining experience." />
+  <meta property="twitter:image" content="https://metatags.io/images/meta-tags.png" />
+
+  <!-- Meta Tags Generated with https://metatags.io -->
 
   <!-- Estilos del menú -->
   <link rel="stylesheet" href="https://menu.maxmenu.com/assets/css/menu/styles/view-items.css">
