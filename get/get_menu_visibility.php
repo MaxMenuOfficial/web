@@ -38,10 +38,12 @@ if (!$isActive && !$isActiveForAll) {
             padding: 40px 30px;
             border-radius: 12px;
             text-align: center;
-            max-width: 500px;
-            width: 90%;
+            max-width: 350px;
+            min-width: 300px;
+            width: 100%;
             font-family: system-ui, -apple-system, sans-serif;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            margin: 0px auto;
         }
 
         #menu-locked-modal h2 {
