@@ -12,7 +12,7 @@
   container.parentNode.insertBefore(host, container);
   host.appendChild(container);
 
-  // === OVERLAY + SPACER (con altura “real” que empuja layout) ===
+  // === OVERLAY + SPACER (skeleton con “cuerpo” que empuja layout) ===
   const overlay = document.createElement('div');
   overlay.id = 'maxmenu-skeleton-overlay';
   overlay.innerHTML = `
@@ -49,64 +49,37 @@
   spacer.id = 'maxmenu-skeleton-spacer';
   host.appendChild(spacer);
 
-  // ====== Altura “real” del skeleton que empuja el layout ======
+  // ===== Skeleton “con cuerpo” =====
   const SKELETON_MIN_PX = 320;
 
-  // Permite forzar altura vía data-skeleton-height="640" o "80vh" en el contenedor
   const parseSkeletonHeightConfig = (val) => {
     if (!val) return 0;
     const s = String(val).trim().toLowerCase();
-    if (s.endsWith('vh')) {
-      const n = parseFloat(s);
-      return isFinite(n) ? Math.max(0, (n / 100) * window.innerHeight) : 0;
-    }
-    if (s.endsWith('px')) {
-      const n = parseFloat(s);
-      return isFinite(n) ? Math.max(0, n) : 0;
-    }
-    const n = parseFloat(s);
-    return isFinite(n) ? Math.max(0, n) : 0;
+    if (s.endsWith('vh')) { const n = parseFloat(s); return isFinite(n) ? Math.max(0, (n/100)*window.innerHeight) : 0; }
+    if (s.endsWith('px')) { const n = parseFloat(s); return isFinite(n) ? Math.max(0, n) : 0; }
+    const n = parseFloat(s); return isFinite(n) ? Math.max(0, n) : 0;
   };
   const configuredSkeletonHeight = parseSkeletonHeightConfig(container?.dataset?.skeletonHeight);
 
-  const getSkeletonIntrinsic = () => {
-    const sk = overlay.querySelector('#maxmenu-skeleton');
-    return sk?.offsetHeight || 0;
-  };
+  const getSkeletonIntrinsic = () => overlay.querySelector('#maxmenu-skeleton')?.offsetHeight || 0;
 
-  // Calcula un alto que:
-  // - rellena hasta el final del viewport desde el inicio del host
-  // - respeta altura intrínseca del skeleton
-  // - considera si el contenedor empieza a crecer
-  // - respeta un mínimo y una config opcional
   const calcDesiredSkeletonHeight = () => {
     const rect = host.getBoundingClientRect();
     const viewportFill = Math.max(window.innerHeight - Math.max(rect.top, 0), 0);
     const intrinsic    = getSkeletonIntrinsic();
     const containerH   = container.offsetHeight || 0;
-    return Math.max(
-      configuredSkeletonHeight,
-      viewportFill,
-      intrinsic,
-      containerH,
-      SKELETON_MIN_PX
-    );
+    return Math.max(configuredSkeletonHeight, viewportFill, intrinsic, containerH, SKELETON_MIN_PX);
   };
 
   let skeletonActive = false;
-  const setSpacerToDesiredHeight = () => {
-    spacer.style.height = `${calcDesiredSkeletonHeight()}px`;
-  };
+  const setSpacerToDesiredHeight = () => { spacer.style.height = `${calcDesiredSkeletonHeight()}px`; };
 
   const showSkeleton = () => {
     skeletonActive = true;
     setSpacerToDesiredHeight();
-    // doble frame para fijar layout y evitar saltos
     requestAnimationFrame(() => requestAnimationFrame(setSpacerToDesiredHeight));
-    // aseguramos visibilidad
     const skEl = overlay.querySelector('#maxmenu-skeleton');
-    void skEl.offsetHeight;
-    skEl.style.opacity = '1';
+    void skEl.offsetHeight; skEl.style.opacity = '1';
   };
 
   const hideSkeleton = () => {
@@ -120,28 +93,26 @@
     });
   };
 
-  // Ajustes en tiempo real mientras el skeleton esté visible
+  // Reajustar altura mientras esté visible
   const onViewportChange = () => { if (skeletonActive) setSpacerToDesiredHeight(); };
   window.addEventListener('resize', onViewportChange);
   window.addEventListener('orientationchange', onViewportChange);
-
-  // Si el host o el contenedor cambian de tamaño (fonts, CSS remotos, etc.)
   const roSkeleton = new ResizeObserver(() => { if (skeletonActive) setSpacerToDesiredHeight(); });
   roSkeleton.observe(host);
   roSkeleton.observe(container);
 
-  // Inicializa “cuerpo” del skeleton desde el inicio
+  // Al empezar, muestra skeleton con cuerpo
   showSkeleton();
 
-  // === HELPERS SKELETON ROBUSTOS ===
+  // === Helpers / timing ===
   const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
   // === VERSIONING (optimistic-first) ===
   const KEY_STORAGE_VERSION = `mmx_last_version_${restaurantId}`;
-  const fallbackVersion   = '__VERSION__';
-  let currentVersion      = localStorage.getItem(KEY_STORAGE_VERSION) || fallbackVersion;
+  const fallbackVersion = '__VERSION__';
+  let currentVersion = localStorage.getItem(KEY_STORAGE_VERSION) || fallbackVersion;
 
-  let lockSkeleton = true;   // El skeleton no se puede ocultar hasta versión final pintada
+  let lockSkeleton = true;   // hasta versión final pintada
   let finalTargetVersion = null;
 
   // 1) version.json cacheado
@@ -183,14 +154,12 @@
   };
 
   const waitPaintThenHide = async (timeoutMs = 2000) => {
-    const t0 = performance.now();
-    let stable = 0, lastH = 0;
+    const t0 = performance.now(); let stable = 0, lastH = 0;
     while (performance.now() - t0 < timeoutMs) {
       await sleep(40);
       const h = container.getBoundingClientRect().height;
       if (isMenuPainted()) {
-        if (Math.abs(h - lastH) < 2) stable++;
-        else stable = 0;
+        if (Math.abs(h - lastH) < 2) stable++; else stable = 0;
         lastH = h;
         if (stable >= 3) { hideSkeleton(); return true; }
       }
@@ -207,60 +176,71 @@
     document.querySelectorAll('script[maxmenu-script]').forEach(s => s.remove());
   };
 
-  // === Carga de widget.js con “paracaídas” de widget.html si no pinta
+  // === Carga de widget.js (con fallback si no pinta) ===
   const loadWidget = (version, unlockOnReady = false) => {
     const script = document.createElement('script');
+    // Nota: mantenemos cache del CDN, pero en mismatch ya hemos traído HTML no-store.
     script.src = `https://cdn.maxmenu.com/s/${restaurantId}/widget/${version}/widget.js`;
     script.async = true;
     script.setAttribute('maxmenu-script', 'true');
     script.setAttribute('data-mm-version', version);
 
     script.addEventListener('load', async () => {
-      // Solo desbloquea si este script es la versión final objetivo
+      // Solo desbloquea si es la versión final
       if (unlockOnReady && version === finalTargetVersion) lockSkeleton = false;
 
       if (!lockSkeleton) {
         if (isMenuPainted()) { hideSkeleton(); return; }
-        const painted = await waitPaintThenHide(1500);
+        const painted = await waitPaintThenHide(2000);
         if (!painted) {
-          // PARACAÍDAS: si no pintó, inyecta el HTML estático de esa versión y reintenta
-          try {
-            const htmlUrl = `https://cdn.maxmenu.com/s/${restaurantId}/widget/${version}/widget.html`;
-            const htmlRes = await fetch(htmlUrl, { cache: 'no-store' });
-            if (htmlRes.ok) {
-              const html = await htmlRes.text();
-              container.innerHTML = html;
-              await waitPaintThenHide(1500);
-            }
-          } catch {}
+          // Último intento: si seguimos sin pintura, mantenemos skeleton atenuado (pero ya hay HTML)
+          console.warn('[MaxMenu] ⚠️ Script cargado pero sin pintura estable. Mantengo skeleton visible.');
         }
       }
+    });
+
+    script.addEventListener('error', () => {
+      console.error('[MaxMenu] ❌ Error cargando widget.js versión', version);
     });
 
     document.head.appendChild(script);
   };
 
-  // === Hot-swap manteniendo SIEMPRE skeleton visible
+  // === Hot-swap HTML-first (nunca “nada”) ===
   const hotSwapTo = async (nextVersion) => {
     if (!nextVersion || nextVersion === currentVersion) return;
     console.log(`[MaxMenu] 🔄 Hot-swap → ${currentVersion} → ${nextVersion}`);
 
-    // 1) Asegurar skeleton ACTIVO antes de limpiar nada
+    // 1) Asegurar skeleton ACTIVO
     showSkeleton();
+    lockSkeleton = true;
 
-    // 2) Dos frames para fijar layout del overlay
+    // 2) Dos frames para fijar overlay
     await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
 
-    // 3) Limpiar scripts antiguos y contenedor
+    // 3) Limpiar scripts antiguos
     removeExistingWidgetScripts();
-    container.innerHTML = ''; // overlay + spacer sostienen el alto
 
-    // 4) Persistir y preparar desbloqueo para la versión final
+    // 4) Inyectar HTML de la versión destino (HTML-first)
+    try {
+      const htmlUrl = `https://cdn.maxmenu.com/s/${restaurantId}/widget/${nextVersion}/widget.html?ts=${Date.now()}`;
+      const htmlRes = await fetch(htmlUrl, { cache: 'no-store' });
+      if (htmlRes.ok) {
+        const html = await htmlRes.text();
+        container.innerHTML = html; // ya hay algo visible; nunca en blanco
+      } else {
+        // si no hay HTML, al menos vacío limpio (pero skeleton sostiene el alto)
+        container.innerHTML = '';
+      }
+    } catch {
+      container.innerHTML = '';
+    }
+
+    // 5) Persistir versión objetivo y cargar JS
     currentVersion = nextVersion;
     finalTargetVersion = nextVersion;
     localStorage.setItem(KEY_STORAGE_VERSION, nextVersion);
 
-    // 5) Cargar widget final; el skeleton se ocultará solo cuando esté pintado
     loadWidget(nextVersion, /* unlockOnReady */ true);
   };
 
@@ -287,7 +267,7 @@
   const latestVersion = await latestPromise;
 
   if (latestVersion && latestVersion !== currentVersion) {
-    // Si justo ya habías ocultado el skeleton por la versión cacheada, lo reactivamos aquí
+    // Reasegura skeleton por si se ocultó
     showSkeleton();
     await hotSwapTo(latestVersion);
   } else {
@@ -297,11 +277,12 @@
     else hideSkeleton();
   }
 
-  // Seguridad: a los 12s atenuar skeleton si no hay nada
+  // Seguridad: a los 12s atenuar skeleton si no hay nada visible
   setTimeout(() => {
     if (!(container.offsetHeight > 0 && container.querySelector('*'))) {
       const skEl = overlay.querySelector('#maxmenu-skeleton');
       skEl.style.opacity = '0.4';
+      console.warn('[MaxMenu] ⏳ Sigue sin pintar tras 12s; skeleton atenuado.');
     }
   }, 12000);
 })();
