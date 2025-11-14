@@ -1,3 +1,4 @@
+
 (async () => {
   const container = document.getElementById('maxmenu-menuContainer');
   const restaurantId = container?.dataset?.restaurantId;
@@ -11,7 +12,7 @@
   container.parentNode.insertBefore(host, container);
   host.appendChild(container);
 
-  // === OVERLAY + SPACER ===
+  // === OVERLAY + SPACER (con altura “real” que empuja layout) ===
   const overlay = document.createElement('div');
   overlay.id = 'maxmenu-skeleton-overlay';
   overlay.innerHTML = `
@@ -47,29 +48,69 @@
   const spacer = document.createElement('div');
   spacer.id = 'maxmenu-skeleton-spacer';
   host.appendChild(spacer);
-  spacer.style.height = '100vh';
-  requestAnimationFrame(() => {
-    const sk = overlay.querySelector('#maxmenu-skeleton');
-    spacer.style.height = sk.offsetHeight ? `${sk.offsetHeight}px` : '100vh';
-  });
 
-  // === HELPERS SKELETON ROBUSTOS ===
-  const getSkeletonHeight = () => {
-    const sk = overlay.querySelector('#maxmenu-skeleton');
-    return (sk && sk.offsetHeight) ? sk.offsetHeight : Math.max(320, Math.floor(window.innerHeight * 0.7));
+  // ====== Altura “real” del skeleton que empuja el layout ======
+  const SKELETON_MIN_PX = 320;
+
+  // Permite forzar altura vía data-skeleton-height="640" o "80vh" en el contenedor
+  const parseSkeletonHeightConfig = (val) => {
+    if (!val) return 0;
+    const s = String(val).trim().toLowerCase();
+    if (s.endsWith('vh')) {
+      const n = parseFloat(s);
+      return isFinite(n) ? Math.max(0, (n / 100) * window.innerHeight) : 0;
+    }
+    if (s.endsWith('px')) {
+      const n = parseFloat(s);
+      return isFinite(n) ? Math.max(0, n) : 0;
+    }
+    const n = parseFloat(s);
+    return isFinite(n) ? Math.max(0, n) : 0;
   };
-  const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+  const configuredSkeletonHeight = parseSkeletonHeightConfig(container?.dataset?.skeletonHeight);
+
+  const getSkeletonIntrinsic = () => {
+    const sk = overlay.querySelector('#maxmenu-skeleton');
+    return sk?.offsetHeight || 0;
+  };
+
+  // Calcula un alto que:
+  // - rellena hasta el final del viewport desde el inicio del host
+  // - respeta altura intrínseca del skeleton
+  // - considera si el contenedor empieza a crecer
+  // - respeta un mínimo y una config opcional
+  const calcDesiredSkeletonHeight = () => {
+    const rect = host.getBoundingClientRect();
+    const viewportFill = Math.max(window.innerHeight - Math.max(rect.top, 0), 0);
+    const intrinsic    = getSkeletonIntrinsic();
+    const containerH   = container.offsetHeight || 0;
+    return Math.max(
+      configuredSkeletonHeight,
+      viewportFill,
+      intrinsic,
+      containerH,
+      SKELETON_MIN_PX
+    );
+  };
+
+  let skeletonActive = false;
+  const setSpacerToDesiredHeight = () => {
+    spacer.style.height = `${calcDesiredSkeletonHeight()}px`;
+  };
 
   const showSkeleton = () => {
-    // Fijamos altura usando contenedor o el propio skeleton como fallback
-    const h = container.offsetHeight || spacer.offsetHeight || getSkeletonHeight();
-    spacer.style.height = `${h}px`;
+    skeletonActive = true;
+    setSpacerToDesiredHeight();
+    // doble frame para fijar layout y evitar saltos
+    requestAnimationFrame(() => requestAnimationFrame(setSpacerToDesiredHeight));
+    // aseguramos visibilidad
     const skEl = overlay.querySelector('#maxmenu-skeleton');
     void skEl.offsetHeight;
     skEl.style.opacity = '1';
   };
 
   const hideSkeleton = () => {
+    skeletonActive = false;
     const skEl = overlay.querySelector('#maxmenu-skeleton');
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
@@ -78,6 +119,22 @@
       });
     });
   };
+
+  // Ajustes en tiempo real mientras el skeleton esté visible
+  const onViewportChange = () => { if (skeletonActive) setSpacerToDesiredHeight(); };
+  window.addEventListener('resize', onViewportChange);
+  window.addEventListener('orientationchange', onViewportChange);
+
+  // Si el host o el contenedor cambian de tamaño (fonts, CSS remotos, etc.)
+  const roSkeleton = new ResizeObserver(() => { if (skeletonActive) setSpacerToDesiredHeight(); });
+  roSkeleton.observe(host);
+  roSkeleton.observe(container);
+
+  // Inicializa “cuerpo” del skeleton desde el inicio
+  showSkeleton();
+
+  // === HELPERS SKELETON ROBUSTOS ===
+  const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
   // === VERSIONING (optimistic-first) ===
   const KEY_STORAGE_VERSION = `mmx_last_version_${restaurantId}`;
@@ -194,9 +251,9 @@
     // 2) Dos frames para fijar layout del overlay
     await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
 
-    // 3) Limpiar scripts antiguos y (opcional) contenedor
+    // 3) Limpiar scripts antiguos y contenedor
     removeExistingWidgetScripts();
-    container.innerHTML = ''; // dejamos el overlay + spacer sosteniendo el alto
+    container.innerHTML = ''; // overlay + spacer sostienen el alto
 
     // 4) Persistir y preparar desbloqueo para la versión final
     currentVersion = nextVersion;
