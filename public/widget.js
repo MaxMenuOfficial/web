@@ -1,3 +1,4 @@
+
 (async () => {
   const container = document.getElementById('maxmenu-menuContainer');
   const restaurantId = container?.dataset?.restaurantId;
@@ -11,7 +12,7 @@
   container.parentNode.insertBefore(host, container);
   host.appendChild(container);
 
-  // === OVERLAY + SPACER ===
+  // === OVERLAY (absoluto) + SPACER (bloque invisible que empuja layout) ===
   const overlay = document.createElement('div');
   overlay.id = 'maxmenu-skeleton-overlay';
   overlay.innerHTML = `
@@ -44,29 +45,51 @@
   `;
   host.appendChild(overlay);
 
+  // 👉 Este es el “algo invisible” que empuja el layout
   const spacer = document.createElement('div');
   spacer.id = 'maxmenu-skeleton-spacer';
+  spacer.style.display = 'block';
+  spacer.style.width = '100%';
+  spacer.style.height = '0px';  // iremos ajustando dinámicamente
   host.appendChild(spacer);
-  spacer.style.height = '100vh';
-  requestAnimationFrame(() => {
-    const sk = overlay.querySelector('#maxmenu-skeleton');
-    spacer.style.height = sk.offsetHeight ? `${sk.offsetHeight}px` : '100vh';
-  });
 
-  // === HELPERS SKELETON ROBUSTOS ===
-  const getSkeletonHeight = () => {
-    const sk = overlay.querySelector('#maxmenu-skeleton');
-    return (sk && sk.offsetHeight) ? sk.offsetHeight : Math.max(320, Math.floor(window.innerHeight * 0.7));
+  // ===== Helpers de altura del skeleton (empuje real) =====
+  const MIN_PX = 320;
+  const cfgHeight = (() => {
+    const v = container?.dataset?.skeletonHeight;
+    if (!v) return 0;
+    const s = String(v).trim().toLowerCase();
+    if (s.endsWith('vh')) { const n = parseFloat(s); return isFinite(n) ? (n/100) * window.innerHeight : 0; }
+    if (s.endsWith('px')) { const n = parseFloat(s); return isFinite(n) ? n : 0; }
+    const n = parseFloat(s); return isFinite(n) ? n : 0;
+  })();
+
+  const getSkeletonIntrinsic = () => overlay.querySelector('#maxmenu-skeleton')?.scrollHeight || 0;
+
+  // Altura deseada:
+  // - rellena hasta final del viewport desde el top del host (para evitar “ventanas”),
+  // - usa la intrínseca del skeleton,
+  // - respeta una config opcional y un mínimo.
+  const calcDesiredHeight = () => {
+    const hostTop = Math.max(host.getBoundingClientRect().top, 0);
+    const viewportFill = Math.max(window.innerHeight - hostTop, 0);
+    const intrinsic = getSkeletonIntrinsic();
+    const containerH = container.offsetHeight || 0; // si empieza a pintar
+    return Math.max(cfgHeight, viewportFill, intrinsic, containerH, MIN_PX);
   };
+
   const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
   const showSkeleton = () => {
-    // Fijamos altura usando contenedor o el propio skeleton como fallback
-    const h = container.offsetHeight || spacer.offsetHeight || getSkeletonHeight();
-    spacer.style.height = `${h}px`;
+    const h = calcDesiredHeight();
+    spacer.style.height = `${h}px`;                // << empuja lo de abajo
     const skEl = overlay.querySelector('#maxmenu-skeleton');
     void skEl.offsetHeight;
     skEl.style.opacity = '1';
+    // doble frame para estabilizar mediciones si cambian fonts/viewport
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      spacer.style.height = `${calcDesiredHeight()}px`;
+    }));
   };
 
   const hideSkeleton = () => {
@@ -78,6 +101,20 @@
       });
     });
   };
+
+  // Mantener altura coherente mientras el skeleton esté visible
+  const syncIfVisible = () => {
+    const skEl = overlay.querySelector('#maxmenu-skeleton');
+    if (getComputedStyle(skEl).opacity !== '0') {
+      spacer.style.height = `${calcDesiredHeight()}px`;
+    }
+  };
+  window.addEventListener('resize', syncIfVisible);
+  window.addEventListener('orientationchange', syncIfVisible);
+  new ResizeObserver(syncIfVisible).observe(host);
+
+  // Primera altura (evita superposición sin empuje)
+  showSkeleton();
 
   // === VERSIONING (optimistic-first) ===
   const KEY_STORAGE_VERSION = `mmx_last_version_${restaurantId}`;
@@ -136,6 +173,9 @@
         else stable = 0;
         lastH = h;
         if (stable >= 3) { hideSkeleton(); return true; }
+      } else {
+        // mientras no pinta, garantizamos empuje correcto
+        syncIfVisible();
       }
     }
     return false;
@@ -188,7 +228,7 @@
     if (!nextVersion || nextVersion === currentVersion) return;
     console.log(`[MaxMenu] 🔄 Hot-swap → ${currentVersion} → ${nextVersion}`);
 
-    // 1) Asegurar skeleton ACTIVO antes de limpiar nada
+    // 1) Asegurar skeleton ACTIVO antes de limpiar nada (para que siempre empuje)
     showSkeleton();
 
     // 2) Dos frames para fijar layout del overlay
@@ -196,7 +236,7 @@
 
     // 3) Limpiar scripts antiguos y (opcional) contenedor
     removeExistingWidgetScripts();
-    container.innerHTML = ''; // dejamos el overlay + spacer sosteniendo el alto
+    container.innerHTML = ''; // overlay + spacer sostienen el alto
 
     // 4) Persistir y preparar desbloqueo para la versión final
     currentVersion = nextVersion;
@@ -240,11 +280,13 @@
     else hideSkeleton();
   }
 
-  // Seguridad: a los 12s atenuar skeleton si no hay nada
+  // Seguridad: si a los 12s no hay nada, atenuar skeleton (pero sigue empujando)
   setTimeout(() => {
     if (!(container.offsetHeight > 0 && container.querySelector('*'))) {
       const skEl = overlay.querySelector('#maxmenu-skeleton');
       skEl.style.opacity = '0.4';
+      // mantenemos spacer con su altura calculada para que nunca haya “blanco”
+      syncIfVisible();
     }
   }, 12000);
 })();
