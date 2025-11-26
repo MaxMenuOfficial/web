@@ -1,7 +1,0 @@
-vendor/
-node_modules/
-vendor/
-.git/
-*.log
-.DS_Store
-secrets/
