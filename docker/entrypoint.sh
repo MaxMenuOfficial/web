@@ -1,49 +1,26 @@
 #!/bin/bash
 set -e
 
-LOG_FILE="/var/www/html/logs/entrypoint.log"
-mkdir -p "$(dirname "$LOG_FILE")"
-touch "$LOG_FILE"
+echo "🚀 Entrando en entrypoint.sh"
 
-log() {
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_FILE"
-}
-
-log "🚀 Entrando en entrypoint.sh"
-
-# Default port fallback
+# Cloud Run / Docker local
 PORT="${PORT:-8080}"
-log "🔧 Usando puerto: $PORT"
+echo "🔧 Puerto detectado: $PORT"
 
-# Configurar Apache dinámicamente para el puerto correcto
-log "🛠️  Ajustando Apache para usar el puerto $PORT"
-sed -i "s/Listen 80/Listen ${PORT}/" /etc/apache2/ports.conf || log "❌ Error modificando ports.conf"
-sed -i "s/:80>/:${PORT}>/" /etc/apache2/sites-available/000-default.conf || log "❌ Error modificando 000-default.conf"
+# Ajustar Apache al puerto correcto
+sed -i "s/Listen 80/Listen ${PORT}/" /etc/apache2/ports.conf
+sed -i "s/:80>/:${PORT}>/" /etc/apache2/sites-available/000-default.conf
 
-# Verificar DocumentRoot
-if [ ! -f "/var/www/html/public/index.php" ]; then
-    log "❌ FALTA: /public/index.php no encontrado. Revisa COPY en Dockerfile"
-    ls -la /var/www/html/public | tee -a "$LOG_FILE"
-else
-    log "✅ /public/index.php detectado correctamente"
-fi
+# Diagnóstico mínimo (stdout → capturado por Cloud Run)
+echo "🔍 PHP version:"
+php -v
 
-# Crear carpeta de logs si no existe
-mkdir -p /var/www/html/logs/apache2 /var/log/supervisord
-chmod -R 777 /var/www/html/logs /var/log/supervisord
+echo "🔍 Apache version:"
+apache2 -v
 
-log "📂 Logs Apache → /var/www/html/logs/apache2"
-log "📂 Logs Supervisor → /var/log/supervisord"
+echo "🔍 Variables de entorno relevantes:"
+env | grep -E "APP_ENV|PROJECT_ROOT|GOOGLE|STRIPE|AUTH0" || true
 
-# Diagnóstico de entorno
-log "🔍 PHP:"
-php -v | tee -a "$LOG_FILE"
-
-log "🔍 Apache:"
-apache2 -v | tee -a "$LOG_FILE"
-
-log "🔍 Variables de entorno:"
-env | tee -a "$LOG_FILE"
-
-log "✅ Ejecutando supervisord..."
-exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+# Iniciar Apache en foreground (Cloud Run exige 1 único proceso)
+echo "🚀 Iniciando Apache (foreground)"
+exec apache2-foreground

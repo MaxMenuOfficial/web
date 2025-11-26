@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: menu-service-dev
+    container_name: web
     ports:
       - "8080:8080"
     volumes:

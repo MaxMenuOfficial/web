@@ -1,41 +1,20 @@
-# 🧱 Imagen base optimizada
-FROM europe-west1-docker.pkg.dev/maxmenu-447510/maxmenu-php-a/php82-grpc-imagick:latest
+FROM php:8.2-apache
 
-ENV COMPOSER_ALLOW_SUPERUSER=1
+# Activar mod_rewrite (muy común para cualquier web)
+RUN a2enmod rewrite
 
-WORKDIR /var/www/html
-
-# 🔁 Copiar primero los archivos de Composer
-COPY composer.json composer.lock ./
-RUN echo "📦 Instalando dependencias con Composer..." && \
-    composer install --no-dev --optimize-autoloader --no-interaction --no-progress || \
-    (echo "❌ Composer falló" && exit 1)
-
-# ✅ Copiar todos los archivos del proyecto
+# Copiar tu proyecto al public root
 COPY . /var/www/html
 
-# ✅ Copiar .env SOLO EN LOCAL
-# ⚠️ Este archivo debe estar en tu `.dockerignore` en producción
-#COPY .env /var/www/html/.env
+# Establecer permisos básicos
+RUN chown -R www-data:www-data /var/www/html
 
-# ⚙️ PHP + Apache + supervisord
-COPY docker/php.ini /usr/local/etc/php/php.ini
-COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY docker/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-# 🛠️ Configurar Apache y permitir .htaccess (para RewriteRules limpias tipo /restaurante)
-RUN a2enmod rewrite && \
-    sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf && \
-    echo '<Directory /var/www/html/public>\nOptions Indexes FollowSymLinks\nAllowOverride All\nRequire all granted\n</Directory>' >> /etc/apache2/apache2.conf
-
-# 📂 Crear logs
-RUN mkdir -p /var/www/html/logs/apache2 /var/log/supervisord && \
-    touch /var/www/html/logs/apache2/access.log /var/www/html/logs/apache2/error.log && \
-    chmod -R 777 /var/www/html/logs /var/log/supervisord
-
-# 🌍 Exponer puerto
+# Exponer puerto estándar de Apache en Cloud Run
 EXPOSE 8080
 
-# 🏁 Iniciar Apache + supervisord
-CMD ["/entrypoint.sh"]
+# Cloud Run usa 8080, así que lo configuramos
+ENV APACHE_LISTEN_PORT=8080
+RUN sed -i 's/80/${APACHE_LISTEN_PORT}/g' /etc/apache2/ports.conf
+RUN sed -i 's/:80/:${APACHE_LISTEN_PORT}/g' /etc/apache2/sites-available/000-default.conf
+
+CMD ["apache2-foreground"]
