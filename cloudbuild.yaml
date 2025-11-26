@@ -1,17 +1,27 @@
+substitutions:
+  _REPO: 'web'
+  _IMAGE: 'website'
+
 steps:
-  # 🛠️ 1. Construir imagen a partir del Dockerfile (usa la imagen base ya construida)
   - name: 'gcr.io/cloud-builders/docker'
     args:
       [
         'build',
-        '-t',
-        'europe-west1-docker.pkg.dev/maxmenu-447510/menu-service/menu-service',
+        '--cache-from', "europe-west1-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE}:latest",
+        '-f', 'Dockerfile',
+        '-t', "europe-west1-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE}:latest",
         '.'
       ]
 
-  # 🚀 2. Subir imagen a Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'europe-west1-docker.pkg.dev/maxmenu-447510/menu-service/menu-service']
+    args:
+      [
+        'push',
+        "europe-west1-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE}:latest"
+      ]
 
 images:
-  - 'europe-west1-docker.pkg.dev/maxmenu-447510/menu-service/menu-service'
+  - "europe-west1-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_IMAGE}:latest"
+
+options:
+  logging: CLOUD_LOGGING_ONLY
