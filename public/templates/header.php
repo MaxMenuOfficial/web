@@ -381,7 +381,7 @@
             <a href="index">Home</a>
             <a href="agency">Agency</a>
             <a href="pricing">Pricing</a>
-            <a href="embeddable">Embeddable</a>
+            <a href="embedded">Embedded</a>
         </nav>
 
         <!-- ACTIONS -->
@@ -410,8 +410,8 @@
             Home
             <span>See what MaxMenu can do for your restaurant.</span>
         </a>
-        <a href="embeddable" class="mm-mobile-link">
-            Embeddable
+        <a href="embedded" class="mm-mobile-link">
+            Embedded
             <span>Embed the menu once and control everything from the panel.</span>
         </a>
         <a href="agency" class="mm-mobile-link">

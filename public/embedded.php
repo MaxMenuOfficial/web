@@ -820,7 +820,7 @@ p {
                     allowed-domains:<br>
                     &nbsp;&nbsp;• restaurant.com<br>
                     &nbsp;&nbsp;• order.restaurant.com<br>
-                    &nbsp;&nbsp;• agency-preview.com<br>
+                    &nbsp;&nbsp;• custom-domain.com<br>
                     &nbsp;&nbsp;• custom-landing.com
                 </div>
 
@@ -864,8 +864,9 @@ p {
             Add the MaxMenu snippet to your website once, and move all future changes into the
             dashboard. The code stays the same. The experience keeps getting better.
         </p>
-
+        <a href="login">
         <button>Create your embeddable menu</button>
+        </a>
     </div>
 </div>
 

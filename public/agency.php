@@ -740,8 +740,6 @@ p {
 
     </div>
 </div>
-
-
 <!-- ========================= -->
 <!-- CTA FINAL                 -->
 <!-- ========================= -->
@@ -752,7 +750,6 @@ p {
             Create development restaurants, design premium menus, transfer ownership and earn a
             recurring 0.5% on every item payment your clients process. All from a single partner panel.
         </p>
-
         <button>Join MaxMenu as an agency</button>
     </div>
 </div>
