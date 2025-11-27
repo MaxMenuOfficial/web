@@ -542,7 +542,9 @@ p {
         </p>
 
         <div class="hero-cta">
-            <button>Generate your embed snippet</button>
+            <a href="https://mks03p-fm.myshopify.com/pages/menu">          
+                  <button>Example in Shopify</button>
+            </a>
         </div>
 
         <div class="hero-embed-layout">
@@ -561,14 +563,14 @@ p {
             </div>
 
             <div style="color:#019353;"class="embed-code-block">
-&lt;!-- MaxMenu embeddable menu --&gt;
-&lt;script
-  src="https://cdn.maxmenu.com/widget.js"
-  data-restaurant="your-restaurant-id"
-  async&gt;
-&lt;/script&gt;
+            &lt;!-- MaxMenu embeddable menu --&gt;
+            &lt;script
+            src="https://cdn.maxmenu.com/widget.js"
+            data-restaurant="your-restaurant-id"
+            async&gt;
+            &lt;/script&gt;
 
-&lt;div id="maxmenu-menuContainer"&gt;&lt;/div&gt;
+            &lt;div id="maxmenu-menuContainer"&gt;&lt;/div&gt;
             </div>
 
         </div>
