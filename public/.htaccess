@@ -1,33 +1,10 @@
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteBase /
+RewriteEngine On
 
-  # 1️⃣ Si accede a la raíz de menu.maxmenu.com, redirige a maxmenu.com
-  RewriteCond %{HTTP_HOST} ^menu\.maxmenu\.com$ [NC]
-  RewriteCond %{REQUEST_URI} ^/?$
-  RewriteRule ^ https://maxmenu.com [R=301,L]
+# Permitir usar URLs sin .php
+# /pricing        → /pricing.php
+# /about/contact  → /about/contact.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+?)/?$ $1.php [L]
 
-  # 🔁 2. Si la URL contiene mayúsculas, redirige a lowercase.php
-  RewriteCond %{REQUEST_URI} [A-Z]
-  RewriteRule ^(.*)$ redirect-to-lowercase.php [L]
-
-  # ► 3. No reescribas si es archivo o carpeta real
-  RewriteCond %{REQUEST_FILENAME} -f [OR]
-  RewriteCond %{REQUEST_FILENAME} -d
-  RewriteRule ^ - [L]
-
-  # 4️⃣ Menú público amigable: /<restaurantId> → /menu.php?id=<restaurantId>
-  RewriteRule ^([A-Za-z0-9_.-]+)$ /menu.php?id=$1 [QSA,L]
-
-  # 5️⃣ Widget: /widget/<restaurantId>/<version> → widget.php?id=<restaurantId>&version=<version>
-  # ⚠️ Esto NO se toca, queda exactamente como lo tenías
-  RewriteRule ^widget/([A-Za-z0-9_-]+)/([0-9]+)$ /widget/widget.php?id=$1&version=$2 [QSA,L]
-</IfModule>
-
-<IfModule mod_headers.c>
-  <FilesMatch "\.js$">
-    Header set Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"
-    Header set Pragma "no-cache"
-    Header set Expires "0"
-  </FilesMatch>
-</IfModule>

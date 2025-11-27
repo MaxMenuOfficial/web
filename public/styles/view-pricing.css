@@ -1,0 +1,353 @@
+
+/* 1) Contenedor principal */
+.contenedor-principal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 60px 20px 40px;
+  text-align: center;
+}
+
+/* 2) Encabezado (back + títulos) */
+.back-edit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.back-edit img { width: 50px; height: 50px; display: block; }
+
+.back-edit a { display: inline-flex; text-decoration: none; }
+
+.titulo {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: #000;
+}
+
+/* 3) Contenedor de planes (dos columnas alineadas arriba) */
+.planes-contenedor {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;      /* clave para alinear arriba */
+  gap: 32px;                    /* separación constante */
+  flex-wrap: wrap;              /* apila en móvil si es necesario */
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 4) Wrapper antiguo por plan: lo neutralizamos para que no recoloque */
+.pricing-table {
+  display: block;               /* evita el centrado vertical del flex anterior */
+  margin: 0;
+  padding: 0;
+  width: auto;
+}
+
+/* 5) Tarjeta del plan */
+.pricing-option {
+  background: #000;
+  border-radius: 30px;
+  padding: 40px 30px;
+  width: 100%;
+  max-width: 320px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+  transition: transform .25s ease;
+  display: flex;                /* para igualar alturas por contenido */
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.pricing-option:hover { transform: scale(1.02); }
+
+/* 6) Jerarquía tipográfica dentro de la tarjeta */
+.pricing-option h2 {
+  margin: 0 0 16px 0;
+  font-size: 22px;
+  font-weight: 800;
+  color: #000;
+  background: transparent;
+}
+
+.pricing-option h3 {
+  margin: 0 0 20px 0;
+  font-size: 16px;
+  font-weight: 800;
+  color: #0090e4;
+  line-height: 1.35;
+  background: transparent;
+}
+
+/* 7) Precio */
+.price {
+  margin: 0 0 24px 0;
+  font-size: 24px;
+  font-weight: 900;
+  color: #000;
+  background: transparent;
+}
+.price span {
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+}
+
+/* 8) Lista de features – ocupa el espacio flexible para empujar el botón abajo */
+.features {
+  list-style: none;
+  margin: 0 0 24px 0;
+  padding: 0;
+  text-align: left;
+  background: transparent;
+  flex: 1 1 auto;               /* clave para igualar altura de columnas */
+}
+
+.features p {
+  margin: 0 0 14px 0;
+  font-size: 16px;
+  color: #000;
+  display: flex;
+  align-items: center;
+  background: transparent;
+}
+
+.features p i {
+  display: inline-block;
+  margin-right: 10px;
+  color: #00c800;
+  line-height: 1;
+}
+
+/* 9) Botón de acción */
+.pricing-option form {
+  background: transparent;
+  margin: 0;                    /* margen se maneja en el botón */
+}
+
+.pricing-option form a {
+  background: #000;
+  color: #fff;
+  border: 5px solid #000;
+  padding: 15px 40px;
+  border-radius: 100px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease, transform .1s ease;
+  margin: 25px auto;
+  align-self: center;           /* centra el botón horizontalmente */
+}
+
+.pricing-option form a:hover {
+  background: #fff;
+  color: #000;
+  transform: translateY(-1px);
+}
+
+.pricing-option form a:active {
+  transform: translateY(0);
+}
+
+/* 10) Estado de plan activo (gestión) */
+#plan-activo .pricing-option {
+  background: rgba(255,255,255,0.0);
+  box-shadow: 0 0 30px rgba(0,0,0,0.3);
+}
+
+#plan-activo .pricing-option form a {
+  background: #000;
+  border: 0;
+  color: #fff;
+  font-size: 12px;
+  padding: 12px 28px;
+}
+
+/* 11) Responsivo */
+@media (max-width: 1024px) {
+  .pricing-option { max-width: 360px; } /* un poco más ancho en tablets */
+}
+
+@media (max-width: 720px) {
+  .contenedor-principal { padding: 40px 16px 32px; }
+  .planes-contenedor {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .pricing-option { max-width: 480px; }
+}
+/* 0) Botón dentro de la tarjeta, aunque NO haya <form> */
+.pricing-option > a.btn {
+  background: #fff;
+  color: #000;
+  border: 5px solid #000;
+  padding: 15px 40px;
+  border-radius: 100px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease, transform .1s ease;
+  margin: 25px auto;
+  align-self: center;
+  display: inline-block; /* asegura caja clickable */
+  text-decoration: none; /* quita subrayado */
+}
+
+.pricing-option > a.btn:hover {
+  background: #000;
+  color: #fff;
+  transform: translateY(-1px);
+}
+.pricing-option > a.btn:active { transform: translateY(0); }
+.pricing-option > a.btn:focus-visible {
+  outline: 3px solid #10ec00;
+  outline-offset: 3px;
+}/* Paletas premium por plan (sobreescriben las que tengas antes) */
+:root {
+  /* MAX (lo mantenemos) */
+  --max-blue: #000e4d;    /* azul casi negro */
+  --max-gold: #bea800;    /* dorado intenso */
+
+  /* BASIC */
+  --basic-border: #5f91ef;       /* índigo */
+  --basic-text:   #7979ff;       /* blanco con tinte lila */
+  --basic-button-bg:   #4680e5;
+  --basic-button-text: #0b1120;
+
+  /* FREE */
+  --free-border:  #95f4b8;       /* verde premium */
+  --free-text:    #76c29e;       /* blanco menta muy suave */
+  --free-button-bg:   #00561f;
+  --free-button-text: #cdfff3;
+}
+
+/* === PLAN MAX (Pro) – lo dejamos en el patrón que ya te gusta === */
+#plan-pro.pricing-option {
+  background: transparent !important;
+  border: 2px solid var(--max-blue);
+  box-shadow: 0 0 30px rgba(136, 100, 0, 0.25);
+}
+
+#plan-pro h2,
+#plan-pro h3,
+#plan-pro .price,
+#plan-pro .price span,
+#plan-pro .features li,
+#plan-pro .features li b {
+  color: var(--max-gold) !important;
+}
+
+#plan-pro .features,
+#plan-pro .features li {
+  background: transparent !important;
+  font-size: 15px;
+  letter-spacing: 1px;
+  margin: 10px;
+}
+
+#plan-pro .features i {
+  color: var(--max-gold) !important;
+}
+
+#plan-pro.pricing-option > a.btn {
+  background: var(--max-gold) !important;
+  color: var(--max-blue) !important;
+  border: 2px solid var(--max-gold) !important;
+}
+#plan-pro.pricing-option > a.btn:hover {
+  background: transparent !important;
+  color: var(--max-gold) !important;
+  border-color: var(--max-gold) !important;
+}
+
+/* === PLAN BASIC – borde índigo, texto lila claro === */
+#plan-basic.pricing-option {
+  background: transparent !important;
+  border: 2px solid var(--basic-border);
+  box-shadow: 0 0 25px rgba(79, 70, 229, 0.32);
+}
+
+#plan-basic h2,
+#plan-basic h3,
+#plan-basic .price,
+#plan-basic .price span,
+#plan-basic .features li,
+#plan-basic .features li b {
+  color: var(--basic-text) !important;      /* texto lila claro */
+}
+
+#plan-basic .features,
+#plan-basic .features li {
+  background: transparent !important;
+  font-size: 15px;
+  letter-spacing: 1px;
+  margin: 10px;
+}
+
+#plan-basic .features i {
+  color: var(--basic-border) !important;    /* iconos con el mismo índigo del borde */
+}
+
+/* Botón BASIC – fondo índigo, texto casi blanco */
+#plan-basic.pricing-option > a.btn {
+  background: var(--basic-button-bg) !important;
+  color: var(--basic-button-text) !important;
+  border: 2px solid var(--basic-button-bg) !important;
+}
+#plan-basic.pricing-option > a.btn:hover {
+  background: transparent !important;
+  color: var(--basic-border) !important;
+  border-color: var(--basic-border) !important;
+}
+
+/* === PLAN FREE – borde verde, texto blanco menta === */
+#plan-free.pricing-option {
+  background: transparent !important;
+  border: 2px solid var(--free-border);
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.30);
+}
+
+#plan-free h2,
+#plan-free h3,
+#plan-free .price,
+#plan-free .price span,
+#plan-free .features li,
+#plan-free .features li b {
+  color: var(--free-text) !important;       /* texto blanco menta */
+}
+
+#plan-free .features,
+#plan-free .features li {
+  background: transparent !important;
+  font-size: 15px;
+  letter-spacing: 1px;
+  margin: 10px;
+}
+
+#plan-free .features i {
+  color: var(--free-border) !important;     /* iconos en verde */
+}
+
+/* Botón FREE – verde sólido, texto oscuro para contraste */
+#plan-free.pricing-option > a.btn {
+  background: var(--free-button-bg) !important;
+  color: var(--free-button-text) !important;
+  border: 2px solid var(--free-button-bg) !important;
+}
+#plan-free.pricing-option > a.btn:hover {
+  background: transparent !important;
+  color: var(--free-border) !important;
+  border-color: var(--free-border) !important;
+}
+
+/* Limpieza: tu HTML usa <li>, ocultamos el estilo antiguo basado en <p> */
+.features p,
+.features p i {
+  display: none !important;
+}
