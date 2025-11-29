@@ -1,5 +1,6 @@
 <footer class="footer" id="footer-maxmenu">
   <div class="footer-container">
+    
     <div class="footer-left">
       <p>© 2025 <strong>MaxMenu Inc.</strong><br>All rights reserved.</p>
     </div>
