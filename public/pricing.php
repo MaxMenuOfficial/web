@@ -31,7 +31,7 @@
     <meta name="twitter:image" content="https://cdn.maxmenu.com/w/img/wpp.png">
 
    <!-- Favicon / theme -->
-    <link rel="icon" href="https://cdn.maxmenu.com/w/img/logoaa.png">
+    <link rel="icon" href="https://cdn.maxmenu.com/w/img/logoaa.ico">
     <link rel="apple-touch-icon" href="https://cdn.maxmenu.com/w/img/apple.png">
     <meta name="theme-color" content="#000000">
 
