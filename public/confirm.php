@@ -85,7 +85,7 @@ if ($success === null) {
 
 
    
-	<?php include_once ('footer.php'); ?>
+	<?php include_once ('templates/footer.php'); ?>
 
 	
 </body>
