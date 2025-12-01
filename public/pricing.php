@@ -22,13 +22,13 @@
     <meta property="og:title" content="MaxMenu — Pricing for Invisible Menu Infrastructure">
     <meta property="og:description" content="Transparent pricing for premium digital menus. Multilingual, embeddable and designed for modern restaurants and agencies. No hidden fees.">
     <meta property="og:url" content="https://maxmenu.com/pricing">
-    <meta property="og:image" content="https://maxmenu.com/assets/social/maxmenu-pricing.jpg">
+    <meta property="og:image" content="https://cdn.maxmenu.com/w/img/wpp.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="MaxMenu — Pricing for Invisible Menu Infrastructure">
     <meta name="twitter:description" content="Explore MaxMenu plans. Multilingual, embeddable digital menus with real-time control and premium design. No surprises.">
-    <meta name="twitter:image" content="https://maxmenu.com/assets/social/maxmenu-pricing.jpg">
+    <meta name="twitter:image" content="https://cdn.maxmenu.com/w/img/wpp.png">
 
    <!-- Favicon / theme -->
     <link rel="icon" href="https://cdn.maxmenu.com/w/img/logoaa.png">
