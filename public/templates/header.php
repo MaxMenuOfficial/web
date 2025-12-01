@@ -2,7 +2,7 @@
     <div class="mm-header-inner">
 
         <div class="mm-logo">
-            <img style="width:50px; height:45px;" src="img/logoaa.png" alt="MaxMenu logo">
+            <img style="width:50px; height:45px;" src="https://cdn.maxmenu.com/w/img/logoaa.png" alt="MaxMenu logo">
                <button id="themeToggle" class="mm-theme-toggle">
                 <div class="toggle-circle"></div>
             </button>
@@ -21,7 +21,7 @@
 
 
             <a href="login">
-                <img src="img/user.svg" alt="Login">
+                <img src="https://cdn.maxmenu.com/w/img/user.svg" alt="Login">
             </a>
 
            <div id="mmHamburger" class="mm-hamburger">

@@ -138,7 +138,7 @@
             </div>
 
             <div class="media-frame">
-              <img src="img/stack-3.png" style="width:400px;" alt="">
+              <img src="https://cdn.maxmenu.com/w/img/stack-3.png" style="width:400px;" alt="">
             </div>
 
 
@@ -177,32 +177,32 @@
              
              <div class="remote-list">
                     <div class="remote-item">
-                        <img src="img/color.svg" alt="Colors">
+                        <img src="https://cdn.maxmenu.com/w/img/color.svg" alt="Colors">
                         <span>Colors: backgrounds, panels, accents and neutrals.</span>
                     </div>
 
                     <div class="remote-item">
-                        <img src="img/typography.svg" alt="Typography">
+                        <img src="https://cdn.maxmenu.com/w/img/typography.svg" alt="Typography">
                         <span>Typography: families, weights and sizes for titles, descriptions and prices.</span>
                     </div>
 
                     <div class="remote-item">
-                        <img src="img/border.svg" alt="Borders & radius">
+                        <img src="https://cdn.maxmenu.com/w/img/border.svg" alt="Borders & radius">
                         <span>Borders & radius: card edges, separators and outlines.</span>
                     </div>
 
                     <div class="remote-item">
-                        <img src="img/space.svg" alt="Spacing">
+                        <img src="https://cdn.maxmenu.com/w/img/space.svg" alt="Spacing">
                         <span>Spacing: vertical rhythm between categories, items and sections.</span>
                     </div>
 
                     <div class="remote-item">
-                        <img src="img/circle.svg" alt="Allergens & icons">
+                        <img src="https://cdn.maxmenu.com/w/img/circle.svg" alt="Allergens & icons">
                         <span>Allergens & icons: labels, badges and iconography.</span>
                     </div>
 
                     <div class="remote-item">
-                        <img src="img/image.svg" alt="Images">
+                        <img src="https://cdn.maxmenu.com/w/img/image.svg" alt="Images">
                         <span>Images: full-bleed or transparent dishes over neutral surfaces.</span>
                     </div>
                 </div>
@@ -213,7 +213,7 @@
             </div>
 
                <div class="media-frame">
-                    <img src="img/widget.png" style="width:500px; border-radius:20p;"  alt="">
+                    <img src="https://cdn.maxmenu.com/w/img/widget.png" style="width:500px; border-radius:20p;"  alt="">
                 </div>
 
 
@@ -320,7 +320,7 @@
                 </div>
 
                 <div class="media-frame">
-                    <img src="img/domain.png" style="width:500px; border-radius:20p;"  alt="">
+                    <img src="https://cdn.maxmenu.com/w/img/domain.png" style="width:500px; border-radius:20p;"  alt="">
                 </div>
 
             </div>

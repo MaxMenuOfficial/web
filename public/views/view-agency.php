@@ -3,7 +3,6 @@
 <!-- ========================= -->
 <div class="section hero">
     <div class="section-inner">
-
         <div class="section-tag">Agencies</div>
 
         <h1 class="hero-title">
@@ -261,3 +260,4 @@
         <button>Join MaxMenu as an agency</button>
     </div>
 </div>
+

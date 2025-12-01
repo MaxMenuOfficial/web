@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <!-- Basic encoding -->
     <meta charset="UTF-8">
@@ -21,24 +21,35 @@
     <meta property="og:title" content="MaxMenu | Login">
     <meta property="og:description" content="Log in to MaxMenu and access your restaurant’s digital menu dashboard. Manage items, translations and design with speed, control and elegance.">
     <meta property="og:url" content="https://maxmenu.com/login">
-    <meta property="og:image" content="https://maxmenu.com/img/maxmenu-v.png">
+    <meta property="og:image" content="https://cdn.maxmenu.com/w/img/wpp.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="MaxMenu | Login">
     <meta name="twitter:description" content="Secure access to your restaurant’s digital menu manager. Designed for speed, control and elegance.">
-    <meta name="twitter:image" content="https://maxmenu.com/img/maxmenu-v.png">
+    <meta name="twitter:image" content="https://cdn.maxmenu.com/w/img/wpp.png">
 
     <!-- Robots: login NO interesa indexarlo -->
     <meta name="robots" content="noindex, nofollow">
 
-    <!-- Favicon -->
-    <link rel="icon" href="/img/logo-app.png">
+    <!-- Favicon / theme -->
+    <link rel="icon" href="https://cdn.maxmenu.com/w/img/logoaa.ico">
+    <link rel="apple-touch-icon" href="https://cdn.maxmenu.com/w/img/apple.png">
+    <meta name="theme-color" content="#000000">
 
     <!-- CSS -->
     <link rel="stylesheet" href="styles/header.css">
     <link rel="stylesheet" href="styles/view-login.css">
     <link rel="stylesheet" href="styles/footer.css">
+
+    <!-- Theme sync (igual que en el resto de la web) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const html = document.documentElement;
+            const saved = localStorage.getItem("maxmenu-theme");
+            if (saved) html.setAttribute("data-theme", saved);
+        });
+    </script>
 </head>
 <body>
 

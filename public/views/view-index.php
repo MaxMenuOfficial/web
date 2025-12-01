@@ -28,7 +28,7 @@
             <!-- Frame de vídeo / demo -->
             <div class="" style="backgroud-color:transparent;">
                
-                     <img src="img/bg1.png" style="width: 500px;">
+                     <img src="https://cdn.maxmenu.com/w/img/bg1.png" style="width: 500px;">
              
             </div>
 
@@ -187,7 +187,7 @@
 
             <!-- Imagen de preview del panel de diseño -->
             <div class="">
-                <img src="img/web-color.png" style="width: 300px;">
+                <img src="https://cdn.maxmenu.com/w/img/web-color.png" style="width: 300px;">
             </div>
         </div>
 
@@ -257,7 +257,7 @@
 
             <!-- Imagen/preview de ítems con iconos de alérgenos -->
             <div class="media-frame">
-                <img src="img/alergen.png" style="width: 300px;">
+                <img src="https://cdn.maxmenu.com/w/img/alergen.png" style="width: 300px;">
             </div>
 
         </div>
@@ -422,7 +422,7 @@
             </div>
 
             <div class="">
-               <img src="img/platforms.png" style="width: 300px;"
+               <img src="https://cdn.maxmenu.com/w/img/platforms.png" style="width: 300px;"
                     alt="Menu with buttons linking to multiple delivery platforms">
             </div>
 
@@ -494,7 +494,7 @@
             </div>
 
             <div class="">
-               <img src="img/language.png" style="width: 300px;">
+               <img src="https://cdn.maxmenu.com/w/img/language.png" style="width: 300px;">
             </div>
 
         </div>
@@ -546,7 +546,7 @@
             <!-- Imagen de UI mostrando categorías/subcategorías -->
             <div class="media-frame">
              
-                    <img src="img/subcategory.png" style="width: 380px; height:400px;"
+                    <img src="https://cdn.maxmenu.com/w/img/subcategory.png" style="width: 380px; height:400px;"
                          alt="Category and subcategory structure for brunch and daily menu">
         
             </div>
@@ -589,7 +589,7 @@
             </div>
 
             <div class="">
-              <img src="img/bg0.png" style="width: 380px;">
+              <img src="https://cdn.maxmenu.com/w/img/bg0.png" style="width: 380px;">
             </div>
 
         </div>

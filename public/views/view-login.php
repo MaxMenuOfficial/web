@@ -12,7 +12,7 @@
                     <h2>Owner</h2>
                     <p>Manage your restaurants and take ownership if an agency created one for you.</p>
                 </div>
-                <img src="img/arrow-r.png" alt="" class="role-card-icon">
+                <img src="https://cdn.maxmenu.com/w/img/arrow-r.png" alt="" class="role-card-icon">
             </a>
 
             <!-- AGENCY -->
@@ -21,7 +21,7 @@
                     <h2>Agency</h2>
                     <p>Create and manage restaurants for clients, and assign ownership when ready.</p>
                 </div>
-                <img src="img/arrow-r.png" alt="" class="role-card-icon">
+                <img src="https://cdn.maxmenu.com/w/img/arrow-r.png" alt="" class="role-card-icon">
             </a>
 
             <!-- Si en el futuro activas más roles, los añades aquí

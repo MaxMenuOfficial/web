@@ -21,17 +21,20 @@
     <meta property="og:site_name" content="MaxMenu">
     <meta property="og:title" content="MaxMenu — Embeddable Menu Control for Restaurants">
     <meta property="og:description" content="Embed a fully customizable, multilingual digital menu inside any website, with instant control over items, design, translations and pricing.">
-    <meta property="og:url" content="https://maxmenu.com/embedded-menu-control">
-    <meta property="og:image" content="https://maxmenu.com/assets/social/maxmenu-embedded.jpg">
+    <meta property="og:url" content="https://maxmenu.com/embedded">
+    <meta property="og:image" content="https://cdn.maxmenu.com/w/img/wpp.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="MaxMenu — Embeddable Menu Control for Restaurants">
     <meta name="twitter:description" content="An embeddable digital menu widget for restaurants. Control design, items and translations from a single dashboard, without touching the website code.">
-    <meta name="twitter:image" content="https://maxmenu.com/assets/social/maxmenu-embedded.jpg">
+    <meta name="twitter:image" content="https://cdn.maxmenu.com/w/img/wpp.png">
 
     <!-- Favicon / theme -->
-    <link rel="icon" href="/img/logo-app.png">
+    <!-- Favicon -->
+    <link rel="icon"  href="https://cdn.maxmenu.com/w/img/logoaa.ico">
+        <link rel="apple-touch-icon" href="https://cdn.maxmenu.com/w/img/apple.png">
+
     <meta name="theme-color" content="#000000">
 
     <!-- JSON-LD: Organization + Website + WebPage -->

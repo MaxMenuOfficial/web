@@ -1,0 +1,111 @@
+/* ========================= */
+/*      HERO / BANNER        */
+/* ========================= */
+#banner {
+    /* Si hay background-image, esto sigue funcionando */
+    background-size: cover;
+    background-position: center;
+    /* Fondo según tema */
+    background-color: var(--color-bg);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px; /* margen interno para móviles */
+}
+
+.banner-content {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+/* Título grande dentro del banner */
+.banner-content h1 {
+    font-family: var(--font-main);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin: 0 16px;
+
+    /* Responsive con clamp */
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+
+    color: var(--color-text);
+}
+
+/* Párrafo dentro del banner */
+.banner-content p,
+.titulos-descripcion p {
+    margin: 18px 20px 0;
+    letter-spacing: 0.02em;
+    font-size: clamp(1rem, 2.3vw, 1.25rem);
+    font-family: var(--font-main);
+    color: var(--color-text-soft);
+    line-height: 1.6;
+}
+
+/* ========================= */
+/*          BOTONES          */
+/* ========================= */
+
+a.btn-banner {
+    display: inline-block;
+    margin: 18px 10px 0;
+    padding: 12px 26px;
+
+    text-decoration: none;
+    text-transform: uppercase;
+    font-family: var(--font-main);
+    font-weight: 500;
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-panel-2);
+    color: var(--color-text);
+
+    transition:
+        background-color var(--transition),
+        color var(--transition),
+        transform var(--transition),
+        box-shadow var(--transition);
+}
+
+a.btn-banner:hover {
+    background-color: var(--color-panel);
+    color: var(--color-text);
+    transform: translateY(-1px) scale(1.03);
+    box-shadow: 0 14px 30px rgba(0,0,0,0.28);
+}
+
+/* ========================= */
+/*        RESPONSIVE         */
+/* ========================= */
+
+@media (max-width: 768px) {
+    #banner {
+        padding: 80px 16px;
+    }
+
+    .banner-content h1 {
+        margin: 0 10px;
+    }
+
+    .banner-content p,
+    .titulos-descripcion p {
+        margin: 14px 10px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .banner-content h1 {
+        font-size: clamp(1.8rem, 8vw, 2.2rem);
+    }
+
+    a.btn-banner {
+        font-size: 0.85rem;
+        padding: 10px 20px;
+        margin-top: 16px;
+    }
+}

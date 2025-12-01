@@ -20,18 +20,19 @@
     <meta property="og:site_name" content="MaxMenu">
     <meta property="og:title" content="MaxMenu for Agencies — Premium digital menus for restaurant clients">
     <meta property="og:description" content="MaxMenu helps creative agencies launch high-converting digital menus for restaurant clients, turning every restaurant website into a recurring revenue channel.">
-    <meta property="og:url" content="https://maxmenu.com/agencies">
-    <meta property="og:image" content="https://maxmenu.com/assets/social/maxmenu-agencies.jpg">
+    <meta property="og:url" content="https://maxmenu.com/agency">
+    <meta property="og:image" content="https://cdn.maxmenu.com/w/img/wpp.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="MaxMenu for Agencies — Premium digital menus for restaurant clients">
     <meta name="twitter:description" content="MaxMenu helps creative agencies launch high-converting digital menus for restaurant clients, turning every restaurant website into a recurring revenue channel.">
-    <meta name="twitter:image" content="https://maxmenu.com/assets/social/maxmenu-agencies.jpg">
+    <meta name="twitter:image" content="https://cdn.maxmenu.com/w/img/wpp.png">
 
     <!-- Favicon / theme -->
-    <link rel="icon" href="/favicon.ico" sizes="any">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <!-- Favicon -->
+    <link rel="icon"  href="https://cdn.maxmenu.com/w/img/logoaa.ico">
+    <link rel="apple-touch-icon" href="https://cdn.maxmenu.com/w/img/apple.png">
     <meta name="theme-color" content="#000000">
 
     <!-- JSON-LD: Organization + Website + WebPage (Google rich understanding) -->

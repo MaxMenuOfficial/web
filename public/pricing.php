@@ -30,8 +30,9 @@
     <meta name="twitter:description" content="Explore MaxMenu plans. Multilingual, embeddable digital menus with real-time control and premium design. No surprises.">
     <meta name="twitter:image" content="https://maxmenu.com/assets/social/maxmenu-pricing.jpg">
 
-    <!-- Favicon / theme -->
-    <link rel="icon" href="/img/logo-app.png">
+   <!-- Favicon / theme -->
+    <link rel="icon" href="https://cdn.maxmenu.com/w/img/logoaa.png">
+    <link rel="apple-touch-icon" href="https://cdn.maxmenu.com/w/img/apple.png">
     <meta name="theme-color" content="#000000">
 
     <!-- JSON-LD: Organization + Website + Pricing WebPage -->

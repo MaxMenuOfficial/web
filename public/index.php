@@ -22,16 +22,21 @@
     <meta property="og:title" content="MaxMenu — Invisible Menu Infrastructure for Restaurants & Agencies">
     <meta property="og:description" content="Embeddable digital menu infrastructure. Design once, deploy everywhere, and control every restaurant menu from a single dashboard.">
     <meta property="og:url" content="https://maxmenu.com">
-    <meta property="og:image" content="https://maxmenu.com/assets/social/maxmenu-home.jpg">
+    <meta property="og:image" content="https://cdn.maxmenu.com/w/img/wpp.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="MaxMenu — Invisible Menu Infrastructure for Restaurants & Agencies">
     <meta name="twitter:description" content="An invisible, embeddable menu layer for restaurants and agencies. Control design, items, translations and payments from one place.">
-    <meta name="twitter:image" content="https://maxmenu.com/assets/social/maxmenu-home.jpg">
+    <meta name="twitter:image" content="https://cdn.maxmenu.com/w/img/wpp.png">
 
     <!-- Favicon / theme -->
-    <link rel="icon" href="/img/logo-app.png">
+    <!-- Favicon -->
+   <!-- Favicon / theme -->
+    <link rel="icon" href="https://cdn.maxmenu.com/w/img/logoaa.png">
+    <link rel="apple-touch-icon" href="https://cdn.maxmenu.com/w/img/apple.png">
+    <meta name="theme-color" content="#000000">
+
     <meta name="theme-color" content="#000000">
 
     <!-- JSON-LD: Organization + Website + Home WebPage -->
