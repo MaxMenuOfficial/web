@@ -55,7 +55,7 @@
 
     <?php include_once 'templates/header.php'; ?>
     <?php include_once 'views/view-login.php'; ?>
-    <?php include_once 'templates/footer.php'; ?>
+
 
 </body>
 </html>
