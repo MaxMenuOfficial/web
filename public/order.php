@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Page Title -->
-    <title>MaxMenu | Login</title>
+    <title>MaxMenu | Order & Pay</title>
 
     <!-- Meta Description -->
     <meta name="description" content="Log in to MaxMenu and access your restaurant’s digital menu dashboard. Manage items, translations and design with speed, control and elegance.">
@@ -54,7 +54,14 @@
 <body>
 
     <?php include_once 'templates/header.php'; ?>
-    <?php include_once 'views/view-login.php'; ?>
+
+        
+    <div id="maxmenu-menuContainer" 
+            data-restaurant-id="simona">
+    </div>
+    <script src="https://cdn.maxmenu.com/widget.js"></script>
+
+                
 
 </body>
 </html>
