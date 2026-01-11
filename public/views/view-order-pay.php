@@ -7,11 +7,11 @@
     <div class="section-tag">Order &amp; Pay</div>
 
     <h1 class="hero-title">
-     Turn your menu into a checkout surface. Orders routed to stations. Payments routed to bank account
+     Turn your menu into a checkout surface. Orders routed to stations. Payments to your bank account
     </h1>
 
     <p class="hero-sub">
-      MaxMenu is not “a QR menu with a button”. It’s an embeddable commerce layer:
+      MaxMenu is not “a QR menu with a button”. It’s an embeddable gastronomy commerce layer:
       customers order &amp; pay from any website, and your kitchen/bar receives the order instantly
       through a station-based workflow — with clean payouts and transparent fees.
     </p>
@@ -20,6 +20,8 @@
       <a href="/pricing"><button>See pricing &amp; fees</button></a>
     </div>
 
+
+    
     <!-- 2-col hero layout usando clases existentes -->
     <div class="hero-embed-layout">
 
@@ -75,105 +77,6 @@
   </div>
 </div>
 
-
-<!-- ========================= -->
-<!-- KDS / STATIONS             -->
-<!-- ========================= -->
-<div class="section">
-  <div class="section-inner">
-
-    <div class="section-header">
-      <div class="section-tag">KDS</div>
-      <h2>Station-based execution: kitchen, bar, cocktails… or just one station.</h2>
-      <p>
-        MaxMenu routes items to stations so your operation stays sane.
-        Multi-station for real venues, single-station for small ones.
-      </p>
-    </div>
-
-    <div class="remote-grid">
-
-      <div class="remote-card">
-        <h3>Multi-station</h3>
-        <p>
-          Remove chaos: kitchen doesn’t see bar noise, bar doesn’t see kitchen backlog.
-        </p>
-        <div class="remote-list">
-          <div class="remote-item"><strong>Kitchen</strong>&nbsp;— Food preparation pipeline</div>
-          <div class="remote-item"><strong>Bar</strong>&nbsp;— Fast output queue</div>
-          <div class="remote-item"><strong>Cocktails</strong>&nbsp;— Different SLA station</div>
-          <div class="remote-item"><strong>Bakery</strong>&nbsp;— Different SLA station</div>
-          <div class="remote-item"><strong>Other</strong>&nbsp;— Etc.</div>
-        </div>
-      </div>
-
-      <div class="remote-card">
-        <h3>Single-station</h3>
-        <p>
-          Same flow, simpler topology. One station receives all items in one queue.
-        </p>
-        <div class="remote-list">
-          <div class="remote-item"><strong>Station:</strong>&nbsp;Main</div>
-          <div class="remote-item"><strong>All items</strong>&nbsp;→ one execution queue</div>
-          <div class="remote-item"><strong>Upgrade later</strong>&nbsp;→ split stations when needed</div>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</div>
-
-
-<!-- ========================= -->
-<!-- POS INTEGRATION            -->
-<!-- ========================= -->
-<div class="section">
-  <div class="section-inner">
-
-    <div class="section-header">
-      <div class="section-tag">POS</div>
-      <h2>Use MaxMenu standalone or alongside your POS.</h2>
-      <p>
-        You don’t need to rebuild your operation. MaxMenu can run end-to-end, or as a secondary layer
-        that feeds your existing stack.
-      </p>
-    </div>
-
-    <div class="remote-grid">
-
-      <div class="remote-card">
-        <h3>Standalone mode</h3>
-        <p>
-          MaxMenu handles ordering, payments, station routing, and execution.
-          Fastest path for modern operations.
-        </p>
-        <div class="remote-list">
-          <div class="remote-item"><strong>No POS dependency</strong></div>
-          <div class="remote-item"><strong>Immediate station jobs</strong></div>
-          <div class="remote-item"><strong>Clean Stripe payouts</strong></div>
-        </div>
-      </div>
-
-      <div class="remote-card">
-        <h3>POS-connected mode (secondary system)</h3>
-        <p>
-          MaxMenu becomes the customer-facing checkout surface; your POS remains your internal system of record.
-          This is how you <strong>alleviate workload</strong> without ripping anything out.
-        </p>
-        <div class="remote-list">
-          <div class="remote-item"><strong>Keep accounting &amp; ops</strong>&nbsp;inside POS</div>
-          <div class="remote-item"><strong>MaxMenu captures demand</strong>&nbsp;during peak load</div>
-          <div class="remote-item"><strong>Lower friction</strong>&nbsp;for staff and customers</div>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</div>
-
-
 <!-- ========================= -->
 <!-- HOW IT WORKS              -->
 <!-- ========================= -->
@@ -184,7 +87,7 @@
       <div class="section-tag">How it works</div>
       <h2>From zero to live in under 30 minutes.</h2>
       <p>
-        MaxMenu is not a plugin. It’s infrastructure. Pre-configured, secure, and ready to deploy — on any website,
+        MaxMenu is not a plugin. It’s infrastructure for gastronomy. Pre-configured, secure, and ready to deploy — on any website,
         with your branding, and native Stripe Elements checkout already built in.
       </p>
     </div>
@@ -338,6 +241,108 @@ once and start receiving payments — directly into your bank account.
 
   </div>
 </div>
+
+
+
+
+<!-- ========================= -->
+<!-- KDS / STATIONS             -->
+<!-- ========================= -->
+<div class="section">
+  <div class="section-inner">
+
+    <div class="section-header">
+      <div class="section-tag">KDS</div>
+      <h2>Station-based execution: kitchen, bar, cocktails… or just one station.</h2>
+      <p>
+        MaxMenu routes items to stations so your operation stays sane.
+        Multi-station for real venues, single-station for small ones.
+      </p>
+    </div>
+
+    <div class="remote-grid">
+
+      <div class="remote-card">
+        <h3>Multi-station</h3>
+        <p>
+          Remove chaos: kitchen doesn’t see bar noise, bar doesn’t see kitchen backlog.
+        </p>
+        <div class="remote-list">
+          <div class="remote-item"><strong>Kitchen</strong>&nbsp;— Food preparation pipeline</div>
+          <div class="remote-item"><strong>Bar</strong>&nbsp;— Fast output queue</div>
+          <div class="remote-item"><strong>Cocktails</strong>&nbsp;— Different SLA station</div>
+          <div class="remote-item"><strong>Bakery</strong>&nbsp;— Different SLA station</div>
+          <div class="remote-item"><strong>Other</strong>&nbsp;— Etc.</div>
+        </div>
+      </div>
+
+      <div class="remote-card">
+        <h3>Single-station</h3>
+        <p>
+          Same flow, simpler topology. One station receives all items in one queue.
+        </p>
+        <div class="remote-list">
+          <div class="remote-item"><strong>Station:</strong>&nbsp;Main</div>
+          <div class="remote-item"><strong>All items</strong>&nbsp;→ one execution queue</div>
+          <div class="remote-item"><strong>Upgrade later</strong>&nbsp;→ split stations when needed</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ========================= -->
+<!-- POS INTEGRATION            -->
+<!-- ========================= -->
+<div class="section">
+  <div class="section-inner">
+
+    <div class="section-header">
+      <div class="section-tag">POS</div>
+      <h2>Use MaxMenu standalone or alongside your POS.</h2>
+      <p>
+        You don’t need to rebuild your operation. MaxMenu can run end-to-end, or as a secondary layer
+        that feeds your existing stack.
+      </p>
+    </div>
+
+    <div class="remote-grid">
+
+      <div class="remote-card">
+        <h3>Standalone mode</h3>
+        <p>
+          MaxMenu handles ordering, payments, station routing, and execution.
+          Fastest path for modern operations.
+        </p>
+        <div class="remote-list">
+          <div class="remote-item"><strong>No POS dependency</strong></div>
+          <div class="remote-item"><strong>Immediate station jobs</strong></div>
+          <div class="remote-item"><strong>Clean Stripe payouts</strong></div>
+        </div>
+      </div>
+
+      <div class="remote-card">
+        <h3>POS-connected mode (secondary system)</h3>
+        <p>
+          MaxMenu becomes the customer-facing checkout surface; your POS remains your internal system of record.
+          This is how you <strong>alleviate workload</strong> without ripping anything out.
+        </p>
+        <div class="remote-list">
+          <div class="remote-item"><strong>Keep accounting &amp; ops</strong>&nbsp;inside POS</div>
+          <div class="remote-item"><strong>MaxMenu captures demand</strong>&nbsp;during peak load</div>
+          <div class="remote-item"><strong>Lower friction</strong>&nbsp;for staff and customers</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
 
 
 <!-- ========================= -->
@@ -535,13 +540,13 @@ once and start receiving payments — directly into your bank account.
       <div class="remote-card">
         <h3>Don’t use it when</h3>
         <div class="remote-list">
-          <div class="remote-item">Your basket is 3.5€ coffee-only and you refuse minimums.</div>
+          <div class="remote-item">Your basket is 3.5€ coffee-only </div>
           <div class="remote-item">Human interaction is the core of the experience (fine dining).</div>
           <div class="remote-item">Your staff can’t operationalize station execution (no process).</div>
           <div class="remote-item">You only want a static QR menu (no payments, no routing).</div>
         </div>
         <p style="margin-top:14px;">
-          The system is deterministic. If the venue has no discipline, software can’t fabricate it.
+          The system is deterministic.
         </p>
       </div>
 
@@ -559,7 +564,7 @@ once and start receiving payments — directly into your bank account.
 
     <div class="section-header">
       <div class="section-tag">Why MaxMenu</div>
-      <h2>Not a QR menu. An infrastructure layer.</h2>
+      <h2>Not a QR menu. An infrastructure layer for gastronomy in real time</h2>
       <p>
         Most “order &amp; pay” tools try to replace the restaurant’s stack. That’s why they fail in real ops.
         MaxMenu can run as a <strong>secondary system</strong>: you keep your POS, keep your habits,
@@ -616,54 +621,78 @@ once and start receiving payments — directly into your bank account.
         Fees, minimums, domain control, station routing — no fluff.
       </p>
     </div>
-
-    <!-- Usamos remote-grid (2 columnas) con múltiples cards -->
-    <div class="remote-grid">
-
-      <div class="remote-card">
-        <h3>Do we need a QR code?</h3>
-        <p>
-          No. QR is just distribution. Order &amp; Pay is embeddable on any domain.
-        </p>
-      </div>
-
-      <div class="remote-card">
-        <h3>What about a 3.5€ coffee?</h3>
-        <p>
-          Use minimum order rules (e.g. 8–10€) or keep Order &amp; Pay for food baskets where it dominates.
-        </p>
-      </div>
-
-      <div class="remote-card">
-        <h3>Who owns the money?</h3>
-        <p>
-          The restaurant. Funds route to the restaurant’s Stripe account.
-          MaxMenu charges 0.14€ per successful transaction.
-        </p>
-      </div>
-
-      <div class="remote-card">
+       <BR></BR>
+        <div class="remote-card">
         <h3>Can we run it on our own domain?</h3>
         <p>
-          Yes. Authorized domains only. Unapproved domains simply won’t run the embed.
+          Yes, the domains you register in your panel will be the authorized ones.
         </p>
       </div>
-
+      <BR></BR>
       <div class="remote-card">
         <h3>Do we need full POS integration?</h3>
         <p>
           Not to start. MaxMenu can run standalone or as a secondary layer alongside your POS.
         </p>
       </div>
-
+      <BR></BR>
       <div class="remote-card">
         <h3>Is it digital or does it print?</h3>
         <p>
           Both. Once you have station jobs, rendering is just output: KDS, printer tickets, or hybrid.
         </p>
       </div>
+      <BR></BR>
+      <div class="remote-card">
+        <h3>Do we need a QR code?</h3>
+        <p>
+          No. QR is just distribution. Order &amp; Pay is embeddable on any domain.
+        </p>
+      </div>
+      <BR></BR>
+      <div class="remote-card">
+        <h3>What about a 3.5€ coffee?</h3>
+        <p>
+          Use minimum order rules (e.g. 8–10€) or keep Order &amp; Pay for food baskets where it dominates.
+        </p>
+      </div>
+      <BR></BR>
+    <div class="remote-card">
+      <h3>Who owns the money?</h3>
+      <p>
+       Yes, the restaurant does. Payments are transferred directly to each restaurant's Stripe account and then automatically to your bank account; MaxMenu doesn't touch your money.
+      </p>
 
+      <p style="margin-top:12px;">
+        Every restaurant you create in MaxMenu gets its own Stripe account automatically.
+        This is required because each restaurant is treated as a separate business entity
+        (legal data, identification, sometimes even different banks).
+      </p>
+
+      <p style="margin-top:12px;">
+        Even if you use the same bank account for multiple restaurants, Stripe accounts stay separate.
+        This keeps transactions, reporting, and payouts clearly split per restaurant.
+      </p>
+
+      <p style="margin-top:12px;">
+        You don’t need to create or manage anything in Stripe.
+        All accounts are created and managed from MaxMenu.
+      </p>
+
+      <p style="margin-top:12px;">
+        MaxMenu charges a fixed fee of <strong>€0.14 per successful transaction</strong>.
+        The rest of the money is yours.
+      </p>
+
+      <div class="remote-list">
+        <div class="remote-item"><strong>One Stripe account per restaurant</strong></div>
+        <div class="remote-item"><strong>Same bank account if you want</strong></div>
+        <div class="remote-item"><strong>Clear separation of funds</strong></div>
+        <div class="remote-item"><strong>No Stripe setup needed outside of maxmenu</strong></div>
+      </div>
     </div>
+
+  
 
   </div>
 </div>
@@ -678,95 +707,102 @@ once and start receiving payments — directly into your bank account.
     <div class="section-header">
       <div class="section-tag">Cost model</div>
       <h2>Deploy Order & Pay</h2>
-      <p>
-        This is the real decision. A waiter is a fixed monthly cost. MaxMenu is variable and scales with demand.
-        Many venues run a hybrid model: keep service quality, and offload peak-hour ordering + payments to the checkout surface.
+        <p>
+        This is the real advantage: MaxMenu adapts to your rhythm. It’s there when your team is busy, understaffed,
+        or someone has an unexpected day off. You don’t pay for idle time — and you don’t lose service when things get tough.
+      </p>
+
+      <p style="margin-top:12px;">
+        Many venues run a hybrid model: they keep the human touch where it matters most, and let MaxMenu handle peak-hour
+        ordering and payments — silently, reliably, and always under your brand.
       </p>
     </div>
 
-    <div class="stack-grid">
 
-      <!-- Scenario B: MaxMenu -->
-      <div class="remote-card">
-        <h3>Deploy MaxMenu (Variable cost)</h3>
-        <p>
-          MaxMenu increases throughput by removing the most expensive bottleneck: ordering + payment collection.
-          It’s not “less hospitality”. It’s less friction.
-        </p>
+<!-- ========================== -->
+<!-- HYBRID MODEL — REFORMULATED -->
+<!-- ========================== -->
+<div class="remote-grid" style="margin-top:18px;">
 
-        <div class="remote-list">
-          <div class="remote-item"><strong>Variable cost</strong>&nbsp;— paid only on successful transactions</div>
-          <div class="remote-item"><strong>Throughput boost</strong>&nbsp;— guests order faster, kitchen receives clean tickets</div>
-          <div class="remote-item"><strong>No hiring risk</strong>&nbsp;— no churn, no training cycles</div>
-        </div>
+  <!-- Hybrid / Secondary lane -->
+  <div class="remote-card">
+    <h3>How most restaurants use MaxMenu</h3>
+    <p>
+      MaxMenu is not here to replace your team. It becomes a second ordering lane — a silent assistant that helps
+      absorb demand when staff can’t be everywhere at once.
+    </p>
 
-        <div class="remote-card" style="margin-top:14px;">
-          <div class="remote-item">
-            <strong>MaxMenu fee:</strong>&nbsp;0.14€ per successful transaction (Stripe fees are separate).
-          </div>
-        </div>
-      </div>
+    <p style="margin-top:12px;">
+      Most venues use MaxMenu as a **backup channel** for terrace, bar, lunch rush, or events.
+      It compensates for the gap between team size and real-world peak traffic.
+    </p>
 
+    <div class="remote-list">
+      <div class="remote-item"><strong>Your staff focuses on</strong>&nbsp;— upsell, service, hospitality</div>
+      <div class="remote-item"><strong>MaxMenu handles</strong>&nbsp;— extra orders, peak flows, routing</div>
+      <div class="remote-item"><strong>Result</strong>&nbsp;— calmer staff, faster service, happier guests</div>
+    </div>
+  </div>
+
+  <!-- Staff empowerment -->
+  <div class="remote-card">
+    <h3>Why your team actually wins</h3>
+    <p>
+      When orders come in through MaxMenu, your staff is freed from chasing tickets and running payments.
+      They gain time — to smile, to connect, and to deliver better service.
+    </p>
+
+    <div class="remote-list">
+      <div class="remote-item"><strong>More attention per table</strong></div>
+      <div class="remote-item"><strong>Better tips from better service</strong></div>
+      <div class="remote-item"><strong>Less stress, more consistency</strong></div>
+      <div class="remote-item"><strong>No order forgotten, no payment lost</strong></div>
     </div>
 
-    <!-- Hybrid model -->
-    <div class="remote-grid" style="margin-top:18px;">
+    <p style="margin-top:12px;">
+      That’s why MaxMenu works best **alongside humans** — not against them.
+    </p>
+  </div>
 
-      <div class="remote-card">
-        <h3>Best practice — Hybrid model (what serious venues do)</h3>
-        <p>
-          Keep hospitality where it matters, and offload repetitive flow. MaxMenu becomes the “second lane”
-          during high traffic: terrace, bar, peak lunch, events.
-        </p>
+</div>
 
-        <div class="remote-list">
-          <div class="remote-item"><strong>Staff focuses on</strong>&nbsp;— service, upsell, problem-solving</div>
-          <div class="remote-item"><strong>MaxMenu handles</strong>&nbsp;— ordering, payment, station routing</div>
-          <div class="remote-item"><strong>Result</strong>&nbsp;— higher revenue per hour with same headcount</div>
-        </div>
-      </div>
+<!-- ========================== -->
+<!-- OPERATIONAL POWER BLOCK -->
+<!-- ========================== -->
+<div class="remote-card" style="margin-top:18px;">
+  <h3>What MaxMenu actually does (operationally)</h3>
+  <p>
+    Orders through MaxMenu follow rules, route to the right station, and are confirmed instantly — every time.
+    It's infrastructure designed to work like your best employee.
+  </p>
+  <div class="remote-list">
+    <div class="remote-item"><strong>Minimum order enforcement</strong>&nbsp;— protect margin at scale</div>
+    <div class="remote-item"><strong>Station routing</strong>&nbsp;— kitchen/bar never get mixed tickets</div>
+    <div class="remote-item"><strong>Instant payment confirmation</strong>&nbsp;— no chasing, no errors</div>
+    <div class="remote-item"><strong>Audit trail</strong>&nbsp;— full traceability for every order</div>
+  </div>
+</div>
 
-      <div class="remote-card">
-        <h3>Break-even logic (simple)</h3>
-        <p>
-          If 1 waiter costs you <strong>X €/month</strong>, you can estimate the MaxMenu volume needed to match it:
-        </p>
+<!-- ========================== -->
+<!-- STARTING TIP FOR NEW VENUES -->
+<!-- ========================== -->
+<div class="remote-card" style="margin-top:18px;">
+  <h3>Starting out? Use MaxMenu as your backup system</h3>
+  <p>
+    If you're opening a new venue or running with a lean team, we recommend using MaxMenu as your backup flow:
+    no training required, no apps to install, and it works even with just one staff member on the floor.
+  </p>
+  <p style="margin-top:12px;">
+    This way, your team can focus on the tables — while MaxMenu silently absorbs demand.
+  </p>
 
-        <div class="code-block" style="margin-top:12px;">
-Break-even transactions/month ≈ X / 0.14
-
-Example:
-If X = 1,400€  →  1,400 / 0.14 = 10,000 transactions/month
-        </div>
-
-        <div class="remote-list">
-          <div class="remote-item"><strong>Key insight:</strong>&nbsp;MaxMenu is not replacing humans.</div>
-          <div class="remote-item"><strong>It replaces bottlenecks</strong>&nbsp;— which is why revenue/hour rises.</div>
-        </div>
-
-        <p style="margin-top:12px;">
-          Most venues don’t need full break-even to justify it: if it removes peak chaos and increases table turns,
-          the ROI appears faster than any spreadsheet.
-        </p>
-      </div>
-
-    </div>
-
-    <!-- Operational angle -->
-    <div class="remote-card" style="margin-top:18px;">
-      <h3>What you actually get (operationally)</h3>
-      <p>
-        A waiter can take orders. Infrastructure can take orders <strong>and</strong> enforce rules and consistency.
-        That’s why chains win.
-      </p>
-      <div class="remote-list">
-        <div class="remote-item"><strong>Minimum order rules</strong>&nbsp;— protect margins on small baskets</div>
-        <div class="remote-item"><strong>Station routing</strong>&nbsp;— kitchen/bar tickets are always clean</div>
-        <div class="remote-item"><strong>Instant payment confirmation</strong>&nbsp;— fewer mistakes, less “chasing”</div>
-        <div class="remote-item"><strong>Auditability</strong>&nbsp;— every order is traceable end-to-end</div>
-      </div>
-    </div>
-
+  <div class="remote-list">
+    <div class="remote-item"><strong>Perfect for small teams</strong></div>
+    <div class="remote-item"><strong>No commitment — use when needed</strong></div>
+    <div class="remote-item"><strong>Be ready for busy days, from day one</strong></div>
+  </div>
+</div>
+    
   </div>
 </div>
 
