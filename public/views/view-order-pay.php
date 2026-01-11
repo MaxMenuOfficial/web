@@ -102,7 +102,8 @@
           <div class="remote-item"><strong>Kitchen</strong>&nbsp;— Food preparation pipeline</div>
           <div class="remote-item"><strong>Bar</strong>&nbsp;— Fast output queue</div>
           <div class="remote-item"><strong>Cocktails</strong>&nbsp;— Different SLA station</div>
-          <div class="remote-item"><strong>Other</strong>&nbsp;— Desserts, sushi, pass, etc.</div>
+          <div class="remote-item"><strong>Bakery</strong>&nbsp;— Different SLA station</div>
+          <div class="remote-item"><strong>Other</strong>&nbsp;— Etc.</div>
         </div>
       </div>
 
@@ -173,9 +174,6 @@
 </div>
 
 
-
-
-
 <!-- ========================= -->
 <!-- HOW IT WORKS              -->
 <!-- ========================= -->
@@ -184,99 +182,117 @@
 
     <div class="section-header">
       <div class="section-tag">How it works</div>
-      <h2>One embed. One checkout. One execution pipeline.</h2>
+      <h2>From zero to live in under 30 minutes.</h2>
       <p>
-        Order &amp; Pay is not “a feature”. It’s infrastructure: a deterministic system where
-        checkout confirmation creates the order, and the order creates station jobs — reliably, every time.
+        MaxMenu is not a plugin. It’s infrastructure. Pre-configured, secure, and ready to deploy — on any website,
+        with your branding, and native Stripe Elements checkout already built in.
       </p>
     </div>
 
     <div class="stack-grid">
 
+      <!-- STEP 1 -->
       <div class="stack-card">
-        <h3>1) The surface: embedded ordering</h3>
+        <h3>1) Create your restaurant</h3>
         <p>
-          Customers browse and build a cart directly inside your website. No app downloads.
-          No platform redirect. It feels like your product because it <strong>is</strong> your product.
+          Set up your restaurant in minutes: name, currency, language, and basic preferences. Escanea y sube tu PDF o Img de tu menu y con Inteligencia Artificial en menu de un Minuto estara listo
         </p>
         <div class="stack-pills">
-          <div class="stack-pill">Your domain</div>
-          <div class="stack-pill">Your branding</div>
-          <div class="stack-pill">Modifiers / supplements</div>
-          <div class="stack-pill">Allergens / dietary labels</div>
-          <div class="stack-pill">Multi-language menus</div>
+          <div class="stack-pill">Menu IA Magic</div>
+          <div class="stack-pill">Allergens & modifiers</div>
+          <div class="stack-pill">No developer needed</div>
         </div>
       </div>
 
+      <!-- STEP 2 -->
       <div class="stack-card">
-        <h3>2) The checkout: Apple Pay / Google Pay on your domain</h3>
+        <h3>2) Connect your bank details</h3>
         <p>
-          Payments happen inline, inside your own domain — with wallet buttons (Apple Pay / Google Pay)
-          and cards. The customer never feels they “left” your restaurant experience.
+        MaxMenu comes with Stripe Elements already integrated. You just connect your bank Account
+once and start receiving payments — directly into your bank account.
         </p>
         <div class="stack-pills">
-          <div class="stack-pill">Apple Pay</div>
-          <div class="stack-pill">Google Pay</div>
-          <div class="stack-pill">Cards</div>
-          <div class="stack-pill">Native checkout flow</div>
-          <div class="stack-pill">Clean charge recognition</div>
+          <div class="stack-pill">Apple Pay & Google Pay</div>
+          <div class="stack-pill">Plug & Play</div>
+          <div class="stack-pill">Instant setup</div>
         </div>
-        <p style="margin-top:12px;">
-          Behind the scenes, MaxMenu uses an enterprise-grade payments partner for authorization, fraud checks,
-          and settlement — without making the customer experience feel “third-party”.
-        </p>
       </div>
 
+      <!-- STEP 3 -->
       <div class="stack-card">
-        <h3>3) Execution: station routing (KDS)</h3>
+        <h3>3) Go live on your domain or ours</h3>
         <p>
-          Every item maps to a station. MaxMenu generates station jobs so your kitchen/bar/cocktails/bakery
-          only see what they must execute — no noise, no chaos, no mixed tickets.
+          Launch your menu on a MaxMenu-hosted URL or embed it inside your existing website — no matter the technology:
+          WordPress, Shopify, Webflow, HTML, React... it just works.
         </p>
         <div class="stack-pills">
-          <div class="stack-pill">Kitchen</div>
-          <div class="stack-pill">Bar</div>
-          <div class="stack-pill">Cocktails</div>
-          <div class="stack-pill">KDS / tickets / hybrid</div>
+          <div class="stack-pill">Embed anywhere</div>
+          <div class="stack-pill">No platform lock-in</div>
+          <div class="stack-pill">Your domain, your brand</div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="stack-card">
+        <h3>4) Customers order and pay inline</h3>
+        <p>
+          Clients browse, select and pay inside your site — without redirects or third-party feel.
+          Stripe Elements handles the payment flow natively: fast, secure, and 100% under your brand.
+        </p>
+        <div class="stack-pills">
+          <div class="stack-pill">No app download</div>
+          <div class="stack-pill">No redirection</div>
+          <div class="stack-pill">Native checkout UX</div>
+        </div>
+      </div>
+
+      <!-- STEP 5 -->
+      <div class="stack-card">
+        <h3>5) Orders reach the right stations</h3>
+        <p>
+          Each item is routed to its station (kitchen, bar, cocktails…). Staff only sees what they need.
+          No noise. No mixed tickets. Clean execution via KDS, print or hybrid.
+        </p>
+        <div class="stack-pills">
+          <div class="stack-pill">Station routing</div>
+          <div class="stack-pill">KDS + print support</div>
           <div class="stack-pill">Status tracking</div>
         </div>
       </div>
 
+      <!-- STEP 6 -->
       <div class="stack-card">
-        <h3>4) Quantum Delivery: updates without redeploys</h3>
-        <p>
-          This is the invisible advantage: you don’t “publish a new site” every time you change prices,
-          items, availability, or styling. MaxMenu runs on <strong>versioned snapshots</strong> served globally,
-          so menus and checkout surfaces load fast and update instantly when you change them.
-        </p>
+        <h3>6) Quantum Delivery: real-time control</h3>
+  
         <div class="stack-pills">
-          <div class="stack-pill">Versioned snapshots</div>
-          <div class="stack-pill">Global edge delivery</div>
-          <div class="stack-pill">Deterministic updates</div>
-          <div class="stack-pill">Remote control from panel</div>
-          <div class="stack-pill">No rebuilds</div>
+          <div class="stack-pill">Remote control</div>
+          <div class="stack-pill">No redeploys</div>
+          <div class="stack-pill">Edge delivery</div>
         </div>
+        <p style="margin-top:12px;">
+          You can even customize your entire checkout flow visually — fonts, labels, layout — all from the panel.
+        </p>
       </div>
 
     </div>
 
+    <!-- FINAL CTA BLOCK -->
     <div class="remote-card" style="margin-top:18px;">
-      <h3>What this really means</h3>
+      <h3>Why it matters</h3>
       <p>
-        You’re plugging into the class of infrastructure normally reserved for chains:
-        checkout surfaces, operational routing, and global delivery — but under your own brand,
-        inside your own website, without the millions in maintenance costs.
+        MaxMenu works wherever you are — on any domain, CMS, or tech stack. You're not locked in. You're not tied to
+        a platform. And you're not alone: we’ve built this with Stripe to give you native payments, wallet support,
+        and real control — with enterprise-grade infrastructure behind the scenes.
       </p>
       <div class="remote-list">
-        <div class="remote-item"><strong>Looks like you</strong>&nbsp;— domain, design, typography</div>
-        <div class="remote-item"><strong>Operates like a chain</strong>&nbsp;— deterministic flow, station execution</div>
-        <div class="remote-item"><strong>Scales cleanly</strong>&nbsp;— fast loads, controlled updates, no redeploys</div>
+        <div class="remote-item"><strong>Sell anywhere</strong>&nbsp;— your website, your rules</div>
+        <div class="remote-item"><strong>Operate like a chain</strong>&nbsp;— payment → order → kitchen</div>
+        <div class="remote-item"><strong>Scale instantly</strong>&nbsp;— updates, styling and routing in seconds</div>
       </div>
     </div>
 
   </div>
 </div>
-
 <!-- ========================= -->
 <!-- EMBEDDABLE ORDER SURFACE   -->
 <!-- ========================= -->
@@ -574,7 +590,7 @@
         </p>
         <div class="remote-list">
           <div class="remote-item"><strong>MaxMenu:</strong>&nbsp;0.14€ per successful transaction</div>
-          <div class="remote-item"><strong>Stripe (EU example):</strong>&nbsp;1.4% + 0.25€</div>
+          <div class="remote-item"><strong>Stripe (EU example):</strong>&nbsp;1.5% + 0.25€</div>
           <div class="remote-item"><strong>No success:</strong>&nbsp;no MaxMenu fee</div>
         </div>
       </div>
