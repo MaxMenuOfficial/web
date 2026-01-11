@@ -14,7 +14,7 @@
             <a href="agency">Agency</a>
             <a href="pricing">Pricing</a>
             <a href="embedded">Embedded</a>
-            <a href="order">Order & Pay</a>
+            <a href="order-pay">Order & Pay</a>
         </nav>
 
         <!-- ACTIONS -->
@@ -53,7 +53,7 @@
             Pricing
             <span>Choose how far you want to go with design and embedding.</span>
         </a>
-          <a href="pricing" class="mm-mobile-link">
+          <a href="order-pay" class="mm-mobile-link">
             Order & Pay
             <span>MaxMenu as your digital waiter 24/7 from anywhere</span>
         </a>

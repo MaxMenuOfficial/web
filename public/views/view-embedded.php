@@ -18,8 +18,8 @@
         </p>
 
         <div class="hero-cta">
-            <a href="https://mks03p-fm.myshopify.com/pages/menu">          
-                  <button>Example in Shopify</button>
+            <a href="https://maxmenu.com/example">          
+                  <button>Example</button>
             </a>
         </div>
 

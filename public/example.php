@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Page Title -->
-    <title>MaxMenu | Order & Pay</title>
+    <title>MaxMenu | Example Embebbed</title>
 
     <!-- Meta Description -->
     <meta name="description" content="Log in to MaxMenu and access your restaurant’s digital menu dashboard. Manage items, translations and design with speed, control and elegance.">
@@ -39,7 +39,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="styles/header.css">
-    <link rel="stylesheet" href="styles/view-login.css">
+    <link rel="stylesheet" href="styles/view-order-pay.css">
     <link rel="stylesheet" href="styles/footer.css">
 
     <!-- Theme sync (igual que en el resto de la web) -->
@@ -54,14 +54,14 @@
 <body>
 
     <?php include_once 'templates/header.php'; ?>
-
-     
+    
+        
     <div id="maxmenu-menuContainer" 
-            data-restaurant-id="jazmin">
+            data-restaurant-id="maxmenu">
     </div>
     <script src="https://cdn.maxmenu.com/widget.js"></script>
 
-                
+  
 
 </body>
 </html>
