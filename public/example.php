@@ -57,7 +57,7 @@
     
         
     <div id="maxmenu-menuContainer" 
-            data-restaurant-id="maxmenu">
+            data-restaurant-id="simona">
     </div>
     <script src="https://cdn.maxmenu.com/widget.js"></script>
 
