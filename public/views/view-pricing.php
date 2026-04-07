@@ -803,3 +803,535 @@ function renderLocalizedPrice(string $price, string $symbol, string $sep, string
 </div>
 
 
+<style>
+
+  /* ============================================
+   ORDER & PAY — PRICING SECTIONS ONLY
+   Extends existing dark theme
+   ============================================ */
+
+/* ── Section base ── */
+.section {
+  padding: 80px 24px;
+  overflow-x: hidden;
+}
+
+.section-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+.section-header {
+  max-width: 720px;
+  margin-bottom: 48px;
+}
+
+.section-header h2 {
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0 0 14px;
+}
+
+.section-header p {
+  font-size: 15px;
+  opacity: 0.5;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.section-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #872cffff;
+  background: rgba(100, 0, 222, 0.08);
+  border: 1px solid rgba(63, 0, 200, 0.2);
+  padding: 5px 14px;
+  border-radius: 100px;
+  margin-bottom: 16px;
+}
+
+/* ── Flow steps ── */
+.op-flow {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 36px 32px;
+}
+
+.op-flow-header h3 {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.op-flow-header p {
+  font-size: 14px;
+  opacity: 0.55;
+  margin-bottom: 28px;
+}
+
+.op-flow-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.op-flow-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 18px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+}
+
+.op-flow-number {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:#872cffff;
+  color: #000;
+  font-size: 14px;
+  font-weight: 800;
+  border-radius: 50%;
+}
+
+.op-flow-content strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.op-flow-content span {
+  font-size: 13px;
+  opacity: 0.55;
+  line-height: 1.5;
+}
+
+.op-flow-connector {
+  width: 2px;
+  height: 16px;
+  background: rgba(255,255,255,0.08);
+  margin-left: 33px;
+}
+
+
+/* ── Currency grid ── */
+.op-currency-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+  gap: 10px;
+}
+
+.op-currency-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  transition: border-color 0.2s, background 0.2s;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.op-currency-card:hover {
+  border-color: rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.op-currency-card--featured {
+  border-color: rgba(87, 0, 200, 0.3);
+  background: rgba(67, 0, 200, 0.04);
+}
+
+.op-currency-card--featured:hover {
+  border-color: rgba(70, 0, 200, 0.5);
+  background: rgba(87, 0, 200, 0.07);
+}
+
+.op-currency-flag {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  flex-shrink: 0;
+}
+
+.op-currency-card--featured .op-currency-flag {
+  background: rgba(66, 0, 180, 0.1);
+  border-color: rgba(89, 6, 222, 0.25);
+  color: #872cffff;
+}
+
+.op-currency-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.op-currency-code {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.op-currency-name {
+  font-size: 12px;
+  opacity: 0.45;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.op-currency-fee {
+  font-size: 15px;
+  font-weight: 800;
+  color: #872cffff;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+
+/* ── Region cards (countries) ── */
+.op-regions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.op-region-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.op-region-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.op-region-label {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.op-region-currency {
+  font-size: 12px;
+  font-weight: 600;
+  color: #872cffff;
+  background: rgba(0,200,83,0.08);
+  border: 1px solid rgba(63, 0, 200, 0.2);
+  padding: 3px 10px;
+  border-radius: 100px;
+  letter-spacing: 0.02em;
+}
+
+.op-country-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.op-country {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 100px;
+  opacity: 0.75;
+  transition: opacity 0.2s, border-color 0.2s;
+}
+
+.op-country:hover {
+  opacity: 1;
+  border-color: rgba(255,255,255,0.15);
+}
+
+.op-country-detail-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.op-country-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  transition: border-color 0.2s;
+}
+
+.op-country-detail:hover {
+  border-color: rgba(255,255,255,0.12);
+}
+
+.op-country-detail-name {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.op-country-detail-fee {
+  font-size: 12px;
+  font-weight: 700;
+  color: #872cffff;
+  letter-spacing: 0.01em;
+}
+
+.op-region-count {
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.35;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: auto;
+}
+
+
+/* ── Total bar ── */
+.op-total-bar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 24px;
+  padding: 24px 28px;
+  background: rgba(86, 0, 225, 0.05);
+  border: 1px solid rgba(96, 1, 237, 0.18);
+  border-radius: 14px;
+}
+
+.op-total-number {
+  font-size: 42px;
+  font-weight: 900;
+  color: #872cffff;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.op-total-text strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.op-total-text span {
+  font-size: 13px;
+  opacity: 0.5;
+}
+
+
+/* ── Control cards (surcharge + minimum) ── */
+.op-control-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.op-control-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px;
+  padding: 28px 24px;
+}
+
+.op-control-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: rgba(255,255,255,0.6);
+}
+
+.op-control-card h3 {
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.op-control-card p {
+  font-size: 13px;
+  opacity: 0.55;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* Surcharge receipt example */
+.op-control-example {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.op-control-example-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 6px 0;
+  opacity: 0.6;
+}
+
+.op-control-example-line--fee {
+  opacity: 0.45;
+  font-style: italic;
+}
+
+.op-control-example-line--total {
+  opacity: 1;
+  font-weight: 800;
+  padding-top: 10px;
+  margin-top: 6px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  color: #872cffff;
+}
+
+/* Minimum combos */
+.op-control-combos {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.op-control-combo {
+  padding: 12px 14px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+}
+
+.op-control-combo strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.op-control-combo span {
+  font-size: 12px;
+  opacity: 0.45;
+}
+
+
+/* ── Volume card ── */
+.op-volume-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 32px 28px;
+}
+
+.op-volume-card h3 {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.op-volume-card p {
+  font-size: 14px;
+  opacity: 0.55;
+  line-height: 1.65;
+  margin-bottom: 18px;
+}
+
+.op-volume-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.op-volume-pills .stack-pill,
+.stack-pill {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 100px;
+  opacity: 0.65;
+}
+
+
+/* ── Fallback card ── */
+.op-fallback-card {
+  background: rgba(255,255,255,0.02);
+  border: 1px dashed rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 28px 24px;
+}
+
+.op-fallback-card h3 {
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.op-fallback-card p {
+  font-size: 13px;
+  opacity: 0.5;
+  line-height: 1.65;
+}
+
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .op-regions,
+  .op-control-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .op-currency-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .op-total-bar {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .op-currency-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+</style>
