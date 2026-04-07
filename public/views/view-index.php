@@ -8,7 +8,7 @@
 
         <h1 class="hero-title">
             Infraestructura de menús<br>
-            con pagos.
+            con pagos para gastronomia.
         </h1>
 
         <p class="hero-sub">
@@ -16,7 +16,7 @@
         </p>
 
         <div class="hero-cta">
-            <a href="login.php">
+            <a href="https://maxmenu.com/login">
             <button>Empieza en minutos</button>
             </a>
         </div>
@@ -57,7 +57,7 @@
 
         <div class="section-header">
             <div class="section-tag">Por qué MaxMenu</div>
-            <h2>Construido como un sistema de menú con pagos, no como una plantilla de usar y tirar.</h2>
+            <h2>Construido como un sistema de menú con pagos</h2>
             <p>
                 MaxMenu no trata tu menú como una página estática o un PDF. Lo trata como un modelo estructurado:
                 categorías, subcategorías, artículos, precios, alérgenos, idiomas y estilos que se mantienen
@@ -706,6 +706,6 @@
             cansados de stacks frágiles.
         </p>
 
-        <button>Empieza con MaxMenu</button>
+        <button><a href="https://maxmenu.com/login">Empieza con MaxMenu</a></button>
     </div>
 </div>
