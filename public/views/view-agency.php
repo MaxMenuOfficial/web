@@ -358,6 +358,8 @@
             Diseña menús, integra el widget, transfiere la propiedad y gana el 20&nbsp;% de cada suscripción
             más una comisión fija por transacción. Todo desde un solo panel de partner, con cobro automático cada mes.
         </p>
-        <button>Únete a MaxMenu como agencia</button>
+         <a href="login">
+            <button>Unete como agencia</button>
+        </a>
     </div>
 </div>
