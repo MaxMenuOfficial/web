@@ -1,52 +1,53 @@
 <!-- ========================= -->
-<!-- HERO: EMBED ONCE, CONTROL FOREVER -->
+<!-- HERO: EMBEBE UNA VEZ      -->
 <!-- ========================= -->
 <div class="section hero">
     <div class="section-inner">
 
-        <div class="section-tag">Embeddable</div>
+        <div class="section-tag">Embebible</div>
 
         <h1 class="hero-title">
-            Embed once.<br>
-            Control everything from the panel.
+            Embebe una vez.<br>
+            Controla todo desde el panel.
         </h1>
 
         <p class="hero-sub">
-            MaxMenu turns your menu into an embeddable surface you can control remotely.
-            Colors, typography, sizes, borders and every visual detail are managed from the
-            dashboard — without touching the code again.
+            MaxMenu convierte tu menú en una superficie embebible que controlas remotamente.
+            Colores, tipografía, tamaños, bordes y cada detalle visual se gestionan desde
+            el dashboard — sin tocar el código de nuevo.
         </p>
 
         <div class="hero-cta">
-            <a href="https://maxmenu.com/example">          
-                  <button>Example</button>
+            <a href="https://maxmenu.com/example">
+                <button>Ver ejemplo</button>
             </a>
         </div>
 
         <div class="hero-embed-layout">
 
             <div class="hero-embed-copy">
-                <h3>A remote control for your menu, inside any website.</h3>
+                <h3>Un mando a distancia para tu menú, dentro de cualquier web.</h3>
                 <p>
-                    You paste a single snippet into your website, and that’s it. From that moment on,
-                    every change you make — colors, fonts, typography sizes, borders, allergens,
-                    images — is pushed from the MaxMenu panel directly into the embedded menu.
+                    Pegas un solo snippet en tu web, y listo. A partir de ese momento,
+                    cada cambio que hagas — colores, fuentes, tamaños tipográficos, bordes, alérgenos,
+                    imágenes — se publica desde el panel de MaxMenu directamente en el menú embebido.
                 </p>
                 <p>
-                    No new deploys, no new plugins, no extra integration work. The embed behaves like
-                    a remote-controlled interface: the code stays still, the design keeps evolving.
+                    Sin nuevos deploys, sin nuevos plugins, sin trabajo de integración extra. El embed
+                    se comporta como una interfaz controlada remotamente: el código se queda quieto,
+                    el diseño sigue evolucionando.
                 </p>
             </div>
 
-            <div style="color:#019353;"class="embed-code-block">
-            &lt;!-- MaxMenu embeddable menu --&gt;
-            &lt;script
-            src="https://cdn.maxmenu.com/widget.js"
-            data-restaurant="your-restaurant-id"
-            async&gt;
-            &lt;/script&gt;
+            <div style="color:#019353;" class="embed-code-block">
+&lt;!-- MaxMenu embeddable menu --&gt;
+&lt;script
+  src="https://cdn.maxmenu.com/widget.js"
+  data-restaurant="your-restaurant-id"
+  async&gt;
+&lt;/script&gt;
 
-            &lt;div id="maxmenu-menuContainer"&gt;&lt;/div&gt;
+&lt;div id="maxmenu-menuContainer"&gt;&lt;/div&gt;
             </div>
 
         </div>
@@ -56,168 +57,215 @@
 
 
 <!-- ========================= -->
-<!-- STACK-AGNOSTIC            -->
+<!-- PAGOS DENTRO DEL EMBED    -->
 <!-- ========================= -->
 <div class="section">
     <div class="section-inner">
 
         <div class="section-header">
-            <div class="section-tag">Stack agnostic</div>
-            <h2>Works in any stack. No negotiations with your tech.</h2>
+            <div class="section-tag">Pagos embebidos</div>
+            <h2>El mismo embed que muestra tu menú, ahora también cobra.</h2>
             <p>
-                MaxMenu doesn’t ask you to rebuild your website. It simply embeds itself: whether
-                your stack is WordPress, Shopify, Webflow, custom React, Laravel, static HTML or
-                something in-between, the menu behaves the same way.
-            </p>
-        </div>
-
-        <div class="stack-grid">
-
-            <div class="stack-card">
-                <h3>Drop it anywhere</h3>
-                <p>
-                    As long as you can insert a small script tag and a container, MaxMenu can live
-                    there. The rendering logic, the design system and the performance layer are all
-                    managed on our side.
-                </p>
-
-           <div class="stack-pills">
-    <!-- CMS / E-commerce grandes -->
-    <div class="stack-pill">WordPress</div>
-    <div class="stack-pill">WooCommerce</div>
-    <div class="stack-pill">Shopify</div>
-    <div class="stack-pill">Shopify Plus</div>
-    <div class="stack-pill">Webflow</div>
-    <div class="stack-pill">Wix</div>
-    <div class="stack-pill">Squarespace</div>
-    <div class="stack-pill">Framer</div>
-    <div class="stack-pill">Ghost</div>
-    <div class="stack-pill">Drupal</div>
-    <div class="stack-pill">Joomla</div>
-    <div class="stack-pill">Magento</div>
-    <div class="stack-pill">PrestaShop</div>
-    <div class="stack-pill">BigCommerce</div>
-    <div class="stack-pill">OpenCart</div>
-    <div class="stack-pill">HubSpot CMS</div>
-    <div class="stack-pill">Craft CMS</div>
-    <div class="stack-pill">TYPO3</div>
-
-    <!-- No-code / low-code donde hay bloque de código -->
-    <div class="stack-pill">Carrd</div>
-    <div class="stack-pill">Tilda</div>
-    <div class="stack-pill">Bubble</div>
-    <div class="stack-pill">ClickFunnels</div>
-    <div class="stack-pill">Leadpages</div>
-    <div class="stack-pill">Dorik</div>
-
-    <!-- Frameworks / apps propias (siempre permiten script) -->
-    <div class="stack-pill">Custom React</div>
-    <div class="stack-pill">Next.js</div>
-    <div class="stack-pill">Remix</div>
-    <div class="stack-pill">Gatsby</div>
-    <div class="stack-pill">Vue / Nuxt</div>
-    <div class="stack-pill">Svelte / SvelteKit</div>
-    <div class="stack-pill">Angular</div>
-    <div class="stack-pill">Astro</div>
-
-    <!-- Estáticos / JAMstack -->
-    <div class="stack-pill">Static HTML</div>
-    <div class="stack-pill">Eleventy</div>
-    <div class="stack-pill">Hugo</div>
-    <div class="stack-pill">Jekyll</div>
-
-    <!-- Genérico -->
-    <div class="stack-pill">Headless CMS + frontend</div>
-    <div class="stack-pill">Any custom stack</div>
-</div>
-                <p style="margin-top:16px;">
-                    The website keeps its own codebase, hosting and deployment process. MaxMenu
-                    focuses solely on the menu surface, so you don’t have to refactor your stack
-                    just to get a better menu.
-                </p>
-            </div>
-
-            <div class="media-frame">
-              <img src="https://cdn.maxmenu.com/w/img/stack-3.png" style="width:400px;" alt="">
-            </div>
-
-
-        </div>
-
-    </div>
-</div>
-
-
-<!-- ========================= -->
-<!-- REMOTE CONTROL PANEL      -->
-<!-- ========================= -->
-<div class="section">
-    <div class="section-inner">
-
-        <div class="section-header">
-            <div class="section-tag">Remote control</div>
-            <h2>The menu feels native to your brand, but you never touch the code.</h2>
-            <p>
-                Every detail you see in the embedded menu — from colors and typography to borders,
-                spacing, icons, allergens and transparent images — is configured from a single
-                control panel. The page only needs to be integrated once.
+                El widget de MaxMenu no es solo un menú visual. Es una superficie de comercio completa:
+                los comensales pueden seleccionar artículos, pedir y pagar sin salir de tu web.
+                Apple Pay, Google Pay y tarjetas funcionan de forma nativa dentro del embed — en tu dominio,
+                con tu marca, sin redirecciones.
             </p>
         </div>
 
         <div class="remote-grid">
 
             <div class="remote-card">
-                <h3>Design once, update in seconds</h3>
+                <h3>Checkout nativo dentro de tu web</h3>
                 <p>
-                    You can change themes, fonts, weights, text sizes, corner radius, border
-                    thickness, layout density and more, directly from the MaxMenu interface. The
-                    changes propagate automatically to all embeds for that restaurant.
+                    El cliente navega el menú, selecciona artículos, elige mesa o para llevar,
+                    y paga — todo dentro del iframe embebido en tu página. No hay redirección a
+                    otra plataforma. No hay sensación de terceros. Tu web es el punto de venta.
+                </p>
+                <div class="remote-list">
+                    <div class="remote-item"><strong>Apple Pay y Google Pay</strong>&nbsp;— checkout en un toque</div>
+                    <div class="remote-item"><strong>Tarjetas</strong>&nbsp;— Visa, Mastercard, Amex vía Stripe Elements</div>
+                    <div class="remote-item"><strong>Sin app</strong>&nbsp;— funciona en cualquier navegador móvil o de escritorio</div>
+                    <div class="remote-item"><strong>Sin redirección</strong>&nbsp;— el pago se completa dentro de tu dominio</div>
+                </div>
+            </div>
+
+            <div class="remote-card">
+                <h3>El pedido llega a la estación correcta</h3>
+                <p>
+                    Cada artículo se enruta automáticamente a su estación (cocina, barra, cócteles…).
+                    El personal solo ve lo que debe ejecutar. El pago se confirma al instante
+                    y el dinero llega directamente a tu cuenta bancaria vía Stripe.
+                </p>
+                <div class="remote-list">
+                    <div class="remote-item"><strong>Enrutamiento por estación</strong>&nbsp;— KDS, impresora o híbrido</div>
+                    <div class="remote-item"><strong>Pago confirmado → pedido ejecutado</strong>&nbsp;— flujo determinista</div>
+                    <div class="remote-item"><strong>Recargo de servicio configurable</strong>&nbsp;— traslada el coste al cliente si quieres</div>
+                    <div class="remote-item"><strong>Pedido mínimo configurable</strong>&nbsp;— protege márgenes en cestas pequeñas</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="remote-card" style="margin-top:18px;">
+            <h3>Un snippet. Menú + pedidos + pagos.</h3>
+            <p>
+                No necesitas dos integraciones. El mismo snippet que embebe el menú visual es el que
+                activa Order &amp; Pay cuando lo configuras desde el panel. Actívalo o desactívalo
+                cuando quieras — es un interruptor, no un nuevo proyecto.
+            </p>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- ========================= -->
+<!-- STACK AGNOSTIC            -->
+<!-- ========================= -->
+<div class="section">
+    <div class="section-inner">
+
+        <div class="section-header">
+            <div class="section-tag">Compatible con cualquier stack</div>
+            <h2>Funciona en cualquier stack. Sin negociar con tu tecnología.</h2>
+            <p>
+                MaxMenu no te pide reconstruir tu web. Simplemente se embebe: ya sea que tu stack
+                sea WordPress, Shopify, Webflow, React a medida, Laravel, HTML estático o algo
+                intermedio, el menú se comporta igual.
+            </p>
+        </div>
+
+        <div class="stack-grid">
+
+            <div class="stack-card">
+                <h3>Ponlo en cualquier sitio</h3>
+                <p>
+                    Mientras puedas insertar una etiqueta script y un contenedor, MaxMenu puede vivir
+                    ahí. La lógica de renderizado, el sistema de diseño y la capa de rendimiento se
+                    gestionan en nuestro lado.
                 </p>
 
-             
-             <div class="remote-list">
-                    <div class="remote-item">
-                        <img src="https://cdn.maxmenu.com/w/img/color.svg" alt="Colors">
-                        <span>Colors: backgrounds, panels, accents and neutrals.</span>
-                    </div>
-
-                    <div class="remote-item">
-                        <img src="https://cdn.maxmenu.com/w/img/typography.svg" alt="Typography">
-                        <span>Typography: families, weights and sizes for titles, descriptions and prices.</span>
-                    </div>
-
-                    <div class="remote-item">
-                        <img src="https://cdn.maxmenu.com/w/img/border.svg" alt="Borders & radius">
-                        <span>Borders & radius: card edges, separators and outlines.</span>
-                    </div>
-
-                    <div class="remote-item">
-                        <img src="https://cdn.maxmenu.com/w/img/space.svg" alt="Spacing">
-                        <span>Spacing: vertical rhythm between categories, items and sections.</span>
-                    </div>
-
-                    <div class="remote-item">
-                        <img src="https://cdn.maxmenu.com/w/img/circle.svg" alt="Allergens & icons">
-                        <span>Allergens & icons: labels, badges and iconography.</span>
-                    </div>
-
-                    <div class="remote-item">
-                        <img src="https://cdn.maxmenu.com/w/img/image.svg" alt="Images">
-                        <span>Images: full-bleed or transparent dishes over neutral surfaces.</span>
-                    </div>
+                <div class="stack-pills">
+                    <div class="stack-pill">WordPress</div>
+                    <div class="stack-pill">WooCommerce</div>
+                    <div class="stack-pill">Shopify</div>
+                    <div class="stack-pill">Shopify Plus</div>
+                    <div class="stack-pill">Webflow</div>
+                    <div class="stack-pill">Wix</div>
+                    <div class="stack-pill">Squarespace</div>
+                    <div class="stack-pill">Framer</div>
+                    <div class="stack-pill">Ghost</div>
+                    <div class="stack-pill">Drupal</div>
+                    <div class="stack-pill">Joomla</div>
+                    <div class="stack-pill">Magento</div>
+                    <div class="stack-pill">PrestaShop</div>
+                    <div class="stack-pill">BigCommerce</div>
+                    <div class="stack-pill">OpenCart</div>
+                    <div class="stack-pill">HubSpot CMS</div>
+                    <div class="stack-pill">Craft CMS</div>
+                    <div class="stack-pill">TYPO3</div>
+                    <div class="stack-pill">Carrd</div>
+                    <div class="stack-pill">Tilda</div>
+                    <div class="stack-pill">Bubble</div>
+                    <div class="stack-pill">ClickFunnels</div>
+                    <div class="stack-pill">Leadpages</div>
+                    <div class="stack-pill">Dorik</div>
+                    <div class="stack-pill">Custom React</div>
+                    <div class="stack-pill">Next.js</div>
+                    <div class="stack-pill">Remix</div>
+                    <div class="stack-pill">Gatsby</div>
+                    <div class="stack-pill">Vue / Nuxt</div>
+                    <div class="stack-pill">Svelte / SvelteKit</div>
+                    <div class="stack-pill">Angular</div>
+                    <div class="stack-pill">Astro</div>
+                    <div class="stack-pill">Static HTML</div>
+                    <div class="stack-pill">Eleventy</div>
+                    <div class="stack-pill">Hugo</div>
+                    <div class="stack-pill">Jekyll</div>
+                    <div class="stack-pill">Headless CMS + frontend</div>
+                    <div class="stack-pill">Cualquier stack a medida</div>
                 </div>
+
                 <p style="margin-top:16px;">
-                    Once the code is in place, you never ask a developer to “change the menu layout”
-                    again. The control lives fully in the panel.
+                    La web mantiene su propio código, hosting y proceso de deploy. MaxMenu se centra
+                    exclusivamente en la superficie del menú y los pagos, para que no tengas que refactorizar
+                    tu stack solo para tener un menú mejor.
                 </p>
             </div>
 
-               <div class="media-frame">
-                    <img src="https://cdn.maxmenu.com/w/img/widget.png" style="width:500px; border-radius:20p;"  alt="">
+            <div class="media-frame">
+                <img src="https://cdn.maxmenu.com/w/img/stack-3.png" style="width:400px;" alt="">
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<!-- ========================= -->
+<!-- CONTROL REMOTO            -->
+<!-- ========================= -->
+<div class="section">
+    <div class="section-inner">
+
+        <div class="section-header">
+            <div class="section-tag">Control remoto</div>
+            <h2>El menú se siente nativo de tu marca, pero nunca tocas el código.</h2>
+            <p>
+                Cada detalle que ves en el menú embebido — desde colores y tipografía hasta bordes,
+                espaciado, iconos, alérgenos e imágenes transparentes — se configura desde un único
+                panel de control. La página solo necesita integrarse una vez.
+            </p>
+        </div>
+
+        <div class="remote-grid">
+
+            <div class="remote-card">
+                <h3>Diseña una vez, actualiza en segundos</h3>
+                <p>
+                    Puedes cambiar temas, fuentes, pesos, tamaños de texto, radio de esquinas, grosor
+                    de bordes, densidad del layout y más, directamente desde la interfaz de MaxMenu.
+                    Los cambios se propagan automáticamente a todos los embeds de ese restaurante.
+                </p>
+
+                <div class="remote-list">
+                    <div class="remote-item">
+                        <img src="https://cdn.maxmenu.com/w/img/color.svg" alt="Colores">
+                        <span>Colores: fondos, paneles, acentos y neutros.</span>
+                    </div>
+                    <div class="remote-item">
+                        <img src="https://cdn.maxmenu.com/w/img/typography.svg" alt="Tipografía">
+                        <span>Tipografía: familias, pesos y tamaños para títulos, descripciones y precios.</span>
+                    </div>
+                    <div class="remote-item">
+                        <img src="https://cdn.maxmenu.com/w/img/border.svg" alt="Bordes y radio">
+                        <span>Bordes y radio: bordes de tarjetas, separadores y contornos.</span>
+                    </div>
+                    <div class="remote-item">
+                        <img src="https://cdn.maxmenu.com/w/img/space.svg" alt="Espaciado">
+                        <span>Espaciado: ritmo vertical entre categorías, artículos y secciones.</span>
+                    </div>
+                    <div class="remote-item">
+                        <img src="https://cdn.maxmenu.com/w/img/circle.svg" alt="Alérgenos e iconos">
+                        <span>Alérgenos e iconos: etiquetas, badges e iconografía.</span>
+                    </div>
+                    <div class="remote-item">
+                        <img src="https://cdn.maxmenu.com/w/img/image.svg" alt="Imágenes">
+                        <span>Imágenes: platos a sangre o transparentes sobre superficies neutras.</span>
+                    </div>
                 </div>
 
+                <p style="margin-top:16px;">
+                    Una vez que el código está en su sitio, nunca más pides a un desarrollador que
+                    "cambie el diseño del menú". El control vive completamente en el panel.
+                </p>
+            </div>
 
-          
+            <div class="media-frame">
+                <img src="https://cdn.maxmenu.com/w/img/widget.png" style="width:500px; border-radius:20px;" alt="">
+            </div>
 
         </div>
 
@@ -225,41 +273,42 @@
 </div>
 
 <!-- ========================= -->
-<!-- VERSIONING & SPEED        -->
+<!-- VERSIONADO Y VELOCIDAD    -->
 <!-- ========================= -->
 <div class="section">
     <div class="section-inner">
 
         <div class="section-header">
-            <div class="section-tag">Speed & updates</div>
-            <h2>Versioned delivery: cached by default, refreshed only when needed.</h2>
+            <div class="section-tag">Velocidad y actualizaciones</div>
+            <h2>Entrega versionada: cacheado por defecto, actualizado solo cuando es necesario.</h2>
             <p>
-                MaxMenu serves your menu from a cached version that only changes when you change it.
-                Every update in the panel creates a new internal version; we invalidate the old one
-                remotely and your site starts serving the new snapshot – without you touching any code.
+                MaxMenu sirve tu menú desde una versión cacheada que solo cambia cuando tú la cambias.
+                Cada actualización en el panel crea una nueva versión interna; invalidamos la anterior
+                remotamente y tu web empieza a servir el nuevo snapshot — sin que toques el código.
             </p>
         </div>
 
         <div class="version-grid">
 
             <div class="version-card">
-                <h3>Always fast, even while you keep editing</h3>
+                <h3>Siempre rápido, incluso mientras sigues editando</h3>
                 <p>
-                    Prices, dishes, languages, allergens and design tweaks are converted into lightweight
-                    snapshots. The embed simply asks: “What version should I show?” If the version is the
-                    same, it serves the cached menu. If it has changed, it refreshes once and goes back
-                    to cache.
+                    Precios, platos, idiomas, alérgenos y ajustes de diseño se convierten en snapshots
+                    ligeros. El embed simplemente pregunta: "¿Qué versión debo mostrar?" Si la versión
+                    es la misma, sirve el menú cacheado. Si ha cambiado, refresca una vez y vuelve
+                    al caché.
                 </p>
 
                 <div class="version-badge-row">
-                    <div class="version-badge">Change in panel: new version created</div>
-                    <div class="version-badge">First load after change: verify &amp; refresh</div>
-                    <div class="version-badge">Next loads: served from cache, no DB reads</div>
+                    <div class="version-badge">Cambio en el panel: nueva versión creada</div>
+                    <div class="version-badge">Primera carga tras el cambio: verificar y refrescar</div>
+                    <div class="version-badge">Siguientes cargas: servido desde caché, sin lecturas a BD</div>
                 </div>
 
                 <p style="margin-top:16px;">
-                    For restaurants and agencies, this means the menu feels native-fast inside your site,
-                    while the database is only touched when something really changes — not on every visit.
+                    Para restaurantes y agencias, esto significa que el menú se siente rápido de forma nativa
+                    dentro de tu web, mientras la base de datos solo se toca cuando algo realmente cambia —
+                    no en cada visita.
                 </p>
             </div>
 
@@ -269,63 +318,60 @@
 </div>
 
 <!-- ========================= -->
-<!-- DOMAIN CONTROL & SECURITY -->
+<!-- CONTROL DE DOMINIO         -->
 <!-- ========================= -->
 <div class="section">
     <div class="section-inner">
 
         <div class="section-header">
-            <div class="section-tag">Domain control</div>
-            <h2>Only authorised domains can display your menu.</h2>
+            <div class="section-tag">Control de dominio</div>
+            <h2>Solo los dominios autorizados pueden mostrar tu menú.</h2>
             <p>
-                The embed snippet is public, but who can actually show the menu is not. MaxMenu
-                validates the domain of the page before rendering anything, so only authorised
-                websites can use your menu.
+                El snippet del embed es público, pero quién puede realmente mostrar el menú no lo es.
+                MaxMenu valida el dominio de la página antes de renderizar nada, así que solo las webs
+                autorizadas pueden usar tu menú.
             </p>
         </div>
 
         <div class="domain-grid">
 
             <div class="domain-card">
-                <h3>Controlled distribution of your menu</h3>
+                <h3>Distribución controlada de tu menú</h3>
                 <p>
-                    In the panel, you decide which domains are allowed to embed your menu: your main
-                    website, a landing page, a microsite for an event, or an agency preview domain.
-                    If a domain is not on the list, the menu simply doesn’t load.
+                    En el panel decides qué dominios pueden embeber tu menú: tu web principal,
+                    una landing page, un micrositio para un evento o un dominio de previsualización
+                    de agencia. Si un dominio no está en la lista, el menú simplemente no carga.
                 </p>
 
                 <div class="domain-list">
-                    allowed-domains:<br>
-                    &nbsp;&nbsp;• restaurant.com<br>
-                    &nbsp;&nbsp;• order.restaurant.com<br>
-                    &nbsp;&nbsp;• custom-domain.com<br>
-                    &nbsp;&nbsp;• custom-landing.com
+                    dominios-permitidos:<br>
+                    &nbsp;&nbsp;• restaurante.com<br>
+                    &nbsp;&nbsp;• pedidos.restaurante.com<br>
+                    &nbsp;&nbsp;• dominio-personalizado.com<br>
+                    &nbsp;&nbsp;• landing-personalizada.com
                 </div>
 
                 <p style="margin-top:16px;">
-                    This prevents unauthorised copies of your menu from being embedded on random
-                    sites, and keeps the brand experience and analytics under your control.
+                    Esto previene copias no autorizadas de tu menú en sitios aleatorios,
+                    y mantiene la experiencia de marca y las analíticas bajo tu control.
                 </p>
             </div>
 
-
-              <div class="widget-preview">
+            <div class="widget-preview">
                 <div class="widget-preview-header">
                     <div class="widget-preview-dot-group">
                         <div style="background-color:#c52b00" class="widget-dot"></div>
                         <div style="background-color:#ffe205;" class="widget-dot"></div>
                         <div style="background-color:#27d41a" class="widget-dot"></div>
                     </div>
-                    <span style="font-size:0.8rem; opacity:0.8;">Restaurant website · Embedded menu</span>
+                    <span style="font-size:0.8rem; opacity:0.8;">Web del restaurante · Menú embebido</span>
                 </div>
 
                 <div class="media-frame">
-                    <img src="https://cdn.maxmenu.com/w/img/domain.png" style="width:500px; border-radius:20p;"  alt="">
+                    <img src="https://cdn.maxmenu.com/w/img/domain.png" style="width:500px; border-radius:20px;" alt="">
                 </div>
-
             </div>
 
-           
         </div>
 
     </div>
@@ -333,17 +379,20 @@
 
 
 <!-- ========================= -->
-<!-- FINAL CTA                 -->
+<!-- CTA FINAL                 -->
 <!-- ========================= -->
 <div class="section final-cta">
     <div class="section-inner">
-        <h2>Embed once, and evolve the menu forever.</h2>
+        <h2>Embebe una vez, y evoluciona el menú para siempre.</h2>
         <p style="max-width:580px;margin:12px auto 32px;">
-            Add the MaxMenu snippet to your website once, and move all future changes into the
-            dashboard. The code stays the same. The experience keeps getting better.
+            Añade el snippet de MaxMenu a tu web una vez, y mueve todos los cambios futuros al dashboard.
+            El código se queda igual. La experiencia sigue mejorando. Y ahora, también cobra.
         </p>
         <a href="login">
-        <button>Create your embeddable menu</button>
+            <button>Crea tu menú embebible</button>
         </a>
     </div>
 </div>
+
+
+

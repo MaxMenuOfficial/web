@@ -7,67 +7,65 @@
     <div class="section-tag">Order &amp; Pay</div>
 
     <h1 class="hero-title">
-     Turn your menu into a checkout surface. Orders routed to stations. Payments to your bank account
+      Tu menú se convierte en un punto de venta. Pedidos a estaciones. Pagos a tu cuenta bancaria.
     </h1>
 
     <p class="hero-sub">
-      MaxMenu is not “a QR menu with a button”. It’s an embeddable gastronomy commerce layer:
-      customers order &amp; pay from any website, and your kitchen/bar receives the order instantly
-      through a station-based workflow — with clean payouts and transparent fees.
+      MaxMenu es una capa de comercio gastronómico embebible:
+      los clientes piden y pagan desde cualquier web, y tu cocina/barra recibe el pedido al instante
+      a través de un flujo por estaciones — con cobros limpios y comisiones transparentes.
     </p>
 
     <div class="hero-cta">
-      <a href="/pricing"><button>See pricing &amp; fees</button></a>
+      <a href="/pricing"><button>Ver precios y comisiones</button></a>
     </div>
 
-
-    
-    <!-- 2-col hero layout usando clases existentes -->
+    <!-- 2-col hero layout -->
     <div class="hero-embed-layout">
 
       <!-- Customer -->
       <div class="stack-card hero-embed-copy">
-        <div class="section-tag" style="margin-bottom:14px;">What the customer sees</div>
-        <h3>Browse → Pay → Done</h3>
+        <div class="section-tag" style="margin-bottom:14px;">Lo que ve el cliente</div>
+        <h3>Elige → Paga → Listo</h3>
         <p>
-          No app downloads, no staff intervention. The customer selects items, chooses table
-          (or takeaway), pays, and the order enters the execution pipeline automatically.
+          Sin descargar apps, sin intervención del personal. El cliente selecciona artículos, elige mesa
+          (o para llevar), paga, y el pedido entra en el flujo de ejecución automáticamente.
         </p>
 
         <div class="stack-pills">
-          <div class="stack-pill">Apple Pay / Google Pay / Cards</div>
-          <div class="stack-pill">No app</div>
-          <div class="stack-pill">Works on any domain</div>
+          <div class="stack-pill">Apple Pay / Google Pay / Tarjetas</div>
+          <div class="stack-pill">Sin app</div>
+          <div class="stack-pill">Funciona en cualquier dominio</div>
         </div>
 
         <div class="remote-list">
-          <div class="remote-item"><strong>Fast.</strong>&nbsp;Checkout in seconds.</div>
-          <div class="remote-item"><strong>Clear.</strong>&nbsp;They see exactly what they pay.</div>
-          <div class="remote-item"><strong>Stable.</strong>&nbsp;Same flow on mobile &amp; desktop.</div>
+          <div class="remote-item"><strong>Rápido.</strong>&nbsp;Checkout en segundos.</div>
+          <div class="remote-item"><strong>Claro.</strong>&nbsp;Ven exactamente lo que pagan.</div>
+          <div class="remote-item"><strong>Estable.</strong>&nbsp;Mismo flujo en móvil y escritorio.</div>
         </div>
       </div>
 
       <!-- Restaurant -->
       <div class="stack-card">
-        <div class="section-tag" style="margin-bottom:14px;">What the restaurant receives</div>
-        <h3>Structured orders by station</h3>
+        <div class="section-tag" style="margin-bottom:14px;">Lo que recibe el restaurante</div>
+        <h3>Pedidos estructurados por estación</h3>
         <p>
-          Each item is mapped to a station. MaxMenu generates station jobs (KDS)
-          so your kitchen and bar only see what they should execute.
+          Cada artículo está asignado a una estación. MaxMenu genera trabajos por estación (KDS)
+          para que tu cocina y barra solo vean lo que deben ejecutar.
         </p>
 
         <div class="remote-list">
           <div class="remote-item">
-            <strong>Payment confirmed</strong>&nbsp;— MaxMenu executes
+            <strong>Pago confirmado</strong>&nbsp;— MaxMenu ejecuta
           </div>
           <div class="remote-item">
-            <strong>Order created</strong>&nbsp;— Order, items, metadata stored
+            <strong>Pedido creado</strong>&nbsp;— Pedido, artículos y metadatos almacenados
           </div>
           <div class="remote-item">
-            <strong>Station jobs generated</strong>&nbsp;— Kitchen / bar / cocktails receive their queue
+            <strong>Trabajos por estación generados</strong>&nbsp;— Cocina / barra / cócteles reciben su cola
           </div>
           <div class="remote-item">
-            <strong>Status tracked</strong>&nbsp;— Preparing → Ready → Completed
+            <strong>Estado rastreado</strong>&nbsp;— Preparando → Listo → Completado
           </div>
         </div>
       </div>
@@ -78,213 +76,330 @@
 </div>
 
 <!-- ========================= -->
-<!-- HOW IT WORKS              -->
+<!-- CÓMO FUNCIONA             -->
 <!-- ========================= -->
 <div class="section">
   <div class="section-inner">
 
     <div class="section-header">
-      <div class="section-tag">How it works</div>
-      <h2>From zero to live in under 30 minutes.</h2>
+      <div class="section-tag">Cómo funciona</div>
+      <h2>De cero a producción en menos de 30 minutos.</h2>
       <p>
-        MaxMenu is not a plugin. It’s infrastructure for gastronomy. Pre-configured, secure, and ready to deploy — on any website,
-        with your branding, and native Stripe Elements checkout already built in.
+        MaxMenu no es un plugin. Es infraestructura para gastronomía. Preconfigurado, seguro y listo para desplegar en cualquier web,
+        con tu branding, y con checkout nativo de Stripe Elements ya integrado.
       </p>
     </div>
 
     <div class="stack-grid">
 
-      <!-- STEP 1 -->
+      <!-- PASO 1 -->
       <div class="stack-card">
-        <h3>1) Create your restaurant</h3>
+        <h3>1) Crea tu restaurante</h3>
         <p>
-          Set up your restaurant in minutes: name, currency, language, and basic preferences. Escanea y sube tu PDF o Img de tu menu y con Inteligencia Artificial en menu de un Minuto estara listo
+          Configura tu restaurante en minutos: nombre, moneda, idioma y preferencias básicas.
+          Escanea y sube tu PDF o imagen del menú y con Inteligencia Artificial tu menú estará listo en un minuto.
         </p>
         <div class="stack-pills">
-          <div class="stack-pill">Menu IA Magic</div>
-          <div class="stack-pill">Allergens & modifiers</div>
-          <div class="stack-pill">No developer needed</div>
+          <div class="stack-pill">Menú IA Magic</div>
+          <div class="stack-pill">Alérgenos y modificadores</div>
+          <div class="stack-pill">Sin necesidad de desarrollador</div>
         </div>
       </div>
 
-      <!-- STEP 2 -->
+      <!-- PASO 2 -->
       <div class="stack-card">
-        <h3>2) Connect your bank details</h3>
+        <h3>2) Conecta tus datos bancarios</h3>
         <p>
-        MaxMenu comes with Stripe Elements already integrated. You just connect your bank Account
-once and start receiving payments — directly into your bank account.
+          MaxMenu viene con Stripe Elements ya integrado. Solo conectas tu cuenta bancaria una vez
+          y empiezas a recibir pagos — directamente en tu cuenta.
         </p>
         <div class="stack-pills">
-          <div class="stack-pill">Apple Pay & Google Pay</div>
-          <div class="stack-pill">Plug & Play</div>
-          <div class="stack-pill">Instant setup</div>
+          <div class="stack-pill">Apple Pay y Google Pay</div>
+          <div class="stack-pill">Plug &amp; Play</div>
+          <div class="stack-pill">Configuración instantánea</div>
         </div>
       </div>
 
-      <!-- STEP 3 -->
+      <!-- PASO 3 -->
       <div class="stack-card">
-        <h3>3) Go live on your domain or ours</h3>
+        <h3>3) Publica en tu dominio o en el nuestro</h3>
         <p>
-          Launch your menu on a MaxMenu-hosted URL or embed it inside your existing website — no matter the technology:
-          WordPress, Shopify, Webflow, HTML, React... it just works.
+          Lanza tu menú en una URL alojada por MaxMenu o embébelo dentro de tu web actual — sin importar la tecnología:
+          WordPress, Shopify, Webflow, HTML, React… simplemente funciona.
         </p>
         <div class="stack-pills">
-          <div class="stack-pill">Embed anywhere</div>
-          <div class="stack-pill">No platform lock-in</div>
-          <div class="stack-pill">Your domain, your brand</div>
+          <div class="stack-pill">Embebe en cualquier sitio</div>
+          <div class="stack-pill">Sin dependencia de plataforma</div>
+          <div class="stack-pill">Tu dominio, tu marca</div>
         </div>
       </div>
 
-      <!-- STEP 4 -->
+      <!-- PASO 4 -->
       <div class="stack-card">
-        <h3>4) Customers order and pay inline</h3>
+        <h3>4) Los clientes piden y pagan online con Apple Pay o Google Pay u otros </h3>
         <p>
-          Clients browse, select and pay inside your site — without redirects or third-party feel.
-          Stripe Elements handles the payment flow natively: fast, secure, and 100% under your brand.
+          Los clientes navegan, seleccionan y pagan dentro de tu web sin redirecciones ni sensación de terceros.
+          Stripe Elements gestiona el flujo de pago de forma nativa: rápido, seguro y 100&nbsp;% bajo tu marca, esto significa que tiene tu propio boton de de Apple pay y Google pay en tu pagina web y que cobra pagos de manera segura  
         </p>
         <div class="stack-pills">
-          <div class="stack-pill">No app download</div>
-          <div class="stack-pill">No redirection</div>
-          <div class="stack-pill">Native checkout UX</div>
+          <div class="stack-pill">Sin descargar app</div>
+          <div class="stack-pill">Sin redirección</div>
+          <div class="stack-pill">Checkout UX nativo</div>
         </div>
       </div>
 
-      <!-- STEP 5 -->
+      <!-- PASO 5 -->
       <div class="stack-card">
-        <h3>5) Orders reach the right stations</h3>
+        <h3>5) Los pedidos llegan a las estaciones correctas</h3>
         <p>
-          Each item is routed to its station (kitchen, bar, cocktails…). Staff only sees what they need.
-          No noise. No mixed tickets. Clean execution via KDS, print or hybrid.
+          Cada artículo se enruta a su estación (cocina, barra, cócteles…). El personal solo ve lo que necesita.
+          Sin ruido. Sin tickets mezclados. Ejecución limpia vía KDS, impresora o híbrido.
         </p>
         <div class="stack-pills">
-          <div class="stack-pill">Station routing</div>
-          <div class="stack-pill">KDS + print support</div>
-          <div class="stack-pill">Status tracking</div>
+          <div class="stack-pill">Enrutamiento por estación</div>
+          <div class="stack-pill">KDS + impresión</div>
+          <div class="stack-pill">Seguimiento de estado</div>
         </div>
       </div>
 
-      <!-- STEP 6 -->
+      <!-- PASO 6 -->
       <div class="stack-card">
-        <h3>6) Quantum Delivery: real-time control</h3>
-  
+        <h3>6) Quantum Delivery: control en tiempo real</h3>
         <div class="stack-pills">
-          <div class="stack-pill">Remote control</div>
-          <div class="stack-pill">No redeploys</div>
-          <div class="stack-pill">Edge delivery</div>
+          <div class="stack-pill">Control remoto</div>
+          <div class="stack-pill">Sin redespliegues</div>
+          <div class="stack-pill">Entrega en el edge</div>
         </div>
         <p style="margin-top:12px;">
-          You can even customize your entire checkout flow visually — fonts, labels, layout — all from the panel.
+          Personaliza todo tu flujo de checkout visualmente — tipografías, etiquetas, diseño — todo desde el panel.
         </p>
       </div>
 
     </div>
 
-    <!-- FINAL CTA BLOCK -->
+    <!-- BLOQUE FINAL -->
     <div class="remote-card" style="margin-top:18px;">
-      <h3>Why it matters</h3>
+      <h3>Por qué importa</h3>
       <p>
-        MaxMenu works wherever you are — on any domain, CMS, or tech stack. You're not locked in. You're not tied to
-        a platform. And you're not alone: we’ve built this with Stripe to give you native payments, wallet support,
-        and real control — with enterprise-grade infrastructure behind the scenes.
+        MaxMenu funciona donde estés — en cualquier dominio, CMS o stack tecnológico. No estás atado a nada.
+        No dependes de una plataforma. Hemos construido esto con Stripe para darte pagos nativos, soporte de wallets
+        y control real — con infraestructura de nivel enterprise por detrás.
       </p>
       <div class="remote-list">
-        <div class="remote-item"><strong>Sell anywhere</strong>&nbsp;— your website, your rules</div>
-        <div class="remote-item"><strong>Operate like a chain</strong>&nbsp;— payment → order → kitchen</div>
-        <div class="remote-item"><strong>Scale instantly</strong>&nbsp;— updates, styling and routing in seconds</div>
+        <div class="remote-item"><strong>Vende en cualquier sitio</strong>&nbsp;— tu web, tus reglas</div>
+        <div class="remote-item"><strong>Opera como una cadena</strong>&nbsp;— pago → pedido → cocina</div>
+        <div class="remote-item"><strong>Escala al instante</strong>&nbsp;— actualizaciones, diseño y enrutamiento en segundos</div>
       </div>
     </div>
 
   </div>
 </div>
+
 <!-- ========================= -->
-<!-- EMBEDDABLE ORDER SURFACE   -->
+<!-- RECARGO ORDER & PAY        -->
 <!-- ========================= -->
 <div class="section">
   <div class="section-inner">
 
     <div class="section-header">
-      <div class="section-tag">Embeddable</div>
-      <h2>Embed Order &amp; Pay into any domain.</h2>
+      <div class="section-tag">Recargo de servicio</div>
+      <h2>Cobra un pequeño extra por Order &amp; Pay. Tus márgenes no se tocan.</h2>
       <p>
-        Your website stays yours. MaxMenu becomes the ordering layer inside it — controlled remotely from the dashboard.
-        Domain authorization applies: only approved domains can run the embed.
+        Cada restaurante puede configurar un recargo de servicio que se añade automáticamente al total del pedido
+        cuando el cliente usa Order &amp; Pay. El importe aparece como una línea separada en el checkout, totalmente
+        transparente para el cliente. Así cubres el coste de la plataforma — o incluso generas un margen adicional —
+        sin que afecte a los precios de tus artículos.
+      </p>
+    </div>
+
+    <div class="remote-grid">
+
+      <div class="remote-card">
+        <h3>Cómo lo ve el cliente</h3>
+        <p>
+          El recargo aparece como una línea clara en el resumen del pedido, separado de los artículos.
+          El cliente sabe exactamente lo que paga y por qué. Sin sorpresas.
+        </p>
+        <div class="remote-list">
+          <div class="remote-item"><strong>Capuccino XL</strong>&nbsp;— 4,00&nbsp;€</div>
+          <div class="remote-item"><strong>Avocado Toast</strong>&nbsp;— 9,50&nbsp;€</div>
+          <div class="remote-item"><strong>Order &amp; Pay (servicio)</strong>&nbsp;— 0,15&nbsp;€</div>
+          <div class="remote-item"><strong>Total</strong>&nbsp;— <strong>13,65&nbsp;€</strong></div>
+        </div>
+        <p style="margin-top:12px;">
+          El cliente percibe el recargo como un coste de conveniencia — similar a lo que ya conoce
+          en plataformas de delivery — pero con la ventaja de estar en tu local, sin intermediarios.
+        </p>
+      </div>
+
+      <div class="remote-card">
+        <h3>Cómo funciona para el restaurante</h3>
+        <p>
+          Desde tu panel de MaxMenu configuras el importe del recargo. Puede ser una cantidad fija (ej. 0,30&nbsp;€, 0,50&nbsp;€, 1,00&nbsp;€)
+
+        </p>
+        <div class="remote-list">
+          <div class="remote-item"><strong>Configurable desde el panel</strong>&nbsp;— actívalo o desactívalo cuando quieras</div>
+          <div class="remote-item"><strong>Importe libre</strong>&nbsp;— tú decides cuánto cobrar por el servicio o no Cobrarlo</div>
+          <div class="remote-item"><strong>Transparente para el cliente</strong>&nbsp;— aparece como línea separada en el checkout</div>
+          <div class="remote-item"><strong>El restaurante recibe todo el recargo</strong>&nbsp;— forma parte del pago total</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="remote-card" style="margin-top:18px;">
+      <h3>¿Por qué cobrar un recargo?</h3>
+      <p>
+        MaxMenu cobra una comisión fija por transacción (ej. 0,15&nbsp;€ en EUR) y Stripe cobra su comisión de procesamiento, el restaurante cubre ambas comisiones y su margen queda intacto.
+        Si configuras un recargo mayor, la diferencia es beneficio neto para ti, Esto es opcional segun el tipo de establecimiento
+      </p>
+
+      <div class="remote-list">
+        <div class="remote-item"><strong>Ejemplo con recargo de 0,40&nbsp;€</strong>&nbsp;— Cubres la comisión de MaxMenu (0,15&nbsp;€) y de Stripe en tickets pequeños. Tu margen por artículo no se toca si asi lo decides </div>
+        <div class="remote-item"><strong>Sin recargo</strong>&nbsp;— También es una opción. El restaurante absorbe las comisiones como coste operativo.</div>
+      </div>
+
+      <p style="margin-top:12px;">
+        La decisión es 100&nbsp;% tuya. MaxMenu te da la herramienta; tú eliges la estrategia.
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- TICKET MÍNIMO              -->
+<!-- ========================= -->
+
+<div class="section">
+  <div class="section-inner">
+
+    <div class="section-header">
+      <div class="section-tag">Pedido mínimo</div>
+      <h2>Establece un mínimo de pedido para que Order &amp; Pay tenga sentido económico si no tienes activado el FEE de Order & Pay</h2>
+      <p>
+        Si tu ticket medio es bajo, las comisiones de procesamiento pueden pesar demasiado en proporción.
+        Por eso MaxMenu te permite configurar un importe mínimo de pedido: si la cesta del cliente no lo alcanza,
+        el checkout se bloquea y se le invita a añadir más artículos, aunque esto es muy valido recomendamos siempre activar la comision adicional de Order & Pay donde no friccion alguna.
+      </p>
+    </div>
+
+    <div class="remote-grid">
+
+      <div class="remote-card">
+        <h3>Cómo funciona</h3>
+        <div class="remote-list">
+          <div class="remote-item"><strong>El propietario establece el mínimo</strong>&nbsp;— ej. 7&nbsp;€, 10&nbsp;€ o lo que necesite</div>
+          <div class="remote-item"><strong>Si la cesta &lt; mínimo</strong>&nbsp;— el botón de pago se bloquea</div>
+          <div class="remote-item"><strong>El cliente ve un mensaje claro</strong>&nbsp;— indicando cuánto falta para alcanzar el mínimo</div>
+          <div class="remote-item"><strong>Resultado</strong>&nbsp;— protege márgenes en cestas pequeñas y fomenta un ticket más alto</div>
+        </div>
+      </div>
+
+      <div class="remote-card">
+        <h3>Recargo + mínimo: la combinación ideal</h3>
+        <p>
+          Puedes usar ambas herramientas a la vez. Establece un mínimo de pedido para filtrar cestas demasiado pequeñas
+          y un recargo de servicio para cubrir las comisiones. Así, cada pedido que pasa por Order &amp; Pay es rentable
+          desde el primer euro.
+        </p>
+        <div class="remote-list">
+          <div class="remote-item"><strong>Mínimo 8&nbsp;€ + recargo 0,40&nbsp;€</strong>&nbsp;— Comisiones cubiertas, márgenes intactos</div>
+          <div class="remote-item"><strong>Mínimo 10&nbsp;€ + recargo 0,90&nbsp;€</strong>&nbsp;— Generas ingreso extra por cada pedido</div>
+          <div class="remote-item"><strong>Sin mínimo + sin recargo</strong>&nbsp;— También funciona si tu ticket medio ya es alto</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- EMBEBIBLE                  -->
+<!-- ========================= -->
+<div class="section">
+  <div class="section-inner">
+
+    <div class="section-header">
+      <div class="section-tag">Embebible</div>
+      <h2>Embebe Order &amp; Pay en cualquier dominio.</h2>
+      <p>
+        Tu web sigue siendo tuya. MaxMenu se convierte en la capa de pedidos dentro de ella — controlada remotamente desde el dashboard.
+        Se aplica autorización de dominio: solo los dominios aprobados pueden ejecutar el embed.
       </p>
     </div>
 
     <div class="widget-grid">
 
       <div class="stack-card">
-        <h3>Paste once. Operate forever.</h3>
+        <h3>Pega una vez. Opera para siempre.</h3>
         <p>
-          Same philosophy as the menu embed: paste the snippet once, then operate from the panel:
-          products, availability, stations, minimums, and payment behavior.
+          Misma filosofía que el embed del menú: pega el snippet una vez, luego opera desde el panel:
+          productos, disponibilidad, estaciones, mínimos y comportamiento de pago.
         </p>
 
         <div class="stack-pills">
           <div class="stack-pill">WordPress</div>
           <div class="stack-pill">Shopify</div>
           <div class="stack-pill">Webflow</div>
-          <div class="stack-pill">Custom stack</div>
-          <div class="stack-pill">Any domain</div>
-    
+          <div class="stack-pill">Stack propio</div>
+          <div class="stack-pill">Cualquier dominio</div>
         </div>
 
         <div class="remote-list">
-          <div class="remote-item"><strong>Security:</strong>&nbsp;approved domains only</div>
-          <div class="remote-item"><strong>Control:</strong>&nbsp;remote changes from dashboard</div>
-          <div class="remote-item"><strong>Stability:</strong>&nbsp;no re-deploy on every update</div>
+          <div class="remote-item"><strong>Seguridad:</strong>&nbsp;solo dominios aprobados</div>
+          <div class="remote-item"><strong>Control:</strong>&nbsp;cambios remotos desde el dashboard</div>
+          <div class="remote-item"><strong>Estabilidad:</strong>&nbsp;sin redespliegues en cada actualización</div>
         </div>
       </div>
 
-     
     </div>
 
   </div>
 </div>
 
-
-
-
 <!-- ========================= -->
-<!-- KDS / STATIONS             -->
+<!-- KDS / ESTACIONES           -->
 <!-- ========================= -->
 <div class="section">
   <div class="section-inner">
 
     <div class="section-header">
       <div class="section-tag">KDS</div>
-      <h2>Station-based execution: kitchen, bar, cocktails… or just one station.</h2>
+      <h2>Ejecución por estaciones: cocina, barra, cócteles… o una sola estación.</h2>
       <p>
-        MaxMenu routes items to stations so your operation stays sane.
-        Multi-station for real venues, single-station for small ones.
+        MaxMenu enruta los artículos a estaciones para que tu operación no se desborde.
+        Multi-estación para locales grandes, estación única para los pequeños.
       </p>
     </div>
 
     <div class="remote-grid">
 
       <div class="remote-card">
-        <h3>Multi-station</h3>
+        <h3>Multi-estación</h3>
         <p>
-          Remove chaos: kitchen doesn’t see bar noise, bar doesn’t see kitchen backlog.
+          Elimina el caos: la cocina no ve el ruido de la barra, la barra no ve la cola de la cocina.
         </p>
         <div class="remote-list">
-          <div class="remote-item"><strong>Kitchen</strong>&nbsp;— Food preparation pipeline</div>
-          <div class="remote-item"><strong>Bar</strong>&nbsp;— Fast output queue</div>
-          <div class="remote-item"><strong>Cocktails</strong>&nbsp;— Different SLA station</div>
-          <div class="remote-item"><strong>Bakery</strong>&nbsp;— Different SLA station</div>
-          <div class="remote-item"><strong>Other</strong>&nbsp;— Etc.</div>
+          <div class="remote-item"><strong>Cocina</strong>&nbsp;— Línea de preparación de comida</div>
+          <div class="remote-item"><strong>Barra</strong>&nbsp;— Cola de servicio rápido</div>
+          <div class="remote-item"><strong>Cócteles</strong>&nbsp;— Estación con SLA diferente</div>
+          <div class="remote-item"><strong>Pastelería</strong>&nbsp;— Estación con SLA diferente</div>
+          <div class="remote-item"><strong>Otros</strong>&nbsp;— Etc.</div>
         </div>
       </div>
 
       <div class="remote-card">
-        <h3>Single-station</h3>
+        <h3>Estación única</h3>
         <p>
-          Same flow, simpler topology. One station receives all items in one queue.
+          Mismo flujo, topología más simple. Una estación recibe todos los artículos en una sola cola.
         </p>
         <div class="remote-list">
-          <div class="remote-item"><strong>Station:</strong>&nbsp;Main</div>
-          <div class="remote-item"><strong>All items</strong>&nbsp;→ one execution queue</div>
-          <div class="remote-item"><strong>Upgrade later</strong>&nbsp;→ split stations when needed</div>
+          <div class="remote-item"><strong>Estación:</strong>&nbsp;Principal</div>
+          <div class="remote-item"><strong>Todos los artículos</strong>&nbsp;→ una cola de ejecución</div>
+          <div class="remote-item"><strong>Amplía después</strong>&nbsp;→ divide estaciones cuando lo necesites</div>
         </div>
       </div>
 
@@ -293,47 +408,46 @@ once and start receiving payments — directly into your bank account.
   </div>
 </div>
 
-
 <!-- ========================= -->
-<!-- POS INTEGRATION            -->
+<!-- INTEGRACIÓN POS            -->
 <!-- ========================= -->
 <div class="section">
   <div class="section-inner">
 
     <div class="section-header">
       <div class="section-tag">POS</div>
-      <h2>Use MaxMenu standalone or alongside your POS.</h2>
+      <h2>Usa MaxMenu solo o junto a tu TPV.</h2>
       <p>
-        You don’t need to rebuild your operation. MaxMenu can run end-to-end, or as a secondary layer
-        that feeds your existing stack.
+        No necesitas reconstruir tu operación. MaxMenu puede funcionar de extremo a extremo, o como una capa secundaria
+        que alimenta tu stack existente.
       </p>
     </div>
 
     <div class="remote-grid">
 
       <div class="remote-card">
-        <h3>Standalone mode</h3>
+        <h3>Modo autónomo</h3>
         <p>
-          MaxMenu handles ordering, payments, station routing, and execution.
-          Fastest path for modern operations.
+          MaxMenu gestiona pedidos, pagos, enrutamiento por estaciones y ejecución.
+          El camino más rápido para operaciones modernas.
         </p>
         <div class="remote-list">
-          <div class="remote-item"><strong>No POS dependency</strong></div>
-          <div class="remote-item"><strong>Immediate station jobs</strong></div>
-          <div class="remote-item"><strong>Clean Stripe payouts</strong></div>
+          <div class="remote-item"><strong>Sin dependencia de TPV</strong></div>
+          <div class="remote-item"><strong>Trabajos por estación inmediatos</strong></div>
+          <div class="remote-item"><strong>Cobros limpios vía Stripe</strong></div>
         </div>
       </div>
 
       <div class="remote-card">
-        <h3>POS-connected mode (secondary system)</h3>
+        <h3>Modo conectado a TPV (sistema secundario)</h3>
         <p>
-          MaxMenu becomes the customer-facing checkout surface; your POS remains your internal system of record.
-          This is how you <strong>alleviate workload</strong> without ripping anything out.
+          MaxMenu se convierte en la superficie de checkout para el cliente; tu TPV sigue siendo tu sistema de registro interno.
+          Así es como <strong>alivias carga de trabajo</strong> sin desmontar nada.
         </p>
         <div class="remote-list">
-          <div class="remote-item"><strong>Keep accounting &amp; ops</strong>&nbsp;inside POS</div>
-          <div class="remote-item"><strong>MaxMenu captures demand</strong>&nbsp;during peak load</div>
-          <div class="remote-item"><strong>Lower friction</strong>&nbsp;for staff and customers</div>
+          <div class="remote-item"><strong>Mantén contabilidad y operaciones</strong>&nbsp;dentro del TPV</div>
+          <div class="remote-item"><strong>MaxMenu captura demanda</strong>&nbsp;en horas punta</div>
+          <div class="remote-item"><strong>Menos fricción</strong>&nbsp;para personal y clientes</div>
         </div>
       </div>
 
@@ -342,167 +456,175 @@ once and start receiving payments — directly into your bank account.
   </div>
 </div>
 
-
-
-
 <!-- ========================= -->
-<!-- FEES / PLATFORM COMMISSION -->
+<!-- COMISIONES / FEES          -->
 <!-- ========================= -->
-
 <div class="section">
   <div class="section-inner">
 
     <div class="section-header">
-      <div class="section-tag">Fees</div>
-      <h2>Fixed platform fee per successful transaction.</h2>
+      <div class="section-tag">Comisiones</div>
+      <h2>Comisión fija de plataforma por transacción exitosa. Transparente y sin sorpresas.</h2>
       <p>
-        MaxMenu charges <strong>0.14</strong> per successful Order &amp; Pay payment.
-        Stripe processing fees are separate and depend on country/card characteristics.
+        MaxMenu cobra una comisión fija por cada pago exitoso de Order &amp; Pay. El importe depende de la moneda del restaurante.
+        Las comisiones de procesamiento de Stripe son aparte y dependen de tu país y tipo de tarjeta.
+        Nosotros no gestionamos ni alteramos las comisiones de Stripe — puedes consultarlas directamente en <a style="color:#00AAE4; text-decoration:none;" href="https://stripe.com/pricing">stripe.com/pricing</a>.
       </p>
-  
     </div>
 
     <div class="remote-grid">
 
       <div class="remote-card">
-        <h3>MaxMenu platform fee</h3>
-        <p>Simple, predictable, and only charged on successful payments.</p>
+        <h3>Comisión MaxMenu por transacción</h3>
+        <p>Simple, predecible, y solo se cobra cuando el pago es exitoso. Sin éxito, sin comisión. Las comisiones siempre varian en que moneda o pais tienes registrado tu restaurante</p>
         <div class="remote-list">
-          <div class="remote-item"><strong>0.14</strong>&nbsp;per successful transaction</div>
-          <div class="remote-item"><strong>Charged only when</strong>&nbsp;payment succeeds</div>
-          <div class="remote-item"><strong>No success</strong>&nbsp;→ no fee in Stripe and MaxMenu</div>
+          <div class="remote-item"><strong>EUR</strong>&nbsp;— 0,15&nbsp;€</div>
+          <div class="remote-item"><strong>GBP</strong>&nbsp;— 0,15&nbsp;£</div>
+          <div class="remote-item"><strong>CHF</strong>&nbsp;— 0,16&nbsp;CHF</div>
+          <div class="remote-item"><strong>USD</strong>&nbsp;— 0,19&nbsp;$</div>
+          <div class="remote-item"><strong>CAD</strong>&nbsp;— 0,24&nbsp;CA$</div>
+          <div class="remote-item"><strong>AUD</strong>&nbsp;— 0,24&nbsp;AU$</div>
+          <div class="remote-item"><strong>NZD</strong>&nbsp;— 0,26&nbsp;NZ$</div>
+          <div class="remote-item"><strong>SEK</strong>&nbsp;— 1,70&nbsp;kr</div>
+          <div class="remote-item"><strong>NOK</strong>&nbsp;— 1,70&nbsp;kr</div>
+          <div class="remote-item"><strong>DKK</strong>&nbsp;— 1,10&nbsp;kr</div>
+          <div class="remote-item"><strong>PLN</strong>&nbsp;— 0,65&nbsp;zł</div>
+          <div class="remote-item"><strong>CZK</strong>&nbsp;— 3,50&nbsp;Kč</div>
+          <div class="remote-item"><strong>HUF</strong>&nbsp;— 55&nbsp;Ft</div>
+          <div class="remote-item"><strong>RON</strong>&nbsp;— 0,70&nbsp;lei</div>
+          <div class="remote-item"><strong>BGN</strong>&nbsp;— 0,29&nbsp;лв</div>
+          <div class="remote-item"><strong>JPY</strong>&nbsp;— 24&nbsp;¥</div>
+          <div class="remote-item"><strong>SGD</strong>&nbsp;— 0,22&nbsp;S$</div>
+          <div class="remote-item"><strong>HKD</strong>&nbsp;— 1,25&nbsp;HK$</div>
+          <div class="remote-item"><strong>MYR</strong>&nbsp;— 0,72&nbsp;RM</div>
         </div>
       </div>
 
       <div class="remote-card">
-        <h3>Stripe processing fees</h3>
+        <h3>Comisiones de Stripe (procesador de pagos)</h3>
         <p>
-          Stripe fees are set by Stripe and vary by country and card type. you can informate here <a style="color:#00AAE4; text-decoration:none;" href="https://stripe.com/pricing">Pricing Stripe</a>
-          MaxMenu does not alter Stripe fees.
+          Las comisiones de Stripe las fija Stripe y varían según país, tipo de tarjeta y origen del pago.
+          MaxMenu no altera ni gestiona estas comisiones. Son independientes de las nuestras.
         </p>
         <div class="remote-list">
-          <div class="remote-item"><strong>EU example:</strong>&nbsp;1.5% + 0.25€</div>
-          <div class="remote-item"><strong>Varies by:</strong>&nbsp;domestic/international, card type</div>
-          <div class="remote-item"><strong>Restaurant receives:</strong>&nbsp;net after fees</div>
+          <div class="remote-item"><strong>Ejemplo UE:</strong>&nbsp;1,5&nbsp;% + 0,25&nbsp;€</div>
+          <div class="remote-item"><strong>Varía según:</strong>&nbsp;doméstico/internacional, tipo de tarjeta</div>
+          <div class="remote-item"><strong>El restaurante recibe:</strong>&nbsp;el neto tras ambas comisiones</div>
         </div>
+        <p style="margin-top:12px;">
+          Consulta las tarifas de Stripe actualizadas en <a style="color:#00AAE4; text-decoration:none;" href="https://stripe.com/pricing">stripe.com/pricing</a>
+        </p>
       </div>
 
     </div>
 
-    <!-- Minimum order rules (owner control) -->
+    <!-- Tarifas personalizadas -->
     <div class="remote-card" style="margin-top:18px;">
-      <h3>Minimum order rules (owner-controlled)</h3>
+      <h3>¿Alto volumen? Tarifas personalizadas.</h3>
       <p>
-        If the average order value at your establishment is too low, you can set a minimum order amount to process payments at the table, thereby encouraging customers to order something extra.
+        Si tu restaurante o cadena procesa un volumen alto de transacciones, podemos negociar tarifas personalizadas
+        adaptadas a tu operación. Contacta con nosotros para una propuesta a medida.
       </p>
       <div class="remote-list">
-        <div class="remote-item">
-          <strong>Owner sets minimum</strong>&nbsp;— e.g. 7–10€ per table
-        </div>
-        <div class="remote-item">
-          <strong>If basket &lt; minimum</strong>&nbsp;— checkout is blocked
-        </div>
-        <div class="remote-item">
-          <strong>Result</strong>&nbsp;— protects margins on small baskets (coffee-only tickets)
-        </div>
+        <div class="remote-item"><strong>Cadenas y grupos</strong>&nbsp;— tarifas por volumen agregado</div>
+        <div class="remote-item"><strong>Agencias con muchos clientes</strong>&nbsp;— condiciones especiales</div>
+        <div class="remote-item"><strong>Contacto directo</strong>&nbsp;— sin formularios, sin esperas</div>
       </div>
     </div>
 
   </div>
 </div>
+
 <!-- ========================= -->
-<!-- COST AT SCALE (EUROPE)     -->
+<!-- COSTE A ESCALA (EUROPA)    -->
 <!-- ========================= -->
 <div class="section">
   <div class="section-inner">
 
     <div class="section-header">
-      <div class="section-tag">Cost at scale</div>
-      <h2>What 1,000 transactions cost in Europe (Stripe + MaxMenu).</h2>
+      <div class="section-tag">Coste a escala</div>
+      <h2>Qué cuestan 1.000 transacciones en Europa (Stripe + MaxMenu).</h2>
       <p>
-        Transparent EU example:
-        <strong>Stripe: 1.5% + 0.25€</strong> per successful transaction, plus
-        <strong>MaxMenu: 0.14€</strong> per successful transaction.
-        (Totals assume all 1,000 payments succeed.)
+        Ejemplo transparente en zona euro:
+        <strong>Stripe: 1,5&nbsp;% + 0,25&nbsp;€</strong> por transacción exitosa, más
+        <strong>MaxMenu: 0,15&nbsp;€</strong> por transacción exitosa.
+        (Los totales asumen que los 1.000 pagos son exitosos.)
       </p>
     </div>
 
-    <!-- Usamos stack-grid (2 columnas) y dejamos que el 3er/4to card caiga a la siguiente fila -->
     <div class="stack-grid">
 
       <!-- Ticket 7€ -->
       <div class="stack-card">
-        <h3>Ticket: &nbsp; 7€ &nbsp;→ &nbsp; 1,000 transactions</h3>
-        <p>7,000€ gross</p>
-
+        <h3>Ticket: &nbsp; 7&nbsp;€ &nbsp;→ &nbsp; 1.000 transacciones</h3>
+        <p>7.000&nbsp;€ brutos</p>
         <div class="remote-list">
-          <div class="remote-item"><strong>Stripe:</strong>&nbsp;355€</div>
-          <div class="remote-item"><strong>MaxMenu:</strong>&nbsp;140€</div>
-          <div class="remote-item"><strong>Total fees:</strong>&nbsp;495€</div>
-          <div class="remote-item"><strong>Net after fees:</strong>&nbsp;6,505€</div>
+          <div class="remote-item"><strong>Stripe:</strong>&nbsp;355&nbsp;€</div>
+          <div class="remote-item"><strong>MaxMenu:</strong>&nbsp;150&nbsp;€</div>
+          <div class="remote-item"><strong>Total comisiones:</strong>&nbsp;505&nbsp;€</div>
+          <div class="remote-item"><strong>Neto tras comisiones:</strong>&nbsp;6.495&nbsp;€</div>
         </div>
-
         <div class="remote-item" style="margin-top:10px;">
-          <strong>Per transaction:</strong>&nbsp;Stripe 0.35€ + MaxMenu 0.14€ → <strong>0.49€</strong>
+          <strong>Por transacción:</strong>&nbsp;Stripe 0,36&nbsp;€ + MaxMenu 0,15&nbsp;€ → <strong>0,51&nbsp;€</strong>
         </div>
       </div>
 
       <!-- Ticket 10€ -->
       <div class="stack-card">
-        <h3>Ticket: 10€ &nbsp;→ &nbsp; 1,000 transactions</h3>
-        <p>10,000€ gross</p>
-
+        <h3>Ticket: 10&nbsp;€ &nbsp;→ &nbsp; 1.000 transacciones</h3>
+        <p>10.000&nbsp;€ brutos</p>
         <div class="remote-list">
-          <div class="remote-item"><strong>Stripe:</strong>&nbsp;400€</div>
-          <div class="remote-item"><strong>MaxMenu:</strong>&nbsp;140€</div>
-          <div class="remote-item"><strong>Total fees:</strong>&nbsp;540€</div>
-          <div class="remote-item"><strong>Net after fees:</strong>&nbsp;9,460€</div>
+          <div class="remote-item"><strong>Stripe:</strong>&nbsp;400&nbsp;€</div>
+          <div class="remote-item"><strong>MaxMenu:</strong>&nbsp;150&nbsp;€</div>
+          <div class="remote-item"><strong>Total comisiones:</strong>&nbsp;550&nbsp;€</div>
+          <div class="remote-item"><strong>Neto tras comisiones:</strong>&nbsp;9.450&nbsp;€</div>
         </div>
-
         <div class="remote-item" style="margin-top:10px;">
-          <strong>Per transaction:</strong>&nbsp;Stripe 0.40€ + MaxMenu 0.14€ → <strong>0.54€</strong>
+          <strong>Por transacción:</strong>&nbsp;Stripe 0,40&nbsp;€ + MaxMenu 0,15&nbsp;€ → <strong>0,55&nbsp;€</strong>
         </div>
       </div>
 
       <!-- Ticket 15€ -->
       <div class="stack-card">
-        <h3>Ticket: 15€ &nbsp;→ &nbsp; 1,000 transactions</h3>
-        <p>15,000€ gross</p>
-
+        <h3>Ticket: 15&nbsp;€ &nbsp;→ &nbsp; 1.000 transacciones</h3>
+        <p>15.000&nbsp;€ brutos</p>
         <div class="remote-list">
-          <div class="remote-item"><strong>Stripe:</strong>&nbsp;475€</div>
-          <div class="remote-item"><strong>MaxMenu:</strong>&nbsp;140€</div>
-          <div class="remote-item"><strong>Total fees:</strong>&nbsp;615€</div>
-          <div class="remote-item"><strong>Net after fees:</strong>&nbsp;14,385€</div>
+          <div class="remote-item"><strong>Stripe:</strong>&nbsp;475&nbsp;€</div>
+          <div class="remote-item"><strong>MaxMenu:</strong>&nbsp;150&nbsp;€</div>
+          <div class="remote-item"><strong>Total comisiones:</strong>&nbsp;625&nbsp;€</div>
+          <div class="remote-item"><strong>Neto tras comisiones:</strong>&nbsp;14.375&nbsp;€</div>
         </div>
-
         <div class="remote-item" style="margin-top:10px;">
-          <strong>Per transaction:</strong>&nbsp;Stripe 0.47€ + MaxMenu 0.14€ → <strong>0.61€</strong>
+          <strong>Por transacción:</strong>&nbsp;Stripe 0,48&nbsp;€ + MaxMenu 0,15&nbsp;€ → <strong>0,63&nbsp;€</strong>
         </div>
       </div>
 
       <!-- Ticket 20€ -->
       <div class="stack-card">
-        <h3>Ticket: 20€ &nbsp;→ &nbsp; 1,000 transactions</h3>
-        <p>20,000€ gross</p>
-
+        <h3>Ticket: 20&nbsp;€ &nbsp;→ &nbsp; 1.000 transacciones</h3>
+        <p>20.000&nbsp;€ brutos</p>
         <div class="remote-list">
-          <div class="remote-item"><strong>Stripe:</strong>&nbsp;550€</div>
-          <div class="remote-item"><strong>MaxMenu:</strong>&nbsp;140€</div>
-          <div class="remote-item"><strong>Total fees:</strong>&nbsp;690€</div>
-          <div class="remote-item"><strong>Net after fees:</strong>&nbsp;19,310€</div>
+          <div class="remote-item"><strong>Stripe:</strong>&nbsp;550&nbsp;€</div>
+          <div class="remote-item"><strong>MaxMenu:</strong>&nbsp;150&nbsp;€</div>
+          <div class="remote-item"><strong>Total comisiones:</strong>&nbsp;700&nbsp;€</div>
+          <div class="remote-item"><strong>Neto tras comisiones:</strong>&nbsp;19.300&nbsp;€</div>
         </div>
-
         <div class="remote-item" style="margin-top:10px;">
-          <strong>Per transaction:</strong>&nbsp;Stripe 0.55€ + MaxMenu 0.14€ → <strong>0.69€</strong>
+          <strong>Por transacción:</strong>&nbsp;Stripe 0,55&nbsp;€ + MaxMenu 0,15&nbsp;€ → <strong>0,70&nbsp;€</strong>
         </div>
       </div>
 
     </div>
 
+    <!-- Ejemplo con recargo -->
     <div class="remote-card" style="margin-top:18px;">
+      <h3>Y si activas el recargo de servicio…</h3>
+      <p>
+        Con un recargo de solo 0,40&nbsp;€ por pedido, en 1.000 transacciones ingresas 400&nbsp;€ adicionales.
+        Eso cubre la comisión de MaxMenu (150&nbsp;€) y buena parte de la de Stripe. Tu neto mejora sin subir precios de carta.
+      </p>
       <div class="remote-item">
-        <strong>Key point:</strong>&nbsp;MaxMenu charges only on successful payments — no success, no fee.
+        <strong>Punto clave:</strong>&nbsp;MaxMenu solo cobra cuando el pago es exitoso — sin éxito, sin comisión.
       </div>
     </div>
 
@@ -510,43 +632,43 @@ once and start receiving payments — directly into your bank account.
 </div>
 
 <!-- ========================= -->
-<!-- WHEN IT'S GOOD / NOT GOOD  -->
+<!-- CUÁNDO SÍ / CUÁNDO NO     -->
 <!-- ========================= -->
 <div class="section">
   <div class="section-inner">
 
     <div class="section-header">
-      <div class="section-tag">Fit</div>
-      <h2>When Order &amp; Pay is a weapon — and when it’s not.</h2>
+      <div class="section-tag">Encaje</div>
+      <h2>Cuándo Order &amp; Pay es un arma — y cuándo no.</h2>
       <p>
-        This is not for every venue. It’s for venues that want throughput, less staff friction,
-        and controlled execution.
+        No es para todos los locales. Es para locales que quieren throughput, menos fricción
+        con el personal y ejecución controlada.
       </p>
     </div>
 
     <div class="remote-grid">
 
       <div class="remote-card">
-        <h3>Use it when</h3>
+        <h3>Úsalo cuando</h3>
         <div class="remote-list">
-          <div class="remote-item">Average ticket is meaningful (or you enforce minimums).</div>
-          <div class="remote-item">You want more orders without more waiters.</div>
-          <div class="remote-item">You have station complexity and need routing.</div>
-          <div class="remote-item">You want ordering embedded into your domain &amp; brand.</div>
-          <div class="remote-item">You want payouts directly into your Stripe.</div>
+          <div class="remote-item">El ticket medio es significativo (o aplicas mínimos y recargos).</div>
+          <div class="remote-item">Quieres más pedidos sin más camareros.</div>
+          <div class="remote-item">Tienes complejidad de estaciones y necesitas enrutamiento.</div>
+          <div class="remote-item">Quieres pedidos embebidos en tu dominio y marca.</div>
+          <div class="remote-item">Quieres cobros directamente en tu cuenta bancaria.</div>
         </div>
       </div>
 
       <div class="remote-card">
-        <h3>Don’t use it when</h3>
+        <h3>No lo uses cuando</h3>
         <div class="remote-list">
-          <div class="remote-item">Your basket is 3.5€ coffee-only </div>
-          <div class="remote-item">Human interaction is the core of the experience (fine dining).</div>
-          <div class="remote-item">Your staff can’t operationalize station execution (no process).</div>
-          <div class="remote-item">You only want a static QR menu (no payments, no routing).</div>
+          <div class="remote-item">Tu cesta es de 3,50&nbsp;€ solo café (salvo que apliques recargo).</div>
+          <div class="remote-item">La interacción humana es el alma de la experiencia (fine dining).</div>
+          <div class="remote-item">Tu personal no puede operacionalizar la ejecución por estaciones (sin proceso).</div>
+          <div class="remote-item">Solo quieres un menú QR estático (sin pagos, sin enrutamiento).</div>
         </div>
         <p style="margin-top:14px;">
-          The system is deterministic.
+          El sistema es determinista.
         </p>
       </div>
 
@@ -555,48 +677,47 @@ once and start receiving payments — directly into your bank account.
   </div>
 </div>
 
-
 <!-- ========================= -->
-<!-- WHY MAXMENU (NO-BS)       -->
+<!-- POR QUÉ MAXMENU           -->
 <!-- ========================= -->
 <div class="section">
   <div class="section-inner">
 
     <div class="section-header">
-      <div class="section-tag">Why MaxMenu</div>
-      <h2>Not a QR menu. An infrastructure layer for gastronomy in real time</h2>
+      <div class="section-tag">Por qué MaxMenu</div>
+      <h2>No es un menú QR. Es una capa de infraestructura para gastronomía en tiempo real.</h2>
       <p>
-        Most “order &amp; pay” tools try to replace the restaurant’s stack. That’s why they fail in real ops.
-        MaxMenu can run as a <strong>secondary system</strong>: you keep your POS, keep your habits,
-        but offload the high-friction layer (ordering + payment + routing) into a deterministic flow.
+        La mayoría de herramientas "order &amp; pay" intentan reemplazar el stack del restaurante. Por eso fallan en operaciones reales.
+        MaxMenu puede funcionar como <strong>sistema secundario</strong>: mantienes tu TPV, mantienes tus hábitos,
+        pero descargas la capa de alta fricción (pedido + pago + enrutamiento) en un flujo determinista.
       </p>
     </div>
 
     <div class="remote-grid">
 
       <div class="remote-card">
-        <h3>Acts as a parallel system</h3>
+        <h3>Funciona como sistema paralelo</h3>
         <p>
-          Use MaxMenu for terrace, peak hours, bar, takeaway pickup — without breaking your existing operation.
-          It reduces staff bottlenecks and absorbs demand spikes.
+          Usa MaxMenu para terraza, horas punta, barra, recogida de takeaway — sin romper tu operación existente.
+          Reduce cuellos de botella del personal y absorbe picos de demanda.
         </p>
         <div class="remote-list">
-          <div class="remote-item"><strong>Less waiter load</strong>&nbsp;— customers self-serve ordering</div>
-          <div class="remote-item"><strong>Less queue chaos</strong>&nbsp;— station routing prevents noise</div>
-          <div class="remote-item"><strong>Less POS pressure</strong>&nbsp;— POS can stay as your accounting truth</div>
+          <div class="remote-item"><strong>Menos carga para camareros</strong>&nbsp;— los clientes piden solos</div>
+          <div class="remote-item"><strong>Menos caos en cola</strong>&nbsp;— el enrutamiento por estaciones elimina ruido</div>
+          <div class="remote-item"><strong>Menos presión al TPV</strong>&nbsp;— el TPV sigue siendo tu verdad contable</div>
         </div>
       </div>
 
       <div class="remote-card">
-        <h3>Transparent economics</h3>
+        <h3>Economía transparente</h3>
         <p>
-          No hidden % cuts, no games, no “contact sales”. You see the full cost:
-          Stripe processing + a fixed MaxMenu platform fee per successful payment.
+          Sin porcentajes ocultos, sin trucos, sin "contacta con ventas". Ves el coste completo:
+          procesamiento de Stripe + comisión fija de MaxMenu por pago exitoso.
         </p>
         <div class="remote-list">
-          <div class="remote-item"><strong>MaxMenu:</strong>&nbsp;0.14€ per successful transaction</div>
-          <div class="remote-item"><strong>Stripe (EU example):</strong>&nbsp;1.5% + 0.25€</div>
-          <div class="remote-item"><strong>No success:</strong>&nbsp;no MaxMenu fee</div>
+          <div class="remote-item"><strong>MaxMenu:</strong>&nbsp;0,15&nbsp;€ por transacción exitosa (en EUR)</div>
+          <div class="remote-item"><strong>Stripe (ejemplo UE):</strong>&nbsp;1,5&nbsp;% + 0,25&nbsp;€</div>
+          <div class="remote-item"><strong>Recargo de servicio:</strong>&nbsp;configurable para cubrir comisiones o generar margen</div>
         </div>
       </div>
 
@@ -604,9 +725,6 @@ once and start receiving payments — directly into your bank account.
 
   </div>
 </div>
-
-
-
 
 <!-- ========================= -->
 <!-- FAQ                        -->
@@ -616,221 +734,223 @@ once and start receiving payments — directly into your bank account.
 
     <div class="section-header">
       <div class="section-tag">FAQ</div>
-      <h2>Questions restaurants actually ask.</h2>
+      <h2>Preguntas que los restaurantes realmente hacen.</h2>
       <p>
-        Fees, minimums, domain control, station routing — no fluff.
+        Comisiones, mínimos, recargos, control de dominio, enrutamiento por estaciones — sin relleno.
       </p>
     </div>
-       <BR></BR>
-        <div class="remote-card">
-        <h3>Can we run it on our own domain?</h3>
-        <p>
-          Yes, the domains you register in your panel will be the authorized ones.
-        </p>
-      </div>
-      <BR></BR>
-      <div class="remote-card">
-        <h3>Do we need full POS integration?</h3>
-        <p>
-          Not to start. MaxMenu can run standalone or as a secondary layer alongside your POS.
-        </p>
-      </div>
-      <BR></BR>
-      <div class="remote-card">
-        <h3>Is it digital or does it print?</h3>
-        <p>
-          Both. Once you have station jobs, rendering is just output: KDS, printer tickets, or hybrid.
-        </p>
-      </div>
-      <BR></BR>
-      <div class="remote-card">
-        <h3>Do we need a QR code?</h3>
-        <p>
-          No. QR is just distribution. Order &amp; Pay is embeddable on any domain.
-        </p>
-      </div>
-      <BR></BR>
-      <div class="remote-card">
-        <h3>What about a 3.5€ coffee?</h3>
-        <p>
-          Use minimum order rules (e.g. 8–10€) or keep Order &amp; Pay for food baskets where it dominates.
-        </p>
-      </div>
-      <BR></BR>
+
+    <BR></BR>
     <div class="remote-card">
-      <h3>Who owns the money?</h3>
+      <h3>¿Puedo usarlo en mi propio dominio?</h3>
       <p>
-       Yes, the restaurant does. Payments are transferred directly to each restaurant's Stripe account and then automatically to your bank account; MaxMenu doesn't touch your money.
+        Sí, los dominios que registres en tu panel serán los autorizados.
+      </p>
+    </div>
+
+    <BR></BR>
+    <div class="remote-card">
+      <h3>¿Necesito integración completa con TPV?</h3>
+      <p>
+        No para empezar. MaxMenu puede funcionar de forma autónoma o como capa secundaria junto a tu TPV.
+      </p>
+    </div>
+
+    <BR></BR>
+    <div class="remote-card">
+      <h3>¿Es digital o imprime?</h3>
+      <p>
+        Ambos. Una vez tienes trabajos por estación, el renderizado es solo salida: KDS, tickets de impresora o híbrido.
+      </p>
+    </div>
+
+    <BR></BR>
+    <div class="remote-card">
+      <h3>¿Necesito un código QR?</h3>
+      <p>
+        No. El QR es solo distribución. Order &amp; Pay es embebible en cualquier dominio.
+      </p>
+    </div>
+
+    <BR></BR>
+    <div class="remote-card">
+      <h3>¿Y un café de 3,50&nbsp;€?</h3>
+      <p>
+        Usa reglas de pedido mínimo (ej. 8–10&nbsp;€) o activa un recargo de servicio para cubrir comisiones.
+        También puedes reservar Order &amp; Pay solo para cestas de comida donde domina.
+      </p>
+    </div>
+
+    <BR></BR>
+    <div class="remote-card">
+      <h3>¿Puedo trasladar la comisión al cliente?</h3>
+      <p>
+        Sí. Configura un recargo de servicio desde tu panel. Aparece como una línea separada en el checkout
+        (ej. "Order &amp; Pay — 0,40&nbsp;€"). El cliente lo ve claro, tus márgenes quedan intactos. Tú decides el importe.
+      </p>
+    </div>
+
+    <BR></BR>
+    <div class="remote-card">
+      <h3>¿De quién es el dinero?</h3>
+      <p>
+        Del restaurante. Los pagos se transfieren directamente a la cuenta Stripe de cada restaurante y de ahí automáticamente a tu cuenta bancaria; MaxMenu no toca tu dinero.
       </p>
 
       <p style="margin-top:12px;">
-        Every restaurant you create in MaxMenu gets its own Stripe account automatically.
-        This is required because each restaurant is treated as a separate business entity
-        (legal data, identification, sometimes even different banks).
+        Cada restaurante que creas en MaxMenu obtiene su propia cuenta de Stripe automáticamente.
+        Esto es necesario porque cada restaurante se trata como una entidad empresarial separada
+        (datos legales, identificación, a veces incluso bancos diferentes).
       </p>
 
       <p style="margin-top:12px;">
-        Even if you use the same bank account for multiple restaurants, Stripe accounts stay separate.
-        This keeps transactions, reporting, and payouts clearly split per restaurant.
+        Aunque uses la misma cuenta bancaria para varios restaurantes, las cuentas de Stripe se mantienen separadas.
+        Esto mantiene las transacciones, reportes y cobros claramente divididos por restaurante.
       </p>
 
       <p style="margin-top:12px;">
-        You don’t need to create or manage anything in Stripe.
-        All accounts are created and managed from MaxMenu.
+        No necesitas crear ni gestionar nada en Stripe.
+        Todas las cuentas se crean y gestionan desde MaxMenu.
       </p>
 
       <p style="margin-top:12px;">
-        MaxMenu charges a fixed fee of <strong>€0.14 per successful transaction</strong>.
-        The rest of the money is yours.
+        MaxMenu cobra una comisión fija por transacción exitosa (varía según moneda, ej. <strong>0,15&nbsp;€ en EUR</strong>).
+        El resto del dinero es tuyo — incluido el recargo de servicio si lo tienes activado.
       </p>
 
       <div class="remote-list">
-        <div class="remote-item"><strong>One Stripe account per restaurant</strong></div>
-        <div class="remote-item"><strong>Same bank account if you want</strong></div>
-        <div class="remote-item"><strong>Clear separation of funds</strong></div>
-        <div class="remote-item"><strong>No Stripe setup needed outside of maxmenu</strong></div>
+        <div class="remote-item"><strong>Una cuenta Stripe por restaurante</strong></div>
+        <div class="remote-item"><strong>Misma cuenta bancaria si quieres</strong></div>
+        <div class="remote-item"><strong>Separación clara de fondos</strong></div>
+        <div class="remote-item"><strong>Sin configuración de Stripe fuera de MaxMenu</strong></div>
       </div>
     </div>
-
-  
 
   </div>
 </div>
 
-
 <!-- ========================= -->
-<!-- STAFF vs MAXMENU (COST)    -->
+<!-- PERSONAL vs MAXMENU        -->
 <!-- ========================= -->
 <div class="section">
   <div class="section-inner">
 
     <div class="section-header">
-      <div class="section-tag">Cost model</div>
-      <h2>Deploy Order & Pay</h2>
-        <p>
-        This is the real advantage: MaxMenu adapts to your rhythm. It’s there when your team is busy, understaffed,
-        or someone has an unexpected day off. You don’t pay for idle time — and you don’t lose service when things get tough.
+      <div class="section-tag">Modelo de coste</div>
+      <h2>Despliega Order &amp; Pay</h2>
+      <p>
+        Esta es la ventaja real: MaxMenu se adapta a tu ritmo. Está ahí cuando tu equipo está ocupado, corto de personal,
+        o alguien tiene un día libre inesperado. No pagas por tiempo muerto — y no pierdes servicio cuando las cosas se complican.
       </p>
 
       <p style="margin-top:12px;">
-        Many venues run a hybrid model: they keep the human touch where it matters most, and let MaxMenu handle peak-hour
-        ordering and payments — silently, reliably, and always under your brand.
+        Muchos locales usan un modelo híbrido: mantienen el toque humano donde más importa, y dejan que MaxMenu gestione
+        pedidos y pagos en horas punta — en silencio, con fiabilidad, y siempre bajo tu marca.
       </p>
     </div>
 
+    <div class="remote-grid" style="margin-top:18px;">
 
-<!-- ========================== -->
-<!-- HYBRID MODEL — REFORMULATED -->
-<!-- ========================== -->
-<div class="remote-grid" style="margin-top:18px;">
+      <div class="remote-card">
+        <h3>Cómo usan MaxMenu la mayoría de restaurantes</h3>
+        <p>
+          MaxMenu no viene a reemplazar a tu equipo. Se convierte en un segundo canal de pedidos — un asistente silencioso
+          que ayuda a absorber demanda cuando el personal no puede estar en todas partes a la vez.
+        </p>
 
-  <!-- Hybrid / Secondary lane -->
-  <div class="remote-card">
-    <h3>How most restaurants use MaxMenu</h3>
-    <p>
-      MaxMenu is not here to replace your team. It becomes a second ordering lane — a silent assistant that helps
-      absorb demand when staff can’t be everywhere at once.
-    </p>
+        <p style="margin-top:12px;">
+          La mayoría de locales usan MaxMenu como canal de respaldo para terraza, barra, rush del mediodía o eventos.
+          Compensa la brecha entre el tamaño del equipo y el tráfico real en horas punta.
+        </p>
 
-    <p style="margin-top:12px;">
-      Most venues use MaxMenu as a **backup channel** for terrace, bar, lunch rush, or events.
-      It compensates for the gap between team size and real-world peak traffic.
-    </p>
+        <div class="remote-list">
+          <div class="remote-item"><strong>Tu equipo se centra en</strong>&nbsp;— venta cruzada, servicio, hospitalidad</div>
+          <div class="remote-item"><strong>MaxMenu gestiona</strong>&nbsp;— pedidos extra, flujos punta, enrutamiento</div>
+          <div class="remote-item"><strong>Resultado</strong>&nbsp;— equipo más tranquilo, servicio más rápido, clientes más contentos</div>
+        </div>
+      </div>
 
-    <div class="remote-list">
-      <div class="remote-item"><strong>Your staff focuses on</strong>&nbsp;— upsell, service, hospitality</div>
-      <div class="remote-item"><strong>MaxMenu handles</strong>&nbsp;— extra orders, peak flows, routing</div>
-      <div class="remote-item"><strong>Result</strong>&nbsp;— calmer staff, faster service, happier guests</div>
+      <div class="remote-card">
+        <h3>Por qué tu equipo sale ganando</h3>
+        <p>
+          Cuando los pedidos entran por MaxMenu, tu personal se libera de perseguir tickets y gestionar cobros.
+          Ganan tiempo — para sonreír, conectar y dar mejor servicio.
+        </p>
+
+        <div class="remote-list">
+          <div class="remote-item"><strong>Más atención por mesa</strong></div>
+          <div class="remote-item"><strong>Mejores propinas por mejor servicio</strong></div>
+          <div class="remote-item"><strong>Menos estrés, más consistencia</strong></div>
+          <div class="remote-item"><strong>Ningún pedido olvidado, ningún pago perdido</strong></div>
+        </div>
+
+        <p style="margin-top:12px;">
+         
+        </p>
+      </div>
+
     </div>
-  </div>
 
-  <!-- Staff empowerment -->
-  <div class="remote-card">
-    <h3>Why your team actually wins</h3>
-    <p>
-      When orders come in through MaxMenu, your staff is freed from chasing tickets and running payments.
-      They gain time — to smile, to connect, and to deliver better service.
-    </p>
-
-    <div class="remote-list">
-      <div class="remote-item"><strong>More attention per table</strong></div>
-      <div class="remote-item"><strong>Better tips from better service</strong></div>
-      <div class="remote-item"><strong>Less stress, more consistency</strong></div>
-      <div class="remote-item"><strong>No order forgotten, no payment lost</strong></div>
+    <div class="remote-card" style="margin-top:18px;">
+      <h3>Lo que MaxMenu hace realmente (operacionalmente)</h3>
+      <p>
+        Los pedidos a través de MaxMenu siguen reglas, se enrutan a la estación correcta y se confirman al instante — siempre.
+        Es infraestructura diseñada para funcionar como tu mejor empleado.
+      </p>
+      <div class="remote-list">
+        <div class="remote-item"><strong>Aplicación de pedido mínimo</strong>&nbsp;— protege márgenes a escala</div>
+        <div class="remote-item"><strong>Recargo de servicio configurable</strong>&nbsp;— traslada el coste al cliente si lo necesitas</div>
+        <div class="remote-item"><strong>Enrutamiento por estaciones</strong>&nbsp;— cocina/barra nunca reciben tickets mezclados</div>
+        <div class="remote-item"><strong>Confirmación de pago instantánea</strong>&nbsp;— sin perseguir, sin errores</div>
+        <div class="remote-item"><strong>Auditoría completa</strong>&nbsp;— trazabilidad total de cada pedido</div>
+      </div>
     </div>
 
-    <p style="margin-top:12px;">
-      That’s why MaxMenu works best **alongside humans** — not against them.
-    </p>
-  </div>
+    <div class="remote-card" style="margin-top:18px;">
+      <h3>¿Empezando? Usa MaxMenu como tu sistema de respaldo</h3>
+      <p>
+        Si estás abriendo un local nuevo o trabajas con un equipo reducido, te recomendamos usar MaxMenu como tu flujo de respaldo:
+        sin formación necesaria, sin apps que instalar, y funciona incluso con una sola persona en sala.
+      </p>
+      <p style="margin-top:12px;">
+        Así, tu equipo puede centrarse en las mesas — mientras MaxMenu absorbe demanda en silencio.
+      </p>
 
-</div>
+      <div class="remote-list">
+        <div class="remote-item"><strong>Perfecto para equipos pequeños</strong></div>
+        <div class="remote-item"><strong>Sin compromiso — úsalo cuando lo necesites</strong></div>
+        <div class="remote-item"><strong>Preparado para días de mucho trabajo, desde el primer día</strong></div>
+      </div>
+    </div>
 
-<!-- ========================== -->
-<!-- OPERATIONAL POWER BLOCK -->
-<!-- ========================== -->
-<div class="remote-card" style="margin-top:18px;">
-  <h3>What MaxMenu actually does (operationally)</h3>
-  <p>
-    Orders through MaxMenu follow rules, route to the right station, and are confirmed instantly — every time.
-    It's infrastructure designed to work like your best employee.
-  </p>
-  <div class="remote-list">
-    <div class="remote-item"><strong>Minimum order enforcement</strong>&nbsp;— protect margin at scale</div>
-    <div class="remote-item"><strong>Station routing</strong>&nbsp;— kitchen/bar never get mixed tickets</div>
-    <div class="remote-item"><strong>Instant payment confirmation</strong>&nbsp;— no chasing, no errors</div>
-    <div class="remote-item"><strong>Audit trail</strong>&nbsp;— full traceability for every order</div>
-  </div>
-</div>
-
-<!-- ========================== -->
-<!-- STARTING TIP FOR NEW VENUES -->
-<!-- ========================== -->
-<div class="remote-card" style="margin-top:18px;">
-  <h3>Starting out? Use MaxMenu as your backup system</h3>
-  <p>
-    If you're opening a new venue or running with a lean team, we recommend using MaxMenu as your backup flow:
-    no training required, no apps to install, and it works even with just one staff member on the floor.
-  </p>
-  <p style="margin-top:12px;">
-    This way, your team can focus on the tables — while MaxMenu silently absorbs demand.
-  </p>
-
-  <div class="remote-list">
-    <div class="remote-item"><strong>Perfect for small teams</strong></div>
-    <div class="remote-item"><strong>No commitment — use when needed</strong></div>
-    <div class="remote-item"><strong>Be ready for busy days, from day one</strong></div>
-  </div>
-</div>
-    
   </div>
 </div>
 
 <!-- ========================= -->
-<!-- FINAL CTA                  -->
+<!-- CTA FINAL                  -->
 <!-- ========================= -->
 <div class="section final-cta">
   <div class="section-inner">
-    <h2>Run enterprise ordering infrastructure — under your own brand.</h2>
+    <h2>Infraestructura de pedidos de nivel enterprise — bajo tu propia marca.</h2>
 
     <p style="max-width:820px;margin:12px auto 26px;">
-      Big chains don’t win because of prettier menus. They win because they operate on infrastructure:
-      payments, routing, station execution, reliability, and control — systems that cost millions to build and maintain.
-      MaxMenu gives you that class of infrastructure, but <strong>embedded inside your own website</strong>.
+      Las grandes cadenas no ganan por tener menús más bonitos. Ganan porque operan con infraestructura:
+      pagos, enrutamiento, ejecución por estaciones, fiabilidad y control — sistemas que cuestan millones construir y mantener.
+      MaxMenu te da esa clase de infraestructura, pero <strong>embebida dentro de tu propia web</strong>.
     </p>
 
     <p style="max-width:820px;margin:0 auto 32px;">
-      Your customers never see “a platform”. They see <strong>your</strong> domain, <strong>your</strong> design,
-      <strong>your</strong> typography, <strong>your</strong> flow. Everything is configurable from your dashboard.
-      We handle what’s under the hood: deterministic order creation, station routing, Stripe payments, and operational controls.
+      Tus clientes nunca ven "una plataforma". Ven <strong>tu</strong> dominio, <strong>tu</strong> diseño,
+      <strong>tu</strong> tipografía, <strong>tu</strong> flujo. Todo es configurable desde tu dashboard.
+      Nosotros gestionamos lo que hay por debajo: creación determinista de pedidos, enrutamiento por estaciones, pagos con Stripe y controles operacionales.
     </p>
 
     <div class="hero-cta" style="margin-top:0;">
-      <a href="/login"><button>Create your branded checkout</button></a>
+      <a href="/login"><button>Crea tu checkout con tu marca</button></a>
     </div>
 
     <p style="max-width:820px;margin:18px auto 0;opacity:0.9;">
-      <strong>In short:</strong> you look like a chain. You operate like a chain. Without the maintenance costs that this entails
+      <strong>En resumen:</strong> pareces una cadena. Operas como una cadena. Sin los costes de mantenimiento que eso conlleva.
     </p>
   </div>
 </div>
